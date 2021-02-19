@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/screens/home_page/components/section.dart';
 import 'package:flutter/material.dart';
 
 import '../../../size_config.dart';
@@ -13,16 +14,8 @@ class SpecialOffers extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: Text(
-            "Special for you",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+        SectionTitle(
+          title: "Special for you",
         ),
         SizedBox(height: getProportionateScreenHeight(10)),
         SingleChildScrollView(
@@ -30,14 +23,14 @@ class SpecialOffers extends StatelessWidget {
           child: Row(
             children: [
               SpecialOfferCard(
-                imageLink: "assets/images/Image Banner 2.png",
-                offerName: "Smartphone",
+                imageLink: "assets/images/Mechanical Keyboard.jpg",
+                offerName: "Mechanical Keyboard",
                 numberOfBrands: 18,
                 handleOnTap: () {},
               ),
               SpecialOfferCard(
-                imageLink: "assets/images/Image Banner 3.png",
-                offerName: "Fashion",
+                imageLink: "assets/images/Mouse.jpg",
+                offerName: "Mouse",
                 numberOfBrands: 24,
                 handleOnTap: () {},
               ),

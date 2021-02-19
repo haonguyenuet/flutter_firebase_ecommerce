@@ -1,7 +1,11 @@
+import 'package:e_commerce_app/components/default_button.dart';
 import 'package:e_commerce_app/models/product.dart';
 import 'package:e_commerce_app/screens/detail_product/components/product_images.dart';
 import 'package:e_commerce_app/screens/detail_product/components/product_info.dart';
+import 'package:e_commerce_app/size_config.dart';
 import 'package:flutter/material.dart';
+
+import '../../../constants.dart';
 
 class Body extends StatefulWidget {
   final Product product;

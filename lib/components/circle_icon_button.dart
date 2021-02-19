@@ -23,17 +23,11 @@ class CircleIconButton extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: color,
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0.05, 0.2),
-            color: Colors.black,
-            spreadRadius: 0.06,
-          )
-        ],
       ),
       child: IconButton(
         onPressed: handleOnPress,
         icon: icon,
+        iconSize: size * 0.5,
       ),
     );
   }

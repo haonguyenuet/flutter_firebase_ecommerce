@@ -8,7 +8,6 @@ ThemeData theme() {
     fontFamily: "Muli",
     appBarTheme: appBarTheme(),
     textTheme: textTheme(),
-    inputDecorationTheme: inputDecorationTheme(),
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
 }
@@ -26,20 +25,7 @@ AppBarTheme appBarTheme() {
     brightness: Brightness.light,
     iconTheme: IconThemeData(color: Colors.black),
     textTheme: TextTheme(
-      headline6: TextStyle(color: Color(0xffD8D8D8), fontSize: 20),
+      headline6: TextStyle(color: Color(0xFF636e72), fontSize: 20),
     ),
-  );
-}
-
-InputDecorationTheme inputDecorationTheme() {
-  OutlineInputBorder outlineInputBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(5),
-      borderSide: BorderSide(color: mTextColor));
-
-  return InputDecorationTheme(
-    contentPadding: EdgeInsets.symmetric(horizontal: 22, vertical: 20),
-    enabledBorder: outlineInputBorder,
-    focusedBorder: outlineInputBorder,
-    border: outlineInputBorder,
   );
 }

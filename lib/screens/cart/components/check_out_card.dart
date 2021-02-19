@@ -1,7 +1,8 @@
 import 'package:e_commerce_app/common/common_func.dart';
 import 'package:e_commerce_app/components/default_button.dart';
 import 'package:e_commerce_app/constants.dart';
-import 'package:e_commerce_app/models/cart.dart';
+import 'package:e_commerce_app/models/cart_item.dart';
+import 'package:e_commerce_app/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -10,12 +11,12 @@ import '../../../size_config.dart';
 class CheckoutCard extends StatelessWidget {
   const CheckoutCard({
     Key key,
-    this.cart,
   }) : super(key: key);
 
-  final Map<String, CartItem> cart;
   @override
   Widget build(BuildContext context) {
+    var cartProvider = context.watch<CartProvider>();
+
     return SafeArea(
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
@@ -49,15 +50,14 @@ class CheckoutCard extends StatelessWidget {
                   ),
                   child: SvgPicture.asset("assets/icons/receipt.svg"),
                 ),
-                SizedBox(height: getProportionateScreenHeight(15)),
+                SizedBox(width: getProportionateScreenHeight(15)),
                 Text.rich(
                   TextSpan(
-                    text: "Total:\n",
                     style: TextStyle(color: mSecondaryColor, fontSize: 16),
                     children: [
+                      TextSpan(text: "Total:\n"),
                       TextSpan(
-                        text:
-                            "${formatNumber(context.watch<Cart>().getPrice())} VNĐ",
+                        text: "${formatNumber(cartProvider.getPrice())}",
                         style: TextStyle(fontSize: 18, color: mPrimaryColor),
                       ),
                     ],

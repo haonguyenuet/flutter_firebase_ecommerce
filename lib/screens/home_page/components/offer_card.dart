@@ -22,7 +22,6 @@ class SpecialOfferCard extends StatelessWidget {
       onTap: handleOnTap,
       child: Container(
         margin: EdgeInsets.only(left: getProportionateScreenWidth(20)),
-        width: getProportionateScreenWidth(242),
         height: getProportionateScreenWidth(100),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
@@ -56,9 +55,6 @@ class SpecialOfferCard extends StatelessWidget {
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
-                      ),
-                      TextSpan(
-                        text: "$numberOfBrands Brands",
                       ),
                     ],
                   ),

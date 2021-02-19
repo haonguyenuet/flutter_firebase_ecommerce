@@ -1,8 +1,5 @@
-import 'package:e_commerce_app/components/custom_suffix_icon.dart';
 import 'package:e_commerce_app/components/default_button.dart';
-import 'package:e_commerce_app/components/form_error.dart';
 import 'package:e_commerce_app/constants.dart';
-import 'package:e_commerce_app/screens/sign_in/sign_in_screen.dart';
 import 'package:e_commerce_app/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import '../../../size_config.dart';
@@ -42,7 +39,6 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         children: [
           buildEmailFormField(),
           SizedBox(height: SizeConfig.screenHeight * 0.02),
-          FormError(errors: _errors),
           SizedBox(height: SizeConfig.screenHeight * 0.02),
           DefaultButton(
             text: "Continue",
@@ -86,13 +82,17 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
       },
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
+        floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: "Email",
         labelStyle: TextStyle(
           fontSize: 20,
         ),
         hintText: "Enter your email",
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSuffixIcon(svgIcon: "assets/icons/Mail.svg"),
+        contentPadding: EdgeInsets.symmetric(horizontal: 22, vertical: 20),
+        focusedBorder: outlineInputBorder(),
+        enabledBorder: outlineInputBorder(),
+        border: outlineInputBorder(),
+        suffixIcon: Icon(Icons.email),
       ),
     );
   }

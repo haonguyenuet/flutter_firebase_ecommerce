@@ -1,14 +1,13 @@
-import 'package:e_commerce_app/screens/authentication/authentication_screen.dart';
-import 'package:e_commerce_app/services/authentication_service.dart';
+import 'package:e_commerce_app/screens/home_page/home_screen.dart';
+import 'package:e_commerce_app/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import '../constants.dart';
 import '../size_config.dart';
-import 'package:provider/provider.dart';
 
-class CustomerBottomNav extends StatelessWidget {
-  const CustomerBottomNav({
+class CustomBottomNav extends StatelessWidget {
+  const CustomBottomNav({
     Key key,
     @required this.selectedMenu,
   }) : super(key: key);
@@ -39,7 +38,13 @@ class CustomerBottomNav extends StatelessWidget {
                     ? mPrimaryColor
                     : mSecondaryColor,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  HomeScreen.routeName,
+                  (_) => false,
+                );
+              },
             ),
             IconButton(
               icon: SvgPicture.asset(
@@ -48,21 +53,20 @@ class CustomerBottomNav extends StatelessWidget {
                     ? mPrimaryColor
                     : mSecondaryColor,
               ),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: SvgPicture.asset(
-                "assets/icons/Log out.svg",
-                color: mSecondaryColor,
-              ),
               onPressed: () {
-                context.read<AuthenticationService>().logOut();
                 Navigator.pushNamedAndRemoveUntil(
                   context,
-                  AuthenticaitonWrapper.routeName,
+                  ProfileScreen.routeName,
                   (_) => false,
                 );
               },
+            ),
+            IconButton(
+              icon: SvgPicture.asset(
+                "assets/icons/message.svg",
+                color: mSecondaryColor,
+              ),
+              onPressed: () {},
             )
           ],
         ),

@@ -1,57 +1,82 @@
-import 'package:e_commerce_app/components/circle_icon_button.dart';
+import 'package:e_commerce_app/models/product.dart';
+import 'package:e_commerce_app/providers/feedback_provider.dart';
+import 'package:e_commerce_app/screens/feedback/feedback_screen.dart';
+import 'package:e_commerce_app/screens/home_page/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:provider/provider.dart';
 import '../../../size_config.dart';
 
 class CustomAppBar extends PreferredSize {
-  final double rating;
+  final Product product;
 
-  CustomAppBar({this.rating});
+  CustomAppBar({@required this.product});
 
   @override
-  // AppBar().preferredSize.height provides us the height that apply on our app bar
+  // AppBar().preferredSize.height provide us the height that appy on our app bar
   Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
-        padding:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CircleIconButton(
-              color: Colors.white,
-              icon: Icon(Icons.arrow_back_sharp),
-              size: getProportionateScreenWidth(40),
-              handleOnPress: () {
-                Navigator.pop(context);
-              },
+            // Back home button
+            SizedBox(
+              height: getProportionateScreenWidth(40),
+              width: getProportionateScreenWidth(40),
+              child: FlatButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                color: Color(0xFFF5F6F9),
+                padding: EdgeInsets.zero,
+                onPressed: () => Navigator.pushReplacementNamed(
+                  context,
+                  HomeScreen.routeName,
+                ),
+                child: SvgPicture.asset(
+                  "assets/icons/Back ICon.svg",
+                  height: 16,
+                ),
+              ),
             ),
-            _rating(),
+            Spacer(),
+
+            /// Rating
+            GestureDetector(
+              onTap: () {
+                context.read<FeedbackProvider>()
+                  ..setProductId(product.id)
+                  ..getFeedbacks();
+                Navigator.pushNamed(context, FeedbackScreen.routeName);
+              },
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
+                decoration: BoxDecoration(
+                  color: Color(0xFFF5F6F9),
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      "${product.rating}",
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(width: 5),
+                    SvgPicture.asset("assets/icons/Star Icon.svg"),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
-      ),
-    );
-  }
-
-  Container _rating() {
-    return Container(
-      height: 35,
-      width: 70,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(rating.toString()),
-          SizedBox(width: 5),
-          SvgPicture.asset("assets/icons/Star Icon.svg"),
-        ],
       ),
     );
   }

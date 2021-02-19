@@ -1,15 +1,15 @@
 import 'package:e_commerce_app/components/default_button.dart';
-import 'package:e_commerce_app/services/authentication_service.dart';
+import 'package:e_commerce_app/providers/authentication_provider.dart';
+import 'package:e_commerce_app/providers/cart_provider.dart';
 import 'package:e_commerce_app/size_config.dart';
 import 'package:e_commerce_app/screens/home_page/home_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final User user = context.watch<AuthenticationService>().getCurrUser();
+    var user = context.watch<AuthenticationProvider>().getCurrentUser();
     return SafeArea(
       child: SizedBox(
         width: double.infinity,
@@ -37,7 +37,12 @@ class Body extends StatelessWidget {
                   child: DefaultButton(
                     text: "Back to home",
                     handleOnPress: () {
-                      Navigator.pushNamed(context, HomeScreen.routeName);
+                      context.read<CartProvider>().getCart();
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        HomeScreen.routeName,
+                        (_) => false,
+                      );
                     },
                   ),
                 )

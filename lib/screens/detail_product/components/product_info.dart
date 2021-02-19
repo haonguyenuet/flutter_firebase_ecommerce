@@ -27,23 +27,22 @@ class _ProductInfoState extends State<ProductInfo> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: getProportionateScreenWidth(20)),
-      width: double.infinity,
       decoration: BoxDecoration(color: Colors.white),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _productName(),
-          SizedBox(height: 2),
           _price(),
-          SizedBox(height: 2),
+          SizedBox(height: 5),
+          _productName(),
+          SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _rating(),
-              _favourite(),
+              _soldQuantity(),
+              _isAvailable(),
             ],
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 30),
           _description(),
           SizedBox(height: 5),
           _seeMore()
@@ -68,51 +67,47 @@ class _ProductInfoState extends State<ProductInfo> {
       padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
       child: Text(
-        "${formatNumber(product.price)} VNĐ",
+        "${formatNumber(product.originalPrice)} VNĐ",
         style: TextStyle(
-          fontSize: 20,
+          fontSize: 24,
           color: mPrimaryColor,
         ),
       ),
     );
   }
 
-  Row _rating() {
-    return Row(
-      children: [
-        SizedBox(width: getProportionateScreenWidth(20)),
-        ...List.generate(5, (index) {
-          return GestureDetector(
-            onTap: () {},
-            child: Container(
-              margin: EdgeInsets.only(right: 5),
-              padding: EdgeInsets.all(5),
-              height: getProportionateScreenWidth(20),
-              width: getProportionateScreenWidth(20),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xFFF5F6F9),
-              ),
-              child: SvgPicture.asset("assets/icons/Star Icon.svg"),
+  Container _soldQuantity() {
+    return Container(
+      padding:
+          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+      child: Text.rich(
+        TextSpan(
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          children: [
+            TextSpan(text: "Đã bán:"),
+            TextSpan(
+              text: " ${product.soldQuantity}",
+              style: TextStyle(fontSize: 16, color: mPrimaryColor),
             ),
-          );
-        })
-      ],
+            TextSpan(text: " sản phẩm"),
+          ],
+        ),
+      ),
     );
   }
 
-  Align _favourite() {
+  Align _isAvailable() {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(horizontal: 15),
         alignment: Alignment.center,
         height: 40,
         decoration: BoxDecoration(
-          color: product.isFavourite ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
+          color: product.isAvailable ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            bottomLeft: Radius.circular(20),
+            topLeft: Radius.circular(25),
+            bottomLeft: Radius.circular(25),
           ),
         ),
         child: Row(
@@ -120,10 +115,10 @@ class _ProductInfoState extends State<ProductInfo> {
             SvgPicture.asset(
               "assets/icons/Check mark rounde.svg",
               color:
-                  product.isFavourite ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
+                  product.isAvailable ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
             ),
             SizedBox(width: 5),
-            Text("${product.isFavourite ? "Còn hàng" : "Hết hàng"}"),
+            Text("${product.isAvailable ? "Còn hàng" : "Hết hàng"}"),
           ],
         ),
       ),
@@ -138,7 +133,7 @@ class _ProductInfoState extends State<ProductInfo> {
       ),
       child: Text(
         product.description,
-        maxLines: seeMore ? null : 3,
+        maxLines: seeMore ? null : 4,
       ),
     );
   }
@@ -154,7 +149,7 @@ class _ProductInfoState extends State<ProductInfo> {
           });
         },
         child: Text(
-          "See more",
+          "${seeMore ? "See less" : "See more"}",
           style: TextStyle(
             color: mPrimaryColor,
             fontWeight: FontWeight.bold,

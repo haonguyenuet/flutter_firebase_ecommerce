@@ -3,7 +3,6 @@ import 'package:e_commerce_app/models/product.dart';
 import 'package:e_commerce_app/screens/detail_product/detail_product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../constants.dart';
 import '../size_config.dart';
 
@@ -27,11 +26,18 @@ class ProductCard extends StatelessWidget {
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        margin: EdgeInsets.symmetric(horizontal: 5),
+        margin: EdgeInsets.only(right: 10, left: 10, bottom: 20),
         width: getProportionateScreenWidth(130),
         decoration: BoxDecoration(
-          border: Border.all(color: mPrimaryColor.withOpacity(0.3)),
+          color: Colors.white,
           borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(0, 10),
+              blurRadius: 10,
+              color: Color(0XFFB0CCE1).withOpacity(0.32),
+            ),
+          ],
         ),
         child: Column(
           children: [
@@ -39,7 +45,7 @@ class ProductCard extends StatelessWidget {
             AspectRatio(
               aspectRatio: 1,
               child: FutureBuilder(
-                future: getProductImage(product: product, index: 0),
+                future: getProductImage(imageURL: product.images[0]),
                 builder: (context, snapshot) {
                   return snapshot.hasData
                       ? Image.network(snapshot.data)
@@ -63,7 +69,7 @@ class ProductCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${formatNumber(product.price)} VNĐ",
+                  "${formatNumber(product.originalPrice)} VNĐ",
                   style: TextStyle(
                     color: mPrimaryColor,
                     fontSize: 14,
@@ -74,20 +80,20 @@ class ProductCard extends StatelessWidget {
                   width: getProportionateScreenWidth(20),
                   height: getProportionateScreenWidth(20),
                   decoration: BoxDecoration(
-                    color: product.isFavourite
+                    color: product.isAvailable
                         ? Color(0xFFFFE6E6)
                         : Color(0xFFF5F6F9),
                     shape: BoxShape.circle,
                   ),
                   child: SvgPicture.asset(
                     "assets/icons/Check mark rounde.svg",
-                    color: product.isFavourite
+                    color: product.isAvailable
                         ? Color(0xFFFF4848)
                         : Colors.black26,
                   ),
                 )
               ],
-            )
+            ),
           ],
         ),
       ),

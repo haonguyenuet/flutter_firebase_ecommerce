@@ -1,43 +1,79 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Product {
+  // Product id
   final String id;
-  final String name, description;
+  // Product name
+  final String name;
+  // Product description
+  final String description;
+  // Product preview images
   final List<dynamic> images;
-  final double rating;
-  final int price;
-  final int quantity;
-  bool isFavourite, isPopular;
-  double totalRates, counterRate;
-  List<String> feedbacks;
-  String type;
+  // Product rating
+  final dynamic rating;
+  final int quantity, soldQuantity, originalPrice;
+  bool isAvailable, isPopular, isSale;
+  final String type;
 
+  // Constructor
   Product({
     @required this.id,
     @required this.images,
-    this.rating = 0.0,
-    this.isFavourite = false,
+    @required this.rating,
+    this.isAvailable = false,
     this.isPopular = false,
+    this.isSale = false,
     @required this.quantity,
     @required this.type,
     @required this.name,
-    @required this.price,
+    @required this.originalPrice,
+    @required this.soldQuantity,
     @required this.description,
   });
 
-  static Product fromDoc(QueryDocumentSnapshot doc) {
-    var data = doc.data();
+  // Json data from server turns into model data
+  static Product fromMap(String id, Map<String, dynamic> data) {
     return Product(
-      id: doc.id,
-      name: data["name"],
-      description: data["desc"],
-      price: data["price"],
-      isFavourite: data["isFavourite"],
-      images: data["images"],
-      type: data["type"],
-      quantity: data["quantity"],
+      id: id,
+      name: data["name"] ?? "Unknown",
+      description: data["desc"] ?? "",
+      originalPrice: data["price"] ?? 0,
+      isAvailable: data["isAvailable"] ?? true,
+      images: data["images"] ?? "",
+      type: data["type"] ?? "",
+      quantity: data["quantity"] ?? 0,
+      rating: data["rating"] ?? 0.0,
+      soldQuantity: data["soldQuantity"] ?? 0,
+    );
+  }
+
+  // Clone and update a product
+  Product cloneWith({
+    id,
+    images,
+    isAvailable,
+    isPopular,
+    isSale,
+    totalRating,
+    numberOfRating,
+    quantity,
+    type,
+    name,
+    originalPrice,
+    soldQuantity,
+    description,
+  }) {
+    return Product(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      originalPrice: originalPrice ?? this.originalPrice,
+      isAvailable: isAvailable ?? this.isAvailable,
+      images: images ?? this.images,
+      type: type ?? this.type,
+      quantity: quantity ?? this.quantity,
+      rating: rating ?? this.rating,
+      soldQuantity: soldQuantity ?? this.soldQuantity,
     );
   }
 }
-// // Our demo Products

@@ -1,14 +1,11 @@
-import 'package:e_commerce_app/blocs/sign_in/sign_in_bloc.dart';
-import 'package:e_commerce_app/blocs/sign_in/sign_in_event.dart';
-import 'package:e_commerce_app/blocs/sign_in/sign_in_state.dart';
-import 'package:e_commerce_app/components/custom_suffix_icon.dart';
+import 'package:e_commerce_app/common/validate_function.dart';
 import 'package:e_commerce_app/components/default_button.dart';
 import 'package:e_commerce_app/constants.dart';
+import 'package:e_commerce_app/providers/authentication_provider.dart';
 import 'package:e_commerce_app/screens/forgot_password/forgot_password_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:formz/formz.dart';
+import 'package:provider/provider.dart';
 import '../../../size_config.dart';
 
 class SignInForm extends StatefulWidget {
@@ -18,168 +15,137 @@ class SignInForm extends StatefulWidget {
 
 class _SignInFormState extends State<SignInForm> {
   // init states
-  bool _isRememberMe = false;
+  String email = "";
+  String password = "";
+  String emailError;
+  String passwordError;
+  bool isShowPassword = false;
+
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SignInBloc, SignInState>(
-      listener: (context, signInState) {
-        if (signInState.status.isSubmissionFailure) {
-          Scaffold.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              const SnackBar(content: Text('Authentication Failure')),
-            );
-        }
-      },
-      child: Column(
-        children: [
-          _EmailInput(),
-          SizedBox(height: SizeConfig.screenHeight * 0.02),
-          _PasswordInput(),
-          SizedBox(height: SizeConfig.screenHeight * 0.02),
-          Row(
-            children: [
-              Checkbox(
-                value: _isRememberMe,
-                onChanged: (value) {
-                  setState(() {
-                    _isRememberMe = value;
-                  });
-                },
-              ),
-              Text(
-                "Remember me",
-                style: TextStyle(color: mSecondaryColor),
-              ),
-              Spacer(),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, ForgotPasswordScreen.routeName);
-                },
-                child: Text(
-                  "Forgot password",
-                  style: TextStyle(
-                    color: mSecondaryColor,
-                    fontSize: 16,
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ),
-            ],
+    return Column(
+      children: [
+        buildEmailInput(),
+        SizedBox(height: SizeConfig.screenHeight * 0.02),
+        buildPasswordInput(),
+        SizedBox(height: SizeConfig.screenHeight * 0.02),
+        Center(
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, ForgotPasswordScreen.routeName);
+            },
+            child: Text(
+              "Forgot password?",
+              style: TextStyle(color: mSecondaryColor, fontSize: 16),
+            ),
           ),
-          SizedBox(height: SizeConfig.screenHeight * 0.01),
-          _SignInButton(),
-          SizedBox(height: SizeConfig.screenHeight * 0.01),
-          _SignInWithGoogle(),
-        ],
+        ),
+        SizedBox(height: SizeConfig.screenHeight * 0.01),
+        buildSignInButton(),
+        SizedBox(height: SizeConfig.screenHeight * 0.01),
+        buildSignInWithGoogle(),
+      ],
+    );
+  }
+
+  TextField buildEmailInput() {
+    return TextField(
+      onChanged: (value) {
+        setState(() {
+          email = value;
+          emailError = validateEmail(value);
+        });
+      },
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        labelText: "Email",
+        labelStyle: TextStyle(
+          fontSize: 18,
+        ),
+        hintText: "Enter your email",
+        errorText: emailError,
+        contentPadding: EdgeInsets.symmetric(horizontal: 22, vertical: 20),
+        focusedBorder: outlineInputBorder(),
+        enabledBorder: outlineInputBorder(),
+        border: outlineInputBorder(),
+        suffixIcon: Icon(Icons.email_outlined),
       ),
     );
   }
-}
 
-class _EmailInput extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<SignInBloc, SignInState>(
-        buildWhen: (preState, currState) => preState.email != currState.email,
-        builder: (context, signInState) {
-          return TextField(
-            onChanged: (email) => BlocProvider.of<SignInBloc>(context)
-                .add(SignInEmailChanged(email)),
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-              labelText: "Email",
-              labelStyle: TextStyle(
-                fontSize: 20,
-              ),
-              hintText: "Enter your email",
-              errorText: signInState.email.invalid ? "Invalid email" : null,
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              suffixIcon: Icon(Icons.email_outlined),
-            ),
-          );
+  TextField buildPasswordInput() {
+    return TextField(
+      onChanged: (value) {
+        setState(() {
+          password = value;
+          passwordError = validatePassword(value);
         });
-  }
-}
-
-class _PasswordInput extends StatefulWidget {
-  @override
-  __PasswordInputState createState() => __PasswordInputState();
-}
-
-class __PasswordInputState extends State<_PasswordInput> {
-  // init states
-  bool isShowPassword = false;
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<SignInBloc, SignInState>(
-      buildWhen: (preState, currState) =>
-          preState.password != currState.password,
-      builder: (context, signInState) {
-        return TextField(
-          onChanged: (password) => BlocProvider.of<SignInBloc>(context)
-              .add(SignInPasswordChanged(password)),
-          obscureText: isShowPassword ? false : true,
-          decoration: InputDecoration(
-            labelText: "Password",
-            labelStyle: TextStyle(
-              fontSize: 20,
-            ),
-            hintText: "Enter your password",
-            errorText: signInState.password.invalid ? "Invalid password" : null,
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            suffixIcon: IconButton(
-              icon: isShowPassword
-                  ? Icon(Icons.visibility)
-                  : Icon(Icons.visibility_off),
-              onPressed: () {
-                setState(() {
-                  isShowPassword = !isShowPassword;
-                });
-              },
-            ),
-          ),
-        );
       },
+      obscureText: isShowPassword ? false : true,
+      decoration: InputDecoration(
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        labelText: "Password",
+        labelStyle: TextStyle(
+          fontSize: 18,
+        ),
+        hintText: "Enter your password",
+        errorText: passwordError,
+        contentPadding: EdgeInsets.symmetric(horizontal: 22, vertical: 20),
+        focusedBorder: outlineInputBorder(),
+        enabledBorder: outlineInputBorder(),
+        border: outlineInputBorder(),
+        suffixIcon: IconButton(
+          icon: isShowPassword
+              ? Icon(Icons.visibility)
+              : Icon(Icons.visibility_off),
+          onPressed: () {
+            setState(() {
+              isShowPassword = !isShowPassword;
+            });
+          },
+        ),
+      ),
     );
   }
-}
 
-class _SignInButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<SignInBloc, SignInState>(
-      buildWhen: (preState, currState) => preState.status != currState.status,
-      builder: (context, signInState) {
-        return signInState.status.isSubmissionInProgress
-            ? const CircularProgressIndicator()
-            : DefaultButton(
-                text: "Sign In",
-                handleOnPress: signInState.status.isValidated
-                    ? () => BlocProvider.of<SignInBloc>(context)
-                        .add(SignInWithCredentials())
-                    : () {},
-              );
-      },
-    );
+  Widget buildSignInButton() {
+    var authenticationStatus = context.watch<AuthenticationProvider>().status;
+    return authenticationStatus == Status.Authenticating
+        ? CircularProgressIndicator()
+        : DefaultButton(
+            text: "Sign In",
+            handleOnPress: () async {
+              if (isValidated()) {
+                var result = await context
+                    .read<AuthenticationProvider>()
+                    .logInWithEmailAndPassword(
+                      email: email,
+                      password: password,
+                    );
+                if (result.isSuccess == false) {
+                  Scaffold.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(
+                      SnackBar(content: Text('${result.message}')),
+                    );
+                }
+              }
+            },
+          );
   }
-}
 
-class _SignInWithGoogle extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
+  GestureDetector buildSignInWithGoogle() {
     return GestureDetector(
       onTap: () {
-        BlocProvider.of<SignInBloc>(context).add(SignInWithGoogle());
+        context.read<AuthenticationProvider>().logInWithGoogle();
       },
       child: Container(
         height: getProportionateScreenHeight(56),
         width: double.infinity,
         padding:
             EdgeInsets.symmetric(vertical: getProportionateScreenHeight(12)),
-        decoration: BoxDecoration(
-          color: Color(0xffF5F6F9),
-        ),
+        decoration: BoxDecoration(color: Color(0xffF5F6F9)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -190,5 +156,13 @@ class _SignInWithGoogle extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  /// Inputs is validated or not
+  bool isValidated() {
+    return emailError == null &&
+        passwordError == null &&
+        email.isNotEmpty &&
+        password.isNotEmpty;
   }
 }

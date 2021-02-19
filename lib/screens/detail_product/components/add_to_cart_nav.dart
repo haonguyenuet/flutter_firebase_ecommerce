@@ -1,5 +1,7 @@
-import 'package:e_commerce_app/models/cart.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce_app/models/cart_item.dart';
 import 'package:e_commerce_app/models/product.dart';
+import 'package:e_commerce_app/providers/cart_provider.dart';
 import 'package:e_commerce_app/screens/cart/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/constants.dart';
@@ -19,11 +21,13 @@ class AddToCartNavigation extends StatefulWidget {
 
 class _AddToCartNavigationState extends State<AddToCartNavigation> {
   Product get product => widget.product;
+  FirebaseFirestore _db = FirebaseFirestore.instance;
   // init states
   int quantity = 1;
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(2),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [BoxShadow(offset: Offset(0.15, 0.4), color: Colors.black)],
@@ -43,7 +47,7 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        /// Button decreses the quantity of product
+        /// Button decreases the quantity of product
         Container(
           height: 60,
           width: 60,
@@ -71,7 +75,7 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
           ),
         ),
 
-        /// Button increses the quantity of product
+        /// Button increases the quantity of product
         Container(
           height: 60,
           width: 60,
@@ -101,12 +105,13 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
             ? () {
                 // create new cart item
                 CartItem cartItem = CartItem(
+                  cid: product.id,
                   pid: product.id,
-                  product: product,
-                  numberOfItems: quantity,
+                  price: product.originalPrice * quantity,
+                  quantity: quantity,
                 );
                 // add new cart item to cart
-                context.read<Cart>().addItem(cartItem);
+                context.read<CartProvider>().addItem(cartItem);
                 // go to cart screen
                 Navigator.pushNamed(context, CartScreen.routeName);
               }

@@ -5,9 +5,9 @@ import 'package:meta/meta.dart';
 ///
 /// [User.empty] represents an unauthenticated user.
 /// {@endtemplate}
-class User extends Equatable {
+class UserModel extends Equatable {
   /// {@macro user}
-  const User({
+  const UserModel({
     @required this.email,
     @required this.id,
     this.name,
@@ -27,9 +27,25 @@ class User extends Equatable {
   /// Url for the current user's photo.
   final String avatar;
 
-  /// Empty user which represents an unauthenticated user.
-  static const empty = User(email: '', id: '', name: null, avatar: null);
-
   @override
   List<Object> get props => [email, id, name, avatar];
+
+  static UserModel fromMap(String id, Map<String, dynamic> data) {
+    return UserModel(
+      id: id,
+      name: data["name"] ?? "",
+      avatar: data["avatar"] ?? "",
+      email: data["email"] ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> userData = {
+      "id": this.id,
+      "email": this.email,
+      "name": this.name,
+      "avatar": this.avatar,
+    };
+    return userData;
+  }
 }

@@ -1,9 +1,9 @@
-import 'package:e_commerce_app/models/cart.dart';
-import 'package:e_commerce_app/models/product.dart';
+import 'package:e_commerce_app/providers/authentication_provider.dart';
+import 'package:e_commerce_app/providers/cart_provider.dart';
+import 'package:e_commerce_app/providers/feedback_provider.dart';
+import 'package:e_commerce_app/providers/product_provider.dart';
 import 'package:e_commerce_app/routes.dart';
 import 'package:e_commerce_app/screens/splash/splash_screen.dart';
-import 'package:e_commerce_app/services/authentication_service.dart';
-import 'package:e_commerce_app/services/firestore_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -23,13 +23,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<AuthenticationService>(create: (_) => AuthenticationService()),
-        StreamProvider<List<Product>>(
-          create: (context) => FirestoreService().getProducts(),
+        ChangeNotifierProvider(
+          create: (_) => AuthenticationProvider.instance(),
         ),
-        ChangeNotifierProvider<Cart>(
-          create: (context) => Cart(),
-        )
+        ChangeNotifierProvider(create: (context) => ProductProvider()),
+        ChangeNotifierProvider(create: (context) => CartProvider()),
+        ChangeNotifierProvider(create: (context) => FeedbackProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

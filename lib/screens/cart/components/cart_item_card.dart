@@ -1,7 +1,12 @@
 import 'package:e_commerce_app/common/common_func.dart';
-import 'package:e_commerce_app/models/cart.dart';
+import 'package:e_commerce_app/components/circle_icon_button.dart';
+import 'package:e_commerce_app/models/cart_item.dart';
+import 'package:e_commerce_app/models/product.dart';
+import 'package:e_commerce_app/providers/cart_provider.dart';
+import 'package:e_commerce_app/providers/product_provider.dart';
+import 'package:e_commerce_app/screens/detail_product/detail_product_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
@@ -15,64 +20,141 @@ class CartItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        height: getProportionateScreenHeight(130),
-        decoration: BoxDecoration(
-          color: Color(0xFFF5F6F9),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Row(
-          children: [
-            /// CartItem image
-            AspectRatio(
-              aspectRatio: 1,
-              child: Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(10),
-                child: FutureBuilder(
-                  future: getProductImage(product: cartItem.product, index: 0),
-                  builder: (context, snapshot) {
-                    return snapshot.hasData
-                        ? Image.network(snapshot.data)
-                        : CircularProgressIndicator();
-                  },
-                ),
-              ),
-            ),
-            SizedBox(width: getProportionateScreenWidth(10)),
-
-            /// CartItem Info
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${cartItem.product.name}",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+    return FutureBuilder(
+      future: context.watch<ProductProvider>().getProductById(cartItem.pid),
+      builder: (context, snapshot) {
+        Product product = snapshot.data;
+        return snapshot.hasData
+            ? GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    DetailProductScreen.routeName,
+                    arguments: DetailProductArgument(product: product),
+                  );
+                },
+                child: Container(
+                  margin: EdgeInsets.all(10),
+                  height: getProportionateScreenHeight(130),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(3, 4),
+                        blurRadius: 10,
+                        color: Color(0XFFB0CCE1).withOpacity(0.4),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 5),
-                  Text.rich(
-                    TextSpan(
-                      text: "${formatNumber(cartItem.product.price)} VNĐ",
-                      style: TextStyle(color: mPrimaryColor, fontSize: 17),
-                      children: [
-                        TextSpan(
-                          text: " x ${cartItem.numberOfItems}",
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
+                  child: Row(
+                    children: [
+                      _buildCartItemImage(product),
+                      SizedBox(width: getProportionateScreenWidth(10)),
+                      Expanded(
+                        child: buildCartItemInfo(product, context),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            : Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+
+  // CartItem image
+  AspectRatio _buildCartItemImage(Product product) {
+    return AspectRatio(
+      aspectRatio: 1,
+      child: Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.all(10),
+        child: FutureBuilder(
+          future: getProductImage(imageURL: product.images[0]),
+          builder: (context, snapshot) {
+            return snapshot.hasData
+                ? Image.network(snapshot.data)
+                : CircularProgressIndicator();
+          },
         ),
       ),
+    );
+  }
+
+  // CartItem Info
+  Column buildCartItemInfo(Product product, BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Name
+        Text(
+          "${product.name}",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 5),
+        // Cart item price
+        Text(
+          "${formatNumber(product.originalPrice)} VNĐ",
+          style: TextStyle(color: mPrimaryColor, fontSize: 17),
+        ),
+        SizedBox(height: 5),
+
+        _buildCartItemQuantity(product, context)
+      ],
+    );
+  }
+
+  // Cart item quantity
+  Row _buildCartItemQuantity(Product product, BuildContext context) {
+    return Row(
+      children: [
+        CircleIconButton(
+          icon: Icon(Icons.remove),
+          color: Color(0xFFF5F6F9).withOpacity(0.7),
+          size: getProportionateScreenWidth(30),
+          handleOnPress: cartItem.quantity > 1
+              ? () {
+                  var newQuantity = cartItem.quantity - 1;
+                  var newPrice = newQuantity * product.originalPrice;
+                  context.read<CartProvider>().updateCartItem(
+                        cartItem.cloneWith(
+                          quantity: newQuantity,
+                          price: newPrice,
+                        ),
+                      );
+                }
+              : () {},
+        ),
+        const SizedBox(width: 10),
+        Text(
+          "${cartItem.quantity}",
+          style: TextStyle(
+            color: mPrimaryColor,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(width: 10),
+        CircleIconButton(
+          icon: Icon(Icons.add),
+          color: Color(0xFFF5F6F9).withOpacity(0.7),
+          size: getProportionateScreenWidth(30),
+          handleOnPress: cartItem.quantity < product.quantity
+              ? () {
+                  var newQuantity = cartItem.quantity + 1;
+                  var newPrice = newQuantity * product.originalPrice;
+                  context.read<CartProvider>().updateCartItem(
+                        cartItem.cloneWith(
+                          quantity: newQuantity,
+                          price: newPrice,
+                        ),
+                      );
+                }
+              : () {},
+        )
+      ],
     );
   }
 }

@@ -1,8 +1,8 @@
 import 'package:e_commerce_app/models/product.dart';
 import 'package:e_commerce_app/screens/detail_product/components/body.dart';
+import 'package:e_commerce_app/screens/detail_product/components/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'components/add_to_cart_nav.dart';
-import 'components/custom_appbar.dart';
 
 class DetailProductScreen extends StatelessWidget {
   static String routeName = "/detail_procduct";
@@ -11,9 +11,9 @@ class DetailProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final DetailProductArgument arguments =
         ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
-      backgroundColor: Color(0xFFF5F6F9),
-      appBar: CustomAppBar(rating: arguments.product.rating),
+      appBar: CustomAppBar(product: arguments.product),
       body: Body(product: arguments.product),
       bottomNavigationBar: AddToCartNavigation(product: arguments.product),
     );

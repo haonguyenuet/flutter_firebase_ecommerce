@@ -17,14 +17,15 @@ class DefaultButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: getProportionateScreenHeight(56),
+      height: getProportionateScreenHeight(50),
       child: FlatButton(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         color: mPrimaryColor,
         child: Text(
           text,
           style: TextStyle(
             color: Colors.white,
-            fontSize: getProportionateScreenWidth(18),
+            fontSize: getProportionateScreenWidth(16),
             fontWeight: FontWeight.bold,
           ),
         ),
