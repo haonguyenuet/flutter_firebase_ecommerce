@@ -18,7 +18,8 @@ class FeedbackProvider with ChangeNotifier {
     _feedbackService = FeedbackService(pid: pid);
   }
 
-  // Get feedbacks
+  /// Get feedbacks
+  /// Created by NDH
   void getFeedbacks({int star = 0}) async {
     // default star = 0, if star = 0 then get all feedbacks
     if (star == 0) {
@@ -35,7 +36,8 @@ class FeedbackProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // Add item
+  /// Add item
+  /// Created by NDH
   void addItem(FeedbackItem newItem) async {
     addNewItem = true;
     await _feedbackService.addNewFeedback(newItem);
@@ -43,7 +45,8 @@ class FeedbackProvider with ChangeNotifier {
     this.getFeedbacks();
   }
 
-  // Get average rating
+  /// Get average rating
+  /// Created by NDH
   double getAverageRating() {
     int totalRating = 0;
     int numberOfRating = _feedbacks.length;
@@ -53,10 +56,9 @@ class FeedbackProvider with ChangeNotifier {
     return numberOfRating > 0 ? totalRating / numberOfRating : 0.0;
   }
 
-  // Get feedbacks
+  /// Getter
+  /// Created by NDH
   List<FeedbackItem> get feedbacks => _feedbacks;
-  // Get average rating
   double get averageRating => _averageRating;
-  // Get numberOfFeedbacks
   int get numberOfFeedbacks => _feedbacks.length;
 }

@@ -7,8 +7,7 @@ class ProductService extends IProductService {
   final CollectionReference productCollection =
       FirebaseFirestore.instance.collection("products");
 
-  /// Collection products
-  // Get all products
+  /// Get all products
   @override
   Future<List<Product>> getProducts() async {
     try {
@@ -21,25 +20,19 @@ class ProductService extends IProductService {
     return null;
   }
 
-  // Get products by category
+  /// Get products by category
   @override
-  Future<List<Product>> getProductsByCategory({Category category}) async {
-    try {
-      return await productCollection
-          .where("type", isEqualTo: category.id)
-          .get()
-          .then(
-            (snapshot) => snapshot.docs
-                .map((doc) => Product.fromMap(doc.id, doc.data()))
-                .toList(),
-          );
-    } catch (e) {
-      print(e);
-    }
-    return null;
+  Future<List<Product>> getProductsByCategory(Category category) async {
+    return await productCollection
+        .where("categoryId", isEqualTo: category.cid)
+        .get()
+        .then((snapshot) => snapshot.docs
+            .map((doc) => Product.fromMap(doc.id, doc.data()))
+            .toList())
+        .catchError((error) => print(error));
   }
 
-  // Get product by Id
+  /// Get product by Id
   @override
   Future<Product> getProductById(String pid) async {
     return await productCollection
@@ -49,7 +42,7 @@ class ProductService extends IProductService {
         .catchError((error) => print(error));
   }
 
-  // Update product rating
+  /// Update product rating
   Future<void> updateProductRatingById(String pid, double rating) async {
     return await productCollection
         .doc(pid)

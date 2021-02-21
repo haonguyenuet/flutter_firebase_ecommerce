@@ -26,7 +26,7 @@ class Body extends StatelessWidget {
               ),
               SizedBox(height: SizeConfig.screenHeight * 0.04),
               SignInForm(),
-              SizedBox(height: SizeConfig.screenHeight * 0.01),
+              SizedBox(height: SizeConfig.screenHeight * 0.03),
               NoAccountText(),
             ],
           ),

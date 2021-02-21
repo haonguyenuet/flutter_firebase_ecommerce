@@ -6,6 +6,7 @@ import 'package:e_commerce_app/providers/cart_provider.dart';
 import 'package:e_commerce_app/providers/product_provider.dart';
 import 'package:e_commerce_app/screens/detail_product/detail_product_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -58,7 +59,12 @@ class CartItemCard extends StatelessWidget {
                   ),
                 ),
               )
-            : Center(child: CircularProgressIndicator());
+            // Loading
+            : Container(
+                alignment: Alignment.center,
+                height: getProportionateScreenHeight(130),
+                child: SpinKitCircle(color: mPrimaryColor),
+              );
       },
     );
   }
@@ -75,7 +81,7 @@ class CartItemCard extends StatelessWidget {
           builder: (context, snapshot) {
             return snapshot.hasData
                 ? Image.network(snapshot.data)
-                : CircularProgressIndicator();
+                : SpinKitCircle(color: mPrimaryColor);
           },
         ),
       ),
@@ -110,6 +116,7 @@ class CartItemCard extends StatelessWidget {
   Row _buildCartItemQuantity(Product product, BuildContext context) {
     return Row(
       children: [
+        // decrease button
         CircleIconButton(
           icon: Icon(Icons.remove),
           color: Color(0xFFF5F6F9).withOpacity(0.7),
@@ -128,6 +135,7 @@ class CartItemCard extends StatelessWidget {
               : () {},
         ),
         const SizedBox(width: 10),
+        // quantity
         Text(
           "${cartItem.quantity}",
           style: TextStyle(
@@ -137,6 +145,7 @@ class CartItemCard extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 10),
+        // increase button
         CircleIconButton(
           icon: Icon(Icons.add),
           color: Color(0xFFF5F6F9).withOpacity(0.7),

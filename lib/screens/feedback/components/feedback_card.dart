@@ -22,7 +22,7 @@ class FeedbackCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border(bottom: BorderSide(color: Color(0xFFF5F6F9), width: 1)),
+        border: Border(top: BorderSide(color: Color(0xFFF5F6F9), width: 4)),
       ),
       padding: EdgeInsets.symmetric(
         horizontal: getProportionateScreenWidth(20),
@@ -39,15 +39,10 @@ class FeedbackCard extends StatelessWidget {
               return snapshot.hasData
                   ? Row(
                       children: [
-                        // user avatar
-                        Container(
-                          width: 40,
-                          height: 40,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child:
-                                Image.asset("assets/images/default_avatar.jpg"),
-                          ),
+                        CircleAvatar(
+                          backgroundImage: user.avatar.isNotEmpty
+                              ? NetworkImage(user.avatar)
+                              : AssetImage("assets/images/default_avatar.jpg"),
                         ),
                         // user email or user name
                         const SizedBox(width: 10),
@@ -59,6 +54,7 @@ class FeedbackCard extends StatelessWidget {
                     );
             },
           ),
+          const SizedBox(height: 10),
 
           /// Rating
           RatingBar.builder(
@@ -86,7 +82,7 @@ class FeedbackCard extends StatelessWidget {
 
           /// Feedback create date
           Text(
-            "Nhận xét vào ngày ${formatTimeStamp(feedbackItem.timestamp)}",
+            "${formatTimeStamp(feedbackItem.timestamp)}",
             style: TextStyle(
               fontSize: 13,
             ),

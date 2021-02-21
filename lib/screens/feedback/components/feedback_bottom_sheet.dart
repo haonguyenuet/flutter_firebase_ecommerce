@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
+import '../../../constants.dart';
+
 class FeedbackBottomSheet extends StatefulWidget {
   const FeedbackBottomSheet({
     Key key,
@@ -18,18 +20,12 @@ class FeedbackBottomSheet extends StatefulWidget {
 class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
   // init states
   int rating = 5;
-  var contentController = TextEditingController();
+  String _content = "";
 
   void close() {
     if (Navigator.canPop(context)) {
       Navigator.pop(context);
     }
-  }
-
-  @override
-  void dispose() {
-    contentController.dispose();
-    super.dispose();
   }
 
   @override
@@ -40,6 +36,42 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            /// Header
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                InkWell(
+                  child: Icon(Icons.close),
+                  onTap: () {
+                    close();
+                  },
+                ),
+                Text(
+                  'Filter',
+                  style: TextStyle(fontSize: 16),
+                ),
+                InkWell(
+                  child: Text(
+                    'Done',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(color: mPrimaryColor, fontSize: 16),
+                  ),
+                  onTap: () {
+                    FeedbackItem newFeedback = FeedbackItem(
+                      fid: UniqueKey().toString(),
+                      uid: context.read<AuthenticationProvider>().loggedUser.id,
+                      rating: rating,
+                      content: _content,
+                    );
+                    // add new feedback
+                    context.read<FeedbackProvider>().addItem(newFeedback);
+                    close();
+                  },
+                )
+              ],
+            ),
+
             /// Comment
             Container(
               padding: const EdgeInsets.only(top: 20),
@@ -63,7 +95,9 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: TextField(
-                      controller: contentController,
+                      onChanged: (value) => setState(() {
+                        _content = value;
+                      }),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(horizontal: 15),
                         border: InputBorder.none,
@@ -106,25 +140,6 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
                 ],
               ),
             ),
-
-            /// Apply button
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: DefaultButton(
-                handleOnPress: () {
-                  FeedbackItem newFeedback = FeedbackItem(
-                    fid: UniqueKey().toString(),
-                    uid: context.read<AuthenticationProvider>().user.uid,
-                    rating: rating,
-                    content: contentController.text,
-                  );
-                  // add new feedback
-                  context.read<FeedbackProvider>().addItem(newFeedback);
-                  close();
-                },
-                text: "Apply",
-              ),
-            )
           ],
         ),
       ),

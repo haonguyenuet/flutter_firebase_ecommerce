@@ -1,7 +1,9 @@
 import 'package:e_commerce_app/models/category.dart';
+import 'package:e_commerce_app/providers/category_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../constants.dart';
+import 'package:provider/provider.dart';
 
 class CategoryList extends StatefulWidget {
   final Function(Category) onSelect;
@@ -35,17 +37,20 @@ class _FilterListState extends State<CategoryList> {
 
   @override
   Widget build(BuildContext context) {
+    var categories = context.watch<CategoryProvider>().categories;
     return Column(
-      children: categories.map((c) {
-        return CategoryItem(
-          iconPath: c.icon,
-          title: c.name,
-          isSelected: this.selectedCategory.id == c.id,
-          onTap: () {
-            toggle(c);
-          },
-        );
-      }).toList(),
+      children: [
+        ...List.generate(categories.length, (index) {
+          return CategoryItem(
+            iconPath: categories[index].iconPath,
+            title: categories[index].name,
+            isSelected: this.selectedCategory.cid == categories[index].cid,
+            onTap: () {
+              toggle(categories[index]);
+            },
+          );
+        })
+      ],
     );
   }
 }

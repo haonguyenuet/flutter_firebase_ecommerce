@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/common/common_func.dart';
 import 'package:e_commerce_app/models/product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -37,7 +38,7 @@ class _ProductImagesState extends State<ProductImages> {
                   builder: (context, snapshot) {
                     return (snapshot.hasData)
                         ? Image.network(snapshot.data)
-                        : CircularProgressIndicator();
+                        : SpinKitCircle(color: mPrimaryColor);
                   },
                 ),
               );

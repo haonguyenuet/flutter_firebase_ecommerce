@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/common/validate_function.dart';
 import 'package:e_commerce_app/components/default_button.dart';
 import 'package:e_commerce_app/providers/authentication_provider.dart';
+import 'package:e_commerce_app/screens/authentication/authentication_screen.dart';
 import 'package:flutter/material.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -55,8 +56,6 @@ class _SignUpFormState extends State<SignUpForm> {
         hintText: "Enter your email",
         errorText: emailError,
         contentPadding: EdgeInsets.symmetric(horizontal: 22, vertical: 20),
-        focusedBorder: outlineInputBorder(),
-        enabledBorder: outlineInputBorder(),
         border: outlineInputBorder(),
         suffixIcon: Icon(Icons.email_outlined),
       ),
@@ -81,8 +80,6 @@ class _SignUpFormState extends State<SignUpForm> {
         hintText: "Enter your password",
         errorText: passwordError,
         contentPadding: EdgeInsets.symmetric(horizontal: 22, vertical: 20),
-        focusedBorder: outlineInputBorder(),
-        enabledBorder: outlineInputBorder(),
         border: outlineInputBorder(),
         suffixIcon: IconButton(
           icon: isShowPassword
@@ -116,8 +113,6 @@ class _SignUpFormState extends State<SignUpForm> {
         hintText: "Enter your password",
         errorText: confirmedPasswordError,
         contentPadding: EdgeInsets.symmetric(horizontal: 22, vertical: 20),
-        focusedBorder: outlineInputBorder(),
-        enabledBorder: outlineInputBorder(),
         border: outlineInputBorder(),
         suffixIcon: IconButton(
           icon: isShowConfirmedPassword
@@ -134,26 +129,25 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
   Widget buildSignUpButton() {
-    var authenticationStatus = context.watch<AuthenticationProvider>().status;
-    return authenticationStatus == Status.Authenticating
-        ? CircularProgressIndicator()
-        : DefaultButton(
-            text: "Sign Up",
-            handleOnPress: () async {
-              if (isValidated()) {
-                var result = await context
-                    .read<AuthenticationProvider>()
-                    .signUp(email: email, password: password);
-                if (result.isSuccess == false) {
-                  Scaffold.of(context)
-                    ..hideCurrentSnackBar()
-                    ..showSnackBar(
-                      SnackBar(content: Text('${result.message}')),
-                    );
-                }
-              }
-            },
-          );
+    return DefaultButton(
+      text: "Sign Up",
+      handleOnPress: () async {
+        if (isValidated()) {
+          var result = await context
+              .read<AuthenticationProvider>()
+              .signUp(email: email, password: password);
+          if (result.isSuccess == false) {
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(content: Text('${result.message}')),
+              );
+            return;
+          }
+          Navigator.pushNamed(context, AuthenticationWrapper.routeName);
+        }
+      },
+    );
   }
 
   /// Inputs is validated or not

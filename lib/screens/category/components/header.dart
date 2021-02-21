@@ -1,6 +1,6 @@
 import 'package:e_commerce_app/components/cart_button.dart';
 import 'package:e_commerce_app/providers/cart_provider.dart';
-import 'package:e_commerce_app/providers/category_filter.dart';
+import 'package:e_commerce_app/providers/product_provider.dart';
 import 'package:e_commerce_app/screens/category/components/action_button.dart';
 import 'package:flutter/material.dart';
 import 'filter_category_bottom_sheet.dart';
@@ -9,9 +9,7 @@ import 'package:provider/provider.dart';
 class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var cart = context.watch<CartProvider>().cart ?? [];
-    var currentCategory =
-        context.watch<CategoryFilterProvider>().currentCategory;
+    var _currentCategory = context.watch<ProductProvider>().filterCategory;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       decoration: BoxDecoration(
@@ -41,26 +39,30 @@ class Header extends StatelessWidget {
               ),
               // Title
               Text(
-                currentCategory.name,
+                "Danh sách sản phẩm",
                 style: TextStyle(fontSize: 18),
               ),
               // Cart Button
-              CartButton(counter: cart.length),
+              CartButton(counter: context.watch<CartProvider>().number0fItems),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ActionButton(
-                name: "Filter",
-                iconPath: "assets/icons/controls.svg",
-                handleOnTap: () => _settingFilterCategoryBottomSheet(context),
+              Expanded(
+                child: ActionButton(
+                  name: "${_currentCategory.name}",
+                  iconPath: "assets/icons/controls.svg",
+                  handleOnTap: () => _settingFilterCategoryBottomSheet(context),
+                ),
               ),
               VerticalSeparator(),
-              ActionButton(
-                name: "Sort",
-                iconPath: "assets/icons/sort.svg",
+              Expanded(
+                child: ActionButton(
+                  name: "Sort",
+                  iconPath: "assets/icons/sort.svg",
+                ),
               )
             ],
           )
@@ -71,8 +73,6 @@ class Header extends StatelessWidget {
 }
 
 void _settingFilterCategoryBottomSheet(context) {
-  var categoryFilterProvider =
-      Provider.of<CategoryFilterProvider>(context, listen: false);
   showModalBottomSheet(
     isScrollControlled: true,
     backgroundColor: Colors.white,
@@ -84,10 +84,7 @@ void _settingFilterCategoryBottomSheet(context) {
     ),
     context: context,
     builder: (BuildContext context) {
-      return ChangeNotifierProvider.value(
-        value: categoryFilterProvider,
-        child: FilterCategoryBottomSheet(),
-      );
+      return FilterCategoryBottomSheet();
     },
   );
 }

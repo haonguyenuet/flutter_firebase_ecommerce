@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
 
+/// Product model
 class Product {
-  // Product id
+  /// Product id
   final String id;
-  // Product name
+
+  /// Category id
+  final String categoryId;
+
+  /// Product name
   final String name;
-  // Product description
+
+  /// Product description
   final String description;
-  // Product preview images
+
+  /// Product preview images
   final List<dynamic> images;
-  // Product rating
+
+  /// Product rating
   final dynamic rating;
   final int quantity, soldQuantity, originalPrice;
   bool isAvailable, isPopular, isSale;
-  final String type;
 
-  // Constructor
+  /// Constructor
   Product({
     @required this.id,
     @required this.images,
@@ -24,14 +31,14 @@ class Product {
     this.isPopular = false,
     this.isSale = false,
     @required this.quantity,
-    @required this.type,
+    @required this.categoryId,
     @required this.name,
     @required this.originalPrice,
     @required this.soldQuantity,
     @required this.description,
   });
 
-  // Json data from server turns into model data
+  /// Json data from server turns into model data
   static Product fromMap(String id, Map<String, dynamic> data) {
     return Product(
       id: id,
@@ -40,16 +47,17 @@ class Product {
       originalPrice: data["price"] ?? 0,
       isAvailable: data["isAvailable"] ?? true,
       images: data["images"] ?? "",
-      type: data["type"] ?? "",
+      categoryId: data["categoryId"] ?? "",
       quantity: data["quantity"] ?? 0,
       rating: data["rating"] ?? 0.0,
       soldQuantity: data["soldQuantity"] ?? 0,
     );
   }
 
-  // Clone and update a product
+  /// Clone and update a product
   Product cloneWith({
     id,
+    categoryId,
     images,
     isAvailable,
     isPopular,
@@ -57,7 +65,6 @@ class Product {
     totalRating,
     numberOfRating,
     quantity,
-    type,
     name,
     originalPrice,
     soldQuantity,
@@ -70,7 +77,7 @@ class Product {
       originalPrice: originalPrice ?? this.originalPrice,
       isAvailable: isAvailable ?? this.isAvailable,
       images: images ?? this.images,
-      type: type ?? this.type,
+      categoryId: categoryId ?? this.categoryId,
       quantity: quantity ?? this.quantity,
       rating: rating ?? this.rating,
       soldQuantity: soldQuantity ?? this.soldQuantity,

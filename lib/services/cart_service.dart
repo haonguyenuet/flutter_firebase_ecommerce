@@ -4,16 +4,16 @@ import 'package:meta/meta.dart';
 
 import 'abstract/i_cart_service.dart';
 
-// cart is collection in each user
+/// cart is collection in each user
 class CartService extends ICartService {
-  // Logged user id
-  String uid;
+  String uid; // Logged user id
   var userCollection = FirebaseFirestore.instance.collection("users");
 
-  // Constructor
+  /// Constructor
+  /// Created by NDH
   CartService({@required this.uid});
 
-  // Get all cart items
+  /// Get all cart items
   Future<List<CartItem>> getCart() async {
     return await userCollection.doc(uid).collection("cart").get().then(
         (snapshot) => snapshot.docs
@@ -21,7 +21,8 @@ class CartService extends ICartService {
             .toList());
   }
 
-  // Add item
+  /// Add item
+  /// Created by NDH
   Future<void> addCartItem(CartItem newItem) async {
     var userRef = userCollection.doc(uid);
     await userRef.collection("cart").doc(newItem.pid).get().then((doc) async {
@@ -41,17 +42,19 @@ class CartService extends ICartService {
     });
   }
 
-  // Remove item
-  Future<void> removeCartItem(String pid) async {
+  /// Remove item
+  /// Created by NDH
+  Future<void> removeCartItem(String cid) async {
     await userCollection
         .doc(uid)
         .collection("cart")
-        .doc(pid)
+        .doc(cid)
         .delete()
         .catchError((error) => print(error));
   }
 
-  // Clear cart
+  /// Clear cart
+  /// Created by NDH
   Future<void> clearCart() async {
     await userCollection
         .doc(uid)
@@ -64,7 +67,8 @@ class CartService extends ICartService {
     }).catchError((error) => print(error));
   }
 
-  // Update quantity
+  /// Update quantity of cart item
+  /// Created by NDH
   Future<void> updateCartItem(CartItem cartItem) async {
     var userRef = userCollection.doc(uid);
     await userRef.collection("cart").doc(cartItem.pid).get().then((doc) async {

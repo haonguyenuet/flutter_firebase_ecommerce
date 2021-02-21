@@ -4,16 +4,17 @@ import 'package:meta/meta.dart';
 
 import 'abstract/i_feedback_service.dart';
 
-/// feedbacks is collection type in each product
+/// Feedbacks is collection type in each product
 class FeedbackService extends IFeedbackService {
-  // Selected product Id
-  String pid;
+  String pid; // Selected product Id
   var productCollection = FirebaseFirestore.instance.collection("products");
 
-  // Constructor
+  /// Constructor
+  /// Created by NDH
   FeedbackService({@required this.pid});
 
-  // Get all feedback items
+  /// Get all feedback items
+  /// Created by NDH
   @override
   Future<List<FeedbackItem>> getFeedbacks() async {
     return await productCollection
@@ -27,7 +28,8 @@ class FeedbackService extends IFeedbackService {
         .catchError((error) => print(error));
   }
 
-  // Get feedbacks by star
+  /// Get feedbacks by star
+  /// Created by NDH
   @override
   Future<List<FeedbackItem>> getFeedbacksByStar(int star) async {
     return await productCollection
@@ -42,7 +44,8 @@ class FeedbackService extends IFeedbackService {
         .catchError((error) => print(error));
   }
 
-  // Add new feedback
+  /// Add new feedback
+  /// Created by NDH
   @override
   Future<void> addNewFeedback(FeedbackItem newItem) async {
     var productRef = productCollection.doc(pid);

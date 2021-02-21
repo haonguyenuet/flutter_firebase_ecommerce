@@ -36,9 +36,10 @@ OutlineInputBorder outlineInputBorder() {
 
 TextStyle headingStyle() {
   return TextStyle(
-      color: Colors.black,
-      fontSize: getProportionateScreenWidth(28),
-      fontWeight: FontWeight.bold);
+    color: Colors.black,
+    fontSize: getProportionateScreenWidth(28),
+    fontWeight: FontWeight.bold,
+  );
 }
 
 enum MenuState { home, profile }

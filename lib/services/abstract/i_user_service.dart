@@ -5,8 +5,8 @@ abstract class IUserService {
   Future<UserModel> getUserById(String id);
 
   /// Add new doc to users collection
-  void addUserData(UserModel user);
+  Future<void> addUserData(UserModel user);
 
   /// Update doc in users collection
-  void updateUserData(Map<String, dynamic> values);
+  Future<void> updateUserData(UserModel user);
 }

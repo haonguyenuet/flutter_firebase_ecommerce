@@ -17,7 +17,7 @@ class Body extends StatelessWidget {
                   direction: DismissDirection.endToStart,
                   onDismissed: (direction) {
                     // remove this item from the cart
-                    context.read<CartProvider>().removeItem(cart[index].pid);
+                    context.read<CartProvider>().removeItem(cart[index].cid);
                   },
                   background: Container(
                     padding: EdgeInsets.symmetric(horizontal: 40),

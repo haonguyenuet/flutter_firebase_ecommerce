@@ -42,7 +42,7 @@ class _SignInFormState extends State<SignInForm> {
         ),
         SizedBox(height: SizeConfig.screenHeight * 0.01),
         buildSignInButton(),
-        SizedBox(height: SizeConfig.screenHeight * 0.01),
+        SizedBox(height: SizeConfig.screenHeight * 0.015),
         buildSignInWithGoogle(),
       ],
     );
@@ -66,8 +66,6 @@ class _SignInFormState extends State<SignInForm> {
         hintText: "Enter your email",
         errorText: emailError,
         contentPadding: EdgeInsets.symmetric(horizontal: 22, vertical: 20),
-        focusedBorder: outlineInputBorder(),
-        enabledBorder: outlineInputBorder(),
         border: outlineInputBorder(),
         suffixIcon: Icon(Icons.email_outlined),
       ),
@@ -92,8 +90,6 @@ class _SignInFormState extends State<SignInForm> {
         hintText: "Enter your password",
         errorText: passwordError,
         contentPadding: EdgeInsets.symmetric(horizontal: 22, vertical: 20),
-        focusedBorder: outlineInputBorder(),
-        enabledBorder: outlineInputBorder(),
         border: outlineInputBorder(),
         suffixIcon: IconButton(
           icon: isShowPassword
@@ -110,50 +106,70 @@ class _SignInFormState extends State<SignInForm> {
   }
 
   Widget buildSignInButton() {
-    var authenticationStatus = context.watch<AuthenticationProvider>().status;
-    return authenticationStatus == Status.Authenticating
-        ? CircularProgressIndicator()
-        : DefaultButton(
-            text: "Sign In",
-            handleOnPress: () async {
-              if (isValidated()) {
-                var result = await context
-                    .read<AuthenticationProvider>()
-                    .logInWithEmailAndPassword(
-                      email: email,
-                      password: password,
-                    );
-                if (result.isSuccess == false) {
-                  Scaffold.of(context)
-                    ..hideCurrentSnackBar()
-                    ..showSnackBar(
-                      SnackBar(content: Text('${result.message}')),
-                    );
-                }
-              }
-            },
-          );
+    return DefaultButton(
+      text: "Sign In",
+      handleOnPress: () async {
+        if (isValidated()) {
+          var result = await context
+              .read<AuthenticationProvider>()
+              .logInWithEmailAndPassword(
+                email: email,
+                password: password,
+              );
+          if (result.isSuccess == false) {
+            print("hello");
+            Scaffold.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(content: Text('${result.message}')),
+              );
+          }
+        }
+      },
+    );
   }
 
-  GestureDetector buildSignInWithGoogle() {
-    return GestureDetector(
-      onTap: () {
-        context.read<AuthenticationProvider>().logInWithGoogle();
-      },
-      child: Container(
-        height: getProportionateScreenHeight(56),
-        width: double.infinity,
-        padding:
-            EdgeInsets.symmetric(vertical: getProportionateScreenHeight(12)),
-        decoration: BoxDecoration(color: Color(0xffF5F6F9)),
+  Container buildSignInWithGoogle() {
+    return Container(
+      width: double.infinity,
+      height: getProportionateScreenHeight(50),
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 6),
+            blurRadius: 10,
+            color: Color(0xff4285f4).withOpacity(0.32),
+          ),
+        ],
+      ),
+      child: FlatButton(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        color: Color(0xff4285f4),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset("assets/icons/google-icon.svg"),
+            Container(
+              alignment: Alignment.center,
+              width: getProportionateScreenHeight(36),
+              height: getProportionateScreenHeight(36),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.white,
+              ),
+              child: SvgPicture.asset("assets/icons/google-icon.svg"),
+            ),
             SizedBox(width: 10),
-            Text("Sign in with google account"),
+            Text(
+              "Continue with google".toUpperCase(),
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
           ],
         ),
+        onPressed: () =>
+            context.read<AuthenticationProvider>().logInWithGoogle(),
       ),
     );
   }

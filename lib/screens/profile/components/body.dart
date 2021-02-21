@@ -1,11 +1,13 @@
 import 'package:e_commerce_app/providers/authentication_provider.dart';
 import 'package:e_commerce_app/screens/authentication/authentication_screen.dart';
+import 'package:e_commerce_app/screens/cart/cart_screen.dart';
+import 'package:e_commerce_app/screens/profile/components/profile_header.dart';
 import 'package:e_commerce_app/screens/profile/components/profile_menu_button.dart';
-import 'package:e_commerce_app/screens/profile/components/profile_pict.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:provider/provider.dart';
+
 
 class Body extends StatelessWidget {
   @override
@@ -14,7 +16,7 @@ class Body extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 20),
       child: Column(
         children: [
-          ProfilePic(),
+          ProfileHeader(),
           SizedBox(height: 20),
           ProfileMenuButton(
             text: "My Information",
@@ -24,11 +26,16 @@ class Body extends StatelessWidget {
           ProfileMenuButton(
             text: "My Cart",
             icon: "assets/icons/Cart Icon.svg",
-            press: () {},
+            press: () {
+              Navigator.pushNamed(
+                context,
+                CartScreen.routeName,
+              );
+            },
           ),
           ProfileMenuButton(
             text: "Log Out",
-            icon: "assets/icons/Log out.svg",
+            icon: "assets/icons/exit.svg",
             press: () {
               context.read<AuthenticationProvider>().logOut();
               Navigator.pushNamedAndRemoveUntil(

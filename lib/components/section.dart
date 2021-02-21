@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../constants.dart';
+import '../constants.dart';
 
+/// A section
 class Section extends StatelessWidget {
   final String title;
   final List<Widget> children;
@@ -44,6 +45,7 @@ class Section extends StatelessWidget {
   }
 }
 
+/// Section title
 class SectionTitle extends StatelessWidget {
   const SectionTitle({
     Key key,
@@ -91,7 +93,7 @@ class SectionTitle extends StatelessWidget {
                 ),
               ],
             ),
-            onTap: () {},
+            onTap: handleOnTap,
           )
         ],
       ),

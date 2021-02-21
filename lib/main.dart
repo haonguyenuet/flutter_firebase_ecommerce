@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/providers/authentication_provider.dart';
 import 'package:e_commerce_app/providers/cart_provider.dart';
+import 'package:e_commerce_app/providers/category_provider.dart';
 import 'package:e_commerce_app/providers/feedback_provider.dart';
 import 'package:e_commerce_app/providers/product_provider.dart';
 import 'package:e_commerce_app/routes.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (context) => ProductProvider()),
         ChangeNotifierProvider(create: (context) => CartProvider()),
+        ChangeNotifierProvider(create: (context) => CategoryProvider()),
         ChangeNotifierProvider(create: (context) => FeedbackProvider()),
       ],
       child: MaterialApp(

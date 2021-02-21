@@ -1,19 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 
+/// Cart item model
 class CartItem {
-  // Cart item id
+  /// Cart item id
   final String cid;
-  // Product id
+
+  /// Product id
   final String pid;
-  // Product quantity in the cart
+
+  /// Product quantity in the cart
   final int quantity;
-  // Product price
+
+  /// Product price
   final int price;
-  // Checkout or not ?
+
+  /// Checkout or not ?
   bool isActive;
 
-  // Constructor
+  /// Constructor
   CartItem({
     @required this.cid,
     @required this.pid,
@@ -21,7 +26,7 @@ class CartItem {
     @required this.quantity,
   });
 
-  // Json data from server turns into model data
+  /// Json data from server turns into model data
   static CartItem fromMap(String id, Map<String, dynamic> data) {
     return CartItem(
       cid: id,
@@ -31,7 +36,7 @@ class CartItem {
     );
   }
 
-  // From model data turns into json data => server
+  /// From model data turns into json data => server
   Map<String, dynamic> toMap() {
     Map<String, dynamic> cartItemData = {
       "cid": this.cid,
@@ -42,7 +47,7 @@ class CartItem {
     return cartItemData;
   }
 
-  // Clone and update
+  /// Clone and update
   CartItem cloneWith({
     cid,
     pid,

@@ -6,7 +6,7 @@ abstract class IProductService {
   Future<List<Product>> getProducts();
 
   // get products by category
-  Future<List<Product>> getProductsByCategory({Category category});
+  Future<List<Product>> getProductsByCategory(Category category);
 
   // get product by Id
   Future<Product> getProductById(String pid);

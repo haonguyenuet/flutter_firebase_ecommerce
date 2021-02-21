@@ -18,14 +18,15 @@ class ActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: handleOnTap,
-      child: Wrap(
-        crossAxisAlignment: WrapCrossAlignment.center,
-        spacing: 10,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
             iconPath,
             color: mPrimaryColor,
           ),
+          const SizedBox(width: 10),
           Text(
             name,
             style: TextStyle(color: mPrimaryColor, fontSize: 16),

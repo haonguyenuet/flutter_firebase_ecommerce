@@ -1,30 +1,45 @@
-class Category {
-  final String id;
+import 'package:equatable/equatable.dart';
+
+/// Category model
+class Category extends Equatable {
+  final String cid;
   final String name;
-  final String icon;
+  final String vietnameseName;
+  final String iconPath;
 
-  Category({this.id, this.name, this.icon});
+  const Category({this.cid, this.name, this.vietnameseName, this.iconPath});
+
+  /// Json data from server turns into model data
+  static Category fromMap(String id, Map<String, dynamic> data) {
+    return Category(
+      cid: id,
+      name: data["name"] ?? "",
+      vietnameseName: data["vietnameseName"] ?? "",
+      iconPath: data["iconPath"] ?? "",
+    );
+  }
+
+  /// From model data turns into json data => server
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> categoryData = {
+      "cid": this.cid,
+      "name": this.name,
+      "vietnameseName": this.vietnameseName,
+      "iconPath": this.iconPath,
+    };
+    return categoryData;
+  }
+
+  /// Represent to all category
+  static const all = Category(
+    cid: "default",
+    name: "All",
+    vietnameseName: "Tất cả",
+    iconPath: "assets/icons/all.svg",
+  );
+
+  @override
+
+  /// TODO: implement props
+  List<Object> get props => [this.cid];
 }
-
-final List<Category> categories = [
-  Category(
-    id: "keyboard",
-    name: "Keyboard",
-    icon: "assets/icons/keyboard_ver2.svg",
-  ),
-  Category(
-    id: "mouse",
-    name: "Mouse",
-    icon: "assets/icons/mouse.svg",
-  ),
-  Category(
-    id: "headphone",
-    name: "Headphone",
-    icon: "assets/icons/headphones.svg",
-  ),
-  Category(
-    id: "screen",
-    name: "Screen",
-    icon: "assets/icons/display.svg",
-  ),
-];

@@ -1,17 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 
-class FeedbackItem {
-  // Feedback Id
+/// Feedback item model
+class FeedbackItem extends Equatable {
+  /// Feedback Id
   final String fid;
-  // User id
+
+  /// User id
   final String uid;
-  // Rating
+
+  /// Rating
   final int rating;
-  // Feedback content
+
+  /// Feedback content
   final String content;
-  // Create date
+
+  /// Create date
   final Timestamp timestamp;
-  // Contructor
+
+  /// Contructor
   FeedbackItem({
     this.fid,
     this.timestamp,
@@ -20,7 +27,7 @@ class FeedbackItem {
     this.content,
   });
 
-// Json data from server turns into model data
+  /// Json data from server turns into model data
   static FeedbackItem fromMap(String id, Map<String, dynamic> data) {
     return FeedbackItem(
       fid: id,
@@ -31,7 +38,7 @@ class FeedbackItem {
     );
   }
 
-  // From model data turns into json data => server
+  /// From model data turns into json data => server
   Map<String, dynamic> toMap() {
     Map<String, dynamic> feedbackItemData = {
       "fid": this.fid,
@@ -43,7 +50,7 @@ class FeedbackItem {
     return feedbackItemData;
   }
 
-  // Clone and update
+  /// Clone and update
   FeedbackItem cloneWith({
     fid,
     uid,
@@ -59,4 +66,10 @@ class FeedbackItem {
       content: content ?? this.content,
     );
   }
+
+
+
+  // Compare two feedback item by fid
+  @override
+  List<Object> get props => [this.fid];
 }

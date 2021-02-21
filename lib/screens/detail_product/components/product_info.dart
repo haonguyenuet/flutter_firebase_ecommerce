@@ -27,7 +27,12 @@ class _ProductInfoState extends State<ProductInfo> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: getProportionateScreenWidth(20)),
-      decoration: BoxDecoration(color: Colors.white),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          bottom: BorderSide(color: Color(0xFFF5F6F9), width: 8),
+        ),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -133,7 +138,7 @@ class _ProductInfoState extends State<ProductInfo> {
       ),
       child: Text(
         product.description,
-        maxLines: seeMore ? null : 4,
+        maxLines: seeMore ? null : 2,
       ),
     );
   }

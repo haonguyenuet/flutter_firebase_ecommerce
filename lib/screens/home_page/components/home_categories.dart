@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/models/category.dart';
+import 'package:e_commerce_app/providers/category_provider.dart';
 import 'package:e_commerce_app/providers/product_provider.dart';
-import 'package:e_commerce_app/screens/category/category.dart';
+import 'package:e_commerce_app/screens/category/category_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,7 @@ import '../../../size_config.dart';
 class HomeCategories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var categories = context.watch<CategoryProvider>().categories;
     return Column(
       children: [
         Container(
@@ -70,7 +72,7 @@ class CategoryCard extends StatelessWidget {
                 color: mPrimaryColor.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: SvgPicture.asset(category.icon, color: mPrimaryColor),
+              child: SvgPicture.asset(category.iconPath, color: mPrimaryColor),
             ),
             SizedBox(height: 5),
             Text(category.name, textAlign: TextAlign.center)
@@ -81,13 +83,12 @@ class CategoryCard extends StatelessWidget {
   }
 
   void handleOnTap(BuildContext context) {
-    context.read<ProductProvider>().getProductsByCategory(category);
+    context
+        .read<ProductProvider>()
+        .getProductsByCategory(filterCategory: category);
     Navigator.pushNamed(
       context,
       CategoryScreen.routeName,
-      arguments: CategoryArgument(
-        category: category,
-      ),
     );
   }
 }

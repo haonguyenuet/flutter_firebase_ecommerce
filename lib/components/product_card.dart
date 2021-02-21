@@ -2,6 +2,7 @@ import 'package:e_commerce_app/common/common_func.dart';
 import 'package:e_commerce_app/models/product.dart';
 import 'package:e_commerce_app/screens/detail_product/detail_product_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import '../constants.dart';
 import '../size_config.dart';
@@ -27,7 +28,7 @@ class ProductCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         margin: EdgeInsets.only(right: 10, left: 10, bottom: 20),
-        width: getProportionateScreenWidth(130),
+        width: 150,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -49,7 +50,7 @@ class ProductCard extends StatelessWidget {
                 builder: (context, snapshot) {
                   return snapshot.hasData
                       ? Image.network(snapshot.data)
-                      : CircularProgressIndicator();
+                      : SpinKitCircle(color: mPrimaryColor);
                 },
               ),
             ),

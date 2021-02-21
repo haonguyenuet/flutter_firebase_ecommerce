@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/components/default_button.dart';
-import 'package:e_commerce_app/providers/category_filter.dart';
 import 'package:e_commerce_app/providers/product_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,8 +22,7 @@ class _FilterCategoryBottomSheetState extends State<FilterCategoryBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    var _currentCategory =
-        context.watch<CategoryFilterProvider>().currentCategory;
+    var _currentCategory = context.watch<ProductProvider>().filterCategory;
     // initial value
     var _selectedCategory = _currentCategory;
     return SingleChildScrollView(
@@ -83,14 +81,10 @@ class _FilterCategoryBottomSheetState extends State<FilterCategoryBottomSheet> {
               padding: const EdgeInsets.only(top: 20),
               child: DefaultButton(
                 handleOnPress: () {
-                  // Change current category
-                  context.read<CategoryFilterProvider>().setFilter(
-                        currentCategory: _selectedCategory,
-                      );
-                  // Get products again
+                  // Change filter category
                   context
                       .read<ProductProvider>()
-                      .getProductsByCategory(_selectedCategory);
+                      .getProductsByCategory(filterCategory: _selectedCategory);
                   close();
                 },
                 text: "Apply",

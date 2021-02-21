@@ -21,29 +21,45 @@ enum Status { Authenticated, Authenticating, Unauthenticated }
 class AuthenticationProvider with ChangeNotifier {
   FirebaseAuth _firebaseAuth;
   GoogleSignIn _googleSignIn;
-  IUserService userService = UserService();
-  User _user; // Firebase user
+  IUserService _userService = UserService();
+  UserModel _loggedUser; // logged user
   Status _status = Status.Unauthenticated;
 
   Status get status => _status;
-  User get user => _user;
+  UserModel get loggedUser => _loggedUser;
 
+  /// Listen auth changes
   AuthenticationProvider.instance()
       : _firebaseAuth = FirebaseAuth.instance,
         _googleSignIn = GoogleSignIn.standard() {
-    _firebaseAuth.authStateChanges().listen((firebaseUser) {
+    _firebaseAuth.authStateChanges().listen((firebaseUser) async {
       if (firebaseUser == null) {
-        _user = null;
+        _loggedUser = UserModel.empty;
         _status = Status.Unauthenticated;
       } else {
-        _user = firebaseUser;
+        _loggedUser = await _userService.getUserById(firebaseUser.uid);
         _status = Status.Authenticated;
       }
       notifyListeners();
     });
   }
 
+  /// Get user data by uid
+  /// Created by NDH
+  Future<UserModel> getUserById(String uid) async {
+    return await _userService.getUserById(uid);
+  }
+
+  /// Update user data
+  /// Created by NDH
+  Future<void> updateLoggedUser(UserModel updatedData) async {
+    await _userService.updateUserData(updatedData);
+    _loggedUser = await _userService.getUserById(_loggedUser.id);
+    notifyListeners();
+  }
+
   /// Creates a new user with the provided [email] and [password].
+  /// Created by NDH
   Future<AuthenticationResult> signUp(
       {@required String email, @required String password}) async {
     assert(email != null && password != null);
@@ -56,7 +72,7 @@ class AuthenticationProvider with ChangeNotifier {
       );
 
       // Create new record for this user in firestore
-      userService.addUserData(result.user.toUser);
+      _userService.addUserData(result.user.toUser);
       // Return result
       return AuthenticationResult(isSuccess: true, message: "Success");
     } on FirebaseAuthException catch (e) {
@@ -66,10 +82,12 @@ class AuthenticationProvider with ChangeNotifier {
         isSuccess: false,
         message: e.message.toString(),
       );
+      
     }
   }
 
   /// Starts the Sign In with Google Flow.
+  /// Created by NDH
   Future<void> logInWithGoogle() async {
     try {
       _status = Status.Authenticating;
@@ -89,6 +107,7 @@ class AuthenticationProvider with ChangeNotifier {
   }
 
   /// Signs in with the provided [email] and [password].
+  /// Created by NDH
   Future<AuthenticationResult> logInWithEmailAndPassword({
     @required String email,
     @required String password,
@@ -116,26 +135,21 @@ class AuthenticationProvider with ChangeNotifier {
     }
   }
 
-  /// Signs out the current user which will emit
-  /// [User.empty] from the [user] Stream.
+  /// Signs out the current user
+  /// Created by NDH
   Future<void> logOut() async {
     try {
-      _status = Status.Unauthenticated;
-      notifyListeners();
       await Future.wait([
         _firebaseAuth.signOut(),
         _googleSignIn.signOut(),
       ]);
+      _status = Status.Unauthenticated;
+      notifyListeners();
     } on Exception {}
-  }
-
-  /// Get current user
-  UserModel getCurrentUser() {
-    return _firebaseAuth.currentUser.toUser;
   }
 }
 
-// Add extension to firebase_auth.User
+/// Add extension to firebase_auth.User
 extension on User {
   UserModel get toUser {
     return UserModel(

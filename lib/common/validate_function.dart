@@ -37,7 +37,7 @@ String validatePassword(String password) {
 /// Validate password
 String validateConfirmedPassword(String password, String confirmedPassword) {
   // Null or empty email is invalid
-  if (password == confirmedPassword) {
+  if (password != confirmedPassword) {
     return mMatchPassError;
   }
   return null;
