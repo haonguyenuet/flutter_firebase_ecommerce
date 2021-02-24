@@ -1,6 +1,6 @@
 buildscript {
     ext.kotlin_version = '1.3.50'
-    repositories {
+    repositoriesitories {
         google()
         jcenter()
     }
@@ -13,7 +13,7 @@ buildscript {
 }
 
 allprojects {
-    repositories {
+    repositoriesitories {
         google()
         jcenter()
     }

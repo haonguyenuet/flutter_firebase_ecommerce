@@ -1,0 +1,71 @@
+import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
+import 'package:e_commerce_app/business_logic/entities/user.dart';
+
+abstract class RegisterEvent extends Equatable {
+  const RegisterEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+/// When email changed
+class EmailChanged extends RegisterEvent {
+  final String email;
+
+  const EmailChanged({@required this.email});
+
+  @override
+  List<Object> get props => [email];
+
+  @override
+  String toString() {
+    return 'EmailChanged{email: $email}';
+  }
+}
+
+/// When password changed
+class PasswordChanged extends RegisterEvent {
+  final String password;
+
+  PasswordChanged({@required this.password});
+
+  @override
+  String toString() {
+    return 'PasswordChanged{password: $password}';
+  }
+}
+
+/// When confirmed password changed
+class ConfirmPasswordChanged extends RegisterEvent {
+  final String password;
+  final String confirmPassword;
+
+  ConfirmPasswordChanged(
+      {@required this.password, @required this.confirmPassword});
+
+  @override
+  String toString() {
+    return 'ConfirmPasswordChanged{password: $password ,confirmPassword: $confirmPassword}';
+  }
+}
+
+/// When click register button
+class Submitted extends RegisterEvent {
+  final UserModel newUser; // contains new user's information
+  final String password;
+  final String confirmPassword;
+
+  const Submitted(
+      {@required this.newUser,
+      @required this.password,
+      @required this.confirmPassword});
+
+  @override
+  List<Object> get props => [newUser.email];
+
+  @override
+  String toString() {
+    return 'Submitted{email: ${newUser.email}, password: $password, confirmPassword: $confirmPassword}';
+  }
+}

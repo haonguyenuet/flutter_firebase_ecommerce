@@ -1,0 +1,29 @@
+import 'package:e_commerce_app/views/screens/cart/widgets/body.dart';
+import 'package:e_commerce_app/views/screens/cart/widgets/check_out_card.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+class CartScreen extends StatelessWidget {
+  static String routeName = "/cart";
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: buildAppBar(context),
+      body: Body(),
+      bottomNavigationBar: CheckoutCard(),
+    );
+  }
+
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(
+      title: Text("Your cart"),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.clear_all_rounded),
+          tooltip: "Clear all",
+          onPressed: () {},
+        )
+      ],
+    );
+  }
+}
