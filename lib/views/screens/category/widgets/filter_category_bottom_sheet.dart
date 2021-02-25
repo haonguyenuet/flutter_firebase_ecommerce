@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/business_logic/entities/category.dart';
-import 'package:e_commerce_app/views/widgets/default_button.dart';
+import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
 
 import 'package:flutter/material.dart';
 

@@ -13,7 +13,7 @@ OutlineInputBorder outlineInputBorder() {
 
 TextStyle headingStyle() {
   return TextStyle(
-    color: Colors.black,
+    color: Colors.white,
     fontSize: getProportionateScreenWidth(28),
     fontWeight: FontWeight.bold,
   );

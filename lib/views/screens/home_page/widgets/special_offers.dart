@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/views/widgets/section.dart';
+import 'package:e_commerce_app/views/widgets/others/section.dart';
 import 'package:flutter/material.dart';
 
 import 'package:e_commerce_app/configs/size_config.dart';

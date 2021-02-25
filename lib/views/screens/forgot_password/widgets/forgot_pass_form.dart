@@ -1,6 +1,6 @@
 import 'package:e_commerce_app/constants/form_error_constant.dart';
 import 'package:e_commerce_app/constants/style_constant.dart';
-import 'package:e_commerce_app/views/widgets/default_button.dart';
+import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 

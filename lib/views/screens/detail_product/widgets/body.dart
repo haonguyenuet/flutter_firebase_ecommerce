@@ -1,10 +1,9 @@
-import 'package:e_commerce_app/views/widgets/product_card.dart';
-import 'package:e_commerce_app/views/widgets/section.dart';
+import 'package:e_commerce_app/views/widgets/single_card/product_card.dart';
+import 'package:e_commerce_app/views/widgets/others/section.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:e_commerce_app/views/screens/detail_product/widgets/product_images.dart';
 import 'package:e_commerce_app/views/screens/detail_product/widgets/product_info.dart';
 import 'package:flutter/material.dart';
-
 
 class Body extends StatefulWidget {
   final Product product;

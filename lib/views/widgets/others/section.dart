@@ -27,14 +27,14 @@ class Section extends StatelessWidget {
 
         /// Section content
         Container(
-          alignment: Alignment.center,
           child: children.length == 0
               ? CircularProgressIndicator()
               : SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Wrap(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: children,
                     ),
                   ),
@@ -59,12 +59,12 @@ class SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      padding: EdgeInsets.only(left: 20, right: 20, bottom: 5, top: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            title,
+            title.toUpperCase(),
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -72,26 +72,14 @@ class SectionTitle extends StatelessWidget {
           ),
           // See more button
           InkWell(
-            child: Wrap(
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                Text(
-                  'See more',
-                  style: TextStyle(
-                    fontSize: 14,
-                    height: 1,
-                    color: mPrimaryColor,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 5),
-                  child: Icon(
-                    Icons.arrow_forward,
-                    color: mPrimaryColor,
-                    size: 14,
-                  ),
-                ),
-              ],
+            child: Text(
+              'See all',
+              style: TextStyle(
+                fontSize: 14,
+                height: 1,
+                color: mPrimaryColor,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             onTap: handleOnTap,
           )

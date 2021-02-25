@@ -11,7 +11,7 @@ import 'package:e_commerce_app/views/screens/login/bloc/login_event.dart';
 import 'package:e_commerce_app/views/screens/login/bloc/login_state.dart';
 import 'package:e_commerce_app/views/screens/login/widgets/facebook_login_btn.dart';
 import 'package:e_commerce_app/views/screens/login/widgets/google_login_btn.dart';
-import 'package:e_commerce_app/views/widgets/default_button.dart';
+import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -84,7 +84,7 @@ class _LoginFormState extends State<LoginForm> {
                       ),
                     ),
                   ),
-                  SizedBox(height: getProportionateScreenHeight(20)),
+                  SizedBox(height: getProportionateScreenHeight(10)),
                   _buildTextFieldUsername(),
                   SizedBox(height: getProportionateScreenHeight(10)),
                   _buildTextFieldPassword(),

@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/business_logic/entities/product.dart';
+import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/views/screens/feedback/feedback_screen.dart';
 import 'package:e_commerce_app/views/screens/home_page/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class CustomAppBar extends PreferredSize {
                 padding: EdgeInsets.zero,
                 onPressed: () => Navigator.pushReplacementNamed(
                   context,
-                  HomeScreen.routeName,
+                  AppRouter.HOME,
                 ),
                 child: SvgPicture.asset(
                   "assets/icons/Back ICon.svg",

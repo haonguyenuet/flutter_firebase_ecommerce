@@ -3,13 +3,12 @@ import 'package:e_commerce_app/utils/common_func.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 
-import 'package:e_commerce_app/views/widgets/circle_icon_button.dart';
+import 'package:e_commerce_app/views/widgets/buttons/circle_icon_button.dart';
 import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:e_commerce_app/views/screens/detail_product/detail_product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:provider/provider.dart';
 
 class CartItemCard extends StatelessWidget {
   const CartItemCard({

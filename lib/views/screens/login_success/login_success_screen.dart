@@ -2,15 +2,14 @@ import 'package:e_commerce_app/business_logic/entities/user.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
-import 'package:e_commerce_app/views/widgets/default_button.dart';
+import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
 import 'package:flutter/material.dart';
 
 class LoginSuccessScreen extends StatelessWidget {
-  static String routeName = "/login_success";
+  final UserModel currUser;
+  LoginSuccessScreen({this.currUser});
   @override
   Widget build(BuildContext context) {
-    final LoginSuccessArgument arguments =
-        ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -27,7 +26,7 @@ class LoginSuccessScreen extends StatelessWidget {
                 children: [
                   SizedBox(height: SizeConfig.screenHeight * 0.04),
                   Image.asset(
-                    "assets/images/success.png",
+                    "assets/images/success_blue.png",
                     height: SizeConfig.screenHeight * 0.5,
                   ),
                   SizedBox(height: SizeConfig.screenHeight * 0.04),
@@ -43,7 +42,7 @@ class LoginSuccessScreen extends StatelessWidget {
                       children: [
                         TextSpan(text: "Hello, "),
                         TextSpan(
-                            text: "${arguments.currUser.name} !",
+                            text: "${currUser.name} !",
                             style: TextStyle(color: mPrimaryColor))
                       ],
                     ),
@@ -54,11 +53,14 @@ class LoginSuccessScreen extends StatelessWidget {
                   SizedBox(
                     width: SizeConfig.screenWidth * 0.6,
                     child: DefaultButton(
-                      child: Text("Back to home"),
+                      child: Text(
+                        "Back to home",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
                       onPressed: () {
                         Navigator.pushNamedAndRemoveUntil(
                           context,
-                          AppRouter.LOGIN_SUCCESS,
+                          AppRouter.HOME,
                           (_) => false,
                         );
                       },
@@ -72,10 +74,4 @@ class LoginSuccessScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-class LoginSuccessArgument {
-  final UserModel currUser;
-
-  LoginSuccessArgument({@required this.currUser});
 }

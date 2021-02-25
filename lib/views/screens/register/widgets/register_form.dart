@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/views/widgets/default_button.dart';
+import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

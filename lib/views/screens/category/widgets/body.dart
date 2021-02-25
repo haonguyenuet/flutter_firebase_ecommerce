@@ -1,7 +1,7 @@
 import 'package:e_commerce_app/business_logic/entities/product.dart';
 
 import 'package:flutter/material.dart';
-import 'package:e_commerce_app/views/widgets/product_card.dart';
+import 'package:e_commerce_app/views/widgets/single_card/product_card.dart';
 
 import 'header_sliver.dart';
 

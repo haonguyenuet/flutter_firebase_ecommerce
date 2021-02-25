@@ -9,13 +9,11 @@ import 'package:e_commerce_app/views/screens/register/widgets/register_header.da
 class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var userRepository =
-        RepositoryProvider.of<UserRepository>(context);
-    return Scaffold(
-      body: BlocProvider(
-        create: (context) =>
-            RegisterBloc(userRepository: userRepository),
-        child: SafeArea(
+    var userRepository = RepositoryProvider.of<UserRepository>(context);
+    return BlocProvider(
+      create: (context) => RegisterBloc(userRepository: userRepository),
+      child: Scaffold(
+        body: SafeArea(
           child: Container(
             decoration: BoxDecoration(gradient: mPrimaryGradientColor),
             child: ListView(

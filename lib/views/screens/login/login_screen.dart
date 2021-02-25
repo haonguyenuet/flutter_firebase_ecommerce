@@ -11,10 +11,10 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var userRepository = RepositoryProvider.of<UserRepository>(context);
-    return Scaffold(
-      body: BlocProvider(
-        create: (context) => LoginBloc(userRepository: userRepository),
-        child: SafeArea(
+    return BlocProvider(
+      create: (context) => LoginBloc(userRepository: userRepository),
+      child: Scaffold(
+        body: SafeArea(
           child: Container(
             decoration: BoxDecoration(gradient: mPrimaryGradientColor),
             child: ListView(

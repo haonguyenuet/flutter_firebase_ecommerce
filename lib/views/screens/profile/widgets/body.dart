@@ -1,10 +1,11 @@
+import 'package:e_commerce_app/business_logic/blocs/auth/auth_bloc.dart';
+import 'package:e_commerce_app/business_logic/blocs/auth/auth_event.dart';
 import 'package:e_commerce_app/views/screens/cart/cart_screen.dart';
 import 'package:e_commerce_app/views/screens/profile/widgets/profile_header.dart';
 import 'package:e_commerce_app/views/screens/profile/widgets/profile_menu_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -33,7 +34,10 @@ class Body extends StatelessWidget {
           ProfileMenuButton(
             text: "Log Out",
             icon: "assets/icons/exit.svg",
-            press: () {},
+            press: () {
+              var _authBloc = BlocProvider.of<AuthenticationBloc>(context);
+              _authBloc.add(LoggedOut());
+            },
           ),
         ],
       ),

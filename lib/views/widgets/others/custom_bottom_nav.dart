@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/constants/style_constant.dart';
 import 'package:e_commerce_app/views/screens/home_page/home_screen.dart';
@@ -39,7 +40,7 @@ class CustomBottomNav extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamedAndRemoveUntil(
                   context,
-                  HomeScreen.routeName,
+                  AppRouter.HOME,
                   (_) => false,
                 );
               },
@@ -69,7 +70,7 @@ class CustomBottomNav extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamedAndRemoveUntil(
                   context,
-                  ProfileScreen.routeName,
+                  AppRouter.PROFILE,
                   (_) => false,
                 );
               },
