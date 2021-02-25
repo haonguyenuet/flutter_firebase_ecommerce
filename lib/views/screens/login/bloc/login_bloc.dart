@@ -46,8 +46,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield LoginState.logging();
 
       await _userRepository.logInWithEmailAndPassword(email, password);
-
-      if (_userRepository.isLoggedIn()) {
+      bool isLoggedIn = await _userRepository.isLoggedIn();
+      if (isLoggedIn) {
         yield LoginState.success();
       } else {
         final message = _userRepository.authException ?? "Login Failure";

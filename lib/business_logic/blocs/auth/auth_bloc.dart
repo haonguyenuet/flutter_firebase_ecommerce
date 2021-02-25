@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/business_logic/blocs/auth/auth_event.dart';
 import 'package:e_commerce_app/business_logic/repositories/user_repo.dart';
@@ -15,7 +14,6 @@ class AuthenticationBloc
         _userRepository = userRepository,
         super(Uninitialized());
 
-
   @override
   Stream<AuthenticationState> mapEventToState(
       AuthenticationEvent event) async* {
@@ -30,13 +28,14 @@ class AuthenticationBloc
 
   Stream<AuthenticationState> _mapAppStartedToState() async* {
     try {
-      bool isLoggedIn = _userRepository.isLoggedIn();
+      bool isLoggedIn = await _userRepository.isLoggedIn();
 
-      //for display splash screen
+      //For display splash screen
       await Future.delayed(Duration(seconds: 2));
 
       if (isLoggedIn) {
-        final currUser = await _userRepository.getCurrentUser();
+        // Get current user
+        final currUser = _userRepository.currentUser;
         yield Authenticated(currUser);
       } else {
         yield Unauthenticated();
@@ -47,8 +46,7 @@ class AuthenticationBloc
   }
 
   Stream<AuthenticationState> _mapLoggedInToState() async* {
-    final currUser = await _userRepository.getCurrentUser();
-    yield Authenticated(currUser);
+    yield Authenticated(_userRepository.currentUser);
   }
 
   Stream<AuthenticationState> _mapLoggedOutToState() async* {

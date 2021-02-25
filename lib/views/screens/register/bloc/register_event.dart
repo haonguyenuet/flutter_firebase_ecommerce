@@ -9,7 +9,7 @@ abstract class RegisterEvent extends Equatable {
   List<Object> get props => [];
 }
 
-/// When email changed
+/// When user changes email
 class EmailChanged extends RegisterEvent {
   final String email;
 
@@ -24,7 +24,7 @@ class EmailChanged extends RegisterEvent {
   }
 }
 
-/// When password changed
+/// When user changes password
 class PasswordChanged extends RegisterEvent {
   final String password;
 
@@ -36,7 +36,7 @@ class PasswordChanged extends RegisterEvent {
   }
 }
 
-/// When confirmed password changed
+/// When user changes confirmed password
 class ConfirmPasswordChanged extends RegisterEvent {
   final String password;
   final String confirmPassword;
@@ -50,7 +50,7 @@ class ConfirmPasswordChanged extends RegisterEvent {
   }
 }
 
-/// When click register button
+/// When clicks to register button
 class Submitted extends RegisterEvent {
   final UserModel newUser; // contains new user's information
   final String password;

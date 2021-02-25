@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/business_logic/entities/category.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
 
 abstract class IProductService {
@@ -6,8 +5,7 @@ abstract class IProductService {
   Future<List<Product>> getProducts();
 
   // get products by category
-  Future<List<Product>> getProductsByCategory(Category category);
-
+  Future<List<Product>> getProductsByCategory(String categoryId);
   // get product by Id
   Future<Product> getProductById(String pid);
 

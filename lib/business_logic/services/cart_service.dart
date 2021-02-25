@@ -1,20 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
-import 'package:meta/meta.dart';
-
 import 'abstract/i_cart_service.dart';
 
 /// cart is collection in each user
 class CartService extends ICartService {
-  String uid; // Logged user id
   var userCollection = FirebaseFirestore.instance.collection("users");
 
-  /// Constructor
-  /// Created by NDH
-  CartService({@required this.uid});
-
   /// Get all cart items
-  Future<List<CartItem>> getCart() async {
+  Future<List<CartItem>> getCart(String uid) async {
     return await userCollection.doc(uid).collection("cart").get().then(
         (snapshot) => snapshot.docs
             .map((doc) => CartItem.fromMap(doc.id, doc.data()))
@@ -23,7 +16,7 @@ class CartService extends ICartService {
 
   /// Add item
   /// Created by NDH
-  Future<void> addCartItem(CartItem newItem) async {
+  Future<void> addCartItem(String uid,CartItem newItem) async {
     var userRef = userCollection.doc(uid);
     await userRef.collection("cart").doc(newItem.pid).get().then((doc) async {
       if (doc.exists) {
@@ -44,7 +37,7 @@ class CartService extends ICartService {
 
   /// Remove item
   /// Created by NDH
-  Future<void> removeCartItem(String cid) async {
+  Future<void> removeCartItem(String uid,String cid) async {
     await userCollection
         .doc(uid)
         .collection("cart")
@@ -55,7 +48,7 @@ class CartService extends ICartService {
 
   /// Clear cart
   /// Created by NDH
-  Future<void> clearCart() async {
+  Future<void> clearCart(String uid) async {
     await userCollection
         .doc(uid)
         .collection("cart")
@@ -69,7 +62,7 @@ class CartService extends ICartService {
 
   /// Update quantity of cart item
   /// Created by NDH
-  Future<void> updateCartItem(CartItem cartItem) async {
+  Future<void> updateCartItem(String uid, CartItem cartItem) async {
     var userRef = userCollection.doc(uid);
     await userRef.collection("cart").doc(cartItem.pid).get().then((doc) async {
       if (doc.exists) {

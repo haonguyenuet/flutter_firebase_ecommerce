@@ -13,15 +13,13 @@ class RegisterScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => RegisterBloc(userRepository: userRepository),
       child: Scaffold(
+        backgroundColor: mPrimaryColor,
         body: SafeArea(
-          child: Container(
-            decoration: BoxDecoration(gradient: mPrimaryGradientColor),
-            child: ListView(
-              children: [
-                RegisterHeader(),
-                RegisterForm(),
-              ],
-            ),
+          child: ListView(
+            children: [
+              RegisterHeader(),
+              RegisterForm(),
+            ],
           ),
         ),
       ),

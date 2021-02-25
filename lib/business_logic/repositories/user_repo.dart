@@ -11,6 +11,7 @@ class UserRepository {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   GoogleSignIn _googleSignIn = GoogleSignIn();
   IUserService _userService = UserService();
+  UserModel _currentUser = UserModel.empty;
   String _authException = "";
 
   /// Don't use onAuthChange
@@ -63,24 +64,26 @@ class UserRepository {
     }
   }
 
+  Future<bool> isLoggedIn() async {
+    var currFirebaseUser = _firebaseAuth.currentUser;
+    // Get current user from firestore
+    if (currFirebaseUser != null) {
+      _currentUser = await _userService.getUserById(currFirebaseUser.uid);
+    }
+    return _currentUser != UserModel.empty;
+  }
+
   /// Signs out the current user
   /// Created by NDH
   Future<void> logOut() async {
+    _currentUser = UserModel.empty;
     await Future.wait([
       _firebaseAuth.signOut(),
       _googleSignIn.signOut(),
     ]).catchError((error) => print(error));
   }
 
-  bool isLoggedIn() {
-    return _firebaseAuth.currentUser != null;
-  }
-
-  Future<UserModel> getCurrentUser() async {
-    User currFisebaseUser = _firebaseAuth.currentUser;
-    return await _userService.getUserById(currFisebaseUser.uid);
-  }
-
+  UserModel get currentUser => _currentUser;
   FirebaseAuth get firebaseAuth => _firebaseAuth;
   String get authException => _authException;
 }

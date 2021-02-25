@@ -76,7 +76,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     try {
       yield RegisterState.loading();
       await _userRepository.signUp(newUser, password);
-      if (_userRepository.isLoggedIn()) {
+      if (await _userRepository.isLoggedIn()) {
         yield RegisterState.success();
       } else {
         final message = _userRepository.authException ?? "Login Failure";

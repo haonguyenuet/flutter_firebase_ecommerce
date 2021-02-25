@@ -1,8 +1,16 @@
+import 'dart:async';
+
 import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
-import 'package:e_commerce_app/views/screens/cart/cart_screen.dart';
+import 'package:e_commerce_app/configs/router.dart';
+import 'package:e_commerce_app/configs/size_config.dart';
+import 'package:e_commerce_app/views/screens/detail_product/bloc/detail_product_bloc.dart';
+import 'package:e_commerce_app/views/screens/detail_product/bloc/detail_product_event.dart';
+import 'package:e_commerce_app/views/screens/detail_product/bloc/detail_product_state.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 /// Class
 class AddToCartNavigation extends StatefulWidget {
@@ -18,28 +26,49 @@ class AddToCartNavigation extends StatefulWidget {
 
 class _AddToCartNavigationState extends State<AddToCartNavigation> {
   Product get product => widget.product;
+  DetailProductBloc _detailProductBloc;
   // init states
   int quantity = 1;
   @override
+  void initState() {
+    super.initState();
+    _detailProductBloc = BlocProvider.of<DetailProductBloc>(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(2),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [BoxShadow(offset: Offset(0.15, 0.4), color: Colors.black)],
-      ),
-      child: SafeArea(
-        child: Row(
-          children: [
-            Expanded(flex: 1, child: buildSelectQuantity()),
-            Expanded(flex: 1, child: addToCartButton()),
+    return BlocListener<DetailProductBloc, DetailProductState>(
+      listener: (context, state) {
+        if (state is Adding) {
+          _showAddingDialog();
+        }
+        if (state is AddSuccess) {
+          Navigator.pushNamed(context, AppRouter.CART);
+        }
+        if (state is AddFailure) {
+          print("Add failure");
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(offset: Offset(0.15, 0.4), color: Colors.black)
           ],
+        ),
+        child: SafeArea(
+          child: Row(
+            children: [
+              Expanded(flex: 1, child: _buildSelectQuantity()),
+              Expanded(flex: 1, child: _addToCartButton()),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Row buildSelectQuantity() {
+  _buildSelectQuantity() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -93,7 +122,7 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
   }
 
   /// Build button add to cart
-  Container addToCartButton() {
+  _addToCartButton() {
     return Container(
       height: 60,
       child: RaisedButton(
@@ -106,14 +135,31 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
                   price: product.originalPrice * quantity,
                   quantity: quantity,
                 );
-
-                // go to cart screen
-                Navigator.pushNamed(context, CartScreen.routeName);
+                // Add event AddToCart
+                _detailProductBloc.add(AddToCart(cartItem));
               }
             : null,
         color: mPrimaryColor,
         child: Icon(Icons.add_shopping_cart, color: Colors.white),
       ),
     );
+  }
+
+  /// Show adding dialog
+  void _showAddingDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext builderContext) {
+          Timer(Duration(seconds: 1), () {
+            Navigator.of(context).pop();
+          });
+
+          return Container(
+            alignment: Alignment.center,
+            width: getProportionateScreenWidth(100),
+            height: getProportionateScreenWidth(100),
+            child: SpinKitCircle(color: mPrimaryColor),
+          );
+        });
   }
 }

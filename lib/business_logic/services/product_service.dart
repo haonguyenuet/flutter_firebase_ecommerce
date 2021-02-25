@@ -10,21 +10,19 @@ class ProductService extends IProductService {
   /// Get all products
   @override
   Future<List<Product>> getProducts() async {
-    try {
-      return await productCollection.get().then((snapshot) => snapshot.docs
-          .map((doc) => Product.fromMap(doc.id, doc.data()))
-          .toList());
-    } catch (e) {
-      print(e);
-    }
-    return null;
+    return await productCollection
+        .get()
+        .then((snapshot) => snapshot.docs
+            .map((doc) => Product.fromMap(doc.id, doc.data()))
+            .toList())
+        .catchError((error) => print(error));
   }
 
   /// Get products by category
   @override
-  Future<List<Product>> getProductsByCategory(Category category) async {
+  Future<List<Product>> getProductsByCategory(String categoryId) async {
     return await productCollection
-        .where("categoryId", isEqualTo: category.cid)
+        .where("categoryId", isEqualTo: categoryId)
         .get()
         .then((snapshot) => snapshot.docs
             .map((doc) => Product.fromMap(doc.id, doc.data()))
@@ -41,6 +39,8 @@ class ProductService extends IProductService {
         .then((doc) => Product.fromMap(doc.id, doc.data()))
         .catchError((error) => print(error));
   }
+
+  @override
 
   /// Update product rating
   Future<void> updateProductRatingById(String pid, double rating) async {

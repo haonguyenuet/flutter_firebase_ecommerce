@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/business_logic/services/product_service.dart';
+import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/utils/common_func.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
@@ -6,7 +7,6 @@ import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/views/widgets/buttons/circle_icon_button.dart';
 import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
-import 'package:e_commerce_app/views/screens/detail_product/detail_product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -29,8 +29,8 @@ class CartItemCard extends StatelessWidget {
                 onTap: () {
                   Navigator.pushNamed(
                     context,
-                    DetailProductScreen.routeName,
-                    arguments: DetailProductArgument(product: product),
+                    AppRouter.show_details,
+                    arguments: product,
                   );
                 },
                 child: Container(

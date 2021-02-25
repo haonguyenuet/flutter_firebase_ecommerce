@@ -1,10 +1,8 @@
 import 'package:e_commerce_app/business_logic/entities/category.dart';
-import 'package:e_commerce_app/views/screens/category/category_screen.dart';
+import 'package:e_commerce_app/configs/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:e_commerce_app/constants/color_constant.dart';
-import 'package:e_commerce_app/configs/size_config.dart';
 
 class CategoryCard extends StatelessWidget {
   final Category category;
@@ -19,28 +17,25 @@ class CategoryCard extends StatelessWidget {
     return InkWell(
       onTap: () => handleOnTap(context),
       child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        margin: EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(
+          gradient: mPrimaryGradientColor,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Row(
           children: [
-            Container(
-              padding: EdgeInsets.all(15),
-              width: getProportionateScreenWidth(90),
-              height: getProportionateScreenWidth(65),
-              decoration: BoxDecoration(
-                color: mPrimaryColor.withOpacity(0.9),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: SvgPicture.asset(
-                category.iconPath,
-                width: 50,
-                height: 50,
-              ),
+            SvgPicture.asset(
+              category.iconPath,
+              width: 24,
+              height: 24,
             ),
-            SizedBox(height: 5),
+            SizedBox(width: 8),
             Text(
               category.name,
               style: TextStyle(
                 fontSize: 14,
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             )
@@ -53,7 +48,7 @@ class CategoryCard extends StatelessWidget {
   void handleOnTap(BuildContext context) {
     Navigator.pushNamed(
       context,
-      CategoryScreen.routeName,
+      AppRouter.SHOW_ALL,
     );
   }
 }

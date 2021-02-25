@@ -1,30 +1,53 @@
 import 'package:e_commerce_app/business_logic/entities/product.dart';
-import 'package:e_commerce_app/views/screens/detail_product/widgets/body.dart';
+import 'package:e_commerce_app/business_logic/repositories/detail_product_repo.dart';
+import 'package:e_commerce_app/business_logic/repositories/user_repo.dart';
+import 'package:e_commerce_app/views/screens/detail_product/bloc/detail_product_bloc.dart';
 import 'package:e_commerce_app/views/screens/detail_product/widgets/custom_appbar.dart';
+import 'package:e_commerce_app/views/screens/detail_product/widgets/product_images.dart';
+import 'package:e_commerce_app/views/screens/detail_product/widgets/product_info.dart';
+import 'package:e_commerce_app/views/screens/detail_product/widgets/related_products/bloc/related_products_bloc.dart';
+import 'package:e_commerce_app/views/screens/detail_product/widgets/related_products/bloc/related_products_event.dart';
+import 'package:e_commerce_app/views/screens/detail_product/widgets/related_products/related_products.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'widgets/add_to_cart_nav.dart';
 
 class DetailProductScreen extends StatelessWidget {
-  static String routeName = "/detail_procduct";
+  final _detailProductRepository = DetailProductRepository();
+  final Product product;
+
+  DetailProductScreen({Key key, this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final DetailProductArgument arguments =
-        ModalRoute.of(context).settings.arguments;
-
-    return Scaffold(
-      appBar: CustomAppBar(product: arguments.product),
-      body: Body(product: arguments.product),
-      bottomNavigationBar: AddToCartNavigation(product: arguments.product),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => DetailProductBloc(
+              detailProductRepository: _detailProductRepository,
+              userRepository: RepositoryProvider.of<UserRepository>(context)),
+        ),
+        BlocProvider(
+          create: (context) => RelatedProductsBloc(
+            detailProductRepository: _detailProductRepository,
+          )..add(LoadRelatedProducts(product.id, product.categoryId)),
+        ),
+      ],
+      child: Scaffold(
+        appBar: CustomAppBar(product: product),
+        body: SafeArea(
+          child: ListView(
+            children: [
+              SizedBox(height: 20),
+              ProductImages(product: product),
+              SizedBox(height: 10),
+              ProductInfo(product: product),
+              RelatedProducts(),
+            ],
+          ),
+        ),
+        bottomNavigationBar: AddToCartNavigation(product: product),
+      ),
     );
   }
-}
-
-// We also need to pass our product to our detail product screen
-// Because we use name route so we need to create a arguments class
-
-class DetailProductArgument {
-  final Product product;
-
-  DetailProductArgument({@required this.product});
 }

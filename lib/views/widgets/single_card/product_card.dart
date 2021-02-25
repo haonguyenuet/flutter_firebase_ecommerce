@@ -1,8 +1,8 @@
+import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/utils/common_func.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
-import 'package:e_commerce_app/views/screens/detail_product/detail_product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
@@ -21,8 +21,8 @@ class ProductCard extends StatelessWidget {
       onTap: () {
         Navigator.pushNamed(
           context,
-          DetailProductScreen.routeName,
-          arguments: DetailProductArgument(product: product),
+          AppRouter.show_details,
+          arguments: product,
         );
       },
       child: Container(
@@ -34,9 +34,9 @@ class ProductCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-              offset: Offset(0, 10),
-              blurRadius: 10,
-              color: Color(0XFFB0CCE1).withOpacity(0.32),
+              offset: Offset(0, 7),
+              blurRadius: 12,
+              color: Color(0XFFB0CCE1).withOpacity(0.4),
             ),
           ],
         ),

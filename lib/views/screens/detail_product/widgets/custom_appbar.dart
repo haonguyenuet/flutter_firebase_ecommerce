@@ -1,7 +1,6 @@
 import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/views/screens/feedback/feedback_screen.dart';
-import 'package:e_commerce_app/views/screens/home_page/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:e_commerce_app/configs/size_config.dart';

@@ -26,7 +26,7 @@ class LoginSuccessScreen extends StatelessWidget {
                 children: [
                   SizedBox(height: SizeConfig.screenHeight * 0.04),
                   Image.asset(
-                    "assets/images/success_blue.png",
+                    "assets/images/success.png",
                     height: SizeConfig.screenHeight * 0.5,
                   ),
                   SizedBox(height: SizeConfig.screenHeight * 0.04),

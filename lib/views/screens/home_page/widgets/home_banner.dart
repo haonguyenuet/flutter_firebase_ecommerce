@@ -26,14 +26,15 @@ class _HomeBannerState extends State<HomeBanner> {
         /// Banner images
         CarouselSlider(
           options: CarouselOptions(
+            pageViewKey: PageStorageKey("home_banner"),
+            height: getProportionateScreenHeight(200),
             initialPage: 0,
             viewportFraction: 1.0,
             enableInfiniteScroll: true,
-            aspectRatio: aspectRatioBanner,
             autoPlay: true,
             autoPlayInterval: Duration(seconds: 3),
             autoPlayAnimationDuration: Duration(milliseconds: 800),
-            autoPlayCurve: Curves.fastLinearToSlowEaseIn,
+            autoPlayCurve: Curves.linearToEaseOut,
             enlargeCenterPage: true,
             onPageChanged: (index, reason) {
               setState(() {
@@ -43,7 +44,7 @@ class _HomeBannerState extends State<HomeBanner> {
           ),
           items: banners.map((banner) {
             return ShimmerImage(
-              aspectRatio: aspectRatioBanner ,
+              width: SizeConfig.screenWidth,
               imageUrl: banner.imageUrl,
             );
           }).toList(),
@@ -77,7 +78,7 @@ class _HomeBannerState extends State<HomeBanner> {
       width: isSelected ? 20 : 16,
       margin: EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
-        color: isSelected ? Colors.white : Colors.black12,
+        color: isSelected ? mPrimaryColor : Colors.black12,
         border: Border.all(color: Colors.white, width: 0.2),
         borderRadius: BorderRadius.circular(4),
       ),

@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/app_view.dart';
 import 'package:e_commerce_app/business_logic/blocs/auth/auth_bloc.dart';
 import 'package:e_commerce_app/business_logic/blocs/auth/auth_event.dart';
+import 'package:e_commerce_app/business_logic/repositories/detail_product_repo.dart';
 import 'package:e_commerce_app/business_logic/repositories/home_repo.dart';
 import 'package:e_commerce_app/business_logic/repositories/user_repo.dart';
 import 'package:e_commerce_app/views/screens/home_page/bloc/home_bloc.dart';
@@ -21,6 +22,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   final UserRepository _userRepository = UserRepository();
   final HomeRepository _homeRepository = HomeRepository();
+
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(

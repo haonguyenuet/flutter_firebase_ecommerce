@@ -1,6 +1,12 @@
+import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:e_commerce_app/business_logic/entities/user.dart';
+import 'package:e_commerce_app/views/screens/cart/cart_screen.dart';
+import 'package:e_commerce_app/views/screens/detail_product/detail_product_screen.dart';
+import 'package:e_commerce_app/views/screens/feedback/feedback_screen.dart';
+import 'package:e_commerce_app/views/screens/forgot_password/forgot_password_screen.dart';
 import 'package:e_commerce_app/views/screens/login_success/login_success_screen.dart';
 import 'package:e_commerce_app/views/screens/profile/profile_screen.dart';
+import 'package:e_commerce_app/views/screens/show_all/category_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/views/screens/home_page/home_screen.dart';
 import 'package:e_commerce_app/views/screens/login/login_screen.dart';
@@ -9,12 +15,16 @@ import 'package:e_commerce_app/views/screens/splash/splash_screen.dart';
 
 class AppRouter {
   static const String HOME = '/';
-
   static const String SPLASH = '/splash';
   static const String LOGIN = '/login';
   static const String REGISTER = '/register';
   static const String LOGIN_SUCCESS = '/login_success';
+  static const String FORGOT_PASSWORD = '/forgot_password';
   static const String PROFILE = '/profile';
+  static const String show_details = '/show_details';
+  static const String FEEDBACK = '/feedback';
+  static const String CART = '/cart';
+  static const String SHOW_ALL = '/show_all';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -32,6 +42,18 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case PROFILE:
         return MaterialPageRoute(builder: (_) => ProfileScreen());
+      case show_details:
+        var product = settings.arguments as Product;
+        return MaterialPageRoute(
+            builder: (_) => DetailProductScreen(product: product));
+      case FEEDBACK:
+        return MaterialPageRoute(builder: (_) => FeedbackScreen());
+      case SHOW_ALL:
+        return MaterialPageRoute(builder: (_) => ShowAllScreen());
+      case FORGOT_PASSWORD:
+        return MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
+      case CART:
+        return MaterialPageRoute(builder: (_) => CartScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

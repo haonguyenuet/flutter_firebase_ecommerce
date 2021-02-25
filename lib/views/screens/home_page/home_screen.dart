@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/views/widgets/others/custom_bottom_nav.dart';
 import 'package:e_commerce_app/views/widgets/others/section.dart';
 import 'package:e_commerce_app/views/widgets/single_card/category_card.dart';

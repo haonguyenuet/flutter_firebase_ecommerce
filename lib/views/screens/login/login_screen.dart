@@ -14,15 +14,13 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => LoginBloc(userRepository: userRepository),
       child: Scaffold(
+        backgroundColor: mPrimaryColor,
         body: SafeArea(
-          child: Container(
-            decoration: BoxDecoration(gradient: mPrimaryGradientColor),
-            child: ListView(
-              children: [
-                LoginHeader(),
-                LoginForm(),
-              ],
-            ),
+          child: ListView(
+            children: [
+              LoginHeader(),
+              LoginForm(),
+            ],
           ),
         ),
       ),
