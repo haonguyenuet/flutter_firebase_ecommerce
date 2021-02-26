@@ -1,39 +1,60 @@
+import 'package:e_commerce_app/views/screens/cart/bloc/cart_bloc.dart';
+import 'package:e_commerce_app/views/screens/cart/bloc/cart_event.dart';
+import 'package:e_commerce_app/views/screens/cart/bloc/cart_state.dart';
 import 'package:e_commerce_app/views/screens/cart/widgets/cart_item_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var cart = [];
-    return SafeArea(
-      child: cart.length > 0
-          ? ListView.builder(
-              itemCount: cart.length,
-              itemBuilder: (context, index) {
-                return Dismissible(
-                  key: Key(cart[index].pid),
-                  direction: DismissDirection.endToStart,
-                  onDismissed: (direction) {
-                    // remove this item from the cart
-                  },
-                  background: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 40),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFFFE6E6),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      children: [
-                        Spacer(),
-                        Icon(Icons.remove_shopping_cart_outlined),
-                      ],
-                    ),
-                  ),
-                  child: CartItemCard(cartItem: cart[index]),
-                );
-              },
-            )
-          : Center(child: Text("Bạn chưa có sản phẩm nào trong giỏ hàng")),
+    return BlocBuilder<CartBloc, CartState>(
+      builder: (context, state) {
+        if (state is CartChanged) {
+          BlocProvider.of<CartBloc>(context).add(RefreshCart());
+        }
+        if (state is CartLoading) {
+          return Center(child: Text("Updating..."));
+        }
+
+        if (state is CartNotLoaded) {
+          return Center(child: Text("Load failure"));
+        }
+        if (state is CartLoaded) {
+          var cart = state.cartResponse.cart;
+          return SafeArea(
+            child: cart.length > 0
+                ? ListView.builder(
+                    itemCount: cart.length,
+                    itemBuilder: (context, index) {
+                      return Dismissible(
+                        key: Key(cart[index].pid),
+                        direction: DismissDirection.endToStart,
+                        onDismissed: (direction) {
+                          // Remove this item from the cart
+                          BlocProvider.of<CartBloc>(context)
+                              .add(RemoveCartItem(cart[index].pid));
+                        },
+                        background: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 40),
+                          decoration: BoxDecoration(color: Color(0xFFFFE6E6)),
+                          child: Row(
+                            children: [
+                              Spacer(),
+                              Icon(Icons.remove_shopping_cart_outlined),
+                            ],
+                          ),
+                        ),
+                        child: CartItemCard(cartItem: cart[index]),
+                      );
+                    },
+                  )
+                : Center(
+                    child: Text("Bạn chưa có sản phẩm nào trong giỏ hàng")),
+          );
+        }
+        return Center(child: Text("Unknown state"));
+      },
     );
   }
 }

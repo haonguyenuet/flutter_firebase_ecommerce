@@ -1,13 +1,18 @@
 import 'package:e_commerce_app/business_logic/services/product_service.dart';
 import 'package:e_commerce_app/configs/router.dart';
-import 'package:e_commerce_app/utils/common_func.dart';
+
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
+import 'package:e_commerce_app/utils/common_func.dart';
+import 'package:e_commerce_app/utils/my_formatter.dart';
+import 'package:e_commerce_app/views/screens/cart/bloc/cart_bloc.dart';
+import 'package:e_commerce_app/views/screens/cart/bloc/cart_event.dart';
 
 import 'package:e_commerce_app/views/widgets/buttons/circle_icon_button.dart';
 import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class CartItemCard extends StatelessWidget {
@@ -41,9 +46,9 @@ class CartItemCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: [
                       BoxShadow(
-                        offset: Offset(3, 4),
+                        offset: Offset(0, 5),
                         blurRadius: 10,
-                        color: Color(0XFFB0CCE1).withOpacity(0.4),
+                        color: mPrimaryColor.withOpacity(0.2),
                       ),
                     ],
                   ),
@@ -51,9 +56,7 @@ class CartItemCard extends StatelessWidget {
                     children: [
                       _buildCartItemImage(product),
                       SizedBox(width: getProportionateScreenWidth(10)),
-                      Expanded(
-                        child: buildCartItemInfo(product, context),
-                      ),
+                      Expanded(child: _buildCartItemInfo(product, context)),
                     ],
                   ),
                 ),
@@ -62,14 +65,13 @@ class CartItemCard extends StatelessWidget {
             : Container(
                 alignment: Alignment.center,
                 height: getProportionateScreenHeight(130),
-                child: SpinKitCircle(color: mPrimaryColor),
               );
       },
     );
   }
 
   // CartItem image
-  AspectRatio _buildCartItemImage(Product product) {
+  _buildCartItemImage(Product product) {
     return AspectRatio(
       aspectRatio: 1,
       child: Container(
@@ -88,7 +90,7 @@ class CartItemCard extends StatelessWidget {
   }
 
   // CartItem Info
-  Column buildCartItemInfo(Product product, BuildContext context) {
+  _buildCartItemInfo(Product product, BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,15 +114,28 @@ class CartItemCard extends StatelessWidget {
   }
 
   // Cart item quantity
-  Row _buildCartItemQuantity(Product product, BuildContext context) {
+  _buildCartItemQuantity(Product product, BuildContext context) {
     return Row(
       children: [
         // decrease button
         CircleIconButton(
           icon: Icon(Icons.remove),
-          color: Color(0xFFF5F6F9).withOpacity(0.7),
+          color: Color(0xFFF5F6F9),
           size: getProportionateScreenWidth(30),
-          handleOnPress: cartItem.quantity > 1 ? () {} : () {},
+          handleOnPress: cartItem.quantity > 1
+              ? () {
+                  var newQuantity = cartItem.quantity - 1;
+                  var newPrice = newQuantity * product.originalPrice;
+
+                  // update cart item
+                  BlocProvider.of<CartBloc>(context).add(UpdateCartItem(
+                    cartItem.cloneWith(
+                      quantity: newQuantity,
+                      price: newPrice,
+                    ),
+                  ));
+                }
+              : () {},
         ),
         const SizedBox(width: 10),
         // quantity
@@ -136,9 +151,22 @@ class CartItemCard extends StatelessWidget {
         // increase button
         CircleIconButton(
           icon: Icon(Icons.add),
-          color: Color(0xFFF5F6F9).withOpacity(0.7),
+          color: Color(0xFFF5F6F9),
           size: getProportionateScreenWidth(30),
-          handleOnPress: cartItem.quantity < product.quantity ? () {} : () {},
+          handleOnPress: cartItem.quantity < product.quantity
+              ? () {
+                  var newQuantity = cartItem.quantity + 1;
+                  var newPrice = newQuantity * product.originalPrice;
+
+                  // update cart item
+                  BlocProvider.of<CartBloc>(context).add(UpdateCartItem(
+                    cartItem.cloneWith(
+                      quantity: newQuantity,
+                      price: newPrice,
+                    ),
+                  ));
+                }
+              : () {},
         )
       ],
     );

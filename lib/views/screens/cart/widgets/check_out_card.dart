@@ -1,10 +1,13 @@
-import 'package:e_commerce_app/utils/common_func.dart';
+import 'package:e_commerce_app/constants/style_constant.dart';
+import 'package:e_commerce_app/views/screens/cart/bloc/cart_bloc.dart';
+import 'package:e_commerce_app/views/screens/cart/bloc/cart_state.dart';
 import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 
 class CheckoutCard extends StatelessWidget {
@@ -48,30 +51,41 @@ class CheckoutCard extends StatelessWidget {
                   child: SvgPicture.asset("assets/icons/receipt.svg"),
                 ),
                 SizedBox(width: getProportionateScreenHeight(15)),
-                Text.rich(
-                  TextSpan(
-                    style: TextStyle(color: mSecondaryColor, fontSize: 16),
-                    children: [
-                      TextSpan(text: "Total:\n"),
-                      TextSpan(
-                        text: "${100000}",
-                        style: TextStyle(fontSize: 18, color: mPrimaryColor),
-                      ),
-                    ],
-                  ),
-                ),
+                _buildTotalPrice(),
               ],
             ),
             SizedBox(height: getProportionateScreenHeight(20)),
 
             /// Checkout button
             DefaultButton(
-              child: Text("Check Out"),
+              child: Text("Check Out", style: mPrimaryFontStyle),
               onPressed: () {},
             ),
           ],
         ),
       ),
+    );
+  }
+
+  _buildTotalPrice() {
+    return BlocBuilder<CartBloc, CartState>(
+      builder: (context, state) {
+        if (state is CartLoaded) {
+          return Text.rich(
+            TextSpan(
+              style: TextStyle(color: mSecondaryColor, fontSize: 16),
+              children: [
+                TextSpan(text: "Total:\n"),
+                TextSpan(
+                  text: "${state.cartResponse.totalCartPrice}",
+                  style: TextStyle(fontSize: 18, color: mPrimaryColor),
+                ),
+              ],
+            ),
+          );
+        }
+        return Center(child: SpinKitThreeBounce(color: mPrimaryColor));
+      },
     );
   }
 }
