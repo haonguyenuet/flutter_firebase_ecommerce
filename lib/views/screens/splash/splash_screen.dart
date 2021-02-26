@@ -1,6 +1,6 @@
+import 'package:e_commerce_app/views/widgets/others/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 
@@ -15,11 +15,7 @@ class SplashScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                "assets/icons/keyboard_logo.svg",
-                width: 100,
-                height: 100,
-              ),
+              Logo(),
               Text(
                 "Peachy",
                 style: TextStyle(

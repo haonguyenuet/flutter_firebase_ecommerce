@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 
 import 'color_constant.dart';
 
+const mPrimaryFontStyle = TextStyle(
+  color: Colors.white,
+  fontSize: 18,
+  fontWeight: FontWeight.bold,
+);
+
 /// Style
 OutlineInputBorder outlineInputBorder() {
   return OutlineInputBorder(

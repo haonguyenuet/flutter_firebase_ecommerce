@@ -1,8 +1,10 @@
 import 'package:e_commerce_app/configs/router.dart';
-import 'package:e_commerce_app/utils/common_func.dart';
+
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
+import 'package:e_commerce_app/utils/common_func.dart';
+import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
@@ -34,9 +36,9 @@ class ProductCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-              offset: Offset(0, 7),
-              blurRadius: 12,
-              color: Color(0XFFB0CCE1).withOpacity(0.4),
+              offset: Offset(0, 5),
+              blurRadius: 10,
+              color: mPrimaryColor.withOpacity(0.2),
             ),
           ],
         ),

@@ -1,7 +1,7 @@
-import 'package:e_commerce_app/utils/common_func.dart';
 import 'package:e_commerce_app/business_logic/entities/feedback_item.dart';
 import 'package:e_commerce_app/business_logic/entities/user.dart';
 import 'package:e_commerce_app/business_logic/services/user_service.dart';
+import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';

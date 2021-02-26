@@ -4,6 +4,7 @@ import 'package:e_commerce_app/views/screens/cart/cart_screen.dart';
 import 'package:e_commerce_app/views/screens/detail_product/detail_product_screen.dart';
 import 'package:e_commerce_app/views/screens/feedback/feedback_screen.dart';
 import 'package:e_commerce_app/views/screens/forgot_password/forgot_password_screen.dart';
+import 'package:e_commerce_app/views/screens/initialize_info/initialize_info_screen.dart';
 import 'package:e_commerce_app/views/screens/login_success/login_success_screen.dart';
 import 'package:e_commerce_app/views/screens/profile/profile_screen.dart';
 import 'package:e_commerce_app/views/screens/show_all/category_screen.dart';
@@ -17,6 +18,7 @@ class AppRouter {
   static const String HOME = '/';
   static const String SPLASH = '/splash';
   static const String LOGIN = '/login';
+  static const String INITIALIZE_INFO = '/initialize_info';
   static const String REGISTER = '/register';
   static const String LOGIN_SUCCESS = '/login_success';
   static const String FORGOT_PASSWORD = '/forgot_password';
@@ -32,12 +34,18 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => SplashScreen());
       case LOGIN:
         return MaterialPageRoute(builder: (_) => LoginScreen());
+      case INITIALIZE_INFO:
+        return MaterialPageRoute(builder: (_) => InitializeInfoScreen());
       case REGISTER:
-        return MaterialPageRoute(builder: (_) => RegisterScreen());
+        var initialUser = settings.arguments as UserModel;
+        return MaterialPageRoute(
+          builder: (_) => RegisterScreen(initialUser: initialUser),
+        );
       case LOGIN_SUCCESS:
         var user = settings.arguments as UserModel;
         return MaterialPageRoute(
-            builder: (_) => LoginSuccessScreen(currUser: user));
+          builder: (_) => LoginSuccessScreen(currUser: user),
+        );
       case HOME:
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case PROFILE:
@@ -45,7 +53,8 @@ class AppRouter {
       case show_details:
         var product = settings.arguments as Product;
         return MaterialPageRoute(
-            builder: (_) => DetailProductScreen(product: product));
+          builder: (_) => DetailProductScreen(product: product),
+        );
       case FEEDBACK:
         return MaterialPageRoute(builder: (_) => FeedbackScreen());
       case SHOW_ALL:

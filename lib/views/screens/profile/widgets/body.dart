@@ -1,6 +1,6 @@
 import 'package:e_commerce_app/business_logic/blocs/auth/auth_bloc.dart';
 import 'package:e_commerce_app/business_logic/blocs/auth/auth_event.dart';
-import 'package:e_commerce_app/views/screens/cart/cart_screen.dart';
+import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/views/screens/profile/widgets/profile_header.dart';
 import 'package:e_commerce_app/views/screens/profile/widgets/profile_menu_button.dart';
 import 'package:flutter/material.dart';
@@ -25,18 +25,14 @@ class Body extends StatelessWidget {
             text: "My Cart",
             icon: "assets/icons/Cart Icon.svg",
             press: () {
-              Navigator.pushNamed(
-                context,
-                CartScreen.routeName,
-              );
+              Navigator.pushNamed(context, AppRouter.CART);
             },
           ),
           ProfileMenuButton(
             text: "Log Out",
             icon: "assets/icons/exit.svg",
             press: () {
-              var _authBloc = BlocProvider.of<AuthenticationBloc>(context);
-              _authBloc.add(LoggedOut());
+              BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
             },
           ),
         ],
