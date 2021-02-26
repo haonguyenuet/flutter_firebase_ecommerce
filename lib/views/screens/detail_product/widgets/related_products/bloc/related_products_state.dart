@@ -21,10 +21,10 @@ class RelatedProductsLoaded extends RelatedProductsState {
 }
 
 /// When related products wasn't loaded => related products not loaded state
-class RelatedProductsNotLoaded extends RelatedProductsState {
+class RelatedProductsLoadFailure extends RelatedProductsState {
   final String error;
 
-  RelatedProductsNotLoaded(this.error);
+  RelatedProductsLoadFailure(this.error);
   @override
   List<Object> get props => [error];
 }

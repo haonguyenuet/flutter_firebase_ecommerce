@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:e_commerce_app/business_logic/entities/user.dart';
-import 'package:e_commerce_app/business_logic/repositories/storage_repo.dart';
+import 'package:e_commerce_app/business_logic/repository/storage_repo.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

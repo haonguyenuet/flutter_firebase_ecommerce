@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/business_logic/entities/user.dart';
 
-import 'package:e_commerce_app/business_logic/repositories/user_repo.dart';
+import 'package:e_commerce_app/business_logic/repository/user_repository/user_repo.dart';
 import 'package:e_commerce_app/utils/validator.dart';
 
 import 'package:bloc/bloc.dart';

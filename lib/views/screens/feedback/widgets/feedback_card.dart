@@ -1,6 +1,6 @@
 import 'package:e_commerce_app/business_logic/entities/feedback_item.dart';
 import 'package:e_commerce_app/business_logic/entities/user.dart';
-import 'package:e_commerce_app/business_logic/services/user_service.dart';
+import 'package:e_commerce_app/business_logic/repository/user_repository/firebase_user_repo.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -33,7 +33,7 @@ class FeedbackCard extends StatelessWidget {
         children: [
           /// User info
           FutureBuilder(
-            future: UserService().getUserById(feedbackItem.uid),
+            future: FirebaseUserRepository().getUserById(feedbackItem.uid),
             builder: (context, snapshot) {
               UserModel user = snapshot.data;
               return snapshot.hasData

@@ -1,16 +1,9 @@
-import 'package:e_commerce_app/constants/color_constant.dart';
-import 'package:e_commerce_app/views/widgets/others/custom_bottom_nav.dart';
-import 'package:e_commerce_app/views/widgets/others/section.dart';
-import 'package:e_commerce_app/views/widgets/single_card/category_card.dart';
-import 'package:e_commerce_app/views/widgets/single_card/product_card.dart';
+import 'package:e_commerce_app/business_logic/entities/entites.dart';
+import 'package:e_commerce_app/configs/router.dart';
+import 'package:e_commerce_app/constants/constants.dart';
+import 'package:e_commerce_app/views/screens/home_page/bloc/bloc.dart';
+import 'package:e_commerce_app/views/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:e_commerce_app/business_logic/entities/banner.dart';
-import 'package:e_commerce_app/business_logic/entities/category.dart';
-import 'package:e_commerce_app/business_logic/entities/product.dart';
-import 'package:e_commerce_app/constants/style_constant.dart';
-import 'package:e_commerce_app/views/screens/home_page/bloc/home_bloc.dart';
-import 'package:e_commerce_app/views/screens/home_page/bloc/home_event.dart';
-import 'package:e_commerce_app/views/screens/home_page/bloc/home_state.dart';
 import 'package:e_commerce_app/views/screens/home_page/widgets/home_banner.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,35 +49,44 @@ class _HomeScreenState extends State<HomeScreen> {
       return SingleChildScrollView(
         child: Column(
           children: [
-            /// Banners
             HomeBanner(banners: banners),
-
-            /// Categories
-            Section(
-              title: "Product Categories",
-              children:
-                  categories.map((c) => CategoryCard(category: c)).toList(),
-              handleOnTap: () {},
-            ),
-
-            /// Section : Popular product - products are most sold
-            Section(
-              title: "Popular product",
-              children: products.map((p) => ProductCard(product: p)).toList(),
-              handleOnTap: () {},
-            ),
-
-            /// Others
+            _buildHomeCategories(categories),
+            _buildPopularProducts(products),
             SpecialOffers(),
           ],
         ),
       );
-    } else if (homeState is HomeLoading) {
-      return Center(child: CircularProgressIndicator());
-    } else if (homeState is HomeNotLoaded) {
-      return Center(child: Text(homeState.error));
-    } else {
-      return Center(child: Text("Unknown state"));
     }
+    if (homeState is HomeLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
+    if (homeState is HomeLoadFailure) {
+      return Center(child: Text(homeState.error));
+    }
+    return Center(child: Text("Something went wrong."));
+  }
+
+  Section _buildPopularProducts(List<Product> products) {
+    return Section(
+      title: "Popular product",
+      children: products.map((p) => ProductCard(product: p)).toList(),
+      handleOnTap: () => navigatorToAllProducts(context),
+    );
+  }
+
+  Section _buildHomeCategories(List<Category> categories) {
+    return Section(
+      title: "Product Categories",
+      children: categories
+          .map((c) => CategoryCard(
+              category: c,
+              onPressed: () => navigatorToAllProducts(context, category: c)))
+          .toList(),
+      handleOnTap: () => navigatorToAllProducts(context),
+    );
+  }
+
+  void navigatorToAllProducts(BuildContext context, {Category category}) {
+    Navigator.pushNamed(context, AppRouter.ALL_PRODUCTS, arguments: category);
   }
 }

@@ -1,22 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/business_logic/entities/feedback_item.dart';
-import 'package:meta/meta.dart';
-
-import 'abstract/i_feedback_service.dart';
+import 'package:e_commerce_app/business_logic/repository/feedback_repository/feedback_repo.dart';
 
 /// Feedbacks is collection type in each product
-class FeedbackService extends IFeedbackService {
-  String pid; // Selected product Id
+class FirebaseFeedbackRepository implements FeedbackRepository {
   var productCollection = FirebaseFirestore.instance.collection("products");
-
-  /// Constructor
-  /// Created by NDH
-  FeedbackService({@required this.pid});
 
   /// Get all feedback items
   /// Created by NDH
   @override
-  Future<List<FeedbackItem>> getFeedbacks() async {
+  Future<List<FeedbackItem>> getFeedbacks(String pid) async {
     return await productCollection
         .doc(pid)
         .collection("feedbacks")
@@ -31,7 +24,7 @@ class FeedbackService extends IFeedbackService {
   /// Get feedbacks by star
   /// Created by NDH
   @override
-  Future<List<FeedbackItem>> getFeedbacksByStar(int star) async {
+  Future<List<FeedbackItem>> getFeedbacksByStar(String pid, int star) async {
     return await productCollection
         .doc(pid)
         .collection("feedbacks")
@@ -47,7 +40,7 @@ class FeedbackService extends IFeedbackService {
   /// Add new feedback
   /// Created by NDH
   @override
-  Future<void> addNewFeedback(FeedbackItem newItem) async {
+  Future<void> addNewFeedback(String pid, FeedbackItem newItem) async {
     var productRef = productCollection.doc(pid);
     await productRef
         .collection("feedbacks")

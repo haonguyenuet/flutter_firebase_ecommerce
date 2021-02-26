@@ -1,7 +1,6 @@
 import 'package:e_commerce_app/views/widgets/buttons/cart_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 
 import 'package:e_commerce_app/constants/color_constant.dart';
 

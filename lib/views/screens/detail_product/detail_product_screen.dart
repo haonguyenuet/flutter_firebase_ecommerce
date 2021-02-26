@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/business_logic/entities/product.dart';
-import 'package:e_commerce_app/business_logic/repositories/detail_product_repo.dart';
-import 'package:e_commerce_app/business_logic/repositories/user_repo.dart';
+import 'package:e_commerce_app/business_logic/repository/cart_repository/cart_repo.dart';
+import 'package:e_commerce_app/business_logic/repository/product_repository/product_repo.dart';
+import 'package:e_commerce_app/business_logic/repository/user_repository/user_repo.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/utils/common_func.dart';
@@ -19,7 +20,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'widgets/add_to_cart_nav.dart';
 
 class DetailProductScreen extends StatelessWidget {
-  final _detailProductRepository = DetailProductRepository();
   final Product product;
 
   DetailProductScreen({Key key, this.product}) : super(key: key);
@@ -30,12 +30,13 @@ class DetailProductScreen extends StatelessWidget {
         providers: [
           BlocProvider(
             create: (context) => DetailProductBloc(
-                detailProductRepository: _detailProductRepository,
+                cartRepository: RepositoryProvider.of<CartRepository>(context),
                 userRepository: RepositoryProvider.of<UserRepository>(context)),
           ),
           BlocProvider(
             create: (context) => RelatedProductsBloc(
-              detailProductRepository: _detailProductRepository,
+              productRepository:
+                  RepositoryProvider.of<ProductRepository>(context),
             )..add(LoadRelatedProducts(product.id, product.categoryId)),
           ),
         ],

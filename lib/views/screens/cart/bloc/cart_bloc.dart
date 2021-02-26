@@ -1,5 +1,7 @@
-import 'package:e_commerce_app/business_logic/repositories/cart_repo.dart';
-import 'package:e_commerce_app/business_logic/repositories/user_repo.dart';
+import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
+import 'package:e_commerce_app/business_logic/repository/cart_repository/cart_repo.dart';
+import 'package:e_commerce_app/business_logic/repository/user_repository/user_repo.dart';
+import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:e_commerce_app/views/screens/cart/bloc/cart_event.dart';
 import 'package:e_commerce_app/views/screens/cart/bloc/cart_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,10 +39,16 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   Stream<CartState> _mapLoadCartToState() async* {
     try {
       var currUser = _userRepository.currentUser;
-      var cartResponse = await _cartRepository.getCartData(currUser.id);
-      yield CartLoaded(cartResponse);
+      var cart = await _cartRepository.getCart(currUser.id);
+      var sum = 0;
+      cart.forEach((c) => sum += c.price);
+
+      yield CartLoaded(CartResponse(
+        cart: cart,
+        totalCartPrice: formatNumber(sum),
+      ));
     } catch (e) {
-      yield CartNotLoaded(e);
+      yield CartLoadFailure(e);
     }
   }
 
@@ -73,4 +81,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       print(e);
     }
   }
+}
+
+class CartResponse {
+  final List<CartItem> cart;
+  final String totalCartPrice;
+
+  CartResponse({this.cart, this.totalCartPrice});
 }

@@ -1,18 +1,20 @@
-import 'dart:async';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/business_logic/entities/user.dart';
-import 'package:e_commerce_app/business_logic/services/abstract/i_user_service.dart';
-import 'package:e_commerce_app/business_logic/services/user_service.dart';
+import 'package:e_commerce_app/business_logic/repository/user_repository/user_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-/// Repository which manages user authentication.
-class UserRepository {
+class FirebaseUserRepository implements UserRepository {
+  var _userCollection = FirebaseFirestore.instance.collection("users");
+
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   GoogleSignIn _googleSignIn = GoogleSignIn();
-  IUserService _userService = UserService();
   UserModel _currentUser = UserModel.empty;
   String _authException = "";
+
+  UserModel get currentUser => _currentUser;
+  FirebaseAuth get firebaseAuth => _firebaseAuth;
+  String get authException => _authException;
 
   /// Don't use onAuthChange
 
@@ -29,7 +31,7 @@ class UserRepository {
       newUser = newUser.cloneWith(id: result.user.uid);
 
       /// Create new doc in users collection
-      _userService.addUserData(newUser);
+      this.addUserData(newUser);
     } on FirebaseAuthException catch (e) {
       _authException = e.message.toString();
     }
@@ -68,7 +70,7 @@ class UserRepository {
     var currFirebaseUser = _firebaseAuth.currentUser;
     // Get current user from firestore
     if (currFirebaseUser != null) {
-      _currentUser = await _userService.getUserById(currFirebaseUser.uid);
+      _currentUser = await this.getUserById(currFirebaseUser.uid);
     }
     return _currentUser != UserModel.empty;
   }
@@ -83,7 +85,22 @@ class UserRepository {
     ]).catchError((error) => print(error));
   }
 
-  UserModel get currentUser => _currentUser;
-  FirebaseAuth get firebaseAuth => _firebaseAuth;
-  String get authException => _authException;
+  /// Get user by id
+  Future<UserModel> getUserById(String uid) async {
+    return await _userCollection
+        .doc(uid)
+        .get()
+        .then((doc) => UserModel.fromMap(doc.id, doc.data()))
+        .catchError((error) => print(error));
+  }
+
+  /// Add new doc to users collection
+  Future<void> addUserData(UserModel user) async {
+    await _userCollection.doc(user.id).set(user.toMap());
+  }
+
+  /// Update doc in users collection
+  Future<void> updateUserData(UserModel user) async {
+    await _userCollection.doc(user.id).update(user.toMap());
+  }
 }

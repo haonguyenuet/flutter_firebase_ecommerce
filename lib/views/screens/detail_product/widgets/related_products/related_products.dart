@@ -13,7 +13,7 @@ class RelatedProducts extends StatelessWidget {
         if (state is RelatedProductsLoading) {
           return Center(child: CircularProgressIndicator());
         }
-        if (state is RelatedProductsNotLoaded) {
+        if (state is RelatedProductsLoadFailure) {
           return Center(child: Text("Loading Failure"));
         }
         if (state is RelatedProductsLoaded) {

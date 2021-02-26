@@ -1,20 +1,20 @@
-import 'package:e_commerce_app/business_logic/repositories/detail_product_repo.dart';
-import 'package:e_commerce_app/business_logic/repositories/user_repo.dart';
+import 'package:e_commerce_app/business_logic/repository/cart_repository/cart_repo.dart';
+import 'package:e_commerce_app/business_logic/repository/user_repository/user_repo.dart';
 import 'package:e_commerce_app/views/screens/detail_product/bloc/detail_product_event.dart';
 import 'package:e_commerce_app/views/screens/detail_product/bloc/detail_product_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
 class DetailProductBloc extends Bloc<DetailProductEvent, DetailProductState> {
-  DetailProductRepository _detailProductRepository;
+  CartRepository _cartRepository;
   UserRepository _userRepository;
 
   DetailProductBloc({
-    @required DetailProductRepository detailProductRepository,
+    @required CartRepository cartRepository,
     @required UserRepository userRepository,
-  })  : assert(detailProductRepository != null),
+  })  : assert(cartRepository != null),
         assert(userRepository != null),
-        _detailProductRepository = detailProductRepository,
+        _cartRepository = cartRepository,
         _userRepository = userRepository,
         super(null);
 
@@ -30,7 +30,7 @@ class DetailProductBloc extends Bloc<DetailProductEvent, DetailProductState> {
     try {
       yield Adding();
       var currentUser = _userRepository.currentUser;
-      await _detailProductRepository.addToCart(currentUser.id, event.cartItem);
+      await _cartRepository.addCartItem(currentUser.id, event.cartItem);
       yield AddSuccess();
     } catch (e) {
       yield AddFailure(e);

@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
-import 'abstract/i_cart_service.dart';
+import 'package:e_commerce_app/business_logic/repository/cart_repository/cart_repo.dart';
 
 /// cart is collection in each user
-class CartService extends ICartService {
+class FirebaseCartRepository implements CartRepository {
   var userCollection = FirebaseFirestore.instance.collection("users");
 
   /// Get all cart items
@@ -16,7 +16,7 @@ class CartService extends ICartService {
 
   /// Add item
   /// Created by NDH
-  Future<void> addCartItem(String uid,CartItem newItem) async {
+  Future<void> addCartItem(String uid, CartItem newItem) async {
     var userRef = userCollection.doc(uid);
     await userRef.collection("cart").doc(newItem.pid).get().then((doc) async {
       if (doc.exists) {
@@ -37,7 +37,7 @@ class CartService extends ICartService {
 
   /// Remove item
   /// Created by NDH
-  Future<void> removeCartItem(String uid,String cid) async {
+  Future<void> removeCartItem(String uid, String cid) async {
     await userCollection
         .doc(uid)
         .collection("cart")

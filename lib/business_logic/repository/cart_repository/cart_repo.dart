@@ -1,6 +1,6 @@
 import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
 
-abstract class ICartService {
+abstract class CartRepository {
 // Get all cart items
   Future<List<CartItem>> getCart(String uid);
 

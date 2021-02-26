@@ -1,8 +1,6 @@
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/constants/style_constant.dart';
-import 'package:e_commerce_app/views/screens/home_page/home_screen.dart';
-import 'package:e_commerce_app/views/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';

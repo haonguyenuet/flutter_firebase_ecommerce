@@ -1,7 +1,6 @@
 import 'package:e_commerce_app/views/screens/feedback/widgets/star_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:provider/provider.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 
 class Header extends StatefulWidget {

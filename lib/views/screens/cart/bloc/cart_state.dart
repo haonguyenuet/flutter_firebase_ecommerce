@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/business_logic/repositories/cart_repo.dart';
+import 'package:e_commerce_app/views/screens/cart/bloc/cart_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class CartState extends Equatable {
@@ -22,10 +22,10 @@ class CartLoaded extends CartState {
 }
 
 /// Cart wasn't loaded
-class CartNotLoaded extends CartState {
+class CartLoadFailure extends CartState {
   final String error;
 
-  CartNotLoaded(this.error);
+  CartLoadFailure(this.error);
 
   @override
   List<Object> get props => [error];
@@ -33,4 +33,3 @@ class CartNotLoaded extends CartState {
 
 /// Cart was cleared
 class CartChanged extends CartState {}
-

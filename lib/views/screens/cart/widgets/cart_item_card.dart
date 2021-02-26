@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/business_logic/services/product_service.dart';
+import 'package:e_commerce_app/business_logic/repository/product_repository/firebase_product_repo.dart';
 import 'package:e_commerce_app/configs/router.dart';
 
 import 'package:e_commerce_app/configs/size_config.dart';
@@ -26,7 +26,7 @@ class CartItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: ProductService().getProductById(cartItem.pid),
+      future: FirebaseProductRepository().getProductById(cartItem.pid),
       builder: (context, snapshot) {
         Product product = snapshot.data;
         return snapshot.hasData

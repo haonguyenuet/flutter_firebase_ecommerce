@@ -17,7 +17,7 @@ class Body extends StatelessWidget {
           return Center(child: Text("Updating..."));
         }
 
-        if (state is CartNotLoaded) {
+        if (state is CartLoadFailure) {
           return Center(child: Text("Load failure"));
         }
         if (state is CartLoaded) {
@@ -53,7 +53,7 @@ class Body extends StatelessWidget {
                     child: Text("Bạn chưa có sản phẩm nào trong giỏ hàng")),
           );
         }
-        return Center(child: Text("Unknown state"));
+        return Center(child: Text("Something went wrong."));
       },
     );
   }

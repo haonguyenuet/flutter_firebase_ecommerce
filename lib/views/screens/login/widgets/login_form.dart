@@ -1,16 +1,14 @@
-import 'package:e_commerce_app/constants/style_constant.dart';
-import 'package:e_commerce_app/utils/common_func.dart';
+import 'package:e_commerce_app/business_logic/blocs/auth/bloc.dart';
+import 'package:e_commerce_app/constants/constants.dart';
+import 'package:e_commerce_app/utils/utils.dart';
+import 'package:e_commerce_app/views/screens/login/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:e_commerce_app/business_logic/blocs/auth/auth_bloc.dart';
-import 'package:e_commerce_app/business_logic/blocs/auth/auth_event.dart';
 
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
-import 'package:e_commerce_app/views/screens/login/bloc/login_bloc.dart';
-import 'package:e_commerce_app/views/screens/login/bloc/login_event.dart';
-import 'package:e_commerce_app/views/screens/login/bloc/login_state.dart';
+
 import 'package:e_commerce_app/views/screens/login/widgets/facebook_login_btn.dart';
 import 'package:e_commerce_app/views/screens/login/widgets/google_login_btn.dart';
 import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';

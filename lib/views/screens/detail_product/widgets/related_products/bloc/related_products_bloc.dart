@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/business_logic/repositories/detail_product_repo.dart';
+import 'package:e_commerce_app/business_logic/repository/product_repository/product_repo.dart';
 import 'package:e_commerce_app/views/screens/detail_product/widgets/related_products/bloc/related_products_event.dart';
 import 'package:e_commerce_app/views/screens/detail_product/widgets/related_products/bloc/related_products_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,12 +6,12 @@ import 'package:meta/meta.dart';
 
 class RelatedProductsBloc
     extends Bloc<RelatedProductsEvent, RelatedProductsState> {
-  DetailProductRepository _detailProductRepository;
+  ProductRepository _productRepository;
 
   RelatedProductsBloc({
-    @required DetailProductRepository detailProductRepository,
-  })  : assert(detailProductRepository != null),
-        _detailProductRepository = detailProductRepository,
+    @required ProductRepository productRepository,
+  })  : assert(productRepository != null),
+        _productRepository = productRepository,
         super(RelatedProductsLoading());
 
   /// Map from load related products event to states
@@ -20,14 +20,14 @@ class RelatedProductsBloc
       RelatedProductsEvent event) async* {
     if (event is LoadRelatedProducts) {
       try {
-        final relatedProducts =
-            await _detailProductRepository.getRelatedProducts(
-          event.pid,
+        var products = await _productRepository.getProductsByCategory(
           event.categoryId,
         );
+        final relatedProducts =
+            products.where((product) => product.id != event.pid).toList();
         yield RelatedProductsLoaded(relatedProducts: relatedProducts);
       } catch (e) {
-        yield RelatedProductsNotLoaded(e);
+        yield RelatedProductsLoadFailure(e);
       }
     }
   }

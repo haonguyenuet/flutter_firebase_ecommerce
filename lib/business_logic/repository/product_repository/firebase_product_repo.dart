@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/business_logic/entities/category.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
-import 'package:e_commerce_app/business_logic/services/abstract/i_product_service.dart';
-
-class ProductService extends IProductService {
+import 'package:e_commerce_app/business_logic/repository/product_repository/product_repo.dart';
+class FirebaseProductRepository implements ProductRepository {
   final CollectionReference productCollection =
       FirebaseFirestore.instance.collection("products");
 
@@ -47,5 +46,16 @@ class ProductService extends IProductService {
     return await productCollection
         .doc(pid)
         .update({"rating": rating}).catchError((error) => print(error));
+  }
+
+  @override
+  Future<List<Category>> getCategories() async {
+    return await FirebaseFirestore.instance
+        .collection("categories")
+        .get()
+        .then((snapshot) => snapshot.docs
+            .map((doc) => Category.fromMap(doc.id, doc.data()))
+            .toList())
+        .catchError((err) => print(err));
   }
 }

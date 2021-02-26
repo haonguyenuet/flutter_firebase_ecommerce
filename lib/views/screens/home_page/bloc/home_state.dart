@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/business_logic/repositories/home_repo.dart';
+import 'package:e_commerce_app/views/screens/home_page/bloc/home_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class HomeState extends Equatable {
@@ -27,13 +27,13 @@ class HomeLoaded extends HomeState {
 }
 
 /// Failure
-class HomeNotLoaded extends HomeState {
+class HomeLoadFailure extends HomeState {
   final String error;
 
-  const HomeNotLoaded(this.error);
+  const HomeLoadFailure(this.error);
 
   @override
   String toString() {
-    return 'HomeNotLoaded{e: $error}';
+    return 'HomeLoadFailure{e: $error}';
   }
 }
