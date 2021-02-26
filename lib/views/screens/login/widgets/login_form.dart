@@ -1,3 +1,5 @@
+import 'package:e_commerce_app/constants/style_constant.dart';
+import 'package:e_commerce_app/utils/common_func.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/business_logic/blocs/auth/auth_bloc.dart';
@@ -45,12 +47,12 @@ class _LoginFormState extends State<LoginForm> {
 
         /// Failure
         if (state.isFailure) {
-          _showFailureDialog(state.message);
+          showFailureDialog(context, state.message);
         }
 
         /// Logging
         if (state.isSubmitting) {
-          _showLogging(state.message);
+          showProcessing(context, state.message);
         }
       },
       child: BlocBuilder<LoginBloc, LoginState>(
@@ -159,10 +161,7 @@ class _LoginFormState extends State<LoginForm> {
 
   _buildButtonLogin(LoginState state) {
     return DefaultButton(
-      child: Text(
-        'Login'.toUpperCase(),
-        style: TextStyle(color: Colors.white, fontSize: 20),
-      ),
+      child: Text('Login'.toUpperCase(), style: mPrimaryFontStyle),
       onPressed: () {
         if (isLoginButtonEnabled()) {
           _loginBloc.add(LoginWithCredential(
@@ -216,52 +215,18 @@ class _LoginFormState extends State<LoginForm> {
           Text('Don\'t have an account ?'),
           SizedBox(width: 5),
           GestureDetector(
-            onTap: () => Navigator.pushNamed(context, AppRouter.REGISTER),
+            onTap: () => Navigator.pushNamed(
+              context,
+              AppRouter.INITIALIZE_INFO,
+            ),
             child: Text(
-              'Sign up',
+              'Register',
               style: TextStyle(color: mPrimaryColor),
             ),
           ),
         ],
       ),
     );
-  }
-
-  void _showFailureDialog(String content) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: Text(
-          "Login Failure",
-          style: TextStyle(color: mPrimaryColor),
-        ),
-        content: Text(content),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('Close'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          )
-        ],
-      ),
-    );
-  }
-
-  void _showLogging(String content) {
-    Scaffold.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(content),
-              CircularProgressIndicator(),
-            ],
-          ),
-        ),
-      );
   }
 
   bool isLoginButtonEnabled() {

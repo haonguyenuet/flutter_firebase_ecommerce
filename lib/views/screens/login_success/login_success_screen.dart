@@ -2,6 +2,7 @@ import 'package:e_commerce_app/business_logic/entities/user.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
+import 'package:e_commerce_app/constants/style_constant.dart';
 import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
 import 'package:flutter/material.dart';
 
@@ -53,10 +54,7 @@ class LoginSuccessScreen extends StatelessWidget {
                   SizedBox(
                     width: SizeConfig.screenWidth * 0.6,
                     child: DefaultButton(
-                      child: Text(
-                        "Back to home",
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      ),
+                      child: Text("Back to home", style: mPrimaryFontStyle),
                       onPressed: () {
                         Navigator.pushNamedAndRemoveUntil(
                           context,

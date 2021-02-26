@@ -1,5 +1,5 @@
-import 'package:e_commerce_app/utils/common_func.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
+import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 

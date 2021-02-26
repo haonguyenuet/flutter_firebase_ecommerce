@@ -10,9 +10,10 @@ import 'package:e_commerce_app/views/screens/login/widgets/login_header.dart';
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var userRepository = RepositoryProvider.of<UserRepository>(context);
     return BlocProvider(
-      create: (context) => LoginBloc(userRepository: userRepository),
+      create: (context) => LoginBloc(
+        userRepository: RepositoryProvider.of<UserRepository>(context),
+      ),
       child: Scaffold(
         backgroundColor: mPrimaryColor,
         body: SafeArea(

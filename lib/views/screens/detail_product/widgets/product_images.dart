@@ -1,5 +1,5 @@
-import 'package:e_commerce_app/utils/common_func.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
+import 'package:e_commerce_app/utils/common_func.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -34,7 +34,7 @@ class _ProductImagesState extends State<ProductImages> {
                   color: Colors.white,
                 ),
                 child: FutureBuilder(
-                  future: loadImage(product.images[0]),
+                  future: loadImage(product.images[index]),
                   builder: (context, snapshot) {
                     return (snapshot.hasData)
                         ? Image.network(snapshot.data)

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/style_constant.dart';
 
-
-class RegisterHeader extends StatelessWidget {
+class InitializeInfoHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -12,7 +11,7 @@ class RegisterHeader extends StatelessWidget {
         SizedBox(height: SizeConfig.screenHeight * 0.04),
         Logo(),
         Text(
-          "Register Now",
+          "Complete Information",
           style: headingStyle(),
         ),
         Text(

@@ -1,3 +1,5 @@
+import 'package:e_commerce_app/constants/style_constant.dart';
+import 'package:e_commerce_app/utils/common_func.dart';
 import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +15,9 @@ import 'package:e_commerce_app/views/screens/register/bloc/register_event.dart';
 import 'package:e_commerce_app/views/screens/register/bloc/register_state.dart';
 
 class RegisterForm extends StatefulWidget {
+  final UserModel intialUser;
+
+  const RegisterForm({Key key, this.intialUser}) : super(key: key);
   @override
   _RegisterFormState createState() => _RegisterFormState();
 }
@@ -25,9 +30,6 @@ class _RegisterFormState extends State<RegisterForm> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
   bool _isShowPassword = false;
   bool _isShowConfirmPassword = false;
 
@@ -50,12 +52,12 @@ class _RegisterFormState extends State<RegisterForm> {
 
         /// Failure
         if (state.isFailure) {
-          _showFailureDialog(state.message);
+          showFailureDialog(context, state.message);
         }
 
-        /// Logging
+        /// Registering
         if (state.isSubmitting) {
-          _showRegistering(state.message);
+          showProcessing(context, state.message);
         }
       },
       child: BlocBuilder<RegisterBloc, RegisterState>(
@@ -74,7 +76,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Register with your information',
+                      'Register with email and password',
                       style: TextStyle(
                         color: mPrimaryColor,
                         fontWeight: FontWeight.bold,
@@ -88,12 +90,6 @@ class _RegisterFormState extends State<RegisterForm> {
                   _buildPasswordInput(),
                   SizedBox(height: getProportionateScreenHeight(10)),
                   _buildConfirmPasswordInput(),
-                  SizedBox(height: getProportionateScreenHeight(10)),
-                  _buildNameInput(),
-                  SizedBox(height: getProportionateScreenHeight(10)),
-                  _buildAddressInput(),
-                  SizedBox(height: getProportionateScreenHeight(10)),
-                  _buildPhoneNumberInput(),
                   SizedBox(height: getProportionateScreenHeight(20)),
                   _buildButtonRegister(),
                   SizedBox(height: getProportionateScreenHeight(20)),
@@ -187,56 +183,16 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 
-  /// Build content
-  _buildNameInput() {
-    return TextFormField(
-      controller: _nameController,
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        hintText: 'Name',
-        suffixIcon: Icon(Icons.person),
-      ),
-    );
-  }
-
-  /// Build content
-  _buildAddressInput() {
-    return TextFormField(
-      controller: _addressController,
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        hintText: 'Address',
-        suffixIcon: Icon(Icons.location_city),
-      ),
-    );
-  }
-
-  /// Build content
-  _buildPhoneNumberInput() {
-    return TextFormField(
-      controller: _phoneNumberController,
-      keyboardType: TextInputType.text,
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-      decoration: InputDecoration(
-        hintText: 'Phone number',
-        suffixIcon: Icon(Icons.phone_callback),
-      ),
-    );
-  }
-
   _buildButtonRegister() {
     return DefaultButton(
       child: Text(
         'Register'.toUpperCase(),
-        style: TextStyle(color: Colors.white, fontSize: 20),
+        style: mPrimaryFontStyle,
       ),
       onPressed: () {
         if (isRegisterButtonEnabled()) {
-          UserModel newUser = UserModel(
+          UserModel newUser = widget.intialUser.cloneWith(
             email: _emailController.text,
-            name: _nameController.text,
-            address: _addressController.text,
-            phoneNumber: _phoneNumberController.text,
           );
           _registerBloc.add(
             Submitted(
@@ -258,8 +214,11 @@ class _RegisterFormState extends State<RegisterForm> {
           Text('Already have an account! '),
           SizedBox(width: 5),
           GestureDetector(
-            onTap: () =>
-                Navigator.pushReplacementNamed(context, AppRouter.LOGIN),
+            onTap: () => Navigator.pushNamedAndRemoveUntil(
+              context,
+              AppRouter.LOGIN,
+              (_) => false,
+            ),
             child: Text(
               'Sign in',
               style: TextStyle(color: mPrimaryColor),
@@ -268,43 +227,6 @@ class _RegisterFormState extends State<RegisterForm> {
         ],
       ),
     );
-  }
-
-  void _showFailureDialog(String content) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: Text(
-          "Login Failure",
-          style: TextStyle(color: mPrimaryColor),
-        ),
-        content: Text(content),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('Close'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          )
-        ],
-      ),
-    );
-  }
-
-  void _showRegistering(String content) {
-    Scaffold.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(content),
-              CircularProgressIndicator(),
-            ],
-          ),
-        ),
-      );
   }
 
   bool isRegisterButtonEnabled() {
@@ -316,8 +238,5 @@ class _RegisterFormState extends State<RegisterForm> {
   bool get isPopulated =>
       _emailController.text.isNotEmpty &&
       _passwordController.text.isNotEmpty &&
-      _confirmPasswordController.text.isNotEmpty &&
-      _nameController.text.isNotEmpty &&
-      _addressController.text.isNotEmpty &&
-      _phoneNumberController.text.isNotEmpty;
+      _confirmPasswordController.text.isNotEmpty;
 }

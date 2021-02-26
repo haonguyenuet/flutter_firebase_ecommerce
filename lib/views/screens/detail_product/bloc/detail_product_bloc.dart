@@ -28,11 +28,9 @@ class DetailProductBloc extends Bloc<DetailProductEvent, DetailProductState> {
   /// Map from add to cart event to states
   Stream<DetailProductState> _mapAddToCartToState(AddToCart event) async* {
     try {
+      yield Adding();
       var currentUser = _userRepository.currentUser;
       await _detailProductRepository.addToCart(currentUser.id, event.cartItem);
-      yield Adding();
-      //for loading screen
-      await Future.delayed(Duration(seconds: 1));
       yield AddSuccess();
     } catch (e) {
       yield AddFailure(e);
