@@ -9,32 +9,46 @@ class FirebaseFeedbackRepository implements FeedbackRepository {
   /// Get all feedback items
   /// Created by NDH
   @override
-  Future<List<FeedbackItem>> getFeedbacks(String pid) async {
-    return await productCollection
-        .doc(pid)
-        .collection("feedbacks")
-        .orderBy("timestamp", descending: true)
-        .get()
-        .then((snapshot) => snapshot.docs
-            .map((doc) => FeedbackItem.fromMap(doc.id, doc.data()))
-            .toList())
-        .catchError((error) => print(error));
+  Stream<List<FeedbackItem>> feedbackStream(String pid) {
+    try {
+      return productCollection
+          .doc(pid)
+          .collection("feedbacks")
+          .orderBy("timestamp", descending: true)
+          .snapshots()
+          .map((snapshot) => snapshot.docs
+              .map((doc) => FeedbackItem.fromMap(doc.id, doc.data()))
+              .toList());
+    } catch (e) {
+      print(e);
+    }
+    return null;
   }
 
   /// Get feedbacks by star
   /// Created by NDH
   @override
   Future<List<FeedbackItem>> getFeedbacksByStar(String pid, int star) async {
-    return await productCollection
-        .doc(pid)
-        .collection("feedbacks")
-        .where("rating", isEqualTo: star)
-        .orderBy("timestamp", descending: true)
-        .get()
-        .then((snapshot) => snapshot.docs
-            .map((doc) => FeedbackItem.fromMap(doc.id, doc.data()))
-            .toList())
-        .catchError((error) => print(error));
+    return star != 0
+        ? await productCollection
+            .doc(pid)
+            .collection("feedbacks")
+            .where("rating", isEqualTo: star)
+            .orderBy("timestamp", descending: true)
+            .get()
+            .then((snapshot) => snapshot.docs
+                .map((doc) => FeedbackItem.fromMap(doc.id, doc.data()))
+                .toList())
+            .catchError((error) => print(error))
+        : await productCollection
+            .doc(pid)
+            .collection("feedbacks")
+            .orderBy("timestamp", descending: true)
+            .get()
+            .then((snapshot) => snapshot.docs
+                .map((doc) => FeedbackItem.fromMap(doc.id, doc.data()))
+                .toList())
+            .catchError((error) => print(error));
   }
 
   /// Add new feedback
