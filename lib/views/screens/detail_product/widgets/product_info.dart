@@ -20,7 +20,7 @@ class ProductInfo extends StatefulWidget {
 
 class _ProductInfoState extends State<ProductInfo> {
   Product get product => widget.product;
-  // init states
+  // local states
   bool seeMore = false;
 
   @override

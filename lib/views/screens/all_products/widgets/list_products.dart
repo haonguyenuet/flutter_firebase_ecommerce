@@ -8,35 +8,37 @@ class ListProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AllProductsBloc, AllProductsState>(
-        buildWhen: (prevState, currState) {
-      return currState is! UpdateToolbarState;
-    }, builder: (context, state) {
-      if (state is DisplayListProducts) {
-        if (state.loading) {
-          return Loading();
+      buildWhen: (prevState, currState) {
+        return true;
+      },
+      builder: (context, state) {
+        if (state is DisplayListProducts) {
+          if (state.loading) {
+            return Loading();
+          }
+          if (state.msg.isNotEmpty) {
+            return Center(child: Text(state.msg));
+          }
+          if (state.productsByCategory.length > 0) {
+            var products = state.productsByCategory;
+            return GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.75,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 0,
+              ),
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                return ProductCard(product: products[index]);
+              },
+            );
+          }
+          return Center(child: Text("No product."));
+        } else {
+          return Center(child: Text("Something went wrong."));
         }
-        if (state.msg.isNotEmpty) {
-          return Center(child: Text(state.msg));
-        }
-        if (state.productsByCategory.length > 0) {
-          var products = state.productsByCategory;
-          return GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.75,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 0,
-            ),
-            itemCount: products.length,
-            itemBuilder: (context, index) {
-              return ProductCard(product: products[index]);
-            },
-          );
-        }
-        return Center(child: Text("No product."));
-      } else {
-        return Center(child: Text("Something went wrong."));
-      }
-    });
+      },
+    );
   }
 }

@@ -34,9 +34,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Stream<HomeState> _mapLoadHomeToState() async* {
     try {
       HomeResponse homeResponse = HomeResponse(
-        banners: await _bannerRepository.getBanners(),
-        categories: await _productRepository.getCategories(),
-        products: await _productRepository.getProducts(),
+        banners: await _bannerRepository.getBanners() ?? [],
+        categories: await _productRepository.getCategories() ?? [],
+        products: await _productRepository.getProducts() ?? [],
       );
       yield HomeLoaded(homeResponse: homeResponse);
     } catch (e) {

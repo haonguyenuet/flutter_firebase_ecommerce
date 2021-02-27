@@ -28,15 +28,15 @@ class ProductCard extends StatelessWidget {
         );
       },
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
         margin: EdgeInsets.only(right: 10, left: 10, bottom: 20),
-        width: 150,
+        width: 160,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-              offset: Offset(0, 5),
+              offset: Offset(-1, 5),
               blurRadius: 10,
               color: mPrimaryColor.withOpacity(0.2),
             ),
@@ -66,6 +66,7 @@ class ProductCard extends StatelessWidget {
               textAlign: TextAlign.start,
               maxLines: 2,
             ),
+            SizedBox(height: 5),
 
             /// Product price and is available
             Row(

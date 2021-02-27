@@ -55,6 +55,8 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
             _buildPhoneNumberInput(),
             SizedBox(height: getProportionateScreenHeight(20)),
             _buildButtonContinue(),
+            SizedBox(height: getProportionateScreenHeight(10)),
+            _buildHaveAccountText(),
           ],
         ),
       ),
@@ -119,6 +121,29 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
           showFailureDialog(context, "You need complete all fields");
         }
       },
+    );
+  }
+
+  _buildHaveAccountText() {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text('Already have an account! '),
+          SizedBox(width: 5),
+          GestureDetector(
+            onTap: () => Navigator.pushNamedAndRemoveUntil(
+              context,
+              AppRouter.LOGIN,
+              (_) => false,
+            ),
+            child: Text(
+              'Sign in',
+              style: TextStyle(color: mPrimaryColor),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

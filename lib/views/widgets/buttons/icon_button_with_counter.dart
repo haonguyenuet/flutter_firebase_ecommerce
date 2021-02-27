@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/views/widgets/buttons/circle_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -6,12 +7,14 @@ class IconButtonWithCounter extends StatelessWidget {
     Key key,
     @required this.counter,
     @required this.svgIcon,
+    this.size,
     this.onPressed,
   }) : super(key: key);
 
   final int counter;
   final String svgIcon;
   final Function onPressed;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
@@ -19,27 +22,24 @@ class IconButtonWithCounter extends StatelessWidget {
       alignment: Alignment.center,
       overflow: Overflow.visible,
       children: [
-        buildIcon(),
-        if (counter > 0) buildCounter(),
+        _buildIcon(),
+        if (counter > 0) _buildCounter(),
       ],
     );
   }
 
-  IconButton buildIcon() {
-    return IconButton(
-      icon: SvgPicture.asset(svgIcon),
-      onPressed: onPressed,
-    );
+  _buildIcon() {
+    return CircleIconButton(size: 20, onPressed: onPressed, svgIcon: svgIcon);
   }
 
-  Positioned buildCounter() {
+  _buildCounter() {
     return Positioned(
-      right: 2,
-      top: 8,
+      right: -4,
+      top: -2,
       child: Container(
         alignment: Alignment.center,
-        width: 18,
-        height: 18,
+        width: 20,
+        height: 20,
         decoration: BoxDecoration(
           color: Colors.red,
           shape: BoxShape.circle,
@@ -50,7 +50,7 @@ class IconButtonWithCounter extends StatelessWidget {
             "${counter > 9 ? "9+" : counter}",
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 8,
+              fontSize: 10,
               color: Colors.white,
             ),
           ),

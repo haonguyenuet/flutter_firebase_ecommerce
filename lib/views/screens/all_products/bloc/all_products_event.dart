@@ -7,7 +7,7 @@ class AllProductsEvent extends Equatable {
 }
 
 class OpenScreen extends AllProductsEvent {
-  final Category category ;
+  final Category category;
 
   OpenScreen(this.category);
 
@@ -19,10 +19,6 @@ class OpenScreen extends AllProductsEvent {
     return 'OpenScreen{keyword: $category}';
   }
 }
-
-class ClickIconSearch extends AllProductsEvent {}
-
-class ClickCloseSearch extends AllProductsEvent {}
 
 class SearchQueryChanged extends AllProductsEvent {
   final String keyword;
@@ -51,11 +47,6 @@ class CategoryChanged extends AllProductsEvent {
     return 'CategoryChanged{keyword: $category}';
   }
 }
-
-// class ClickIconSort extends AllProductsEvent {
-//   @override
-//   List<Object> get props => [DateTime.now().millisecond];
-// }
 
 // class SortByChanged extends AllShowsEvent {
 //   SHOW_SORT_BY showSortBy;

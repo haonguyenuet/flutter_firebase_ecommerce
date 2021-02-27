@@ -13,8 +13,9 @@ class CategoriesLoading extends AllProductsState {}
 /// Adready categories data
 class CategoriesLoaded extends AllProductsState {
   final List<Category> categories;
+  final int selectedCategoryIndex;
 
-  CategoriesLoaded({this.categories});
+  CategoriesLoaded({this.categories, this.selectedCategoryIndex});
 
   @override
   List<Object> get props => [categories];
@@ -77,33 +78,3 @@ class DisplayListProducts extends AllProductsState {
     return 'DisplayListProducts{productsByCategory: ${productsByCategory.length}, loading: $loading, msg: $msg}';
   }
 }
-
-/// Update toolbar
-class UpdateToolbarState extends AllProductsState {
-  final bool showSearchField;
-
-  UpdateToolbarState({this.showSearchField});
-
-  @override
-  List<Object> get props => [showSearchField];
-
-  @override
-  String toString() {
-    return 'UpdateSearchIconState{showSearchIcon: $showSearchField}';
-  }
-}
-
-// class OpenSortOption extends AllProductsState {
-//   final bool isOpen;
-//   final SHOW_SORT_BY showSortBy;
-
-//   OpenSortOption({this.isOpen, this.showSortBy});
-
-//   @override
-//   List<Object> get props => [isOpen, showSortBy, DateTime.now().millisecond];
-
-//   @override
-//   String toString() {
-//     return 'OpenSortOption{isOpen: $isOpen, showSortBy: $showSortBy}';
-//   }
-// }

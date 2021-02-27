@@ -6,13 +6,11 @@ import 'package:e_commerce_app/constants/color_constant.dart';
 class CategoryCard extends StatelessWidget {
   final Category category;
   final Function onPressed;
-  final bool isActive;
 
   const CategoryCard({
     Key key,
     @required this.category,
     this.onPressed,
-    this.isActive = true,
   }) : super(key: key);
 
   @override
@@ -23,7 +21,7 @@ class CategoryCard extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         margin: EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
-          color: isActive ? mPrimaryColor : mSecondaryColor,
+          color: mPrimaryColor,
           borderRadius: BorderRadius.circular(5),
         ),
         child: Row(
@@ -38,7 +36,7 @@ class CategoryCard extends StatelessWidget {
               category.name,
               style: TextStyle(
                 fontSize: 14,
-                color: isActive ? Colors.white : mTextColor,
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             )

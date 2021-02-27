@@ -21,7 +21,7 @@ class AddToCartNavigation extends StatefulWidget {
 class _AddToCartNavigationState extends State<AddToCartNavigation> {
   Product get product => widget.product;
   DetailProductBloc _detailProductBloc;
-  // init states
+  // local states
   int quantity = 1;
   @override
   void initState() {

@@ -54,7 +54,9 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => DetailProductScreen(product: product));
       case FEEDBACK:
-        return MaterialPageRoute(builder: (_) => FeedbackScreen());
+        var product = settings.arguments as Product;
+        return MaterialPageRoute(
+            builder: (_) => FeedbackScreen(product: product));
       case ALL_PRODUCTS:
         var category = settings.arguments as Category;
         return MaterialPageRoute(

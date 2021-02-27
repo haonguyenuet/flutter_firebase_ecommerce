@@ -1,10 +1,8 @@
 import 'package:e_commerce_app/business_logic/entities/user.dart';
 
 abstract class UserRepository {
-  UserModel _currentUser = UserModel.empty;
-  String _authException = "";
-  UserModel get currentUser => _currentUser;
-  String get authException => _authException;
+  UserModel get currentUser;
+  String get authException;
 
   /// Creates a new user with the provided [information]
   /// Created by NDH

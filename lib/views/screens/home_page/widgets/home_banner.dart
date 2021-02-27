@@ -15,7 +15,7 @@ class HomeBanner extends StatefulWidget {
 
 class _HomeBannerState extends State<HomeBanner> {
   List<BannerItem> get banners => widget.banners;
-  // init states
+  // local states
   final aspectRatioBanner = 16 / 9;
   var currentIndex = 0;
 

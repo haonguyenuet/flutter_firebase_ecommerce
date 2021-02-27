@@ -2,6 +2,7 @@ import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/views/screens/home_page/bloc/bloc.dart';
+import 'package:e_commerce_app/views/screens/home_page/widgets/category_card.dart';
 import 'package:e_commerce_app/views/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/views/screens/home_page/widgets/home_banner.dart';
@@ -28,11 +29,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         return Scaffold(
-          appBar: buildAppBar(context),
           body: SafeArea(
-            child: SizedBox(
-              width: double.infinity,
-              child: _buildContent(state),
+            child: Column(
+              children: [
+                HomeAppBar(),
+                Expanded(
+                  child: _buildContent(state),
+                )
+              ],
             ),
           ),
           bottomNavigationBar: CustomBottomNav(selectedMenu: MenuState.home),
@@ -66,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Center(child: Text("Something went wrong."));
   }
 
-  Section _buildPopularProducts(List<Product> products) {
+  _buildPopularProducts(List<Product> products) {
     return Section(
       title: "Popular product",
       children: products.map((p) => ProductCard(product: p)).toList(),
@@ -74,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Section _buildHomeCategories(List<Category> categories) {
+  _buildHomeCategories(List<Category> categories) {
     return Section(
       title: "Product Categories",
       children: categories

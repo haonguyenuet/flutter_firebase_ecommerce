@@ -27,15 +27,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   Stream<CartState> mapEventToState(CartEvent event) async* {
     if (event is LoadCart) {
       yield* _mapLoadCartToState();
-    } else if (event is CartChanged) {
-      yield CartLoading();
-      yield* _mapCartChangedToState(event);
     } else if (event is RemoveCartItem) {
       yield* _mapRemoveCartItemToState(event);
     } else if (event is UpdateCartItem) {
       yield* _mapUpdateCartItemToState(event);
     } else if (event is ClearCart) {
       yield* _mapClearCartToState();
+    } else if (event is CartUpdated) {
+      yield* _mapCartUpdatedToState(event);
     }
   }
 
@@ -44,7 +43,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       var currUser = _userRepository.currentUser;
       _cartSubscription?.cancel();
       _cartSubscription = _cartRepository.cartStream(currUser.id).listen(
-            (cart) => add(CartChanged(cart)),
+            (cart) => add(CartUpdated(cart)),
           );
     } catch (e) {
       yield CartLoadFailure(e);
@@ -78,13 +77,19 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
   }
 
-  Stream<CartState> _mapCartChangedToState(CartChanged event) async* {
+  Stream<CartState> _mapCartUpdatedToState(CartUpdated event) async* {
     var sum = 0;
     event.cart.forEach((c) => sum += c.price);
     yield CartLoaded(CartResponse(
       cart: event.cart,
       totalCartPrice: formatNumber(sum),
     ));
+  }
+
+  @override
+  Future<void> close() {
+    _cartSubscription?.cancel();
+    return super.close();
   }
 }
 

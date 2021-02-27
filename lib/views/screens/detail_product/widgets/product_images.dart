@@ -16,7 +16,7 @@ class ProductImages extends StatefulWidget {
 
 class _ProductImagesState extends State<ProductImages> {
   Product get product => widget.product;
-  // init states
+  // local states
   int _currentPage = 0;
   @override
   Widget build(BuildContext context) {

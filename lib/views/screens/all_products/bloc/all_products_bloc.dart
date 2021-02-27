@@ -10,7 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
   ProductRepository _productRepository;
-  Category _filterCategory;
+  Category _currCategory;
+  String _currKeyword = "";
 
   AllProductsBloc({@required ProductRepository productRepository})
       : assert(productRepository != null),
@@ -24,13 +25,7 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
   @override
   Stream<AllProductsState> mapEventToState(AllProductsEvent event) async* {
     if (event is OpenScreen) {
-      yield UpdateToolbarState(showSearchField: false);
       yield* _mapOpenScreenToState(event.category);
-    } else if (event is ClickIconSearch) {
-      yield UpdateToolbarState(showSearchField: true);
-    } else if (event is ClickCloseSearch) {
-      yield UpdateToolbarState(showSearchField: false);
-      yield* _mapSearchQueryChangedToState("");
     } else if (event is SearchQueryChanged) {
       yield* _mapSearchQueryChangedToState(event.keyword);
     } else if (event is CategoryChanged) {
@@ -38,54 +33,69 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
     }
   }
 
+  /// Open screen event => state
   Stream<AllProductsState> _mapOpenScreenToState(Category category) async* {
     try {
       yield CategoriesLoading();
-      // Get products by category
-      var categories = await _productRepository.getCategories();
-      yield CategoriesLoaded(categories: categories);
-      // Set _filterCategory
-      _filterCategory = category == null ? categories[0] : category;
+      // Get categories
+      var categories = await _productRepository.getCategories() ?? [];
+      var selectedCategoryIndex = 0;
+      if (category != null) {
+        for (int i = 0; i < categories.length; i++) {
+          if (categories[i].cid == category.cid) selectedCategoryIndex = i;
+        }
+      }
+      yield CategoriesLoaded(
+        categories: categories,
+        selectedCategoryIndex: selectedCategoryIndex,
+      );
+      // Set _currCategory
+      _currCategory = category == null ? categories[0] : category;
       // Get products by category
       var products =
-          await _productRepository.getProductsByCategory(_filterCategory.cid);
+          await _productRepository.getProductsByCategory(_currCategory.cid);
       yield DisplayListProducts.data(products);
     } catch (e) {
       yield DisplayListProducts.error(e.toString());
     }
   }
 
+  /// Search query changed => state
   Stream<AllProductsState> _mapSearchQueryChangedToState(
       String keyword) async* {
     yield DisplayListProducts.loading();
     try {
-      // Get products by category
-      var products =
-          await _productRepository.getProductsByCategory(_filterCategory.cid);
-      // This should be execute at server side
-      // Filter products by keyword
-      bool query(Product p) =>
-          keyword.isEmpty ||
-          p.name.toLowerCase().contains(keyword.toLowerCase());
-
-      products = products.where(query).toList();
-      yield DisplayListProducts.data(products);
+      _currKeyword = keyword;
+      yield DisplayListProducts.data(await getProducts());
     } catch (e) {
       yield DisplayListProducts.error(e.toString());
     }
   }
 
+  /// Category changed => state
   Stream<AllProductsState> _mapCategoryChangedToState(
       Category category) async* {
     try {
-      // Set _filterCategory by category from event
-      _filterCategory = category;
-      var products =
-          await _productRepository.getProductsByCategory(category.cid);
-      yield DisplayListProducts.data(products);
+      _currCategory = category;
+      yield DisplayListProducts.data(await getProducts());
     } catch (e) {
       yield DisplayListProducts.error(e.toString());
     }
+  }
+
+  /// This should be execute at server side
+  Future<List<Product>> getProducts() async {
+    // Get products by current category
+    var products =
+        await _productRepository.getProductsByCategory(_currCategory.cid);
+
+    // Filter products by current keyword
+    bool query(Product p) =>
+        _currKeyword.isEmpty ||
+        p.name.toLowerCase().contains(_currKeyword.toLowerCase());
+
+    products = products.where(query).toList();
+    return products;
   }
 
   @override
@@ -93,3 +103,4 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
     return super.close();
   }
 }
+

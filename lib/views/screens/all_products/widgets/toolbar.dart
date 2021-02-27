@@ -1,8 +1,5 @@
 import 'package:e_commerce_app/constants/color_constant.dart';
-import 'package:e_commerce_app/constants/style_constant.dart';
-import 'package:e_commerce_app/views/screens/all_products/bloc/all_products_bloc.dart';
-import 'package:e_commerce_app/views/screens/all_products/bloc/all_products_event.dart';
-import 'package:e_commerce_app/views/screens/all_products/bloc/all_products_state.dart';
+import 'package:e_commerce_app/views/screens/all_products/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,7 +10,9 @@ class ToolBar extends StatefulWidget {
 
 class _ToolBarState extends State<ToolBar> {
   TextEditingController _searchController = TextEditingController();
-  BuildContext _blocContext;
+  // Local states
+  bool _showSearchField = false;
+
   @override
   void initState() {
     super.initState();
@@ -29,79 +28,86 @@ class _ToolBarState extends State<ToolBar> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AllProductsBloc, AllProductsState>(
-      buildWhen: (prevState, currState) {
-        return currState is UpdateToolbarState;
-      },
-      builder: (context, state) {
-        _blocContext = context;
-        if (state is UpdateToolbarState) {
-          return Container(
-            color: mPrimaryColor,
-            height: 50,
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.white,
-                  ),
-                  onPressed: () => Navigator.pop(context),
-                ),
-                Expanded(child: _buildTitle(state)),
-                _buildActions(state),
-              ],
-            ),
-          );
-        } else {
-          return Container();
-        }
-      },
+    return Container(
+      height: 50,
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: mPrimaryLightColor, width: 1),
+        ),
+      ),
+      child: Row(
+        children: <Widget>[
+          _buildLeading(context),
+          Expanded(child: _buildTitle()),
+          _buildActions(context),
+        ],
+      ),
     );
   }
 
-  _buildActions(UpdateToolbarState state) {
+  _buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back_ios),
+      onPressed: () => Navigator.pop(context),
+    );
+  }
+
+  _buildActions(BuildContext context) {
     return Row(
       children: [
+        // Search action
         IconButton(
           icon: Icon(
-            state.showSearchField ? Icons.close : Icons.search,
-            color: Colors.white,
+            _showSearchField ? Icons.close : Icons.search,
           ),
           onPressed: () {
-            BlocProvider.of<AllProductsBloc>(_blocContext).add(
-              state.showSearchField ? ClickCloseSearch() : ClickIconSearch(),
-            );
+            setState(() {
+              _showSearchField = !_showSearchField;
+            });
+            if (_showSearchField == false) {
+              BlocProvider.of<AllProductsBloc>(context)
+                  .add(SearchQueryChanged(keyword: ""));
+            }
           },
         ),
-        IconButton(
-            icon: Icon(
-              Icons.sort,
-              color: Colors.white,
-            ),
-            onPressed: () {}),
+        // Sort action
+        IconButton(icon: Icon(Icons.sort), onPressed: () {}),
       ],
     );
   }
 
-  _buildTitle(UpdateToolbarState state) {
-    if (state.showSearchField) {
+  _buildTitle() {
+    if (_showSearchField) {
       _searchController.text = "";
-      return TextField(
-        controller: _searchController,
-        keyboardType: TextInputType.text,
-        autofocus: true,
-        textInputAction: TextInputAction.search,
-        decoration: InputDecoration(
-          hintText: 'Search',
-          border: InputBorder.none,
-          hintStyle: TextStyle(
-            color: Colors.grey,
+      return Container(
+        height: 40,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          color: mPrimaryLightColor,
+        ),
+        child: TextField(
+          controller: _searchController,
+          keyboardType: TextInputType.text,
+          autofocus: true,
+          textInputAction: TextInputAction.search,
+          decoration: InputDecoration(
+            hintText: 'Search',
+            contentPadding: EdgeInsets.only(top: 3),
+            prefixIcon: Icon(Icons.search),
+            border: InputBorder.none,
+            hintStyle: TextStyle(color: Colors.grey),
           ),
         ),
       );
     } else
-      return Text('All Products', style: mPrimaryFontStyle);
+      return Text(
+        'All Products',
+        style: TextStyle(
+          color: mPrimaryColor,
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+        ),
+      );
   }
 }

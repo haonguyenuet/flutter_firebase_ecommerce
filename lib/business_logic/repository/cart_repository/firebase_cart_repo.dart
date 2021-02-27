@@ -7,11 +7,16 @@ class FirebaseCartRepository implements CartRepository {
   var userCollection = FirebaseFirestore.instance.collection("users");
 
   /// Get all cart items
-  Future<List<CartItem>> getCart(String uid) async {
-    return await userCollection.doc(uid).collection("cart").get().then(
-        (snapshot) => snapshot.docs
-            .map((doc) => CartItem.fromMap(doc.id, doc.data()))
-            .toList());
+  Stream<List<CartItem>> cartStream(String uid) {
+    try {
+      return userCollection.doc(uid).collection("cart").snapshots().map(
+          (snapshot) => snapshot.docs
+              .map((doc) => CartItem.fromMap(doc.id, doc.data()))
+              .toList());
+    } catch (e) {
+      print(e);
+    }
+    return null;
   }
 
   /// Add item

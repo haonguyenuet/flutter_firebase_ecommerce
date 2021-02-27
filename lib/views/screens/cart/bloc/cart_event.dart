@@ -35,10 +35,10 @@ class UpdateCartItem extends CartEvent {
 }
 
 /// Cart was cleared
-class CartChanged extends CartEvent {
+class CartUpdated extends CartEvent {
   final List<CartItem> cart;
 
-  CartChanged(this.cart);
+  CartUpdated(this.cart);
 
   @override
   List<Object> get props => [cart];

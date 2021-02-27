@@ -13,7 +13,7 @@ class FilterCategoryBottomSheet extends StatefulWidget {
 }
 
 class _FilterCategoryBottomSheetState extends State<FilterCategoryBottomSheet> {
-  // init states
+  // local states
 
   void close() {
     if (Navigator.canPop(context)) {

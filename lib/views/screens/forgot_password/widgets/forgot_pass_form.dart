@@ -10,7 +10,7 @@ class ForgotPassForm extends StatefulWidget {
 }
 
 class _ForgotPassFormState extends State<ForgotPassForm> {
-  // init states
+  // local states
   final _formKey = GlobalKey<FormState>();
   List<String> _errors = [];
   String _email = "";

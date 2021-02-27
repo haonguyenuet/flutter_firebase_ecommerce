@@ -7,23 +7,13 @@ import 'package:e_commerce_app/views/screens/all_products/widgets/toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AllProductsScreen extends StatefulWidget {
+class AllProductsScreen extends StatelessWidget {
   final Category category;
 
   const AllProductsScreen({
     Key key,
     this.category,
   }) : super(key: key);
-  @override
-  _AllProductsScreenState createState() => _AllProductsScreenState();
-}
-
-class _AllProductsScreenState extends State<AllProductsScreen> {
-  Category get category => widget.category;
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +26,34 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
           child: Container(
             child: Column(
               children: <Widget>[
-                ToolBar(),
-                Categories(),
+                _buildMyAppBar(),
                 Expanded(child: ListProducts()),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  _buildMyAppBar() {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 2),
+            blurRadius: 5,
+            color: Colors.black12,
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          ToolBar(),
+          Categories(),
+        ],
       ),
     );
   }
