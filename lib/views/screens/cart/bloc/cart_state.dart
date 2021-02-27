@@ -30,6 +30,3 @@ class CartLoadFailure extends CartState {
   @override
   List<Object> get props => [error];
 }
-
-/// Cart was cleared
-class CartChanged extends CartState {}

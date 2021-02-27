@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
 import 'package:e_commerce_app/business_logic/repository/cart_repository/cart_repo.dart';
 import 'package:e_commerce_app/business_logic/repository/user_repository/user_repo.dart';
@@ -10,6 +12,7 @@ import 'package:meta/meta.dart';
 class CartBloc extends Bloc<CartEvent, CartState> {
   final CartRepository _cartRepository;
   final UserRepository _userRepository;
+  StreamSubscription _cartSubscription;
 
   CartBloc({
     @required CartRepository cartRepository,
@@ -24,9 +27,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   Stream<CartState> mapEventToState(CartEvent event) async* {
     if (event is LoadCart) {
       yield* _mapLoadCartToState();
-    } else if (event is RefreshCart) {
+    } else if (event is CartChanged) {
       yield CartLoading();
-      yield* _mapLoadCartToState();
+      yield* _mapCartChangedToState(event);
     } else if (event is RemoveCartItem) {
       yield* _mapRemoveCartItemToState(event);
     } else if (event is UpdateCartItem) {
@@ -39,14 +42,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   Stream<CartState> _mapLoadCartToState() async* {
     try {
       var currUser = _userRepository.currentUser;
-      var cart = await _cartRepository.getCart(currUser.id);
-      var sum = 0;
-      cart.forEach((c) => sum += c.price);
-
-      yield CartLoaded(CartResponse(
-        cart: cart,
-        totalCartPrice: formatNumber(sum),
-      ));
+      _cartSubscription?.cancel();
+      _cartSubscription = _cartRepository.cartStream(currUser.id).listen(
+            (cart) => add(CartChanged(cart)),
+          );
     } catch (e) {
       yield CartLoadFailure(e);
     }
@@ -56,7 +55,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     try {
       var currUser = _userRepository.currentUser;
       await _cartRepository.removeCartItem(currUser.id, event.pid);
-      yield CartChanged();
     } catch (e) {
       print(e);
     }
@@ -66,7 +64,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     try {
       var currUser = _userRepository.currentUser;
       await _cartRepository.updateCartItem(currUser.id, event.cartItem);
-      yield CartChanged();
     } catch (e) {
       print(e);
     }
@@ -76,10 +73,18 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     try {
       var currUser = _userRepository.currentUser;
       await _cartRepository.clearCart(currUser.id);
-      yield CartChanged();
     } catch (e) {
       print(e);
     }
+  }
+
+  Stream<CartState> _mapCartChangedToState(CartChanged event) async* {
+    var sum = 0;
+    event.cart.forEach((c) => sum += c.price);
+    yield CartLoaded(CartResponse(
+      cart: event.cart,
+      totalCartPrice: formatNumber(sum),
+    ));
   }
 }
 

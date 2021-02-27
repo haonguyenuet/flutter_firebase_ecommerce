@@ -62,10 +62,7 @@ class CartItemCard extends StatelessWidget {
                 ),
               )
             // Loading
-            : Container(
-                alignment: Alignment.center,
-                height: getProportionateScreenHeight(130),
-              );
+            : Container(height: getProportionateScreenHeight(130));
       },
     );
   }
@@ -119,10 +116,10 @@ class CartItemCard extends StatelessWidget {
       children: [
         // decrease button
         CircleIconButton(
-          icon: Icon(Icons.remove),
+          svgIcon: "assets/icons/subtract.svg",
           color: Color(0xFFF5F6F9),
-          size: getProportionateScreenWidth(30),
-          handleOnPress: cartItem.quantity > 1
+          size: 16,
+          onPressed: cartItem.quantity > 1
               ? () {
                   var newQuantity = cartItem.quantity - 1;
                   var newPrice = newQuantity * product.originalPrice;
@@ -150,10 +147,10 @@ class CartItemCard extends StatelessWidget {
         const SizedBox(width: 10),
         // increase button
         CircleIconButton(
-          icon: Icon(Icons.add),
+          svgIcon: "assets/icons/add.svg",
           color: Color(0xFFF5F6F9),
-          size: getProportionateScreenWidth(30),
-          handleOnPress: cartItem.quantity < product.quantity
+          size: 16,
+          onPressed: cartItem.quantity < product.quantity
               ? () {
                   var newQuantity = cartItem.quantity + 1;
                   var newPrice = newQuantity * product.originalPrice;

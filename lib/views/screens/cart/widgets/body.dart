@@ -2,6 +2,7 @@ import 'package:e_commerce_app/views/screens/cart/bloc/cart_bloc.dart';
 import 'package:e_commerce_app/views/screens/cart/bloc/cart_event.dart';
 import 'package:e_commerce_app/views/screens/cart/bloc/cart_state.dart';
 import 'package:e_commerce_app/views/screens/cart/widgets/cart_item_card.dart';
+import 'package:e_commerce_app/views/widgets/others/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,11 +11,8 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(
       builder: (context, state) {
-        if (state is CartChanged) {
-          BlocProvider.of<CartBloc>(context).add(RefreshCart());
-        }
         if (state is CartLoading) {
-          return Center(child: Text("Updating..."));
+          return Loading();
         }
 
         if (state is CartLoadFailure) {

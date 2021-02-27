@@ -11,9 +11,6 @@ abstract class CartEvent extends Equatable {
 /// When open cart screen -> load cart event
 class LoadCart extends CartEvent {}
 
-/// When change cart => refresh cart event
-class RefreshCart extends CartEvent {}
-
 /// When user clicks to a clear cart => clear cart event
 class ClearCart extends CartEvent {}
 
@@ -35,4 +32,14 @@ class UpdateCartItem extends CartEvent {
 
   @override
   List<Object> get props => [cartItem.cid];
+}
+
+/// Cart was cleared
+class CartChanged extends CartEvent {
+  final List<CartItem> cart;
+
+  CartChanged(this.cart);
+
+  @override
+  List<Object> get props => [cart];
 }
