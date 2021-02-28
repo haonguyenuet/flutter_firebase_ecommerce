@@ -3,7 +3,7 @@ import 'package:e_commerce_app/business_logic/entities/user.dart';
 
 import 'package:e_commerce_app/business_logic/repository/user_repository/user_repo.dart';
 import 'package:e_commerce_app/utils/validator.dart';
-
+import 'package:rxdart/rxdart.dart';
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/views/screens/register/bloc/register_event.dart';
 import 'package:e_commerce_app/views/screens/register/bloc/register_state.dart';
@@ -15,6 +15,23 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       : assert(userRepository != null),
         _userRepository = userRepository,
         super(RegisterState.empty());
+
+  @override
+  Stream<Transition<RegisterEvent, RegisterState>> transformEvents(
+      Stream<RegisterEvent> events, transitionFn) {
+    var debounceStream = events
+        .where((event) =>
+            event is EmailChanged ||
+            event is PasswordChanged ||
+            event is ConfirmPasswordChanged)
+        .debounceTime(Duration(milliseconds: 300));
+    var nonDebounceStream = events.where((event) =>
+        event is! EmailChanged &&
+        event is! PasswordChanged &&
+        event is! ConfirmPasswordChanged);
+    return super.transformEvents(
+        nonDebounceStream.mergeWith([debounceStream]), transitionFn);
+  }
 
   @override
   Stream<RegisterState> mapEventToState(RegisterEvent event) async* {

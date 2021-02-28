@@ -6,6 +6,7 @@ import 'package:e_commerce_app/business_logic/repository/product_repository/prod
 import 'package:e_commerce_app/views/screens/all_products/bloc/all_products_event.dart';
 import 'package:e_commerce_app/views/screens/all_products/bloc/all_products_state.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
@@ -17,6 +18,20 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
       : assert(productRepository != null),
         _productRepository = productRepository,
         super(DisplayListProducts.loading());
+
+  @override
+  Stream<Transition<AllProductsEvent, AllProductsState>> transformEvents(
+      Stream<AllProductsEvent> events, transitionFn) {
+    var debounceStream = events
+        .where((event) => event is SearchQueryChanged)
+        .debounceTime(Duration(milliseconds: 300));
+    var nonDebounceStream =
+        events.where((event) => event is! SearchQueryChanged);
+    return super.transformEvents(
+      nonDebounceStream.mergeWith([debounceStream]),
+      transitionFn,
+    );
+  }
 
   int sortByName(Product a, Product b) => a.name.compareTo(b.name);
 
@@ -103,4 +118,3 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
     return super.close();
   }
 }
-

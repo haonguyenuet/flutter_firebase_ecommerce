@@ -3,7 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/business_logic/repository/user_repository/user_repo.dart';
 import 'package:e_commerce_app/utils/validator.dart';
-
+import 'package:rxdart/rxdart.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 
@@ -15,8 +15,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         _userRepository = userRepository,
         super(LoginState.empty());
 
-  // @override
-  // LoginState get initialState => LoginState.empty();
+  @override
+  Stream<Transition<LoginEvent, LoginState>> transformEvents(
+      Stream<LoginEvent> events, transitionFn) {
+    var debounceStream = events
+        .where((event) => event is EmailChanged || event is PasswordChanged)
+        .debounceTime(Duration(milliseconds: 300));
+    var nonDebounceStream = events
+        .where((event) => event is! EmailChanged && event is! PasswordChanged);
+    return super.transformEvents(nonDebounceStream.mergeWith([debounceStream]), transitionFn);
+  }
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
