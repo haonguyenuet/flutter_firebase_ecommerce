@@ -10,9 +10,10 @@ class CartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButtonWithCounter(
-      svgIcon: "assets/icons/shopping-cart.svg",
+      icon: Icons.shopping_bag_outlined,
       onPressed: () => Navigator.pushNamed(context, AppRouter.CART),
       counter: counter,
+      size: 30,
     );
   }
 }

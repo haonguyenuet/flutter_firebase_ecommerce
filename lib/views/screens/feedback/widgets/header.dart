@@ -20,11 +20,7 @@ class _HeaderState extends State<Header> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(bottom: 10),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: Color(0xFFF5F6F9), width: 1),
-        ),
-      ),
+      color: mDarkShadeColor,
       child: Column(
         children: [
           _buildFeedbackStats(),
@@ -50,7 +46,11 @@ class _HeaderState extends State<Header> {
               children: [
                 Text(
                   "${state.feedbackResponse.rating}",
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
                 RatingBar.builder(
                   initialRating: state.feedbackResponse.rating,
@@ -58,6 +58,7 @@ class _HeaderState extends State<Header> {
                   allowHalfRating: true,
                   itemCount: 5,
                   itemSize: 26,
+                  unratedColor: mAccentShadeColor,
                   itemBuilder: (context, _) => Icon(
                     Icons.star,
                     color: Colors.amber,
@@ -67,7 +68,7 @@ class _HeaderState extends State<Header> {
                 const SizedBox(height: 15),
                 Text(
                   "${state.feedbackResponse.numberOfFeedbacks} nhận xét",
-                  style: TextStyle(fontSize: 14),
+                  style: TextStyle(fontSize: 14, color: Colors.white),
                 ),
               ],
             ),
@@ -146,22 +147,19 @@ class StarButton extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 5),
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
         decoration: BoxDecoration(
-          color: Color(0xFFF5F6F9),
+          color: Colors.white,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
           children: [
             Text(
               "$numberOfStars",
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
             ),
             const SizedBox(width: 5),
             Icon(
               Icons.star,
-              color: isActive ? Colors.amber : Colors.grey,
+              color: isActive ? Colors.amber : mAccentShadeColor,
               size: 20,
             ),
           ],

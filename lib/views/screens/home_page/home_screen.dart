@@ -3,13 +3,11 @@ import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/views/screens/home_page/bloc/bloc.dart';
 import 'package:e_commerce_app/views/screens/home_page/widgets/category_card.dart';
+import 'package:e_commerce_app/views/screens/home_page/widgets/persistent_header.dart';
 import 'package:e_commerce_app/views/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/views/screens/home_page/widgets/home_banner.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'widgets/app_bar.dart';
 import 'package:e_commerce_app/views/screens/home_page/widgets/special_offers.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -30,10 +28,13 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context, state) {
         return Scaffold(
           body: SafeArea(
-            child: Column(
-              children: [
-                HomeAppBar(),
-                Expanded(
+            child: CustomScrollView(
+              slivers: [
+                SliverPersistentHeader(
+                  delegate: HomePersistentHeader(),
+                  pinned: true,
+                ),
+                SliverToBoxAdapter(
                   child: _buildContent(state),
                 )
               ],

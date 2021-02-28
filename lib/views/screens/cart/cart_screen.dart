@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/business_logic/repository/repository.dart';
+import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/views/screens/cart/bloc/bloc.dart';
 import 'package:e_commerce_app/views/screens/cart/widgets/body.dart';
 import 'package:e_commerce_app/views/screens/cart/widgets/check_out_card.dart';
@@ -26,7 +27,7 @@ class CartScreen extends StatelessWidget {
       title: Text("Your cart"),
       actions: [
         IconButton(
-          icon: Icon(Icons.clear_all_rounded),
+          icon: Icon(Icons.clear_all_rounded, color: mAccentTintColor),
           tooltip: "Clear all",
           onPressed: () {},
         )

@@ -1,18 +1,16 @@
-import 'package:e_commerce_app/views/widgets/buttons/circle_icon_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class IconButtonWithCounter extends StatelessWidget {
   const IconButtonWithCounter({
     Key key,
     @required this.counter,
-    @required this.svgIcon,
+    @required this.icon,
     this.size,
     this.onPressed,
   }) : super(key: key);
 
   final int counter;
-  final String svgIcon;
+  final IconData icon;
   final Function onPressed;
   final double size;
 
@@ -29,13 +27,17 @@ class IconButtonWithCounter extends StatelessWidget {
   }
 
   _buildIcon() {
-    return CircleIconButton(size: 20, onPressed: onPressed, svgIcon: svgIcon);
+    return IconButton(
+      icon: Icon(icon, size: size),
+      onPressed: onPressed,
+      color: Colors.white,
+    );
   }
 
   _buildCounter() {
     return Positioned(
-      right: -4,
-      top: -2,
+      right: 2,
+      top: 5,
       child: Container(
         alignment: Alignment.center,
         width: 20,

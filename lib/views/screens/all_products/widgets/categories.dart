@@ -55,7 +55,9 @@ class _ListCategoryState extends State<ListCategory> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 55,
+      height: 60,
+      padding: EdgeInsets.all(10),
+      color: mDarkShadeColor,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: widget.categories.length,
@@ -81,15 +83,11 @@ class _ListCategoryState extends State<ListCategory> {
       },
       child: AnimatedContainer(
         duration: mAnimationDuration,
+        margin: EdgeInsets.symmetric(horizontal: 10),
         padding: EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color:
-                  selectedIndex == index ? mPrimaryColor : Colors.transparent,
-              width: 2,
-            ),
-          ),
+          color: selectedIndex == index ? mAccentTintColor : mAccentShadeColor,
+          borderRadius: BorderRadius.circular(5),
         ),
         child: Row(
           children: [
@@ -102,7 +100,7 @@ class _ListCategoryState extends State<ListCategory> {
             Text(
               category.name,
               style: TextStyle(
-                color: selectedIndex == index ? mPrimaryColor : mTextColor,
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             )

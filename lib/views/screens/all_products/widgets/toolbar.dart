@@ -11,7 +11,7 @@ class ToolBar extends StatefulWidget {
 class _ToolBarState extends State<ToolBar> {
   TextEditingController _searchController = TextEditingController();
   // Local states
-  bool _showSearchField = false;
+  bool _showSearchField = true;
 
   @override
   void initState() {
@@ -31,11 +31,7 @@ class _ToolBarState extends State<ToolBar> {
     return Container(
       height: 50,
       padding: EdgeInsets.symmetric(horizontal: 15),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: mPrimaryLightColor, width: 1),
-        ),
-      ),
+      color: mDarkShadeColor,
       child: Row(
         children: <Widget>[
           _buildLeading(context),
@@ -48,7 +44,7 @@ class _ToolBarState extends State<ToolBar> {
 
   _buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.arrow_back_ios),
+      icon: Icon(Icons.arrow_back_ios, color: mAccentTintColor),
       onPressed: () => Navigator.pop(context),
     );
   }
@@ -60,6 +56,7 @@ class _ToolBarState extends State<ToolBar> {
         IconButton(
           icon: Icon(
             _showSearchField ? Icons.close : Icons.search,
+            color: mAccentTintColor,
           ),
           onPressed: () {
             setState(() {
@@ -72,7 +69,10 @@ class _ToolBarState extends State<ToolBar> {
           },
         ),
         // Sort action
-        IconButton(icon: Icon(Icons.sort), onPressed: () {}),
+        IconButton(
+          icon: Icon(Icons.sort, color: mAccentTintColor),
+          onPressed: () {},
+        ),
       ],
     );
   }
@@ -83,8 +83,8 @@ class _ToolBarState extends State<ToolBar> {
       return Container(
         height: 40,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
-          color: mPrimaryLightColor,
+          borderRadius: BorderRadius.circular(5),
+          color: Colors.white,
         ),
         child: TextField(
           controller: _searchController,
@@ -104,7 +104,7 @@ class _ToolBarState extends State<ToolBar> {
       return Text(
         'All Products',
         style: TextStyle(
-          color: mPrimaryColor,
+          color: Colors.white,
           fontSize: 22,
           fontWeight: FontWeight.bold,
         ),

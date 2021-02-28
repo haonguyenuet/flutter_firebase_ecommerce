@@ -86,8 +86,9 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
     var totalRating = 0;
     var feedbacks = event.feedbacks;
     feedbacks.forEach((f) => totalRating += f.rating);
-    _currAverageRating =
+    var averageRating =
         feedbacks.length > 0 ? totalRating / feedbacks.length : 0.0;
+     _currAverageRating = double.parse(averageRating.toStringAsFixed(1));
     // Update product rating
     _productRepository.updateProductRatingById(
       _currentProduct.id,

@@ -9,8 +9,8 @@ class FeedbackAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Colors.white,
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        color: mDarkShadeColor,
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -23,7 +23,7 @@ class FeedbackAppBar extends StatelessWidget {
 
   _buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.arrow_back_ios),
+      icon: Icon(Icons.arrow_back_ios, color: mAccentTintColor),
       onPressed: () => Navigator.pop(context),
     );
   }
@@ -32,7 +32,7 @@ class FeedbackAppBar extends StatelessWidget {
     return Row(
       children: [
         IconButton(
-          icon: Icon(Icons.add),
+          icon: Icon(Icons.add, color: mAccentTintColor),
           onPressed: () => _settingModalBottomSheet(context),
         )
       ],
@@ -44,7 +44,7 @@ class FeedbackAppBar extends StatelessWidget {
       'Feedbacks',
       style: TextStyle(
         fontSize: 20,
-        color: mTextColor,
+        color: Colors.white,
         fontWeight: FontWeight.bold,
       ),
     );

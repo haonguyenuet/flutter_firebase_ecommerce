@@ -27,12 +27,7 @@ class _ProductInfoState extends State<ProductInfo> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: getProportionateScreenWidth(20)),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          bottom: BorderSide(color: Color(0xFFF5F6F9), width: 8),
-        ),
-      ),
+      color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -50,7 +45,8 @@ class _ProductInfoState extends State<ProductInfo> {
           SizedBox(height: 30),
           _description(),
           SizedBox(height: 5),
-          _seeMore()
+          _seeMore(),
+          Divider(color: Colors.black26),
         ],
       ),
     );
