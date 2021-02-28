@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
 import 'package:e_commerce_app/business_logic/repository/product_repository/firebase_product_repo.dart';
 import 'package:e_commerce_app/configs/router.dart';
 
@@ -5,8 +6,6 @@ import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/utils/common_func.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
-import 'package:e_commerce_app/views/screens/cart/bloc/cart_bloc.dart';
-import 'package:e_commerce_app/views/screens/cart/bloc/cart_event.dart';
 
 import 'package:e_commerce_app/views/widgets/buttons/circle_icon_button.dart';
 import 'package:e_commerce_app/business_logic/entities/cart_item.dart';

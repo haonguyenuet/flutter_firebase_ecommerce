@@ -11,16 +11,16 @@ abstract class AuthenticationState extends Equatable {
 class Uninitialized extends AuthenticationState {}
 
 class Authenticated extends AuthenticationState {
-  final UserModel userModel;
+  final UserModel loggedUser;
 
-  const Authenticated(this.userModel);
+  const Authenticated(this.loggedUser);
 
   @override
-  List<Object> get props => [userModel];
+  List<Object> get props => [loggedUser];
 
   @override
   String toString() {
-    return 'Authenticated{email: ${userModel.email}}';
+    return 'Authenticated{email: ${loggedUser.email}}';
   }
 }
 

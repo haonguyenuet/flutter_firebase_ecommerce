@@ -1,6 +1,5 @@
+import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
 import 'package:e_commerce_app/constants/style_constant.dart';
-import 'package:e_commerce_app/views/screens/cart/bloc/cart_bloc.dart';
-import 'package:e_commerce_app/views/screens/cart/bloc/cart_state.dart';
 import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 

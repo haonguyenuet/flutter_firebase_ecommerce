@@ -129,16 +129,15 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
-              color: Color(0XFFF5F6F9),
+              color: mPrimaryLightColor,
               borderRadius: BorderRadius.circular(10),
             ),
             child: TextField(
-              onChanged: (value) => setState(() {
-                _content = value;
-              }),
+              onChanged: (value) => setState(() => _content = value),
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.symmetric(horizontal: 15),
                 border: InputBorder.none,
+                hintText: "Type...",
               ),
             ),
           ),

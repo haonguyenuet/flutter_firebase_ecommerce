@@ -1,13 +1,45 @@
-import 'package:e_commerce_app/constants/style_constant.dart';
-import 'package:e_commerce_app/views/widgets/others/custom_bottom_nav.dart';
-import 'package:e_commerce_app/views/screens/profile/widgets/body.dart';
+import 'package:e_commerce_app/business_logic/blocs/auth/bloc.dart';
+import 'package:e_commerce_app/business_logic/blocs/user/bloc.dart';
+import 'package:e_commerce_app/configs/router.dart';
+import 'package:e_commerce_app/constants/constants.dart';
+import 'package:e_commerce_app/views/screens/profile/widgets/profile_header.dart';
+import 'package:e_commerce_app/views/screens/profile/widgets/profile_menu_button.dart';
+import 'package:e_commerce_app/views/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Body(),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(vertical: 20),
+        child: Column(
+          children: [
+            ProfileHeader(),
+            SizedBox(height: 20),
+            ProfileMenuButton(
+              text: "My Information",
+              icon: "assets/icons/User Icon.svg",
+              press: () => {},
+            ),
+            ProfileMenuButton(
+              text: "My Cart",
+              icon: "assets/icons/Cart Icon.svg",
+              press: () {
+                Navigator.pushNamed(context, AppRouter.CART);
+              },
+            ),
+            ProfileMenuButton(
+              text: "Log Out",
+              icon: "assets/icons/exit.svg",
+              press: () {
+                BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+              },
+            ),
+          ],
+        ),
+      ),
       bottomNavigationBar: CustomBottomNav(selectedMenu: MenuState.profile),
     );
   }

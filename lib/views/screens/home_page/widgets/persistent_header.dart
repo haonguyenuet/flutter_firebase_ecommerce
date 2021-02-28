@@ -37,13 +37,13 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
             top: 15,
             right: 15,
             height: 40,
-            child: CartButton(counter: 3),
+            child: CartButton(),
           ),
           AnimatedPositioned(
+            duration: Duration(microseconds: 200),
             bottom: 15,
             left: 0,
             height: 40,
-            duration: Duration(microseconds: 200),
             width: size.width * rangeSearchFieldWidth,
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 15),

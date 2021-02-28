@@ -1,18 +1,15 @@
+import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
-
-import 'package:e_commerce_app/views/screens/detail_product/bloc/detail_product_bloc.dart';
-import 'package:e_commerce_app/views/screens/detail_product/bloc/detail_product_event.dart';
+import 'package:e_commerce_app/configs/router.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddToCartNavigation extends StatefulWidget {
   final Product product;
-  const AddToCartNavigation({
-    Key key,
-    @required this.product,
-  }) : super(key: key);
+  const AddToCartNavigation({Key key, @required this.product})
+      : super(key: key);
 
   @override
   _AddToCartNavigationState createState() => _AddToCartNavigationState();
@@ -20,13 +17,12 @@ class AddToCartNavigation extends StatefulWidget {
 
 class _AddToCartNavigationState extends State<AddToCartNavigation> {
   Product get product => widget.product;
-  DetailProductBloc _detailProductBloc;
+
   // local states
   int quantity = 1;
   @override
   void initState() {
     super.initState();
-    _detailProductBloc = BlocProvider.of<DetailProductBloc>(context);
   }
 
   @override
@@ -87,9 +83,7 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
             absorbing: quantity < product.quantity ? false : true,
             child: RaisedButton(
               onPressed: () {
-                setState(() {
-                  quantity += 1;
-                });
+                setState(() => quantity += 1);
               },
               color: Colors.white,
               child: Icon(Icons.add, color: mPrimaryColor),
@@ -107,7 +101,7 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
       child: RaisedButton(
         onPressed: product.quantity > 0
             ? () {
-                // create new cart item
+                // Create new cart item
                 CartItem cartItem = CartItem(
                   cid: product.id,
                   pid: product.id,
@@ -115,7 +109,9 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
                   quantity: quantity,
                 );
                 // Add event AddToCart
-                _detailProductBloc.add(AddToCart(cartItem));
+                BlocProvider.of<CartBloc>(context).add(AddCartItem(cartItem));
+                // Go to cart screen
+                Navigator.pushNamed(context, AppRouter.CART);
               }
             : null,
         color: mPrimaryColor,

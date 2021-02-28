@@ -1,8 +1,11 @@
 import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
 
 abstract class CartRepository {
-  // Get all cart items
+  // cart stream
   Stream<List<CartItem>> cartStream(String uid);
+
+  // Get all cart items
+  Future<int> getCartLength(String uid);
 
   // Add item
   Future<void> addCartItem(String uid, CartItem newItem);

@@ -1,11 +1,10 @@
 import 'dart:async';
 
+import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
 import 'package:e_commerce_app/business_logic/repository/cart_repository/cart_repo.dart';
 import 'package:e_commerce_app/business_logic/repository/user_repository/user_repo.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
-import 'package:e_commerce_app/views/screens/cart/bloc/cart_event.dart';
-import 'package:e_commerce_app/views/screens/cart/bloc/cart_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -27,6 +26,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   Stream<CartState> mapEventToState(CartEvent event) async* {
     if (event is LoadCart) {
       yield* _mapLoadCartToState();
+    } else if (event is AddCartItem) {
+      yield* _mapAddCartItemToState(event);
     } else if (event is RemoveCartItem) {
       yield* _mapRemoveCartItemToState(event);
     } else if (event is UpdateCartItem) {
@@ -47,6 +48,15 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           );
     } catch (e) {
       yield CartLoadFailure(e);
+    }
+  }
+
+  Stream<CartState> _mapAddCartItemToState(AddCartItem event) async* {
+    try {
+      var currUser = _userRepository.currentUser;
+      await _cartRepository.addCartItem(currUser.id, event.cartItem);
+    } catch (e) {
+      print(e);
     }
   }
 

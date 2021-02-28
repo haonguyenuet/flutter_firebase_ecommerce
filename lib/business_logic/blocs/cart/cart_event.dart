@@ -14,6 +14,26 @@ class LoadCart extends CartEvent {}
 /// When user clicks to a clear cart => clear cart event
 class ClearCart extends CartEvent {}
 
+/// Cart was cleared
+class CartUpdated extends CartEvent {
+  final List<CartItem> cart;
+
+  CartUpdated(this.cart);
+
+  @override
+  List<Object> get props => [cart];
+}
+
+/// When user clicks to add button => add cart item event
+class AddCartItem extends CartEvent {
+  final CartItem cartItem;
+
+  AddCartItem(this.cartItem);
+
+  @override
+  List<Object> get props => [cartItem];
+}
+
 /// When user swipes to remove cart item => remove cart item event
 class RemoveCartItem extends CartEvent {
   final String pid;
@@ -32,14 +52,4 @@ class UpdateCartItem extends CartEvent {
 
   @override
   List<Object> get props => [cartItem.cid];
-}
-
-/// Cart was cleared
-class CartUpdated extends CartEvent {
-  final List<CartItem> cart;
-
-  CartUpdated(this.cart);
-
-  @override
-  List<Object> get props => [cart];
 }

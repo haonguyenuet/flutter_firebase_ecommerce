@@ -42,9 +42,7 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => RegisterScreen(initialUser: initialUser));
       case LOGIN_SUCCESS:
-        var user = settings.arguments as UserModel;
-        return MaterialPageRoute(
-            builder: (_) => LoginSuccessScreen(currUser: user));
+        return MaterialPageRoute(builder: (_) => LoginSuccessScreen());
       case HOME:
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case PROFILE:

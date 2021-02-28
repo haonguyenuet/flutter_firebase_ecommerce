@@ -41,7 +41,6 @@ class _AppViewState extends State<AppView> {
               _navigator.pushNamedAndRemoveUntil(
                 AppRouter.LOGIN_SUCCESS,
                 (_) => false,
-                arguments: state.userModel,
               );
             } else {
               // default case

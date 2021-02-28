@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/app_view.dart';
 import 'package:e_commerce_app/views/screens/home_page/bloc/home_bloc.dart';
 import 'business_logic/blocs/auth/bloc.dart';
+import 'business_logic/blocs/cart/bloc.dart';
 import 'business_logic/blocs/simple_bloc_observer.dart';
 import 'business_logic/repository/repository.dart';
 
@@ -40,10 +41,11 @@ class MyApp extends StatelessWidget {
                   ..add(AppStarted()),
           ),
           BlocProvider(
-              create: (context) => HomeBloc(
-                    bannerRepository: _bannerRepository,
-                    productRepository: _productRepository,
-                  )),
+            create: (context) => CartBloc(
+              cartRepository: RepositoryProvider.of<CartRepository>(context),
+              userRepository: RepositoryProvider.of<UserRepository>(context),
+            ),
+          ),
         ],
         child: AppView(),
       ),
