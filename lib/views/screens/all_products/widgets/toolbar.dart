@@ -1,5 +1,8 @@
 import 'package:e_commerce_app/constants/color_constant.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/views/screens/all_products/bloc/bloc.dart';
+import 'package:e_commerce_app/views/screens/all_products/widgets/sort_option_dialog.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,9 +13,6 @@ class ToolBar extends StatefulWidget {
 
 class _ToolBarState extends State<ToolBar> {
   TextEditingController _searchController = TextEditingController();
-  // Local states
-  bool _showSearchField = true;
-
   @override
   void initState() {
     super.initState();
@@ -28,17 +28,30 @@ class _ToolBarState extends State<ToolBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      color: mDarkShadeColor,
-      child: Row(
-        children: <Widget>[
-          _buildLeading(context),
-          Expanded(child: _buildTitle()),
-          _buildActions(context),
-        ],
-      ),
+    return BlocConsumer<AllProductsBloc, AllProductsState>(
+      listenWhen: (prevState, currState) => currState is OpenSortOption,
+      listener: (context, state) {
+        if (state is OpenSortOption) {
+          _openSortOptionsDialog(context, state);
+        }
+      },
+      buildWhen: (prevState, currState) => currState is UpdateToolbarState,
+      builder: (context, state) {
+        if (state is UpdateToolbarState) {
+          return Container(
+            height: 50,
+            color: mDarkShadeColor,
+            child: Row(
+              children: <Widget>[
+                _buildLeading(context),
+                Expanded(child: _buildTitle(state)),
+                _buildActions(context, state),
+              ],
+            ),
+          );
+        }
+        return Container();
+      },
     );
   }
 
@@ -49,39 +62,36 @@ class _ToolBarState extends State<ToolBar> {
     );
   }
 
-  _buildActions(BuildContext context) {
+  _buildActions(BuildContext context, UpdateToolbarState state) {
     return Row(
       children: [
         // Search action
         IconButton(
           icon: Icon(
-            _showSearchField ? Icons.close : Icons.search,
+            state.showSearchField ? Icons.close : Icons.search,
             color: mAccentTintColor,
           ),
           onPressed: () {
-            setState(() {
-              _showSearchField = !_showSearchField;
-            });
-            if (_showSearchField == false) {
-              BlocProvider.of<AllProductsBloc>(context)
-                  .add(SearchQueryChanged(keyword: ""));
-            }
+            BlocProvider.of<AllProductsBloc>(context).add(
+                state.showSearchField ? ClickCloseSearch() : ClickIconSearch());
           },
         ),
         // Sort action
         IconButton(
           icon: Icon(Icons.sort, color: mAccentTintColor),
-          onPressed: () {},
+          onPressed: () {
+            BlocProvider.of<AllProductsBloc>(context).add(ClickIconSort());
+          },
         ),
       ],
     );
   }
 
-  _buildTitle() {
-    if (_showSearchField) {
+  _buildTitle(UpdateToolbarState state) {
+    if (state.showSearchField) {
       _searchController.text = "";
       return Container(
-        height: 40,
+        height: 38,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           color: Colors.white,
@@ -93,7 +103,7 @@ class _ToolBarState extends State<ToolBar> {
           textInputAction: TextInputAction.search,
           decoration: InputDecoration(
             hintText: 'Search',
-            contentPadding: EdgeInsets.only(top: 3),
+            contentPadding: EdgeInsets.only(top: 0),
             prefixIcon: Icon(Icons.search),
             border: InputBorder.none,
             hintStyle: TextStyle(color: Colors.grey),
@@ -105,9 +115,22 @@ class _ToolBarState extends State<ToolBar> {
         'All Products',
         style: TextStyle(
           color: Colors.white,
-          fontSize: 22,
+          fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
       );
+  }
+
+  _openSortOptionsDialog(BuildContext context, OpenSortOption state) async {
+    var response = await showDialog<ProductSortOption>(
+      context: context,
+      builder: (context) {
+        return SortOptionDialog(currSortOption: state.currSortOption);
+      },
+    );
+    if (response is ProductSortOption) {
+      BlocProvider.of<AllProductsBloc>(context)
+          .add(SortOptionsChanged(response));
+    }
   }
 }

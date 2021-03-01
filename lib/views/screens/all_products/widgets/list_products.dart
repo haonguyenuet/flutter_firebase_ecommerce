@@ -9,7 +9,7 @@ class ListProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AllProductsBloc, AllProductsState>(
       buildWhen: (prevState, currState) {
-        return true;
+        return currState is DisplayListProducts;
       },
       builder: (context, state) {
         if (state is DisplayListProducts) {
@@ -34,7 +34,11 @@ class ListProducts extends StatelessWidget {
               },
             );
           }
-          return Center(child: Text("No product."));
+          return Center(
+              child: Image.asset(
+            "assets/images/Not Found.png",
+            width: 200,
+          ));
         } else {
           return Center(child: Text("Something went wrong."));
         }

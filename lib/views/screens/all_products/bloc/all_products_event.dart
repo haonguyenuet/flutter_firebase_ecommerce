@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/business_logic/entities/category.dart';
 import 'package:equatable/equatable.dart';
+import 'package:e_commerce_app/views/screens/all_products/bloc/bloc.dart';
 
 class AllProductsEvent extends Equatable {
   @override
@@ -19,6 +20,10 @@ class OpenScreen extends AllProductsEvent {
     return 'OpenScreen{keyword: $category}';
   }
 }
+
+class ClickIconSearch extends AllProductsEvent {}
+
+class ClickCloseSearch extends AllProductsEvent {}
 
 class SearchQueryChanged extends AllProductsEvent {
   final String keyword;
@@ -48,16 +53,21 @@ class CategoryChanged extends AllProductsEvent {
   }
 }
 
-// class SortByChanged extends AllShowsEvent {
-//   SHOW_SORT_BY showSortBy;
+class ClickIconSort extends AllProductsEvent {
+  @override
+  List<Object> get props => [DateTime.now().millisecond];
+}
 
-//   SortByChanged(this.showSortBy);
+class SortOptionsChanged extends AllProductsEvent {
+  final ProductSortOption productSortOption;
 
-//   @override
-//   List<Object> get props => [showSortBy];
+  SortOptionsChanged(this.productSortOption);
 
-//   @override
-//   String toString() {
-//     return 'SortByChanged{showSortBy: $showSortBy}';
-//   }
-// }
+  @override
+  List<Object> get props => [productSortOption];
+
+  @override
+  String toString() {
+    return 'SortByChanged{showSortBy: $productSortOption}';
+  }
+}

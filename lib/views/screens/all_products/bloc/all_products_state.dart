@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/business_logic/entities/category.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
+import 'package:e_commerce_app/views/screens/all_products/bloc/all_products_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 class AllProductsState extends Equatable {
@@ -76,5 +77,35 @@ class DisplayListProducts extends AllProductsState {
   @override
   String toString() {
     return 'DisplayListProducts{productsByCategory: ${productsByCategory.length}, loading: $loading, msg: $msg}';
+  }
+}
+
+/// Update toolbar
+class UpdateToolbarState extends AllProductsState {
+  final bool showSearchField;
+
+  UpdateToolbarState({this.showSearchField});
+
+  @override
+  List<Object> get props => [showSearchField];
+
+  @override
+  String toString() {
+    return 'UpdateSearchIconState{showSearchIcon: $showSearchField}';
+  }
+}
+
+/// Open sort option dialog
+class OpenSortOption extends AllProductsState {
+  final ProductSortOption currSortOption;
+
+  OpenSortOption({this.currSortOption});
+
+  @override
+  List<Object> get props => [currSortOption, DateTime.now().millisecond];
+
+  @override
+  String toString() {
+    return 'OpenSortOption{showSortBy: ${currSortOption.toString()}}';
   }
 }

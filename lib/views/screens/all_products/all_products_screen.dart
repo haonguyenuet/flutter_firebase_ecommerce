@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/business_logic/entities/category.dart';
 import 'package:e_commerce_app/business_logic/repository/repository.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/views/screens/all_products/bloc/bloc.dart';
 import 'package:e_commerce_app/views/screens/all_products/widgets/categories.dart';
 import 'package:e_commerce_app/views/screens/all_products/widgets/list_products.dart';
@@ -26,34 +27,13 @@ class AllProductsScreen extends StatelessWidget {
           child: Container(
             child: Column(
               children: <Widget>[
-                _buildMyAppBar(),
+                ToolBar(),
+                Categories(),
                 Expanded(child: ListProducts()),
               ],
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  _buildMyAppBar() {
-    return Container(
-      margin: EdgeInsets.only(bottom: 20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, 2),
-            blurRadius: 5,
-            color: Colors.black12,
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          ToolBar(),
-          Categories(),
-        ],
       ),
     );
   }
