@@ -1,6 +1,6 @@
 import 'package:e_commerce_app/business_logic/entities/user.dart';
 import 'package:e_commerce_app/constants/style_constant.dart';
-import 'package:e_commerce_app/utils/common_func.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/configs/router.dart';
@@ -118,7 +118,10 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
             arguments: initialUser,
           );
         } else {
-          showFailureDialog(context, "You need complete all fields");
+          MyDialog.showInformation(
+            context,
+            content: "You need complete all fields",
+          );
         }
       },
     );

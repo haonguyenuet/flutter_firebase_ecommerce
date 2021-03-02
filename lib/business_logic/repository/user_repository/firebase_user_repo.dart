@@ -7,85 +7,22 @@ import 'package:google_sign_in/google_sign_in.dart';
 class FirebaseUserRepository implements UserRepository {
   var _userCollection = FirebaseFirestore.instance.collection("users");
 
-  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  GoogleSignIn _googleSignIn = GoogleSignIn();
-  UserModel _currentUser = UserModel.empty;
-  String _authException = "";
-
-  UserModel get currentUser => _currentUser;
-  FirebaseAuth get firebaseAuth => _firebaseAuth;
-  String get authException => _authException;
-
-  /// Don't use onAuthChange
-
-  /// Creates a new user with the provided [information]
+  /// Stream of logged user model
+  /// [loggedFirebaseUser] is user of firebase auth
   /// Created by NDH
-  Future<void> signUp(UserModel newUser, String password) async {
-    try {
-      var result = await _firebaseAuth.createUserWithEmailAndPassword(
-        email: newUser.email,
-        password: password,
-      );
-
-      /// Add id for new user
-      newUser = newUser.cloneWith(id: result.user.uid);
-
-      /// Create new doc in users collection
-      this.addUserData(newUser);
-    } on FirebaseAuthException catch (e) {
-      _authException = e.message.toString();
+  Stream<UserModel> loggedUserStream(User loggedFirebaseUser) {
+    if (loggedFirebaseUser != null) {
+      return _userCollection
+          .doc(loggedFirebaseUser.uid)
+          .snapshots()
+          .map((doc) => UserModel.fromMap(doc.id, doc.data()));
     }
-  }
-
-  /// Signs in with the provided [email] and [password].
-  /// Created by NDH
-  Future<void> logInWithEmailAndPassword(String email, String password) async {
-    try {
-      await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    } on FirebaseAuthException catch (e) {
-      _authException = e.message.toString();
-    }
-  }
-
-  /// Starts the Sign In with Google Flow.
-  /// Created by NDH
-  Future<void> logInWithGoogle() async {
-    try {
-      final googleUser = await _googleSignIn.signIn();
-      final googleAuth = await googleUser.authentication;
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-      await _firebaseAuth.signInWithCredential(credential);
-    } on FirebaseAuthException catch (e) {
-      _authException = e.message.toString();
-    }
-  }
-
-  Future<bool> isLoggedIn() async {
-    var currFirebaseUser = _firebaseAuth.currentUser;
-    // Get current user from firestore
-    if (currFirebaseUser != null) {
-      _currentUser = await this.getUserById(currFirebaseUser.uid);
-    }
-    return _currentUser != UserModel.empty;
-  }
-
-  /// Signs out the current user
-  /// Created by NDH
-  Future<void> logOut() async {
-    _currentUser = UserModel.empty;
-    await Future.wait([
-      _firebaseAuth.signOut(),
-      _googleSignIn.signOut(),
-    ]).catchError((error) => print(error));
+    return null;
   }
 
   /// Get user by id
+  /// [uid] is user id
+  /// Created by NDH
   Future<UserModel> getUserById(String uid) async {
     return await _userCollection
         .doc(uid)
@@ -95,12 +32,25 @@ class FirebaseUserRepository implements UserRepository {
   }
 
   /// Add new doc to users collection
+  /// [user] is data of new user
+  /// Created by NDH
   Future<void> addUserData(UserModel user) async {
     await _userCollection.doc(user.id).set(user.toMap());
   }
 
-  /// Update doc in users collection
+  /// Update a doc in users collection
+  /// [user] is updated data of user
+  /// Created by NDH
   Future<void> updateUserData(UserModel user) async {
     await _userCollection.doc(user.id).update(user.toMap());
+  }
+
+  /// Update user avatar in users collection
+  /// [uid] is user id
+  /// [imageUrl] is image link
+  /// Created by NDH
+  @override
+  Future<void> updateUserAvatar(String uid, String imageUrl) async {
+    await _userCollection.doc(uid).update({"avatar": imageUrl});
   }
 }

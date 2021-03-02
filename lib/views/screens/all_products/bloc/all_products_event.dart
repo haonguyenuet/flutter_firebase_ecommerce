@@ -58,6 +58,11 @@ class ClickIconSort extends AllProductsEvent {
   List<Object> get props => [DateTime.now().millisecond];
 }
 
+class CloseSortOption extends AllProductsEvent {
+  @override
+  List<Object> get props => [DateTime.now().millisecond];
+}
+
 class SortOptionsChanged extends AllProductsEvent {
   final ProductSortOption productSortOption;
 

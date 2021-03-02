@@ -97,15 +97,17 @@ class UpdateToolbarState extends AllProductsState {
 
 /// Open sort option dialog
 class OpenSortOption extends AllProductsState {
+  final bool isOpen;
   final ProductSortOption currSortOption;
 
-  OpenSortOption({this.currSortOption});
+  OpenSortOption({this.isOpen, this.currSortOption});
 
   @override
-  List<Object> get props => [currSortOption, DateTime.now().millisecond];
+  List<Object> get props =>
+      [isOpen, currSortOption, DateTime.now().millisecond];
 
   @override
   String toString() {
-    return 'OpenSortOption{showSortBy: ${currSortOption.toString()}}';
+    return 'OpenSortOption{isOpen: $isOpen, showSortBy: ${currSortOption.toString()}}';
   }
 }

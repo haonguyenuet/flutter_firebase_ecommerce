@@ -19,7 +19,6 @@ class FeedbackScreen extends StatelessWidget {
       create: (context) => FeedbackBloc(
         feedbackRepository: RepositoryProvider.of<FeedbackRepository>(context),
         productRepository: RepositoryProvider.of<ProductRepository>(context),
-        userRepository: RepositoryProvider.of<UserRepository>(context),
       )..add(LoadFeedbacks(product)),
       child: Scaffold(
         body: SafeArea(

@@ -33,7 +33,7 @@ class FeedbackAppBar extends StatelessWidget {
       children: [
         IconButton(
           icon: Icon(Icons.add, color: mAccentTintColor),
-          onPressed: () => _settingModalBottomSheet(context),
+          onPressed: () => _openModalBottomSheet(context),
         )
       ],
     );
@@ -50,14 +50,14 @@ class FeedbackAppBar extends StatelessWidget {
     );
   }
 
-  void _settingModalBottomSheet(context) async {
-    var response = await showModalBottomSheet(
+  void _openModalBottomSheet(BuildContext context) async {
+    var newFeedback = await showModalBottomSheet<FeedbackItem>(
       isScrollControlled: true,
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
         ),
       ),
       context: context,
@@ -65,8 +65,8 @@ class FeedbackAppBar extends StatelessWidget {
         return FeedbackBottomSheet();
       },
     );
-    if (response is FeedbackItem) {
-      BlocProvider.of<FeedbackBloc>(context).add(AddFeedbackItem(response));
+    if (newFeedback != null) {
+      BlocProvider.of<FeedbackBloc>(context).add(AddFeedbackItem(newFeedback));
     }
   }
 }

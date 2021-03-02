@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:e_commerce_app/business_logic/repository/user_repository/user_repo.dart';
+import 'package:e_commerce_app/business_logic/repository/repository.dart';
+
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/business_logic/blocs/auth/auth_event.dart';
 
@@ -7,11 +8,11 @@ import 'auth_state.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final UserRepository _userRepository;
+  final AuthRepository _authRepository;
 
-  AuthenticationBloc({@required UserRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
+  AuthenticationBloc({@required AuthRepository authRepository})
+      : assert(authRepository != null),
+        _authRepository = authRepository,
         super(Uninitialized());
 
   @override
@@ -28,15 +29,15 @@ class AuthenticationBloc
 
   Stream<AuthenticationState> _mapAppStartedToState() async* {
     try {
-      bool isLoggedIn = await _userRepository.isLoggedIn();
+      bool isLoggedIn = _authRepository.isLoggedIn();
 
       //For display splash screen
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 3));
 
       if (isLoggedIn) {
         // Get current user
-        final currUser = _userRepository.currentUser;
-        yield Authenticated(currUser);
+        final loggedFirebaseUser = _authRepository.currentFirebaseUser;
+        yield Authenticated(loggedFirebaseUser);
       } else {
         yield Unauthenticated();
       }
@@ -46,11 +47,11 @@ class AuthenticationBloc
   }
 
   Stream<AuthenticationState> _mapLoggedInToState() async* {
-    yield Authenticated(_userRepository.currentUser);
+    yield Authenticated(_authRepository.currentFirebaseUser);
   }
 
   Stream<AuthenticationState> _mapLoggedOutToState() async* {
     yield Unauthenticated();
-    _userRepository.logOut();
+    _authRepository.logOut();
   }
 }

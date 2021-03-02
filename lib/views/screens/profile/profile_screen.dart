@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/business_logic/blocs/auth/bloc.dart';
-import 'package:e_commerce_app/business_logic/blocs/user/bloc.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/views/screens/profile/widgets/profile_header.dart';

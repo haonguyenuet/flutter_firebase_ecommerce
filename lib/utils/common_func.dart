@@ -23,24 +23,3 @@ void showProcessing(BuildContext context, String content) {
       ),
     );
 }
-
-void showFailureDialog(BuildContext context, String content) {
-  showDialog(
-    context: context,
-    builder: (_) => AlertDialog(
-      title: Text(
-        "Message for you",
-        style: TextStyle(color: mPrimaryColor),
-      ),
-      content: Text(content),
-      actions: <Widget>[
-        FlatButton(
-          child: Text('Close'),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        )
-      ],
-    ),
-  );
-}

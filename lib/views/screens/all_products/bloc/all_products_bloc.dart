@@ -54,7 +54,9 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
     } else if (event is CategoryChanged) {
       yield* _mapCategoryChangedToState(event.category);
     } else if (event is ClickIconSort) {
-      yield* _mapClickIconSortToState();
+      yield OpenSortOption(isOpen: true, currSortOption: _currSortOption);
+    } else if (event is CloseSortOption) {
+      yield OpenSortOption(isOpen: false, currSortOption: _currSortOption);
     } else if (event is ClickIconSearch) {
       yield UpdateToolbarState(showSearchField: true);
     } else if (event is ClickCloseSearch) {
@@ -119,11 +121,6 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
     } catch (e) {
       yield DisplayListProducts.error(e.toString());
     }
-  }
-
-  /// Click sort icon => state
-  Stream<AllProductsState> _mapClickIconSortToState() async* {
-    yield OpenSortOption(currSortOption: _currSortOption);
   }
 
   /// This should be done at server side

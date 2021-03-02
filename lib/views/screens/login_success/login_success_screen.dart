@@ -1,6 +1,4 @@
-import 'package:e_commerce_app/business_logic/blocs/auth/auth_bloc.dart';
-import 'package:e_commerce_app/business_logic/blocs/auth/auth_state.dart';
-import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
+import 'package:e_commerce_app/business_logic/blocs/profile/bloc.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
@@ -53,7 +51,6 @@ class LoginSuccessScreen extends StatelessWidget {
       child: DefaultButton(
         child: Text("Back to home", style: mPrimaryFontStyle),
         onPressed: () {
-          BlocProvider.of<CartBloc>(context)..add(LoadCart());
           Navigator.pushNamedAndRemoveUntil(
             context,
             AppRouter.HOME,
@@ -65,10 +62,10 @@ class LoginSuccessScreen extends StatelessWidget {
   }
 
   _buildGreeting() {
-    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+    return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
-        if (state is Authenticated) {
-          var currUser = state.loggedUser;
+        if (state is ProfileLoaded) {
+          var loggedUser = state.loggedUser;
           return Text.rich(
             TextSpan(
               style: TextStyle(
@@ -79,8 +76,9 @@ class LoginSuccessScreen extends StatelessWidget {
               children: [
                 TextSpan(text: "Hello, "),
                 TextSpan(
-                    text: "${currUser.name} !",
-                    style: TextStyle(color: mPrimaryColor))
+                  text: "${loggedUser.name}",
+                  style: TextStyle(color: mPrimaryColor),
+                )
               ],
             ),
           );

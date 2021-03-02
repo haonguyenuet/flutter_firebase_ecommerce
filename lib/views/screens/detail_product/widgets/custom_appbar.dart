@@ -20,59 +20,58 @@ class CustomAppBar extends PreferredSize {
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           children: [
-            // Back home button
-            SizedBox(
-              height: getProportionateScreenWidth(40),
-              width: getProportionateScreenWidth(40),
-              child: FlatButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                color: Color(0xFFF5F6F9),
-                padding: EdgeInsets.zero,
-                onPressed: () => Navigator.pushReplacementNamed(
-                  context,
-                  AppRouter.HOME,
-                ),
-                child: SvgPicture.asset(
-                  "assets/icons/Back ICon.svg",
-                  height: 16,
-                ),
+            _buildBackHomeButton(context),
+            Spacer(),
+            _buildRatingButton(context)
+          ],
+        ),
+      ),
+    );
+  }
+
+  _buildBackHomeButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushReplacementNamed(context, AppRouter.HOME);
+      },
+      child: Container(
+        height: getProportionateScreenWidth(40),
+        width: getProportionateScreenWidth(40),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Color(0xFFF5F6F9),
+        ),
+        child: Icon(Icons.cancel_rounded),
+      ),
+    );
+  }
+
+  _buildRatingButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          AppRouter.FEEDBACK,
+          arguments: product,
+        );
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 14, vertical: 5),
+        decoration: BoxDecoration(
+          color: Color(0xFFF5F6F9),
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Row(
+          children: [
+            Text(
+              "${product.rating}",
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
               ),
             ),
-            Spacer(),
-
-            /// Rating
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  AppRouter.FEEDBACK,
-                  arguments: product,
-                );
-              },
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
-                decoration: BoxDecoration(
-                  color: Color(0xFFF5F6F9),
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: Row(
-                  children: [
-                    Text(
-                      "${product.rating}",
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    SvgPicture.asset("assets/icons/Star Icon.svg"),
-                  ],
-                ),
-              ),
-            )
+            const SizedBox(width: 5),
+            SvgPicture.asset("assets/icons/Star Icon.svg"),
           ],
         ),
       ),

@@ -6,7 +6,8 @@ import 'package:e_commerce_app/business_logic/repository/feedback_repository/fee
 class FirebaseFeedbackRepository implements FeedbackRepository {
   var productCollection = FirebaseFirestore.instance.collection("products");
 
-  /// Get all feedback items
+  /// Stream of feedback
+  /// [pid] is product id
   /// Created by NDH
   @override
   Stream<List<FeedbackItem>> feedbackStream(String pid) {
@@ -25,7 +26,9 @@ class FirebaseFeedbackRepository implements FeedbackRepository {
     return null;
   }
 
-  /// Get feedbacks by star
+  /// Add new doc to feedbacks collection
+  /// [pid] is product id
+  /// [newItem] is data of new feedback
   /// Created by NDH
   @override
   Future<List<FeedbackItem>> getFeedbacksByStar(String pid, int star) async {
@@ -51,7 +54,9 @@ class FirebaseFeedbackRepository implements FeedbackRepository {
             .catchError((error) => print(error));
   }
 
-  /// Add new feedback
+  /// Get feedbacks by star
+  /// [pid] is product id
+  /// [star] is number of stars
   /// Created by NDH
   @override
   Future<void> addNewFeedback(String pid, FeedbackItem newItem) async {

@@ -42,7 +42,10 @@ class CartBody extends StatelessWidget {
                     },
                   )
                 : Center(
-                    child: Text("Bạn chưa có sản phẩm nào trong giỏ hàng")),
+                    child: Image.asset(
+                    "assets/images/empty_cart.png",
+                    width: 200,
+                  )),
           );
         }
         if (state is CartLoadFailure) {

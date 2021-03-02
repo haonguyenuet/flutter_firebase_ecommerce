@@ -81,17 +81,4 @@ class FirebaseCartRepository implements CartRepository {
       print(error);
     });
   }
-
-  @override
-  Future<int> getCartLength(String uid) async {
-    var cart = await userCollection
-        .doc(uid)
-        .collection("cart")
-        .get()
-        .then((snapshot) => snapshot.docs
-            .map((doc) => CartItem.fromMap(doc.id, doc.data()))
-            .toList())
-        .catchError((e) => print(e));
-    return cart.length ?? 0;
-  }
 }

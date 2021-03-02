@@ -1,36 +1,30 @@
 import 'package:e_commerce_app/business_logic/entities/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class UserRepository {
-  UserModel get currentUser;
-  String get authException;
-
-  /// Creates a new user with the provided [information]
+  /// Stream of logged user model
+  /// [loggedFirebaseUser] is user of firebase auth
   /// Created by NDH
-  Future<void> signUp(UserModel newUser, String password);
-
-  /// Signs in with the provided [email] and [password].
-  /// Created by NDH
-  Future<void> logInWithEmailAndPassword(String email, String password);
-
-  /// Starts the Sign In with Google Flow.
-  /// Created by NDH
-  Future<void> logInWithGoogle();
-
-  Future<bool> isLoggedIn();
-
-  /// Signs out the current user
-  /// Created by NDH
-  Future<void> logOut();
+  Stream<UserModel> loggedUserStream(User loggedFirebaseUser);
 
   /// Get user by id
+  /// [uid] is user id
   /// Created by NDH
   Future<UserModel> getUserById(String uid);
 
   /// Add new doc to users collection
+  /// [user] is data of new user
   /// Created by NDH
   Future<void> addUserData(UserModel user);
 
-  /// Update doc in users collection
+  /// Update a doc in users collection
+  /// [user] is updated data of user
   /// Created by NDH
   Future<void> updateUserData(UserModel user);
+
+  /// Update user avatar in users collection
+  /// [uid] is user id
+  /// [imageUrl] is image link
+  /// Created by NDH
+  Future<void> updateUserAvatar(String uid, String imageUrl);
 }

@@ -4,6 +4,7 @@ import 'package:e_commerce_app/views/screens/home_page/bloc/bloc.dart';
 import 'package:e_commerce_app/views/screens/home_page/widgets/home_banner.dart';
 import 'package:e_commerce_app/views/screens/home_page/widgets/special_offers.dart';
 import 'package:e_commerce_app/views/widgets/custom_widgets.dart';
+import 'package:e_commerce_app/views/widgets/others/loading.dart';
 import 'package:e_commerce_app/views/widgets/single_card/category_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,7 +31,7 @@ class HomeBody extends StatelessWidget {
             );
           }
           if (homeState is HomeLoading) {
-            return Center(child: CircularProgressIndicator());
+            return Loading();
           }
           if (homeState is HomeLoadFailure) {
             return Center(child: Text(homeState.error));

@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/business_logic/blocs/auth/bloc.dart';
 import 'package:e_commerce_app/constants/constants.dart';
+import 'package:e_commerce_app/utils/my_dialog.dart';
 import 'package:e_commerce_app/utils/utils.dart';
 import 'package:e_commerce_app/views/screens/login/bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ class _LoginFormState extends State<LoginForm> {
 
         /// Failure
         if (state.isFailure) {
-          showFailureDialog(context, state.message);
+          MyDialog.showInformation(context, content: state.message);
         }
 
         /// Logging

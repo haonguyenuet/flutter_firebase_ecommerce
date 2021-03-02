@@ -1,5 +1,9 @@
+import 'package:e_commerce_app/business_logic/blocs/auth/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/feedback_item.dart';
+import 'package:e_commerce_app/constants/style_constant.dart';
+import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'package:e_commerce_app/constants/color_constant.dart';
@@ -30,119 +34,101 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildHeader(context),
+            _buildHeader(),
+            SizedBox(height: 20),
             _buildCommentSection(),
+            SizedBox(height: 20),
             _buildRatingSection(),
+            SizedBox(height: 10),
+            _buildAddButton(context),
           ],
         ),
       ),
     );
   }
 
-  _buildHeader(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        InkWell(
-          child: Icon(Icons.close),
-          onTap: () {
-            close();
-          },
-        ),
-        Text(
-          'Add your feedback',
-          style: TextStyle(fontSize: 16),
-        ),
-        InkWell(
-          child: Text(
-            'Add',
-            textAlign: TextAlign.right,
-            style: TextStyle(color: mPrimaryColor, fontSize: 16),
-          ),
-          onTap: () {
-            // create new feedback
-            FeedbackItem newFeedback = FeedbackItem(
-              fid: UniqueKey().toString(),
-              uid: "",
-              rating: rating,
-              content: _content,
-            );
-            // return new feedback to main screen
-            Navigator.pop(context, newFeedback);
-          },
-        )
-      ],
-    );
-  }
-
-  _buildRatingSection() {
-    return Container(
-      padding: const EdgeInsets.only(top: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Text(
-              "Rating:",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          RatingBar.builder(
-            initialRating: rating.toDouble(),
-            minRating: 1,
-            allowHalfRating: false,
-            itemCount: 5,
-            itemBuilder: (context, _) => Icon(
-              Icons.star,
-              color: Colors.amber,
-            ),
-            onRatingUpdate: (rating) => setState(() {
-              this.rating = rating.round();
-            }),
-          ),
-        ],
-      ),
+  _buildHeader() {
+    return Align(
+      alignment: Alignment.center,
+      child: Text('Add your feedback', style: TextStyle(fontSize: 16)),
     );
   }
 
   _buildCommentSection() {
     return Container(
-      padding: const EdgeInsets.only(top: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Text(
-              "Nhận xét:",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: mPrimaryLightColor,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: TextField(
-              onChanged: (value) => setState(() => _content = value),
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                border: InputBorder.none,
-                hintText: "Type...",
-              ),
-            ),
-          ),
-        ],
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: mPrimaryLightColor,
       ),
+      child: TextField(
+        autofocus: true,
+        onChanged: (value) => setState(() => _content = value),
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          border: InputBorder.none,
+          hintText: "Type...",
+        ),
+        maxLines: null,
+      ),
+    );
+  }
+
+  _buildRatingSection() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Rating:",
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(width: 10),
+        RatingBar.builder(
+          initialRating: rating.toDouble(),
+          minRating: 1,
+          allowHalfRating: false,
+          itemCount: 5,
+          itemSize: 24,
+          itemBuilder: (context, _) => Icon(
+            Icons.star,
+            color: Colors.amber,
+          ),
+          onRatingUpdate: (rating) => setState(() {
+            this.rating = rating.round();
+          }),
+        ),
+      ],
+    );
+  }
+
+  _buildAddButton(BuildContext context) {
+    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+      builder: (context, state) {
+        return Align(
+          alignment: Alignment.centerRight,
+          child: Container(
+            width: 200,
+            child: DefaultButton(
+              child: Text("Send", style: mPrimaryFontStyle),
+              onPressed: () {
+                // create new feedback
+                FeedbackItem newFeedback = FeedbackItem(
+                  fid: UniqueKey().toString(),
+                  uid: state is Authenticated
+                      ? state.loggedFirebaseUser.uid
+                      : "",
+                  rating: rating,
+                  content: _content,
+                );
+                // return new feedback to main screen
+                Navigator.pop(context, newFeedback);
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }

@@ -1,9 +1,9 @@
 import 'dart:io';
 
+import 'package:e_commerce_app/business_logic/blocs/profile/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/user.dart';
-import 'package:e_commerce_app/business_logic/repository/storage_repo.dart';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -14,8 +14,6 @@ class ProfilePic extends StatelessWidget {
   }) : super(key: key);
 
   final UserModel loggedUser;
-  final ImagePicker _imagePicker = ImagePicker();
-  final StorageRepository _storageRepository = StorageRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -57,14 +55,9 @@ class ProfilePic extends StatelessWidget {
   }
 
   void uploadAvatar(BuildContext context) async {
+    ImagePicker _imagePicker = ImagePicker();
     PickedFile file = await _imagePicker.getImage(source: ImageSource.gallery);
     File imageFile = File(file.path);
-    String url = await _storageRepository.uploadImage(
-      "users/profile/${loggedUser.id}",
-      imageFile,
-    );
-
-    /// Clone a user model with new data
-    UserModel updatedUser = loggedUser.cloneWith(avatar: url);
+    BlocProvider.of<ProfileBloc>(context).add(UploadAvatar(imageFile));
   }
 }

@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
 import 'package:e_commerce_app/constants/style_constant.dart';
+import 'package:e_commerce_app/utils/common_func.dart';
 import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 
@@ -27,8 +28,9 @@ class CheckoutCard extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              offset: Offset(0.15, 0.6),
-              color: Colors.black,
+              offset: Offset(0, -0.5),
+              color: Colors.black12,
+              blurRadius: 5,
             )
           ],
         ),

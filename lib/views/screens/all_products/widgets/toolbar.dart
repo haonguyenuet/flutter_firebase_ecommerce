@@ -31,7 +31,7 @@ class _ToolBarState extends State<ToolBar> {
     return BlocConsumer<AllProductsBloc, AllProductsState>(
       listenWhen: (prevState, currState) => currState is OpenSortOption,
       listener: (context, state) {
-        if (state is OpenSortOption) {
+        if (state is OpenSortOption && state.isOpen) {
           _openSortOptionsDialog(context, state);
         }
       },
@@ -122,15 +122,16 @@ class _ToolBarState extends State<ToolBar> {
   }
 
   _openSortOptionsDialog(BuildContext context, OpenSortOption state) async {
-    var response = await showDialog<ProductSortOption>(
+    var sortOption = await showDialog<ProductSortOption>(
       context: context,
       builder: (context) {
         return SortOptionDialog(currSortOption: state.currSortOption);
       },
     );
-    if (response is ProductSortOption) {
+    if (sortOption != null) {
       BlocProvider.of<AllProductsBloc>(context)
-          .add(SortOptionsChanged(response));
+          .add(SortOptionsChanged(sortOption));
     }
+    BlocProvider.of<AllProductsBloc>(context).add(CloseSortOption());
   }
 }

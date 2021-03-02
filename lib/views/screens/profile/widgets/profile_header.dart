@@ -1,5 +1,4 @@
-import 'package:e_commerce_app/business_logic/blocs/auth/auth_bloc.dart';
-import 'package:e_commerce_app/business_logic/blocs/auth/bloc.dart';
+import 'package:e_commerce_app/business_logic/blocs/profile/bloc.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/business_logic/entities/user.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
@@ -19,10 +18,10 @@ class ProfileHeader extends StatelessWidget {
       width: double.infinity,
       height: SizeConfig.screenHeight * 0.3,
       color: mDarkShadeColor,
-      child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+      child: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
-          if (state is Authenticated) {
-            UserModel _loggedUser = state.loggedUser;
+          if (state is ProfileLoaded) {
+            var _loggedUser = state.loggedUser;
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -30,7 +29,7 @@ class ProfileHeader extends StatelessWidget {
                 Text(
                   "${_loggedUser.name}",
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 24,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),

@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
+import 'package:e_commerce_app/views/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -46,7 +47,6 @@ class _ProductInfoState extends State<ProductInfo> {
           _description(),
           SizedBox(height: 5),
           _seeMore(),
-          Divider(color: Colors.black26),
         ],
       ),
     );

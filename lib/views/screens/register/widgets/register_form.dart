@@ -48,7 +48,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
         /// Failure
         if (state.isFailure) {
-          showFailureDialog(context, state.message);
+            MyDialog.showInformation(context, content: state.message);
         }
 
         /// Registering

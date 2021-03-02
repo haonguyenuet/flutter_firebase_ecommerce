@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:e_commerce_app/business_logic/entities/feedback_item.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class FeedbackEvent extends Equatable {
   const FeedbackEvent();

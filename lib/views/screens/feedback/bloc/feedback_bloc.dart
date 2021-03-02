@@ -9,7 +9,6 @@ import 'package:meta/meta.dart';
 class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
   final FeedbackRepository _feedbackRepository;
   final ProductRepository _productRepository;
-  final UserRepository _userRepository;
   StreamSubscription _feedbackSubscription;
   Product _currentProduct;
   double _currAverageRating = 0.0;
@@ -17,13 +16,10 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
   FeedbackBloc({
     @required FeedbackRepository feedbackRepository,
     @required ProductRepository productRepository,
-    @required UserRepository userRepository,
   })  : assert(feedbackRepository != null),
         assert(productRepository != null),
-        assert(userRepository != null),
         _feedbackRepository = feedbackRepository,
         _productRepository = productRepository,
-        _userRepository = userRepository,
         super(FeedbacksLoading());
 
   @override
@@ -55,9 +51,7 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
   Stream<FeedbackState> _mapAddFeedbackItemToState(
       AddFeedbackItem event) async* {
     try {
-      var currUser = _userRepository.currentUser;
-      var newFeedback = event.feedback.cloneWith(uid: currUser.id);
-      _feedbackRepository.addNewFeedback(_currentProduct.id, newFeedback);
+      _feedbackRepository.addNewFeedback(_currentProduct.id, event.feedback);
     } catch (e) {
       print(e);
     }
@@ -88,7 +82,7 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
     feedbacks.forEach((f) => totalRating += f.rating);
     var averageRating =
         feedbacks.length > 0 ? totalRating / feedbacks.length : 0.0;
-     _currAverageRating = double.parse(averageRating.toStringAsFixed(1));
+    _currAverageRating = double.parse(averageRating.toStringAsFixed(1));
     // Update product rating
     _productRepository.updateProductRatingById(
       _currentProduct.id,

@@ -24,15 +24,13 @@ class _ProductImagesState extends State<ProductImages> {
       children: [
         /// Product image preview
         SizedBox(
-          height: getProportionateScreenWidth(238),
+          height: getProportionateScreenWidth(230),
           child: PageView.builder(
             itemCount: product.images.length,
             itemBuilder: (context, index) {
               return Container(
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
+                color: Colors.white,
                 child: FutureBuilder(
                   future: loadImage(product.images[index]),
                   builder: (context, snapshot) {
@@ -65,11 +63,10 @@ class _ProductImagesState extends State<ProductImages> {
     return AnimatedContainer(
         duration: mAnimationDuration,
         margin: EdgeInsets.only(right: 5),
-        height: 6,
-        width: _currentPage == index ? 20 : 6,
+        height: 3,
+        width: _currentPage == index ? 60 : 30,
         decoration: BoxDecoration(
           color: _currentPage == index ? mPrimaryColor : Color(0xFFD8D8D8),
-          borderRadius: BorderRadius.circular(_currentPage == index ? 8 : 3),
         ));
   }
 }

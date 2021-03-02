@@ -1,18 +1,18 @@
 import 'package:bloc/bloc.dart';
 
 import 'package:flutter/material.dart';
-import 'package:e_commerce_app/business_logic/repository/user_repository/user_repo.dart';
+import 'package:e_commerce_app/business_logic/repository/repository.dart';
 import 'package:e_commerce_app/utils/validator.dart';
 import 'package:rxdart/rxdart.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final UserRepository _userRepository;
+  final AuthRepository _authRepository;
 
-  LoginBloc({@required UserRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository,
+  LoginBloc({@required AuthRepository authRepository})
+      : assert(authRepository != null),
+        _authRepository = authRepository,
         super(LoginState.empty());
 
   @override
@@ -23,7 +23,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         .debounceTime(Duration(milliseconds: 300));
     var nonDebounceStream = events
         .where((event) => event is! EmailChanged && event is! PasswordChanged);
-    return super.transformEvents(nonDebounceStream.mergeWith([debounceStream]), transitionFn);
+    return super.transformEvents(
+        nonDebounceStream.mergeWith([debounceStream]), transitionFn);
   }
 
   @override
@@ -53,12 +54,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       yield LoginState.logging();
 
-      await _userRepository.logInWithEmailAndPassword(email, password);
-      bool isLoggedIn = await _userRepository.isLoggedIn();
+      await _authRepository.logInWithEmailAndPassword(email, password);
+      bool isLoggedIn = _authRepository.isLoggedIn();
       if (isLoggedIn) {
         yield LoginState.success();
       } else {
-        final message = _userRepository.authException ?? "Login Failure";
+        final message = _authRepository.authException ?? "Login Failure";
         yield LoginState.failure(message);
       }
     } catch (e) {

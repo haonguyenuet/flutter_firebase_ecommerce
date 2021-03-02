@@ -17,7 +17,7 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => RegisterBloc(
-        userRepository: RepositoryProvider.of<UserRepository>(context),
+        authRepository: RepositoryProvider.of<AuthRepository>(context),
       ),
       child: Scaffold(
         backgroundColor: mAccentShadeColor,

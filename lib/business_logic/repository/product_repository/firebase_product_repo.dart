@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/business_logic/entities/category.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:e_commerce_app/business_logic/repository/product_repository/product_repo.dart';
+
 class FirebaseProductRepository implements ProductRepository {
   final CollectionReference productCollection =
       FirebaseFirestore.instance.collection("products");
 
   /// Get all products
+  /// Created by NDH
   @override
   Future<List<Product>> getProducts() async {
     return await productCollection
@@ -18,6 +20,8 @@ class FirebaseProductRepository implements ProductRepository {
   }
 
   /// Get products by category
+  /// [categoryId] is id of category
+  /// Created by NDH
   @override
   Future<List<Product>> getProductsByCategory(String categoryId) async {
     return await productCollection
@@ -30,6 +34,8 @@ class FirebaseProductRepository implements ProductRepository {
   }
 
   /// Get product by Id
+  /// [pid] is product id
+  /// Created by NDH
   @override
   Future<Product> getProductById(String pid) async {
     return await productCollection
@@ -42,12 +48,17 @@ class FirebaseProductRepository implements ProductRepository {
   @override
 
   /// Update product rating
+  /// [pid] is product id
+  /// [rating] is updated rating
+  /// Created by NDH
   Future<void> updateProductRatingById(String pid, double rating) async {
     return await productCollection
         .doc(pid)
         .update({"rating": rating}).catchError((error) => print(error));
   }
 
+  /// Get all categories
+  /// Created by NDH
   @override
   Future<List<Category>> getCategories() async {
     return await FirebaseFirestore.instance

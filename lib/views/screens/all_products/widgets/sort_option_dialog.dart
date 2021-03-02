@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/constants/constants.dart';
+import 'package:e_commerce_app/utils/my_dialog.dart';
 import 'package:e_commerce_app/views/screens/all_products/bloc/bloc.dart';
 import 'package:e_commerce_app/views/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
@@ -31,69 +32,76 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
           fontWeight: FontWeight.bold,
         ),
       ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Wrap(
-            children: [
-              Text("Sort by:"),
-              SizedBox(width: 10),
-              RadioListTile(
-                title: Text("Price"),
-                value: PRODUCT_SORT_BY.PRICE,
-                groupValue: sortOption?.productSortBy,
-                onChanged: (value) {
-                  print(value);
-                  setState(() =>
-                      sortOption = sortOption.update(productSortBy: value));
-                },
-              ),
-              RadioListTile(
-                title: Text("Name"),
-                value: PRODUCT_SORT_BY.NAME,
-                groupValue: sortOption?.productSortBy,
-                onChanged: (value) {
-                  setState(() =>
-                      sortOption = sortOption.update(productSortBy: value));
-                },
-              )
-            ],
-          ),
-          Wrap(
-            children: [
-              Text("Sort order:"),
-              SizedBox(width: 10),
-              RadioListTile(
-                title: Text("Ascending"),
-                value: PRODUCT_SORT_ORDER.ASCENDING,
-                groupValue: sortOption?.productSortOrder,
-                onChanged: (value) {
-                  setState(() =>
-                      sortOption = sortOption.update(productSortOrder: value));
-                },
-              ),
-              RadioListTile(
-                title: Text("Descending"),
-                value: PRODUCT_SORT_ORDER.DESCENDING,
-                groupValue: sortOption?.productSortOrder,
-                onChanged: (value) {
-                  setState(() =>
-                      sortOption = sortOption.update(productSortOrder: value));
-                },
-              )
-            ],
-          ),
-          SizedBox(height: 10),
-          DefaultButton(
-            onPressed: () {
-              // Because productSortOrder default is descending, so it's not null
-              if (sortOption.productSortBy != null) {
-                Navigator.pop(context, sortOption);
-              }
-            },
-            child: Text("Select", style: mPrimaryFontStyle),
-          )
-        ],
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Wrap(
+              children: [
+                Text("Sort by:"),
+                SizedBox(width: 10),
+                RadioListTile(
+                  title: Text("Price"),
+                  value: PRODUCT_SORT_BY.PRICE,
+                  groupValue: sortOption?.productSortBy,
+                  onChanged: (value) {
+                    print(value);
+                    setState(() =>
+                        sortOption = sortOption.update(productSortBy: value));
+                  },
+                ),
+                RadioListTile(
+                  title: Text("Name"),
+                  value: PRODUCT_SORT_BY.NAME,
+                  groupValue: sortOption?.productSortBy,
+                  onChanged: (value) {
+                    setState(() =>
+                        sortOption = sortOption.update(productSortBy: value));
+                  },
+                )
+              ],
+            ),
+            Wrap(
+              children: [
+                Text("Sort order:"),
+                SizedBox(width: 10),
+                RadioListTile(
+                  title: Text("Ascending"),
+                  value: PRODUCT_SORT_ORDER.ASCENDING,
+                  groupValue: sortOption?.productSortOrder,
+                  onChanged: (value) {
+                    setState(() => sortOption =
+                        sortOption.update(productSortOrder: value));
+                  },
+                ),
+                RadioListTile(
+                  title: Text("Descending"),
+                  value: PRODUCT_SORT_ORDER.DESCENDING,
+                  groupValue: sortOption?.productSortOrder,
+                  onChanged: (value) {
+                    setState(() => sortOption =
+                        sortOption.update(productSortOrder: value));
+                  },
+                )
+              ],
+            ),
+            SizedBox(height: 10),
+            DefaultButton(
+              onPressed: () {
+                // Because productSortOrder default is descending, so it's not null
+                if (sortOption.productSortBy != null) {
+                  Navigator.pop(context, sortOption);
+                } else {
+                  MyDialog.showInformation(
+                    context,
+                    content: "Sort by isn't selected",
+                  );
+                }
+              },
+              child: Text("Select", style: mPrimaryFontStyle),
+            )
+          ],
+        ),
       ),
     );
   }
