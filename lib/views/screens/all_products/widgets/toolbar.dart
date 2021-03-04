@@ -39,7 +39,7 @@ class _ToolBarState extends State<ToolBar> {
       builder: (context, state) {
         if (state is UpdateToolbarState) {
           return Container(
-            height: 50,
+            padding: EdgeInsets.only(top: 10),
             color: mDarkShadeColor,
             child: Row(
               children: <Widget>[

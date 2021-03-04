@@ -1,8 +1,9 @@
 import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:e_commerce_app/configs/router.dart';
+import 'package:e_commerce_app/constants/color_constant.dart';
+import 'package:e_commerce_app/views/widgets/buttons/cart_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:e_commerce_app/configs/size_config.dart';
 
 class CustomAppBar extends PreferredSize {
   final Product product;
@@ -22,7 +23,7 @@ class CustomAppBar extends PreferredSize {
           children: [
             _buildBackHomeButton(context),
             Spacer(),
-            _buildRatingButton(context)
+            CartButton(color: mTextColor),
           ],
         ),
       ),
@@ -35,45 +36,14 @@ class CustomAppBar extends PreferredSize {
         Navigator.pushReplacementNamed(context, AppRouter.HOME);
       },
       child: Container(
-        height: getProportionateScreenWidth(40),
-        width: getProportionateScreenWidth(40),
+        height: 40,
+        width: 40,
+        padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Color(0xFFF5F6F9),
         ),
-        child: Icon(Icons.cancel_rounded),
-      ),
-    );
-  }
-
-  _buildRatingButton(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(
-          context,
-          AppRouter.FEEDBACK,
-          arguments: product,
-        );
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 14, vertical: 5),
-        decoration: BoxDecoration(
-          color: Color(0xFFF5F6F9),
-          borderRadius: BorderRadius.circular(14),
-        ),
-        child: Row(
-          children: [
-            Text(
-              "${product.rating}",
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(width: 5),
-            SvgPicture.asset("assets/icons/Star Icon.svg"),
-          ],
-        ),
+        child: SvgPicture.asset("assets/icons/cancel.svg"),
       ),
     );
   }

@@ -6,12 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/app_view.dart';
 import 'business_logic/blocs/auth/bloc.dart';
 import 'business_logic/blocs/cart/bloc.dart';
-import 'business_logic/blocs/simple_bloc_observer.dart';
 import 'business_logic/repository/repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Bloc.observer = SimpleBlocObserver();
+  // Bloc.observer = SimpleBlocObserver();
   await Firebase.initializeApp();
   runApp(MyApp());
 }

@@ -20,11 +20,5 @@ abstract class UserRepository {
   /// Update a doc in users collection
   /// [user] is updated data of user
   /// Created by NDH
-  Future<void> updateUserData(UserModel user);
-
-  /// Update user avatar in users collection
-  /// [uid] is user id
-  /// [imageUrl] is image link
-  /// Created by NDH
-  Future<void> updateUserAvatar(String uid, String imageUrl);
+  Future<void> updateUserData(UserModel updatedUser);
 }

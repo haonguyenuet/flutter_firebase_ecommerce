@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:e_commerce_app/business_logic/blocs/profile/bloc.dart';
+import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:e_commerce_app/business_logic/repository/repository.dart';
 import 'package:e_commerce_app/business_logic/repository/storage_repo.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -11,7 +11,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   UserRepository _userRepository;
   StorageRepository _storageRepository;
   StreamSubscription _userProfileSubscription;
-  User _loggedUser;
+  UserModel _loggedUser;
 
   ProfileBloc({
     @required UserRepository userRepository,
@@ -35,10 +35,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   Stream<ProfileState> _mapLoadProfileToState(LoadProfile event) async* {
     try {
-      _loggedUser = event.loggedFirebaseUser;
       _userProfileSubscription?.cancel();
       _userProfileSubscription = _userRepository
-          .loggedUserStream(_loggedUser)
+          .loggedUserStream(event.loggedFirebaseUser)
           .listen((user) => add(ProfileUpdated(user)));
     } catch (e) {
       print(e);
@@ -49,16 +48,18 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Stream<ProfileState> _mapUploadAvatarToState(UploadAvatar event) async* {
     try {
       String imageUrl = await _storageRepository.uploadImage(
-        "users/profile/${_loggedUser.uid}",
+        "users/profile/${_loggedUser.id}",
         event.imageFile,
       );
+      var updatedUser = _loggedUser.cloneWith(avatar: imageUrl);
       // Update user avatar
-      await _userRepository.updateUserAvatar(_loggedUser.uid, imageUrl);
+      await _userRepository.updateUserData(updatedUser);
     } catch (e) {}
   }
 
   Stream<ProfileState> _mapProfileUpdatedToState(ProfileUpdated event) async* {
     try {
+      _loggedUser = event.updatedUser;
       yield ProfileLoaded(event.updatedUser);
     } catch (e) {
       print(e);

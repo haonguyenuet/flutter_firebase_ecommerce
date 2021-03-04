@@ -1,10 +1,7 @@
 import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
 import 'package:e_commerce_app/business_logic/repository/product_repository/firebase_product_repo.dart';
 import 'package:e_commerce_app/configs/router.dart';
-
-import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
-import 'package:e_commerce_app/utils/common_func.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
 
 import 'package:e_commerce_app/views/widgets/buttons/circle_icon_button.dart';
@@ -12,15 +9,16 @@ import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class CartItemCard extends StatelessWidget {
   const CartItemCard({
     Key key,
     this.cartItem,
+    this.allowChangeQuantity = true,
   }) : super(key: key);
 
   final CartItem cartItem;
+  final bool allowChangeQuantity;
 
   @override
   Widget build(BuildContext context) {
@@ -33,20 +31,20 @@ class CartItemCard extends StatelessWidget {
                 onTap: () {
                   Navigator.pushNamed(
                     context,
-                    AppRouter.show_details,
+                    AppRouter.DETAIL_PRODUCT,
                     arguments: product,
                   );
                 },
                 child: Container(
                   margin: EdgeInsets.all(10),
-                  height: getProportionateScreenHeight(130),
+                  height: 140,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(5),
                     boxShadow: [
                       BoxShadow(
-                        offset: Offset(0, 5),
-                        blurRadius: 10,
+                        offset: Offset(0, 1),
+                        blurRadius: 5,
                         color: mPrimaryColor.withOpacity(0.2),
                       ),
                     ],
@@ -54,14 +52,14 @@ class CartItemCard extends StatelessWidget {
                   child: Row(
                     children: [
                       _buildCartItemImage(product),
-                      SizedBox(width: getProportionateScreenWidth(10)),
+                      SizedBox(width: 10),
                       Expanded(child: _buildCartItemInfo(product, context)),
                     ],
                   ),
                 ),
               )
             // Loading
-            : Container(height: getProportionateScreenHeight(130));
+            : Container();
       },
     );
   }
@@ -71,17 +69,9 @@ class CartItemCard extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 1,
       child: Container(
-        alignment: Alignment.center,
-        padding: EdgeInsets.all(10),
-        child: FutureBuilder(
-          future: loadImage(product.images[0]),
-          builder: (context, snapshot) {
-            return snapshot.hasData
-                ? Image.network(snapshot.data)
-                : SpinKitCircle(color: mPrimaryColor);
-          },
-        ),
-      ),
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(10),
+          child: Image.network(product.images[0])),
     );
   }
 
@@ -95,16 +85,19 @@ class CartItemCard extends StatelessWidget {
         Text(
           "${product.name}",
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          maxLines: 1,
         ),
         SizedBox(height: 5),
         // Cart item price
         Text(
-          "${formatNumber(product.originalPrice)} VNĐ",
+          "${formatNumber(product.originalPrice)} ₫",
           style: TextStyle(color: mPrimaryColor, fontSize: 17),
         ),
         SizedBox(height: 5),
 
-        _buildCartItemQuantity(product, context)
+        allowChangeQuantity
+            ? _buildCartItemQuantity(product, context)
+            : Text("x ${cartItem.quantity}")
       ],
     );
   }
@@ -112,59 +105,53 @@ class CartItemCard extends StatelessWidget {
   // Cart item quantity
   _buildCartItemQuantity(Product product, BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         // decrease button
         CircleIconButton(
           svgIcon: "assets/icons/subtract.svg",
           color: Color(0xFFF5F6F9),
-          size: 16,
+          size: 14,
           onPressed: cartItem.quantity > 1
-              ? () {
-                  var newQuantity = cartItem.quantity - 1;
-                  var newPrice = newQuantity * product.originalPrice;
-
-                  // update cart item
-                  BlocProvider.of<CartBloc>(context).add(UpdateCartItem(
-                    cartItem.cloneWith(
-                      quantity: newQuantity,
-                      price: newPrice,
-                    ),
-                  ));
-                }
+              ? () => _changeQuantity(context, product, cartItem.quantity - 1)
               : () {},
         ),
-        const SizedBox(width: 10),
+
         // quantity
-        Text(
-          "${cartItem.quantity}",
-          style: TextStyle(
-            color: mPrimaryColor,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Text(
+            "${cartItem.quantity}",
+            style: TextStyle(
+              color: mPrimaryColor,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-        const SizedBox(width: 10),
-        // increase button
+
+        // // increase button
         CircleIconButton(
           svgIcon: "assets/icons/add.svg",
           color: Color(0xFFF5F6F9),
-          size: 16,
+          size: 14,
           onPressed: cartItem.quantity < product.quantity
-              ? () {
-                  var newQuantity = cartItem.quantity + 1;
-                  var newPrice = newQuantity * product.originalPrice;
-
-                  // update cart item
-                  BlocProvider.of<CartBloc>(context).add(UpdateCartItem(
-                    cartItem.cloneWith(
-                      quantity: newQuantity,
-                      price: newPrice,
-                    ),
-                  ));
-                }
+              ? () => _changeQuantity(context, product, cartItem.quantity + 1)
               : () {},
         )
       ],
     );
+  }
+
+  _changeQuantity(BuildContext context, Product product, int newQuantity) {
+    var newPrice = newQuantity * product.originalPrice;
+
+    // update cart item
+    BlocProvider.of<CartBloc>(context).add(UpdateCartItem(
+      cartItem.cloneWith(
+        quantity: newQuantity,
+        price: newPrice,
+      ),
+    ));
   }
 }

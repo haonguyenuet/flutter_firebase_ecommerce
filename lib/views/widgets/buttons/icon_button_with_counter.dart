@@ -7,18 +7,20 @@ class IconButtonWithCounter extends StatelessWidget {
     @required this.icon,
     this.size,
     this.onPressed,
+    this.color,
   }) : super(key: key);
 
   final int counter;
   final IconData icon;
   final Function onPressed;
   final double size;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
-      overflow: Overflow.visible,
+      clipBehavior: Clip.antiAlias,
       children: [
         _buildIcon(),
         if (counter > 0) _buildCounter(),
@@ -30,7 +32,7 @@ class IconButtonWithCounter extends StatelessWidget {
     return IconButton(
       icon: Icon(icon, size: size),
       onPressed: onPressed,
-      color: Colors.white,
+      color: color,
     );
   }
 

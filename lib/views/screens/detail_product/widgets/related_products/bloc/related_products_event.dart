@@ -10,7 +10,7 @@ class LoadRelatedProducts extends RelatedProductsEvent {
   final String categoryId;
 
   LoadRelatedProducts(this.pid, this.categoryId);
+  
   @override
-  // TODO: implement props
   List<Object> get props => [pid, categoryId];
 }

@@ -12,7 +12,7 @@ class CategoryCard extends StatelessWidget {
     Key key,
     @required this.category,
     this.onPressed,
-    this.isActive = false,
+    this.isActive = true,
   }) : super(key: key);
 
   @override
@@ -23,8 +23,8 @@ class CategoryCard extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         margin: EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
-          color: isActive ? mPrimaryColor : mAccentShadeColor,
-          borderRadius: BorderRadius.circular(5),
+          color: isActive ? mAccentShadeColor : mDarkShadeColor,
+          borderRadius: BorderRadius.circular(2),
         ),
         child: Row(
           children: [
@@ -39,7 +39,7 @@ class CategoryCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.white,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600,
               ),
             )
           ],

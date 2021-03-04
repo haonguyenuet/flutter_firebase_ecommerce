@@ -43,8 +43,8 @@ class Product {
     return Product(
       id: id,
       name: data["name"] ?? "Unknown",
-      description: data["desc"] ?? "",
-      originalPrice: data["price"] ?? 0,
+      description: data["description"] ?? "",
+      originalPrice: data["originalPrice"] ?? 0,
       isAvailable: data["isAvailable"] ?? true,
       images: data["images"] ?? "",
       categoryId: data["categoryId"] ?? "",

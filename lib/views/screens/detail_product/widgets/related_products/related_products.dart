@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/views/screens/detail_product/widgets/related_products/bloc/related_products_bloc.dart';
 import 'package:e_commerce_app/views/screens/detail_product/widgets/related_products/bloc/related_products_state.dart';
 import 'package:e_commerce_app/views/widgets/others/section.dart';
@@ -22,7 +23,9 @@ class RelatedProducts extends StatelessWidget {
             children: state.relatedProducts
                 .map((p) => ProductCard(product: p))
                 .toList(),
-            handleOnTap: () {},
+            handleOnTap: () {
+              Navigator.pushNamed(context, AppRouter.ALL_PRODUCTS);
+            },
           );
         }
         return Center(child: Text("Unknown state"));

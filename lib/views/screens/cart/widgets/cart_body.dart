@@ -13,7 +13,7 @@ class CartBody extends StatelessWidget {
           return Loading();
         }
         if (state is CartLoaded) {
-          var cart = state.cartResponse.cart;
+          var cart = state.cart;
           return SafeArea(
             child: cart.length > 0
                 ? ListView.builder(

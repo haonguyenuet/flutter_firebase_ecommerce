@@ -9,7 +9,7 @@ Future<String> loadImage(dynamic imageURL) {
 
 /// Show processing
 void showProcessing(BuildContext context, String content) {
-  Scaffold.of(context)
+  ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()
     ..showSnackBar(
       SnackBar(

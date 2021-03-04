@@ -15,7 +15,7 @@ class HomeBanner extends StatefulWidget {
 class _HomeBannerState extends State<HomeBanner> {
   List<BannerItem> get banners => widget.banners;
   // local states
-  final aspectRatioBanner = 16 / 7;
+  final aspectRatioBanner = 2 / 1;
   var currentIndex = 0;
 
   @override
@@ -61,8 +61,8 @@ class _HomeBannerState extends State<HomeBanner> {
 
   _buildIndicators() {
     return Positioned(
-      left: 40,
-      bottom: 12,
+      left: 28,
+      bottom: 6,
       child: Row(
         children: [
           ...List.generate(banners.length, (index) {
@@ -76,11 +76,11 @@ class _HomeBannerState extends State<HomeBanner> {
   _buildIndicatorNormal(bool isSelected) {
     return AnimatedContainer(
       duration: mAnimationDuration,
-      height: isSelected ? 7 : 6,
+      height: isSelected ? 6 : 5,
       width: isSelected ? 20 : 16,
       margin: EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
-        color: isSelected ? mAccentShadeColor : Colors.grey,
+        color: isSelected ? Colors.white : Colors.black26,
         borderRadius: BorderRadius.circular(4),
       ),
     );

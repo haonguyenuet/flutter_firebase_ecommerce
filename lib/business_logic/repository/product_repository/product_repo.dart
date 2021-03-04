@@ -6,6 +6,10 @@ abstract class ProductRepository {
   /// Created by NDH
   Future<List<Product>> getProducts();
 
+  /// Get all products
+  /// Created by NDH
+  Future<List<Product>> getPopularProducts();
+
   /// Get products by category
   /// [categoryId] is id of category
   /// Created by NDH

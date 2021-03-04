@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
+import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class CartState extends Equatable {
@@ -13,12 +13,13 @@ class CartLoading extends CartState {}
 
 /// Cart was loaded
 class CartLoaded extends CartState {
-  final CartResponse cartResponse;
+  final List<CartItem> cart;
+  final int totalCartPrice;
 
-  CartLoaded(this.cartResponse);
+  CartLoaded(this.cart, this.totalCartPrice);
 
   @override
-  List<Object> get props => [cartResponse];
+  List<Object> get props => [cart, totalCartPrice];
 }
 
 /// Cart wasn't loaded

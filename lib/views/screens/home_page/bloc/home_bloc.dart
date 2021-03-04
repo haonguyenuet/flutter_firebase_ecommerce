@@ -36,7 +36,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       HomeResponse homeResponse = HomeResponse(
         banners: await _bannerRepository.getBanners() ?? [],
         categories: await _productRepository.getCategories() ?? [],
-        products: await _productRepository.getProducts() ?? [],
+        products: await _productRepository.getPopularProducts() ?? [],
       );
       yield HomeLoaded(homeResponse: homeResponse);
     } catch (e) {

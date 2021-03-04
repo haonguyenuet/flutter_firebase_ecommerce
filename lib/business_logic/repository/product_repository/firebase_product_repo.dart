@@ -19,18 +19,34 @@ class FirebaseProductRepository implements ProductRepository {
         .catchError((error) => print(error));
   }
 
+  /// Get popular product by soldQuantity
+  /// Created by NDH
+  @override
+  Future<List<Product>> getPopularProducts() async {
+    return await productCollection
+            .orderBy("soldQuantity", descending: true)
+            .limit(10)
+            .get()
+            .then((snapshot) => snapshot.docs
+                .map((doc) => Product.fromMap(doc.id, doc.data()))
+                .toList())
+            .catchError((error) => print(error)) ??
+        [];
+  }
+
   /// Get products by category
   /// [categoryId] is id of category
   /// Created by NDH
   @override
   Future<List<Product>> getProductsByCategory(String categoryId) async {
     return await productCollection
-        .where("categoryId", isEqualTo: categoryId)
-        .get()
-        .then((snapshot) => snapshot.docs
-            .map((doc) => Product.fromMap(doc.id, doc.data()))
-            .toList())
-        .catchError((error) => print(error));
+            .where("categoryId", isEqualTo: categoryId)
+            .get()
+            .then((snapshot) => snapshot.docs
+                .map((doc) => Product.fromMap(doc.id, doc.data()))
+                .toList())
+            .catchError((error) => print(error)) ??
+        [];
   }
 
   /// Get product by Id
@@ -62,11 +78,12 @@ class FirebaseProductRepository implements ProductRepository {
   @override
   Future<List<Category>> getCategories() async {
     return await FirebaseFirestore.instance
-        .collection("categories")
-        .get()
-        .then((snapshot) => snapshot.docs
-            .map((doc) => Category.fromMap(doc.id, doc.data()))
-            .toList())
-        .catchError((err) => print(err));
+            .collection("categories")
+            .get()
+            .then((snapshot) => snapshot.docs
+                .map((doc) => Category.fromMap(doc.id, doc.data()))
+                .toList())
+            .catchError((err) => print(err)) ??
+        [];
   }
 }

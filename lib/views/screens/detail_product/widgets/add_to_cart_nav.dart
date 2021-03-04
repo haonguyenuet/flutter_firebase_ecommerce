@@ -53,13 +53,13 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
           width: 60,
           child: AbsorbPointer(
             absorbing: quantity > 1 ? false : true,
-            child: RaisedButton(
+            child: ElevatedButton(
               onPressed: () {
                 setState(() {
                   quantity -= 1;
                 });
               },
-              color: Colors.white,
+              style: ElevatedButton.styleFrom(primary: Colors.white),
               child: Icon(Icons.remove, color: mPrimaryColor),
             ),
           ),
@@ -81,11 +81,11 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
           width: 60,
           child: AbsorbPointer(
             absorbing: quantity < product.quantity ? false : true,
-            child: RaisedButton(
+            child: ElevatedButton(
               onPressed: () {
                 setState(() => quantity += 1);
               },
-              color: Colors.white,
+              style: ElevatedButton.styleFrom(primary: Colors.white),
               child: Icon(Icons.add, color: mPrimaryColor),
             ),
           ),
@@ -98,7 +98,7 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
   _addToCartButton() {
     return Container(
       height: 60,
-      child: RaisedButton(
+      child: ElevatedButton(
         onPressed: product.quantity > 0
             ? () {
                 // Create new cart item
@@ -114,7 +114,7 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
                 Navigator.pushNamed(context, AppRouter.CART);
               }
             : null,
-        color: mPrimaryColor,
+        style: ElevatedButton.styleFrom(primary: mPrimaryColor),
         child: Icon(Icons.add_shopping_cart, color: Colors.white),
       ),
     );

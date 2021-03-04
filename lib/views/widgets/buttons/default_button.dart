@@ -25,15 +25,14 @@ class DefaultButton extends StatelessWidget {
           ),
         ],
       ),
-      child: FlatButton(
+      child: TextButton(
         onPressed: onPressed,
-        color: mPrimaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(7.0),
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+              (states) => mPrimaryColor),
         ),
         child: child,
       ),
     );
-    ;
   }
 }

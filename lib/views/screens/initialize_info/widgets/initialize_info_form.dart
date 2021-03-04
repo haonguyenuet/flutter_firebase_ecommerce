@@ -15,7 +15,6 @@ class InitializeInfoForm extends StatefulWidget {
 
 class _InitializeInfoFormState extends State<InitializeInfoForm> {
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
 
   @override
@@ -50,8 +49,6 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
             SizedBox(height: getProportionateScreenHeight(20)),
             _buildNameInput(),
             SizedBox(height: getProportionateScreenHeight(10)),
-            _buildAddressInput(),
-            SizedBox(height: getProportionateScreenHeight(10)),
             _buildPhoneNumberInput(),
             SizedBox(height: getProportionateScreenHeight(20)),
             _buildButtonContinue(),
@@ -71,17 +68,6 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
       decoration: InputDecoration(
         hintText: 'Name',
         suffixIcon: Icon(Icons.person),
-      ),
-    );
-  }
-
-  _buildAddressInput() {
-    return TextFormField(
-      controller: _addressController,
-      keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        hintText: 'Address',
-        suffixIcon: Icon(Icons.location_city),
       ),
     );
   }
@@ -109,7 +95,6 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
           UserModel initialUser = UserModel(
             email: "",
             name: _nameController.text,
-            address: _addressController.text,
             phoneNumber: _phoneNumberController.text,
           );
           Navigator.pushNamed(
@@ -155,15 +140,12 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
   }
 
   bool get isPopulated =>
-      _nameController.text.isNotEmpty &&
-      _addressController.text.isNotEmpty &&
-      _phoneNumberController.text.isNotEmpty;
+      _nameController.text.isNotEmpty && _phoneNumberController.text.isNotEmpty;
 
   @override
   void dispose() {
     _phoneNumberController.dispose();
     _nameController.dispose();
-    _addressController.dispose();
     super.dispose();
   }
 }

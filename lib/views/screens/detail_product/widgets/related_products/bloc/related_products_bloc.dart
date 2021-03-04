@@ -27,7 +27,7 @@ class RelatedProductsBloc
             products.where((product) => product.id != event.pid).toList();
         yield RelatedProductsLoaded(relatedProducts: relatedProducts);
       } catch (e) {
-        yield RelatedProductsLoadFailure(e);
+        yield RelatedProductsLoadFailure(e.toString());
       }
     }
   }

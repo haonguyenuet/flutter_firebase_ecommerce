@@ -51,8 +51,8 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
                   },
                 ),
                 RadioListTile(
-                  title: Text("Name"),
-                  value: PRODUCT_SORT_BY.NAME,
+                  title: Text("Sold Quantity"),
+                  value: PRODUCT_SORT_BY.SOLD_QUANTITY,
                   groupValue: sortOption?.productSortBy,
                   onChanged: (value) {
                     setState(() =>
@@ -66,6 +66,15 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
                 Text("Sort order:"),
                 SizedBox(width: 10),
                 RadioListTile(
+                  title: Text("Descending"),
+                  value: PRODUCT_SORT_ORDER.DESCENDING,
+                  groupValue: sortOption?.productSortOrder,
+                  onChanged: (value) {
+                    setState(() => sortOption =
+                        sortOption.update(productSortOrder: value));
+                  },
+                ),
+                RadioListTile(
                   title: Text("Ascending"),
                   value: PRODUCT_SORT_ORDER.ASCENDING,
                   groupValue: sortOption?.productSortOrder,
@@ -74,15 +83,6 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
                         sortOption.update(productSortOrder: value));
                   },
                 ),
-                RadioListTile(
-                  title: Text("Descending"),
-                  value: PRODUCT_SORT_ORDER.DESCENDING,
-                  groupValue: sortOption?.productSortOrder,
-                  onChanged: (value) {
-                    setState(() => sortOption =
-                        sortOption.update(productSortOrder: value));
-                  },
-                )
               ],
             ),
             SizedBox(height: 10),

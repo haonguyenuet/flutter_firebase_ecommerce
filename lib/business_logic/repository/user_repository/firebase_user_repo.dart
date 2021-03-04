@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/business_logic/entities/user.dart';
 import 'package:e_commerce_app/business_logic/repository/user_repository/user_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseUserRepository implements UserRepository {
   var _userCollection = FirebaseFirestore.instance.collection("users");
@@ -41,16 +40,7 @@ class FirebaseUserRepository implements UserRepository {
   /// Update a doc in users collection
   /// [user] is updated data of user
   /// Created by NDH
-  Future<void> updateUserData(UserModel user) async {
-    await _userCollection.doc(user.id).update(user.toMap());
-  }
-
-  /// Update user avatar in users collection
-  /// [uid] is user id
-  /// [imageUrl] is image link
-  /// Created by NDH
-  @override
-  Future<void> updateUserAvatar(String uid, String imageUrl) async {
-    await _userCollection.doc(uid).update({"avatar": imageUrl});
+  Future<void> updateUserData(UserModel updatedUser) async {
+    await _userCollection.doc(updatedUser.id).update(updatedUser.toMap());
   }
 }

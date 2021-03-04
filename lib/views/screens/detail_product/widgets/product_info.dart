@@ -1,11 +1,10 @@
 import 'package:e_commerce_app/business_logic/entities/product.dart';
+import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
-import 'package:e_commerce_app/views/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:e_commerce_app/constants/color_constant.dart';
-import 'package:e_commerce_app/configs/size_config.dart';
 
 class ProductInfo extends StatefulWidget {
   const ProductInfo({
@@ -27,35 +26,37 @@ class _ProductInfoState extends State<ProductInfo> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: getProportionateScreenWidth(20)),
+      padding: EdgeInsets.symmetric(vertical: 30),
       color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _price(),
-          SizedBox(height: 5),
           _productName(),
+          SizedBox(height: 5),
+          _price(),
           SizedBox(height: 20),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              SizedBox(width: 15),
               _soldQuantity(),
+              SizedBox(width: 10),
+              Container(height: 15, width: 2, color: Colors.black12),
+              SizedBox(width: 10),
+              _rating(context),
+              Spacer(),
               _isAvailable(),
             ],
           ),
           SizedBox(height: 30),
           _description(),
-          SizedBox(height: 5),
-          _seeMore(),
         ],
       ),
     );
   }
 
-  Padding _productName() {
+  _productName() {
     return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+      padding: EdgeInsets.symmetric(horizontal: 15),
       child: Text(
         product.name,
         style: TextStyle(fontSize: 20),
@@ -63,12 +64,11 @@ class _ProductInfoState extends State<ProductInfo> {
     );
   }
 
-  Padding _price() {
+  _price() {
     return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+      padding: EdgeInsets.symmetric(horizontal: 15),
       child: Text(
-        "${formatNumber(product.originalPrice)} VNĐ",
+        "${formatNumber(product.originalPrice)}₫",
         style: TextStyle(
           fontSize: 24,
           color: mPrimaryColor,
@@ -77,27 +77,47 @@ class _ProductInfoState extends State<ProductInfo> {
     );
   }
 
-  Container _soldQuantity() {
-    return Container(
-      padding:
-          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-      child: Text.rich(
-        TextSpan(
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-          children: [
-            TextSpan(text: "Đã bán:"),
-            TextSpan(
-              text: " ${product.soldQuantity}",
-              style: TextStyle(fontSize: 16, color: mPrimaryColor),
-            ),
-            TextSpan(text: " sản phẩm"),
-          ],
-        ),
+  _soldQuantity() {
+    return Text.rich(
+      TextSpan(
+        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+        children: [
+          TextSpan(text: "Đã bán:"),
+          TextSpan(
+            text: " ${product.soldQuantity}",
+            style: TextStyle(fontSize: 16, color: mPrimaryColor),
+          ),
+        ],
       ),
     );
   }
 
-  Align _isAvailable() {
+  _rating(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          AppRouter.FEEDBACK,
+          arguments: product,
+        );
+      },
+      child: Row(
+        children: [
+          Text(
+            "${product.rating}",
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          SizedBox(width: 5),
+          SvgPicture.asset("assets/icons/Star Icon.svg"),
+        ],
+      ),
+    );
+  }
+
+  _isAvailable() {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
@@ -126,37 +146,35 @@ class _ProductInfoState extends State<ProductInfo> {
     );
   }
 
-  Padding _description() {
+  _description() {
     return Padding(
-      padding: EdgeInsets.only(
-        left: getProportionateScreenWidth(20),
-        right: getProportionateScreenWidth(60),
-      ),
-      child: Text(
-        product.description,
-        maxLines: seeMore ? null : 2,
-      ),
-    );
-  }
-
-  Padding _seeMore() {
-    return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            seeMore = !seeMore;
-          });
-        },
-        child: Text(
-          "${seeMore ? "See less" : "See more"}",
-          style: TextStyle(
-            color: mPrimaryColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            product.description,
+            maxLines: seeMore ? null : 2,
           ),
-        ),
+          SizedBox(height: 5),
+
+          // see more button
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                seeMore = !seeMore;
+              });
+            },
+            child: Text(
+              "${seeMore ? "See less" : "See more"}",
+              style: TextStyle(
+                color: mPrimaryColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

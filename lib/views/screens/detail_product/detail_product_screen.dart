@@ -6,6 +6,7 @@ import 'package:e_commerce_app/views/screens/detail_product/widgets/product_info
 import 'package:e_commerce_app/views/screens/detail_product/widgets/related_products/bloc/related_products_bloc.dart';
 import 'package:e_commerce_app/views/screens/detail_product/widgets/related_products/bloc/related_products_event.dart';
 import 'package:e_commerce_app/views/screens/detail_product/widgets/related_products/related_products.dart';
+import 'package:e_commerce_app/views/screens/detail_product/widgets/slogan.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,10 +33,9 @@ class DetailProductScreen extends StatelessWidget {
         body: SafeArea(
           child: ListView(
             children: [
-              SizedBox(height: 20),
               ProductImages(product: product),
-              SizedBox(height: 10),
               ProductInfo(product: product),
+              Slogan(),
               RelatedProducts(),
             ],
           ),

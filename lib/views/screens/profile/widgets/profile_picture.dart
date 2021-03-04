@@ -18,7 +18,7 @@ class ProfilePic extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      overflow: Overflow.visible,
+      clipBehavior: Clip.antiAlias,
       children: [
         Container(
           height: 150,
@@ -39,12 +39,14 @@ class ProfilePic extends StatelessWidget {
           child: SizedBox(
             height: 46,
             width: 46,
-            child: FlatButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50),
-                side: BorderSide(color: Colors.white),
+            child: TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Color(0xFFF5F6F9),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                  side: BorderSide(color: Colors.white),
+                ),
               ),
-              color: Color(0xFFF5F6F9),
               onPressed: () => uploadAvatar(context),
               child: SvgPicture.asset("assets/icons/Camera Icon.svg"),
             ),

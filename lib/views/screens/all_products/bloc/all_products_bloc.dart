@@ -35,8 +35,10 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
     );
   }
 
-  int sortNameDescending(Product a, Product b) => a.name.compareTo(b.name);
-  int sortNameAscending(Product a, Product b) => b.name.compareTo(a.name);
+  int sortSoldQuantityDescending(Product a, Product b) =>
+      b.soldQuantity.compareTo(a.soldQuantity);
+  int sortSoldQuantityAscending(Product a, Product b) =>
+      a.soldQuantity.compareTo(b.soldQuantity);
   int sortPriceDescending(Product a, Product b) =>
       b.originalPrice.compareTo(a.originalPrice);
   int sortPriceAscending(Product a, Product b) =>
@@ -143,13 +145,13 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
 
   /// Map sort options
   Function mapOptionToSortMethod() {
-    if (_currSortOption.productSortBy == PRODUCT_SORT_BY.NAME &&
+    if (_currSortOption.productSortBy == PRODUCT_SORT_BY.SOLD_QUANTITY &&
         _currSortOption.productSortOrder == PRODUCT_SORT_ORDER.DESCENDING) {
-      return sortNameDescending;
+      return sortSoldQuantityDescending;
     }
-    if (_currSortOption.productSortBy == PRODUCT_SORT_BY.NAME &&
+    if (_currSortOption.productSortBy == PRODUCT_SORT_BY.SOLD_QUANTITY &&
         _currSortOption.productSortOrder == PRODUCT_SORT_ORDER.ASCENDING) {
-      return sortNameAscending;
+      return sortSoldQuantityAscending;
     }
     if (_currSortOption.productSortBy == PRODUCT_SORT_BY.PRICE &&
         _currSortOption.productSortOrder == PRODUCT_SORT_ORDER.DESCENDING) {
@@ -159,7 +161,7 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
         _currSortOption.productSortOrder == PRODUCT_SORT_ORDER.ASCENDING) {
       return sortPriceAscending;
     }
-    return sortNameDescending;
+    return sortSoldQuantityDescending;
   }
 
   @override
@@ -191,5 +193,5 @@ class ProductSortOption {
   }
 }
 
-enum PRODUCT_SORT_BY { PRICE, NAME }
+enum PRODUCT_SORT_BY { PRICE, SOLD_QUANTITY }
 enum PRODUCT_SORT_ORDER { ASCENDING, DESCENDING }

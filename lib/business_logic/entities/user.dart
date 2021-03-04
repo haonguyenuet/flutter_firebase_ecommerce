@@ -16,7 +16,7 @@ class UserModel extends Equatable {
   final String avatar;
 
   /// The user's address
-  final String address;
+  final List<dynamic> address;
 
   /// The user's phone number
   final String phoneNumber;
@@ -38,7 +38,7 @@ class UserModel extends Equatable {
       name: data["name"] ?? "",
       avatar: data["avatar"] ?? "",
       phoneNumber: data["phoneNumber"] ?? "",
-      address: data["address"] ?? "",
+      address: data["address"] ?? [],
       email: data["email"] ?? 0,
     );
   }
@@ -84,7 +84,7 @@ class UserModel extends Equatable {
 
   /// Represent to all category
   static const empty =
-      UserModel(id: "", name: "", email: "", avatar: "", address: "");
+      UserModel(id: "", name: "", email: "", avatar: "", address: null);
 
   /// Compare two users by uid
   @override

@@ -17,7 +17,7 @@ class MyDialog {
         ),
         content: Text(content),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text('Close'),
             onPressed: () => Navigator.of(context).pop(),
           )
@@ -50,11 +50,11 @@ class MyDialog {
         ),
         content: Text(content),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text('Cancel'),
             onPressed: () => Navigator.pop(context, false),
           ),
-          FlatButton(
+          TextButton(
             child: Text(confirmButtonText),
             onPressed: () => Navigator.pop(context, true),
           ),

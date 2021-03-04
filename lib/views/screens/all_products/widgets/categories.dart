@@ -57,9 +57,9 @@ class _ListCategoryState extends State<ListCategory> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
-      margin: EdgeInsets.only(bottom: 20),
-      padding: EdgeInsets.symmetric(vertical: 10),
+      height: 50,
+      margin: EdgeInsets.only(bottom: 0),
+      padding: EdgeInsets.symmetric(vertical: 5),
       color: mDarkShadeColor,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
