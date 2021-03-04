@@ -9,14 +9,11 @@ class FirebaseUserRepository implements UserRepository {
   /// Stream of logged user model
   /// [loggedFirebaseUser] is user of firebase auth
   /// Created by NDH
-  Stream<UserModel> loggedUserStream(User loggedFirebaseUser) {
-    if (loggedFirebaseUser != null) {
-      return _userCollection
-          .doc(loggedFirebaseUser.uid)
-          .snapshots()
-          .map((doc) => UserModel.fromMap(doc.id, doc.data()));
-    }
-    return null;
+  Stream<UserModel>? loggedUserStream(User? loggedFirebaseUser) {
+    return _userCollection
+        .doc(loggedFirebaseUser!.uid)
+        .snapshots()
+        .map((doc) => UserModel.fromMap(doc.id, doc.data()!));
   }
 
   /// Get user by id
@@ -26,8 +23,8 @@ class FirebaseUserRepository implements UserRepository {
     return await _userCollection
         .doc(uid)
         .get()
-        .then((doc) => UserModel.fromMap(doc.id, doc.data()))
-        .catchError((error) => print(error));
+        .then((doc) => UserModel.fromMap(doc.id, doc.data()!))
+        .catchError((error) {});
   }
 
   /// Add new doc to users collection

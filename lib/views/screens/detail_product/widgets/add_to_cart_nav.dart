@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddToCartNavigation extends StatefulWidget {
   final Product product;
-  const AddToCartNavigation({Key key, @required this.product})
+  const AddToCartNavigation({Key? key, required this.product})
       : super(key: key);
 
   @override

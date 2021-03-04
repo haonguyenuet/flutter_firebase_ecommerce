@@ -8,7 +8,7 @@ import 'icon_button_with_counter.dart';
 class CartButton extends StatelessWidget {
   final Color color;
 
-  const CartButton({Key key, this.color = Colors.white}) : super(key: key);
+  const CartButton({Key? key, this.color = Colors.white}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(

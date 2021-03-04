@@ -4,11 +4,11 @@ import 'package:e_commerce_app/configs/size_config.dart';
 
 class SpecialOfferCard extends StatelessWidget {
   const SpecialOfferCard({
-    Key key,
-    @required this.imageLink,
-    @required this.numberOfBrands,
-    @required this.offerName,
-    @required this.handleOnTap,
+    Key? key,
+    required this.imageLink,
+    required this.numberOfBrands,
+    required this.offerName,
+    required this.handleOnTap,
   }) : super(key: key);
 
   final String imageLink;
@@ -19,7 +19,7 @@ class SpecialOfferCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: handleOnTap,
+      onTap: handleOnTap as void Function()?,
       child: Container(
         margin: EdgeInsets.only(left: getProportionateScreenWidth(20)),
         height: getProportionateScreenWidth(110),

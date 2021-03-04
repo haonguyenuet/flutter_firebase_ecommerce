@@ -1,6 +1,4 @@
 import 'package:bloc/bloc.dart';
-
-import 'package:flutter/material.dart';
 import 'package:e_commerce_app/business_logic/repository/repository.dart';
 import 'package:e_commerce_app/utils/validator.dart';
 import 'package:rxdart/rxdart.dart';
@@ -10,9 +8,8 @@ import 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthRepository _authRepository;
 
-  LoginBloc({@required AuthRepository authRepository})
-      : assert(authRepository != null),
-        _authRepository = authRepository,
+  LoginBloc({required AuthRepository authRepository})
+      : _authRepository = authRepository,
         super(LoginState.empty());
 
   @override
@@ -59,7 +56,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       if (isLoggedIn) {
         yield LoginState.success();
       } else {
-        final message = _authRepository.authException ?? "Login Failure";
+        final message = _authRepository.authException;
         yield LoginState.failure(message);
       }
     } catch (e) {

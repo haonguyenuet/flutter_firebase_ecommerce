@@ -5,7 +5,7 @@ abstract class HomeState extends Equatable {
   const HomeState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 /// Loading
@@ -15,10 +15,10 @@ class HomeLoading extends HomeState {}
 class HomeLoaded extends HomeState {
   final HomeResponse homeResponse;
 
-  const HomeLoaded({this.homeResponse});
+  const HomeLoaded({required this.homeResponse});
 
   @override
-  List<Object> get props => [homeResponse];
+  List<Object?> get props => [homeResponse];
 
   @override
   String toString() {

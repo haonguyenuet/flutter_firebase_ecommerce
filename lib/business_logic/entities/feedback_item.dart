@@ -13,17 +13,17 @@ class FeedbackItem extends Equatable {
   final int rating;
 
   /// Feedback content
-  final String content;
+  final String? content;
 
   /// Create date
-  final Timestamp timestamp;
+  final Timestamp? timestamp;
 
   /// Contructor
   FeedbackItem({
-    this.fid,
+    required this.fid,
     this.timestamp,
-    this.uid,
-    this.rating,
+    required this.uid,
+    required this.rating,
     this.content,
   });
 
@@ -67,9 +67,7 @@ class FeedbackItem extends Equatable {
     );
   }
 
-
-
   // Compare two feedback item by fid
   @override
-  List<Object> get props => [this.fid];
+  List<Object?> get props => [this.fid];
 }

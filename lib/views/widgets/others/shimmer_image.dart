@@ -3,14 +3,14 @@ import 'package:shimmer/shimmer.dart';
 
 class ShimmerImage extends StatelessWidget {
   final String imageUrl;
-  final BoxFit fit;
-  final double width;
-  final double height;
-  final double aspectRatio;
+  final BoxFit? fit;
+  final double? width;
+  final double? height;
+  final double? aspectRatio;
   final double iconHolderSize;
   ShimmerImage({
-    Key key,
-    this.imageUrl,
+    Key? key,
+    required this.imageUrl,
     this.fit,
     this.width,
     this.height,
@@ -24,11 +24,11 @@ class ShimmerImage extends StatelessWidget {
       children: [
         /// Holder image
         Shimmer.fromColors(
-          baseColor: Colors.grey[200],
-          highlightColor: Colors.grey[100],
+          baseColor: Colors.grey[200]!,
+          highlightColor: Colors.grey[100]!,
           child: this.aspectRatio != null
               ? AspectRatio(
-                  aspectRatio: aspectRatio,
+                  aspectRatio: aspectRatio!,
                   child: _buildHolderIcon(),
                 )
               : Container(
@@ -41,7 +41,7 @@ class ShimmerImage extends StatelessWidget {
         /// Image
         this.aspectRatio != null
             ? AspectRatio(
-                aspectRatio: aspectRatio,
+                aspectRatio: aspectRatio!,
                 child: Image.network(imageUrl, fit: fit ?? BoxFit.contain),
               )
             : Image.asset(imageUrl,

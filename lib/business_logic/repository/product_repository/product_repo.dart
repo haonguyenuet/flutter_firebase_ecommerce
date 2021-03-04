@@ -13,7 +13,7 @@ abstract class ProductRepository {
   /// Get products by category
   /// [categoryId] is id of category
   /// Created by NDH
-  Future<List<Product>> getProductsByCategory(String categoryId);
+  Future<List<Product>> getProductsByCategory(String? categoryId);
 
   /// Get product by Id
   /// [pid] is product id

@@ -15,7 +15,7 @@ import 'widgets/add_to_cart_nav.dart';
 class DetailProductScreen extends StatelessWidget {
   final Product product;
 
-  DetailProductScreen({Key key, this.product}) : super(key: key);
+  DetailProductScreen({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +29,20 @@ class DetailProductScreen extends StatelessWidget {
         ),
       ],
       child: Scaffold(
-        appBar: CustomAppBar(product: product),
         body: SafeArea(
-          child: ListView(
+          child: Column(
             children: [
-              ProductImages(product: product),
-              ProductInfo(product: product),
-              Slogan(),
-              RelatedProducts(),
+              CustomAppBar(product: product),
+              Expanded(
+                child: ListView(
+                  children: [
+                    ProductImages(product: product),
+                    ProductInfo(product: product),
+                    Slogan(),
+                    RelatedProducts(),
+                  ],
+                ),
+              )
             ],
           ),
         ),

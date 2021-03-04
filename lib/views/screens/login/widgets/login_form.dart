@@ -20,8 +20,8 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  AuthenticationBloc _authenticationBloc;
-  LoginBloc _loginBloc;
+  late AuthenticationBloc _authenticationBloc;
+  late LoginBloc _loginBloc;
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -51,7 +51,7 @@ class _LoginFormState extends State<LoginForm> {
 
         /// Logging
         if (state.isSubmitting) {
-          showProcessing(context, state.message);
+          showProcessing(context, state.message!);
         }
       },
       child: BlocBuilder<LoginBloc, LoginState>(
@@ -63,13 +63,6 @@ class _LoginFormState extends State<LoginForm> {
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(10),
               color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(0, 6),
-                  blurRadius: 10,
-                  color: Colors.black.withOpacity(0.2),
-                ),
-              ],
             ),
             child: Form(
               child: Column(

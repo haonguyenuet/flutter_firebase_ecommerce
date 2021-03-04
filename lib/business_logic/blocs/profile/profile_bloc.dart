@@ -5,19 +5,18 @@ import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:e_commerce_app/business_logic/repository/repository.dart';
 import 'package:e_commerce_app/business_logic/repository/storage_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
+
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   UserRepository _userRepository;
   StorageRepository _storageRepository;
-  StreamSubscription _userProfileSubscription;
-  UserModel _loggedUser;
+  StreamSubscription? _userProfileSubscription;
+  UserModel? _loggedUser;
 
   ProfileBloc({
-    @required UserRepository userRepository,
-    @required StorageRepository storageRepository,
-  })  : assert(userRepository != null),
-        assert(storageRepository != null),
+    required UserRepository userRepository,
+    required StorageRepository storageRepository,
+  })  :
         _userRepository = userRepository,
         _storageRepository = storageRepository,
         super(ProfileLoading());
@@ -37,7 +36,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     try {
       _userProfileSubscription?.cancel();
       _userProfileSubscription = _userRepository
-          .loggedUserStream(event.loggedFirebaseUser)
+          .loggedUserStream(event.loggedFirebaseUser)!
           .listen((user) => add(ProfileUpdated(user)));
     } catch (e) {
       print(e);
@@ -48,10 +47,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Stream<ProfileState> _mapUploadAvatarToState(UploadAvatar event) async* {
     try {
       String imageUrl = await _storageRepository.uploadImage(
-        "users/profile/${_loggedUser.id}",
+        "users/profile/${_loggedUser!.id}",
         event.imageFile,
       );
-      var updatedUser = _loggedUser.cloneWith(avatar: imageUrl);
+      var updatedUser = _loggedUser!.cloneWith(avatar: imageUrl);
       // Update user avatar
       await _userRepository.updateUserData(updatedUser);
     } catch (e) {}

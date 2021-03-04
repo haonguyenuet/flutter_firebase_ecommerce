@@ -6,17 +6,17 @@ abstract class FeedbackEvent extends Equatable {
   const FeedbackEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 /// When open feedback screen
 class LoadFeedbacks extends FeedbackEvent {
-  final Product product;
+  final Product? product;
 
   LoadFeedbacks(this.product);
 
   @override
-  List<Object> get props => [product.id];
+  List<Object> get props => [product!.id];
 }
 
 /// When user clicks to add feedback
@@ -26,7 +26,7 @@ class AddFeedbackItem extends FeedbackEvent {
   AddFeedbackItem(this.feedback);
 
   @override
-  List<Object> get props => [feedback.fid];
+  List<Object?> get props => [feedback.fid];
 }
 
 /// When user clicks to

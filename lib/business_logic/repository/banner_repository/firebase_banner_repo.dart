@@ -11,8 +11,8 @@ class FirebaseBannerRepository implements BannerRepository {
         .collection("banners")
         .get()
         .then((snapshot) => snapshot.docs
-            .map((doc) => BannerItem.fromMap(doc.id, doc.data()))
+            .map((doc) => BannerItem.fromMap(doc.id, doc.data()!))
             .toList())
-        .catchError((err) => print(err));
+        .catchError((err) {});
   }
 }

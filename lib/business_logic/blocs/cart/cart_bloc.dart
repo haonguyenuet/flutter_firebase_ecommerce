@@ -4,16 +4,14 @@ import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
 import 'package:e_commerce_app/business_logic/repository/cart_repository/cart_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   final CartRepository _cartRepository;
-  User _loggedFirebaseUser;
-  StreamSubscription _cartSubscription;
+  User? _loggedFirebaseUser;
+  StreamSubscription? _cartSubscription;
 
-  CartBloc({@required CartRepository cartRepository})
-      : assert(cartRepository != null),
-        _cartRepository = cartRepository,
+  CartBloc({required CartRepository cartRepository})
+      : _cartRepository = cartRepository,
         super(CartLoading());
 
   @override
@@ -38,18 +36,18 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       _loggedFirebaseUser = event.loggedFirebaseUser;
       _cartSubscription?.cancel();
       _cartSubscription =
-          _cartRepository.cartStream(_loggedFirebaseUser.uid).listen(
+          _cartRepository.cartStream(_loggedFirebaseUser!.uid)!.listen(
                 (cart) => add(CartUpdated(cart)),
               );
     } catch (e) {
-      yield CartLoadFailure(e);
+      yield CartLoadFailure(e.toString());
     }
   }
 
   Stream<CartState> _mapAddCartItemToState(AddCartItem event) async* {
     try {
       await _cartRepository.addCartItem(
-          _loggedFirebaseUser.uid, event.cartItem);
+          _loggedFirebaseUser!.uid, event.cartItem);
     } catch (e) {
       print(e);
     }
@@ -57,7 +55,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   Stream<CartState> _mapRemoveCartItemToState(RemoveCartItem event) async* {
     try {
-      await _cartRepository.removeCartItem(_loggedFirebaseUser.uid, event.pid);
+      await _cartRepository.removeCartItem(_loggedFirebaseUser!.uid, event.pid);
     } catch (e) {
       print(e);
     }
@@ -66,7 +64,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   Stream<CartState> _mapUpdateCartItemToState(UpdateCartItem event) async* {
     try {
       await _cartRepository.updateCartItem(
-          _loggedFirebaseUser.uid, event.cartItem);
+          _loggedFirebaseUser!.uid, event.cartItem);
     } catch (e) {
       print(e);
     }
@@ -74,7 +72,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   Stream<CartState> _mapClearCartToState() async* {
     try {
-      await _cartRepository.clearCart(_loggedFirebaseUser.uid);
+      await _cartRepository.clearCart(_loggedFirebaseUser!.uid);
     } catch (e) {
       print(e);
     }

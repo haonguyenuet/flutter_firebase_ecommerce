@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 
 /// User model
 class UserModel extends Equatable {
@@ -7,29 +6,29 @@ class UserModel extends Equatable {
   final String email;
 
   /// The current user's id.
-  final String id;
+  final String? id;
 
   /// The current user's name (display name).
-  final String name;
+  final String? name;
 
   /// Url for the current user's photo.
-  final String avatar;
+  final String? avatar;
 
   /// The user's address
-  final List<dynamic> address;
+  final List<dynamic>? address;
 
   /// The user's phone number
-  final String phoneNumber;
+  final String? phoneNumber;
 
   /// Constructor
   const UserModel({
-    @required this.email,
+    required this.email,
     this.id,
     this.address,
     this.phoneNumber,
     this.name,
     this.avatar,
-  }) : assert(email != null);
+  });
 
   /// Json data from server turns into model data
   static UserModel fromMap(String id, Map<String, dynamic> data) {
@@ -39,7 +38,7 @@ class UserModel extends Equatable {
       avatar: data["avatar"] ?? "",
       phoneNumber: data["phoneNumber"] ?? "",
       address: data["address"] ?? [],
-      email: data["email"] ?? 0,
+      email: data["email"] ?? 0 as String,
     );
   }
 
@@ -77,9 +76,9 @@ class UserModel extends Equatable {
 
   /// Check user has all informations
   bool isCompleteInfo() {
-    return this.name.isNotEmpty &&
-        this.address.isNotEmpty &&
-        this.phoneNumber.isNotEmpty;
+    return this.name!.isNotEmpty &&
+        this.address!.isNotEmpty &&
+        this.phoneNumber!.isNotEmpty;
   }
 
   /// Represent to all category
@@ -88,5 +87,5 @@ class UserModel extends Equatable {
 
   /// Compare two users by uid
   @override
-  List<Object> get props => [email, id, name, avatar];
+  List<Object?> get props => [email, id, name, avatar];
 }

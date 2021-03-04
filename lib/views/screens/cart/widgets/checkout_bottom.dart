@@ -12,7 +12,7 @@ import 'package:flutter_svg/svg.dart';
 
 class CheckoutBottom extends StatelessWidget {
   const CheckoutBottom({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

@@ -6,7 +6,7 @@ import 'offer_card.dart';
 
 class SpecialOffers extends StatelessWidget {
   const SpecialOffers({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

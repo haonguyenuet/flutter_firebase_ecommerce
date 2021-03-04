@@ -9,7 +9,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 
 class FeedbackBottomSheet extends StatefulWidget {
-  const FeedbackBottomSheet({Key key}) : super(key: key);
+  const FeedbackBottomSheet({Key? key}) : super(key: key);
 
   @override
   _FeedbackBottomSheetState createState() => _FeedbackBottomSheetState();

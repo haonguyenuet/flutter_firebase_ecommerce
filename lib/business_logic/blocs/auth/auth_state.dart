@@ -5,7 +5,7 @@ abstract class AuthenticationState extends Equatable {
   const AuthenticationState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class Uninitialized extends AuthenticationState {}
@@ -16,7 +16,7 @@ class Authenticated extends AuthenticationState {
   const Authenticated(this.loggedFirebaseUser);
 
   @override
-  List<Object> get props => [loggedFirebaseUser];
+  List<Object?> get props => [loggedFirebaseUser];
 
   @override
   String toString() {

@@ -9,8 +9,8 @@ import 'package:image_picker/image_picker.dart';
 
 class ProfilePic extends StatelessWidget {
   ProfilePic({
-    Key key,
-    @required this.loggedUser,
+    Key? key,
+    required this.loggedUser,
   }) : super(key: key);
 
   final UserModel loggedUser;
@@ -28,9 +28,10 @@ class ProfilePic extends StatelessWidget {
             border: Border.all(color: Colors.white, width: 2),
           ),
           child: CircleAvatar(
-            backgroundImage: loggedUser.avatar.isNotEmpty
-                ? NetworkImage(loggedUser.avatar)
-                : AssetImage("assets/images/default_avatar.jpg"),
+            backgroundImage: loggedUser.avatar!.isNotEmpty
+                    ? NetworkImage(loggedUser.avatar!)
+                    : AssetImage("assets/images/default_avatar.jpg")
+                as ImageProvider<Object>,
           ),
         ),
         Positioned(
@@ -58,7 +59,8 @@ class ProfilePic extends StatelessWidget {
 
   void uploadAvatar(BuildContext context) async {
     ImagePicker _imagePicker = ImagePicker();
-    PickedFile file = await _imagePicker.getImage(source: ImageSource.gallery);
+    PickedFile file = await (_imagePicker.getImage(source: ImageSource.gallery)
+        as Future<PickedFile>);
     File imageFile = File(file.path);
     BlocProvider.of<ProfileBloc>(context).add(UploadAvatar(imageFile));
   }

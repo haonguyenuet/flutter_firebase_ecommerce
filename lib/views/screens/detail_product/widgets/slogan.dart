@@ -35,7 +35,7 @@ class Slogan extends StatelessWidget {
     );
   }
 
-  _buildSloganItem({String iconPath, String text}) {
+  _buildSloganItem({required String iconPath, required String text}) {
     return Row(
       children: [
         SvgPicture.asset(iconPath, width: 20, height: 20, color: mPrimaryColor),

@@ -6,7 +6,7 @@ abstract class CartEvent extends Equatable {
   const CartEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 /// When open cart screen -> load cart event
@@ -15,7 +15,7 @@ class LoadCart extends CartEvent {
 
   LoadCart(this.loggedFirebaseUser);
 
-  List<Object> get props => [loggedFirebaseUser];
+  List<Object?> get props => [loggedFirebaseUser];
 }
 
 /// When user clicks to a clear cart => clear cart event
@@ -43,12 +43,12 @@ class AddCartItem extends CartEvent {
 
 /// When user swipes to remove cart item => remove cart item event
 class RemoveCartItem extends CartEvent {
-  final String pid;
+  final String? pid;
 
   RemoveCartItem(this.pid);
 
   @override
-  List<Object> get props => [pid];
+  List<Object?> get props => [pid];
 }
 
 /// When user clicks to change quantity => update cart event

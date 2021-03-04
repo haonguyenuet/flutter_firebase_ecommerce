@@ -16,14 +16,6 @@ class SplashScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Logo(),
-              // Text(
-              //   "Peachy",
-              //   style: TextStyle(
-              //     fontSize: getProportionateScreenWidth(36),
-              //     color: mPrimaryColor,
-              //     fontWeight: FontWeight.bold,
-              //   ),
-              // ),
               SizedBox(height: 10),
               SpinKitDualRing(color: mPrimaryColor),
             ],

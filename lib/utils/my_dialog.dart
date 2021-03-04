@@ -6,7 +6,7 @@ class MyDialog {
   static showInformation(
     BuildContext context, {
     String title = "Message for you",
-    String content,
+    String? content,
   }) {
     showDialog(
       context: context,
@@ -15,7 +15,7 @@ class MyDialog {
           title,
           style: TextStyle(color: mPrimaryColor),
         ),
-        content: Text(content),
+        content: Text(content!),
         actions: <Widget>[
           TextButton(
             child: Text('Close'),
@@ -35,11 +35,11 @@ class MyDialog {
     );
   }
 
-  static Future<bool> showConfirmation(
+  static Future<bool?> showConfirmation(
     BuildContext context, {
     String title = "Message for you",
     String confirmButtonText = "Yes",
-    String content,
+    String? content,
   }) {
     return showDialog<bool>(
       context: context,
@@ -48,7 +48,7 @@ class MyDialog {
           title,
           style: TextStyle(color: mPrimaryColor),
         ),
-        content: Text(content),
+        content: Text(content!),
         actions: <Widget>[
           TextButton(
             child: Text('Cancel'),

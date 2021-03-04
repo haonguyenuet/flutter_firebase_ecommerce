@@ -22,7 +22,7 @@ class DeliveryAddress extends StatelessWidget {
           builder: (context, state) {
             if (state is ProfileLoaded) {
               var user = state.loggedUser;
-              return user.address.length > 1
+              return user.address!.length > 1
                   ? _buildInfo(user)
                   : _buildWarning(context);
             }
@@ -55,7 +55,7 @@ class DeliveryAddress extends StatelessWidget {
           "${user.name} | ${user.phoneNumber}",
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
-        Text(user.address[0]),
+        Text(user.address![0]),
       ],
     );
   }
@@ -69,7 +69,7 @@ class DeliveryAddress extends StatelessWidget {
             Navigator.pushNamed(context, AppRouter.ADD_DELIVERY_ADDRESS);
           },
           style: TextButton.styleFrom(backgroundColor: mPrimaryColor),
-          child: Text("Add new address"),
+          child: Text("Add new address", style: TextStyle(color: Colors.white)),
         )
       ],
     );

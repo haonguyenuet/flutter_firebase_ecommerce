@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 /// Product model
 class Product {
@@ -24,18 +23,18 @@ class Product {
 
   /// Constructor
   Product({
-    @required this.id,
-    @required this.images,
-    @required this.rating,
+    required this.id,
+    required this.images,
+    required this.rating,
     this.isAvailable = false,
     this.isPopular = false,
     this.isSale = false,
-    @required this.quantity,
-    @required this.categoryId,
-    @required this.name,
-    @required this.originalPrice,
-    @required this.soldQuantity,
-    @required this.description,
+    required this.quantity,
+    required this.categoryId,
+    required this.name,
+    required this.originalPrice,
+    required this.soldQuantity,
+    required this.description,
   });
 
   /// Json data from server turns into model data
@@ -46,7 +45,7 @@ class Product {
       description: data["description"] ?? "",
       originalPrice: data["originalPrice"] ?? 0,
       isAvailable: data["isAvailable"] ?? true,
-      images: data["images"] ?? "",
+      images: data["images"] ?? "" as List<dynamic>,
       categoryId: data["categoryId"] ?? "",
       quantity: data["quantity"] ?? 0,
       rating: data["rating"] ?? 0.0,

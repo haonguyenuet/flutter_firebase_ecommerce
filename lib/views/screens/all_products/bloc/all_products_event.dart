@@ -4,16 +4,16 @@ import 'package:e_commerce_app/views/screens/all_products/bloc/bloc.dart';
 
 class AllProductsEvent extends Equatable {
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class OpenScreen extends AllProductsEvent {
-  final Category category;
+  final Category? category;
 
   OpenScreen(this.category);
 
   @override
-  List<Object> get props => [category];
+  List<Object?> get props => [category];
 
   @override
   String toString() {
@@ -26,12 +26,12 @@ class ClickIconSearch extends AllProductsEvent {}
 class ClickCloseSearch extends AllProductsEvent {}
 
 class SearchQueryChanged extends AllProductsEvent {
-  final String keyword;
+  final String? keyword;
 
   SearchQueryChanged({this.keyword});
 
   @override
-  List<Object> get props => [keyword];
+  List<Object?> get props => [keyword];
 
   @override
   String toString() {

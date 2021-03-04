@@ -10,9 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/feedback_bloc.dart';
 
 class FeedbackScreen extends StatelessWidget {
-  final Product product;
+  final Product? product;
 
-  const FeedbackScreen({Key key, @required this.product}) : super(key: key);
+  const FeedbackScreen({Key? key, required this.product}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

@@ -5,14 +5,14 @@ import 'package:e_commerce_app/constants/color_constant.dart';
 
 class ProfileMenuButton extends StatelessWidget {
   const ProfileMenuButton({
-    Key key,
-    @required this.text,
-    @required this.icon,
-    this.press,
+    Key? key,
+    required this.text,
+    required this.icon,
+    this.onPressed,
   }) : super(key: key);
 
   final String text, icon;
-  final VoidCallback press;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class ProfileMenuButton extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           backgroundColor: Color(0xFFF5F6F9),
         ),
-        onPressed: press,
+        onPressed: onPressed,
         child: Row(
           children: [
             SvgPicture.asset(
@@ -33,8 +33,8 @@ class ProfileMenuButton extends StatelessWidget {
               width: 22,
             ),
             SizedBox(width: 20),
-            Expanded(child: Text(text)),
-            Icon(Icons.arrow_forward_ios),
+            Expanded(child: Text(text, style: TextStyle(color: mTextColor))),
+            Icon(Icons.arrow_forward_ios, color: mTextColor),
           ],
         ),
       ),

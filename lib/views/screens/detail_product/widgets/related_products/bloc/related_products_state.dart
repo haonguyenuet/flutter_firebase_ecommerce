@@ -13,11 +13,11 @@ class RelatedProductsLoading extends RelatedProductsState {
 
 /// When related products was loaded => related products loaded state
 class RelatedProductsLoaded extends RelatedProductsState {
-  final List<Product> relatedProducts;
+  final List<Product>? relatedProducts;
 
   RelatedProductsLoaded({this.relatedProducts});
   @override
-  List<Object> get props => [relatedProducts.length];
+  List<Object> get props => [relatedProducts!.length];
 }
 
 /// When related products wasn't loaded => related products not loaded state

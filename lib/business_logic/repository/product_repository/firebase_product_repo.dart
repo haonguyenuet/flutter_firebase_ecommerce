@@ -14,9 +14,9 @@ class FirebaseProductRepository implements ProductRepository {
     return await productCollection
         .get()
         .then((snapshot) => snapshot.docs
-            .map((doc) => Product.fromMap(doc.id, doc.data()))
+            .map((doc) => Product.fromMap(doc.id, doc.data()!))
             .toList())
-        .catchError((error) => print(error));
+        .catchError((error) {});
   }
 
   /// Get popular product by soldQuantity
@@ -24,41 +24,39 @@ class FirebaseProductRepository implements ProductRepository {
   @override
   Future<List<Product>> getPopularProducts() async {
     return await productCollection
-            .orderBy("soldQuantity", descending: true)
-            .limit(10)
-            .get()
-            .then((snapshot) => snapshot.docs
-                .map((doc) => Product.fromMap(doc.id, doc.data()))
-                .toList())
-            .catchError((error) => print(error)) ??
-        [];
+        .orderBy("soldQuantity", descending: true)
+        .limit(10)
+        .get()
+        .then((snapshot) => snapshot.docs
+            .map((doc) => Product.fromMap(doc.id, doc.data()!))
+            .toList())
+        .catchError((error) {});
   }
 
   /// Get products by category
   /// [categoryId] is id of category
   /// Created by NDH
   @override
-  Future<List<Product>> getProductsByCategory(String categoryId) async {
+  Future<List<Product>> getProductsByCategory(String? categoryId) async {
     return await productCollection
-            .where("categoryId", isEqualTo: categoryId)
-            .get()
-            .then((snapshot) => snapshot.docs
-                .map((doc) => Product.fromMap(doc.id, doc.data()))
-                .toList())
-            .catchError((error) => print(error)) ??
-        [];
+        .where("categoryId", isEqualTo: categoryId)
+        .get()
+        .then((snapshot) => snapshot.docs
+            .map((doc) => Product.fromMap(doc.id, doc.data()!))
+            .toList())
+        .catchError((error) {});
   }
 
   /// Get product by Id
   /// [pid] is product id
   /// Created by NDH
   @override
-  Future<Product> getProductById(String pid) async {
+  Future<Product> getProductById(String? pid) async {
     return await productCollection
         .doc(pid)
         .get()
-        .then((doc) => Product.fromMap(doc.id, doc.data()))
-        .catchError((error) => print(error));
+        .then((doc) => Product.fromMap(doc.id, doc.data()!))
+        .catchError((error) {});
   }
 
   @override
@@ -70,7 +68,7 @@ class FirebaseProductRepository implements ProductRepository {
   Future<void> updateProductRatingById(String pid, double rating) async {
     return await productCollection
         .doc(pid)
-        .update({"rating": rating}).catchError((error) => print(error));
+        .update({"rating": rating}).catchError((error) {});
   }
 
   /// Get all categories
@@ -81,9 +79,8 @@ class FirebaseProductRepository implements ProductRepository {
             .collection("categories")
             .get()
             .then((snapshot) => snapshot.docs
-                .map((doc) => Category.fromMap(doc.id, doc.data()))
+                .map((doc) => Category.fromMap(doc.id, doc.data()!))
                 .toList())
-            .catchError((err) => print(err)) ??
-        [];
+            .catchError((err) {}) ;
   }
 }

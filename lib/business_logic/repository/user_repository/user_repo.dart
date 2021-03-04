@@ -5,7 +5,7 @@ abstract class UserRepository {
   /// Stream of logged user model
   /// [loggedFirebaseUser] is user of firebase auth
   /// Created by NDH
-  Stream<UserModel> loggedUserStream(User loggedFirebaseUser);
+  Stream<UserModel>? loggedUserStream(User? loggedFirebaseUser);
 
   /// Get user by id
   /// [uid] is user id

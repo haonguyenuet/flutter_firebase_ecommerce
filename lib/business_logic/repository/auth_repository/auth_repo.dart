@@ -2,7 +2,7 @@ import 'package:e_commerce_app/business_logic/entities/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthRepository {
-  User get currentFirebaseUser;
+  User get loggedFirebaseUser;
   String get authException;
 
   /// Creates a new user with the provided [information]

@@ -8,7 +8,7 @@ import 'profile_picture.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

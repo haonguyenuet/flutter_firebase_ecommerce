@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 
 class AllProductsState extends Equatable {
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 /// Categories Loading
@@ -13,17 +13,17 @@ class CategoriesLoading extends AllProductsState {}
 
 /// Adready categories data
 class CategoriesLoaded extends AllProductsState {
-  final List<Category> categories;
-  final int selectedCategoryIndex;
+  final List<Category>? categories;
+  final int? selectedCategoryIndex;
 
   CategoriesLoaded({this.categories, this.selectedCategoryIndex});
 
   @override
-  List<Object> get props => [categories];
+  List<Object?> get props => [categories];
 
   @override
   String toString() {
-    return 'CategoriesLoaded{response: ${categories.length}}';
+    return 'CategoriesLoaded{response: ${categories!.length}}';
   }
 }
 
@@ -41,9 +41,9 @@ class CategoriesLoadFailure extends AllProductsState {
 
 /// Display list products
 class DisplayListProducts extends AllProductsState {
-  final List<Product> productsByCategory;
-  final bool loading;
-  final String msg;
+  final List<Product>? productsByCategory;
+  final bool? loading;
+  final String? msg;
 
   DisplayListProducts({this.productsByCategory, this.loading, this.msg});
 
@@ -72,11 +72,11 @@ class DisplayListProducts extends AllProductsState {
   }
 
   @override
-  List<Object> get props => [productsByCategory, loading, msg];
+  List<Object?> get props => [productsByCategory, loading, msg];
 
   @override
   String toString() {
-    return 'DisplayListProducts{productsByCategory: ${productsByCategory.length}, loading: $loading, msg: $msg}';
+    return 'DisplayListProducts{productsByCategory: ${productsByCategory!.length}, loading: $loading, msg: $msg}';
   }
 }
 
@@ -84,10 +84,10 @@ class DisplayListProducts extends AllProductsState {
 class UpdateToolbarState extends AllProductsState {
   final bool showSearchField;
 
-  UpdateToolbarState({this.showSearchField});
+  UpdateToolbarState({required this.showSearchField});
 
   @override
-  List<Object> get props => [showSearchField];
+  List<Object?> get props => [showSearchField];
 
   @override
   String toString() {
@@ -100,10 +100,10 @@ class OpenSortOption extends AllProductsState {
   final bool isOpen;
   final ProductSortOption currSortOption;
 
-  OpenSortOption({this.isOpen, this.currSortOption});
+  OpenSortOption({required this.isOpen, required this.currSortOption});
 
   @override
-  List<Object> get props =>
+  List<Object?> get props =>
       [isOpen, currSortOption, DateTime.now().millisecond];
 
   @override

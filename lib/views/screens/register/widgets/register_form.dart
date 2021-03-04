@@ -11,16 +11,16 @@ import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 
 class RegisterForm extends StatefulWidget {
-  final UserModel intialUser;
+  final UserModel? intialUser;
 
-  const RegisterForm({Key key, this.intialUser}) : super(key: key);
+  const RegisterForm({Key? key, this.intialUser}) : super(key: key);
   @override
   _RegisterFormState createState() => _RegisterFormState();
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-  AuthenticationBloc _authenticationBloc;
-  RegisterBloc _registerBloc;
+  late AuthenticationBloc _authenticationBloc;
+  late RegisterBloc _registerBloc;
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -53,7 +53,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
         /// Registering
         if (state.isSubmitting) {
-          showProcessing(context, state.message);
+          showProcessing(context, state.message!);
         }
       },
       child: BlocBuilder<RegisterBloc, RegisterState>(
@@ -187,7 +187,7 @@ class _RegisterFormState extends State<RegisterForm> {
       ),
       onPressed: () {
         if (isRegisterButtonEnabled()) {
-          UserModel newUser = widget.intialUser.cloneWith(
+          UserModel newUser = widget.intialUser!.cloneWith(
             email: _emailController.text,
           );
           _registerBloc.add(

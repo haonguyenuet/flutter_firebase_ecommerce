@@ -5,14 +5,10 @@ import 'package:e_commerce_app/views/widgets/buttons/cart_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class CustomAppBar extends PreferredSize {
+class CustomAppBar extends StatelessWidget {
   final Product product;
 
-  CustomAppBar({@required this.product});
-
-  @override
-  // AppBar().preferredSize.height provide us the height that appy on our app bar
-  Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height);
+  CustomAppBar({required this.product});
 
   @override
   Widget build(BuildContext context) {

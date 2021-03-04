@@ -10,7 +10,7 @@ class ListFeedbacks extends StatelessWidget {
     return BlocBuilder<FeedbackBloc, FeedbackState>(
       builder: (context, state) {
         if (state is FeedbacksLoaded) {
-          var feedbacks = state.feedbackResponse.feedbacks;
+          var feedbacks = state.feedbackResponse.feedbacks!;
           return feedbacks.length > 0
               ? ListView.builder(
                   itemCount: feedbacks.length,

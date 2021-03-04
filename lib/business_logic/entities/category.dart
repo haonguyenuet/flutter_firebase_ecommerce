@@ -4,10 +4,15 @@ import 'package:equatable/equatable.dart';
 class Category extends Equatable {
   final String cid;
   final String name;
-  final String vietnameseName;
+  final String? vietnameseName;
   final String iconPath;
 
-  const Category({this.cid, this.name, this.vietnameseName, this.iconPath});
+  const Category({
+    required this.cid,
+    required this.name,
+    this.vietnameseName,
+    required this.iconPath,
+  });
 
   /// Json data from server turns into model data
   static Category fromMap(String id, Map<String, dynamic> data) {
@@ -39,6 +44,5 @@ class Category extends Equatable {
   );
 
   @override
-
-  List<Object> get props => [this.cid];
+  List<Object?> get props => [this.cid];
 }

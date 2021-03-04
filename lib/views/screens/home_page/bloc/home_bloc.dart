@@ -6,18 +6,15 @@ import 'package:e_commerce_app/business_logic/repository/product_repository/prod
 import 'package:e_commerce_app/views/screens/home_page/bloc/home_event.dart';
 import 'package:e_commerce_app/views/screens/home_page/bloc/home_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final BannerRepository _bannerRepository;
   final ProductRepository _productRepository;
 
   HomeBloc(
-      {@required BannerRepository bannerRepository,
-      @required ProductRepository productRepository})
-      : assert(bannerRepository != null),
-        assert(productRepository != null),
-        _bannerRepository = bannerRepository,
+      {required BannerRepository bannerRepository,
+      required ProductRepository productRepository})
+      : _bannerRepository = bannerRepository,
         _productRepository = productRepository,
         super(HomeLoading());
 
@@ -34,21 +31,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Stream<HomeState> _mapLoadHomeToState() async* {
     try {
       HomeResponse homeResponse = HomeResponse(
-        banners: await _bannerRepository.getBanners() ?? [],
-        categories: await _productRepository.getCategories() ?? [],
-        products: await _productRepository.getPopularProducts() ?? [],
+        banners: await _bannerRepository.getBanners(),
+        categories: await _productRepository.getCategories(),
+        products: await _productRepository.getPopularProducts(),
       );
       yield HomeLoaded(homeResponse: homeResponse);
     } catch (e) {
-      yield HomeLoadFailure(e);
+      yield HomeLoadFailure(e.toString());
     }
   }
 }
 
 class HomeResponse {
-  final List<Product> products;
-  final List<Category> categories;
-  final List<BannerItem> banners;
+  final List<Product>? products;
+  final List<Category>? categories;
+  final List<BannerItem>? banners;
 
   HomeResponse({
     this.banners,

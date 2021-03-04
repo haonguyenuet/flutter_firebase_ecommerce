@@ -7,16 +7,16 @@ class LoginState {
   final bool isSubmitting;
   final bool isSuccess;
   final bool isFailure;
-  final String message;
+  final String? message;
 
   bool get isFormValid => isEmailValid && isPasswordValid;
 
   LoginState({
-    @required this.isEmailValid,
-    @required this.isPasswordValid,
-    @required this.isSubmitting,
-    @required this.isSuccess,
-    @required this.isFailure,
+    required this.isEmailValid,
+    required this.isPasswordValid,
+    required this.isSubmitting,
+    required this.isSuccess,
+    required this.isFailure,
     this.message,
   });
 
@@ -63,7 +63,7 @@ class LoginState {
     );
   }
 
-  LoginState update({bool isEmailValid, bool isPasswordValid}) {
+  LoginState update({bool? isEmailValid, bool? isPasswordValid}) {
     return cloneWith(
       isEmailValid: isEmailValid,
       isPasswordValid: isPasswordValid,
@@ -75,12 +75,12 @@ class LoginState {
   }
 
   LoginState cloneWith({
-    bool isEmailValid,
-    bool isPasswordValid,
-    bool isSubmitting,
-    bool isSuccess,
-    bool isFailure,
-    String message,
+    bool? isEmailValid,
+    bool? isPasswordValid,
+    bool? isSubmitting,
+    bool? isSuccess,
+    bool? isFailure,
+    String? message,
   }) {
     return LoginState(
       isEmailValid: isEmailValid ?? this.isEmailValid,

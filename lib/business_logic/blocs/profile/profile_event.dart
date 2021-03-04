@@ -1,12 +1,11 @@
 import 'dart:io';
-
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class ProfileEvent extends Equatable {
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class LoadProfile extends ProfileEvent {
@@ -14,7 +13,7 @@ class LoadProfile extends ProfileEvent {
 
   LoadProfile(this.loggedFirebaseUser);
 
-  List<Object> get props => [loggedFirebaseUser];
+  List<Object?> get props => [loggedFirebaseUser];
 
   @override
   String toString() {

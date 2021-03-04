@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 import 'package:e_commerce_app/business_logic/entities/user.dart';
 
 abstract class RegisterEvent extends Equatable {
@@ -13,7 +12,7 @@ abstract class RegisterEvent extends Equatable {
 class EmailChanged extends RegisterEvent {
   final String email;
 
-  const EmailChanged({@required this.email});
+  const EmailChanged({required this.email});
 
   @override
   List<Object> get props => [email];
@@ -28,7 +27,7 @@ class EmailChanged extends RegisterEvent {
 class PasswordChanged extends RegisterEvent {
   final String password;
 
-  PasswordChanged({@required this.password});
+  PasswordChanged({required this.password});
 
   @override
   String toString() {
@@ -42,7 +41,7 @@ class ConfirmPasswordChanged extends RegisterEvent {
   final String confirmPassword;
 
   ConfirmPasswordChanged(
-      {@required this.password, @required this.confirmPassword});
+      {required this.password, required this.confirmPassword});
 
   @override
   String toString() {
@@ -56,10 +55,11 @@ class Submitted extends RegisterEvent {
   final String password;
   final String confirmPassword;
 
-  const Submitted(
-      {@required this.newUser,
-      @required this.password,
-      @required this.confirmPassword});
+  const Submitted({
+    required this.newUser,
+    required this.password,
+    required this.confirmPassword,
+  });
 
   @override
   List<Object> get props => [newUser.email];

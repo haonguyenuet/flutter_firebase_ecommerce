@@ -8,18 +8,18 @@ import 'package:e_commerce_app/constants/color_constant.dart';
 
 class ProductInfo extends StatefulWidget {
   const ProductInfo({
-    Key key,
-    @required this.product,
+    Key? key,
+    required this.product,
   }) : super(key: key);
 
-  final Product product;
+  final Product? product;
 
   @override
   _ProductInfoState createState() => _ProductInfoState();
 }
 
 class _ProductInfoState extends State<ProductInfo> {
-  Product get product => widget.product;
+  Product? get product => widget.product;
   // local states
   bool seeMore = false;
 
@@ -58,7 +58,7 @@ class _ProductInfoState extends State<ProductInfo> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15),
       child: Text(
-        product.name,
+        product!.name,
         style: TextStyle(fontSize: 20),
       ),
     );
@@ -68,7 +68,7 @@ class _ProductInfoState extends State<ProductInfo> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15),
       child: Text(
-        "${formatNumber(product.originalPrice)}₫",
+        "${formatNumber(product!.originalPrice)}₫",
         style: TextStyle(
           fontSize: 24,
           color: mPrimaryColor,
@@ -84,7 +84,7 @@ class _ProductInfoState extends State<ProductInfo> {
         children: [
           TextSpan(text: "Đã bán:"),
           TextSpan(
-            text: " ${product.soldQuantity}",
+            text: " ${product!.soldQuantity}",
             style: TextStyle(fontSize: 16, color: mPrimaryColor),
           ),
         ],
@@ -104,7 +104,7 @@ class _ProductInfoState extends State<ProductInfo> {
       child: Row(
         children: [
           Text(
-            "${product.rating}",
+            "${product!.rating}",
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -125,7 +125,7 @@ class _ProductInfoState extends State<ProductInfo> {
         alignment: Alignment.center,
         height: 40,
         decoration: BoxDecoration(
-          color: product.isAvailable ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
+          color: product!.isAvailable ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(25),
             bottomLeft: Radius.circular(25),
@@ -136,10 +136,10 @@ class _ProductInfoState extends State<ProductInfo> {
             SvgPicture.asset(
               "assets/icons/Check mark rounde.svg",
               color:
-                  product.isAvailable ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
+                  product!.isAvailable ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
             ),
             SizedBox(width: 5),
-            Text("${product.isAvailable ? "Còn hàng" : "Hết hàng"}"),
+            Text("${product!.isAvailable ? "Còn hàng" : "Hết hàng"}"),
           ],
         ),
       ),
@@ -153,7 +153,7 @@ class _ProductInfoState extends State<ProductInfo> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            product.description,
+            product!.description,
             maxLines: seeMore ? null : 2,
           ),
           SizedBox(height: 5),

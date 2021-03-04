@@ -6,7 +6,7 @@ import 'package:e_commerce_app/configs/size_config.dart';
 class ProductImages extends StatefulWidget {
   final Product product;
 
-  const ProductImages({Key key, this.product}) : super(key: key);
+  const ProductImages({Key? key, required this.product}) : super(key: key);
   @override
   _ProductImagesState createState() => _ProductImagesState();
 }

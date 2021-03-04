@@ -7,11 +7,11 @@ class FirebaseCartRepository implements CartRepository {
   var userCollection = FirebaseFirestore.instance.collection("users");
 
   /// Get all cart items
-  Stream<List<CartItem>> cartStream(String uid) {
+  Stream<List<CartItem>>? cartStream(String uid) {
     try {
       return userCollection.doc(uid).collection("cart").snapshots().map(
           (snapshot) => snapshot.docs
-              .map((doc) => CartItem.fromMap(doc.id, doc.data()))
+              .map((doc) => CartItem.fromMap(doc.id, doc.data()!))
               .toList());
     } catch (e) {
       print(e);
@@ -26,8 +26,8 @@ class FirebaseCartRepository implements CartRepository {
     await userRef.collection("cart").doc(newItem.pid).get().then((doc) async {
       if (doc.exists) {
         // old data + new data
-        var quantity = doc.data()["quantity"] + newItem.quantity;
-        var price = doc.data()["price"] + newItem.price;
+        var quantity = doc.data()!["quantity"] + newItem.quantity;
+        var price = doc.data()!["price"] + newItem.price;
         // update
         await doc.reference.update({"quantity": quantity, "price": price});
       } else {
@@ -42,7 +42,7 @@ class FirebaseCartRepository implements CartRepository {
 
   /// Remove item
   /// Created by NDH
-  Future<void> removeCartItem(String uid, String cid) async {
+  Future<void> removeCartItem(String uid, String? cid) async {
     await userCollection
         .doc(uid)
         .collection("cart")
@@ -62,7 +62,7 @@ class FirebaseCartRepository implements CartRepository {
       for (DocumentSnapshot doc in snapshot.docs) {
         await doc.reference.delete();
       }
-    }).catchError((error) => print(error));
+    }).catchError((error) {});
   }
 
   /// Update quantity of cart item

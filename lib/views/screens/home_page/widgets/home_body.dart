@@ -62,7 +62,7 @@ class HomeBody extends StatelessWidget {
     );
   }
 
-  void navigatorToAllProducts(BuildContext context, {Category category}) {
+  void navigatorToAllProducts(BuildContext context, {Category? category}) {
     Navigator.pushNamed(context, AppRouter.ALL_PRODUCTS, arguments: category);
   }
 }

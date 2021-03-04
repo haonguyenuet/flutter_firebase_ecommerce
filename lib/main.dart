@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:e_commerce_app/business_logic/blocs/profile/bloc.dart';
 import 'package:e_commerce_app/business_logic/repository/storage_repo.dart';
 import 'package:firebase_core/firebase_core.dart';

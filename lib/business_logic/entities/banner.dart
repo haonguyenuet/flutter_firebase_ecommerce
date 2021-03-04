@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 
 class BannerItem extends Equatable {
-  final String id;
-  final String imageUrl;
+  final String? id;
+  final String? imageUrl;
 
   BannerItem({this.id, this.imageUrl});
 
@@ -24,7 +24,7 @@ class BannerItem extends Equatable {
   }
 
   @override
-  List<Object> get props => [id, imageUrl];
+  List<Object?> get props => [id, imageUrl];
 
   @override
   String toString() {

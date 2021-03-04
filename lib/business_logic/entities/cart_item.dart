@@ -1,6 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:meta/meta.dart';
-
 /// Cart item model
 class CartItem {
   /// Cart item id
@@ -16,14 +13,14 @@ class CartItem {
   final int price;
 
   /// Checkout or not ?
-  bool isActive;
+  bool? isActive;
 
   /// Constructor
   CartItem({
-    @required this.cid,
-    @required this.pid,
-    @required this.price,
-    @required this.quantity,
+    required this.cid,
+    required this.pid,
+    required this.price,
+    required this.quantity,
   });
 
   /// Json data from server turns into model data

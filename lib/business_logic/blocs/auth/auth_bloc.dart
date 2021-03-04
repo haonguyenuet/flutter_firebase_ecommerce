@@ -1,7 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/business_logic/repository/repository.dart';
-
-import 'package:flutter/material.dart';
 import 'package:e_commerce_app/business_logic/blocs/auth/auth_event.dart';
 
 import 'auth_state.dart';
@@ -10,9 +8,8 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final AuthRepository _authRepository;
 
-  AuthenticationBloc({@required AuthRepository authRepository})
-      : assert(authRepository != null),
-        _authRepository = authRepository,
+  AuthenticationBloc({required AuthRepository authRepository})
+      : _authRepository = authRepository,
         super(Uninitialized());
 
   @override
@@ -36,7 +33,7 @@ class AuthenticationBloc
 
       if (isLoggedIn) {
         // Get current user
-        final loggedFirebaseUser = _authRepository.currentFirebaseUser;
+        final loggedFirebaseUser = _authRepository.loggedFirebaseUser;
         yield Authenticated(loggedFirebaseUser);
       } else {
         yield Unauthenticated();
@@ -47,7 +44,7 @@ class AuthenticationBloc
   }
 
   Stream<AuthenticationState> _mapLoggedInToState() async* {
-    yield Authenticated(_authRepository.currentFirebaseUser);
+    yield Authenticated(_authRepository.loggedFirebaseUser);
   }
 
   Stream<AuthenticationState> _mapLoggedOutToState() async* {

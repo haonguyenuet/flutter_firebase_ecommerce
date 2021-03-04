@@ -7,8 +7,8 @@ import 'package:flutter_svg/svg.dart';
 
 class CustomBottomNav extends StatelessWidget {
   const CustomBottomNav({
-    Key key,
-    @required this.selectedMenu,
+    Key? key,
+    required this.selectedMenu,
   }) : super(key: key);
 
   final MenuState selectedMenu;
@@ -84,11 +84,11 @@ class CustomBottomNav extends StatelessWidget {
 ///
 class BottomMenuButton extends StatelessWidget {
   const BottomMenuButton({
-    Key key,
-    @required this.isSelected,
-    @required this.iconPath,
-    @required this.buttonName,
-    @required this.onTap,
+    Key? key,
+    required this.isSelected,
+    required this.iconPath,
+    required this.buttonName,
+    required this.onTap,
   }) : super(key: key);
 
   final bool isSelected;
@@ -98,7 +98,7 @@ class BottomMenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: onTap as void Function()?,
       child: AnimatedContainer(
         duration: mAnimationDuration,
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),

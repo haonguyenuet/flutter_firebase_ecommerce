@@ -31,12 +31,12 @@ class Categories extends StatelessWidget {
 
 /// List category
 class ListCategory extends StatefulWidget {
-  final List<Category> categories;
-  final int selectedCategoryIndex;
+  final List<Category>? categories;
+  final int? selectedCategoryIndex;
 
   const ListCategory({
-    Key key,
-    @required this.categories,
+    Key? key,
+    required this.categories,
     this.selectedCategoryIndex,
   }) : super(key: key);
 
@@ -45,8 +45,8 @@ class ListCategory extends StatefulWidget {
 }
 
 class _ListCategoryState extends State<ListCategory> {
-  List<Category> get categories => widget.categories;
-  int selectedIndex;
+  List<Category>? get categories => widget.categories;
+  int? selectedIndex;
 
   @override
   void initState() {
@@ -63,14 +63,14 @@ class _ListCategoryState extends State<ListCategory> {
       color: mDarkShadeColor,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: widget.categories.length,
+        itemCount: widget.categories!.length,
         itemBuilder: (context, index) {
           return CategoryCard(
-            category: categories[index],
+            category: categories![index],
             isActive: index == selectedIndex,
             onPressed: () {
               BlocProvider.of<AllProductsBloc>(context)
-                  .add(CategoryChanged(categories[index]));
+                  .add(CategoryChanged(categories![index]));
               setState(() {
                 selectedIndex = index;
               });

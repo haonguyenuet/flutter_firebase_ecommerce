@@ -2,16 +2,14 @@ import 'package:e_commerce_app/business_logic/repository/product_repository/prod
 import 'package:e_commerce_app/views/screens/detail_product/widgets/related_products/bloc/related_products_event.dart';
 import 'package:e_commerce_app/views/screens/detail_product/widgets/related_products/bloc/related_products_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
 
 class RelatedProductsBloc
     extends Bloc<RelatedProductsEvent, RelatedProductsState> {
   ProductRepository _productRepository;
 
   RelatedProductsBloc({
-    @required ProductRepository productRepository,
-  })  : assert(productRepository != null),
-        _productRepository = productRepository,
+    required ProductRepository productRepository,
+  })   : _productRepository = productRepository,
         super(RelatedProductsLoading());
 
   /// Map from load related products event to states

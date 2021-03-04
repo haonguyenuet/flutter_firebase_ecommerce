@@ -7,13 +7,16 @@ import 'package:flutter/material.dart';
 
 class SortOptionDialog extends StatefulWidget {
   final ProductSortOption currSortOption;
-  const SortOptionDialog({Key key, this.currSortOption}) : super(key: key);
+  const SortOptionDialog({
+    Key? key,
+    required this.currSortOption,
+  }) : super(key: key);
   @override
   _SortOptionDialogState createState() => _SortOptionDialogState();
 }
 
 class _SortOptionDialogState extends State<SortOptionDialog> {
-  ProductSortOption sortOption;
+  ProductSortOption? sortOption;
 
   @override
   void initState() {
@@ -36,7 +39,8 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Wrap(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("Sort by:"),
                 SizedBox(width: 10),
@@ -44,24 +48,25 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
                   title: Text("Price"),
                   value: PRODUCT_SORT_BY.PRICE,
                   groupValue: sortOption?.productSortBy,
-                  onChanged: (value) {
+                  onChanged: (dynamic value) {
                     print(value);
                     setState(() =>
-                        sortOption = sortOption.update(productSortBy: value));
+                        sortOption = sortOption!.update(productSortBy: value));
                   },
                 ),
                 RadioListTile(
                   title: Text("Sold Quantity"),
                   value: PRODUCT_SORT_BY.SOLD_QUANTITY,
                   groupValue: sortOption?.productSortBy,
-                  onChanged: (value) {
+                  onChanged: (dynamic value) {
                     setState(() =>
-                        sortOption = sortOption.update(productSortBy: value));
+                        sortOption = sortOption!.update(productSortBy: value));
                   },
                 )
               ],
             ),
-            Wrap(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("Sort order:"),
                 SizedBox(width: 10),
@@ -69,18 +74,18 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
                   title: Text("Descending"),
                   value: PRODUCT_SORT_ORDER.DESCENDING,
                   groupValue: sortOption?.productSortOrder,
-                  onChanged: (value) {
+                  onChanged: (dynamic value) {
                     setState(() => sortOption =
-                        sortOption.update(productSortOrder: value));
+                        sortOption!.update(productSortOrder: value));
                   },
                 ),
                 RadioListTile(
                   title: Text("Ascending"),
                   value: PRODUCT_SORT_ORDER.ASCENDING,
                   groupValue: sortOption?.productSortOrder,
-                  onChanged: (value) {
+                  onChanged: (dynamic value) {
                     setState(() => sortOption =
-                        sortOption.update(productSortOrder: value));
+                        sortOption!.update(productSortOrder: value));
                   },
                 ),
               ],
@@ -89,7 +94,7 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
             DefaultButton(
               onPressed: () {
                 // Because productSortOrder default is descending, so it's not null
-                if (sortOption.productSortBy != null) {
+                if (sortOption!.productSortBy != null) {
                   Navigator.pop(context, sortOption);
                 } else {
                   MyDialog.showInformation(

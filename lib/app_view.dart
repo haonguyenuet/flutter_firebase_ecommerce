@@ -15,7 +15,7 @@ class AppView extends StatefulWidget {
 class _AppViewState extends State<AppView> {
   final _navigatorKey = GlobalKey<NavigatorState>();
 
-  NavigatorState get _navigator => _navigatorKey.currentState;
+  NavigatorState? get _navigator => _navigatorKey.currentState;
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +30,12 @@ class _AppViewState extends State<AppView> {
         return BlocListener<AuthenticationBloc, AuthenticationState>(
           listener: (context, state) {
             if (state is Uninitialized) {
-              _navigator.pushNamedAndRemoveUntil(
+              _navigator!.pushNamedAndRemoveUntil(
                 AppRouter.SPLASH,
                 (_) => false,
               );
             } else if (state is Unauthenticated) {
-              _navigator.pushNamedAndRemoveUntil(
+              _navigator!.pushNamedAndRemoveUntil(
                 AppRouter.LOGIN,
                 (_) => false,
               );
@@ -50,13 +50,13 @@ class _AppViewState extends State<AppView> {
                   .add(LoadProfile(_loggedFirebaseUser));
 
               // Go to login success screen
-              _navigator.pushNamedAndRemoveUntil(
+              _navigator!.pushNamedAndRemoveUntil(
                 AppRouter.LOGIN_SUCCESS,
                 (_) => false,
               );
             } else {
               // default case
-              _navigator.pushNamedAndRemoveUntil(
+              _navigator!.pushNamedAndRemoveUntil(
                 AppRouter.SPLASH,
                 (_) => false,
               );

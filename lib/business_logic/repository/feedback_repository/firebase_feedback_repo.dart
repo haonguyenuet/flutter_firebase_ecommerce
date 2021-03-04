@@ -10,7 +10,7 @@ class FirebaseFeedbackRepository implements FeedbackRepository {
   /// [pid] is product id
   /// Created by NDH
   @override
-  Stream<List<FeedbackItem>> feedbackStream(String pid) {
+  Stream<List<FeedbackItem>>? feedbackStream(String pid) {
     try {
       return productCollection
           .doc(pid)
@@ -18,7 +18,7 @@ class FirebaseFeedbackRepository implements FeedbackRepository {
           .orderBy("timestamp", descending: true)
           .snapshots()
           .map((snapshot) => snapshot.docs
-              .map((doc) => FeedbackItem.fromMap(doc.id, doc.data()))
+              .map((doc) => FeedbackItem.fromMap(doc.id, doc.data()!))
               .toList());
     } catch (e) {
       print(e);
@@ -40,18 +40,18 @@ class FirebaseFeedbackRepository implements FeedbackRepository {
             .orderBy("timestamp", descending: true)
             .get()
             .then((snapshot) => snapshot.docs
-                .map((doc) => FeedbackItem.fromMap(doc.id, doc.data()))
+                .map((doc) => FeedbackItem.fromMap(doc.id, doc.data()!))
                 .toList())
-            .catchError((error) => print(error))
+            .catchError((error){})
         : await productCollection
             .doc(pid)
             .collection("feedbacks")
             .orderBy("timestamp", descending: true)
             .get()
             .then((snapshot) => snapshot.docs
-                .map((doc) => FeedbackItem.fromMap(doc.id, doc.data()))
+                .map((doc) => FeedbackItem.fromMap(doc.id, doc.data()!))
                 .toList())
-            .catchError((error) => print(error));
+            .catchError((error) {});
   }
 
   /// Get feedbacks by star

@@ -20,7 +20,7 @@ class RelatedProducts extends StatelessWidget {
         if (state is RelatedProductsLoaded) {
           return Section(
             title: "Related product",
-            children: state.relatedProducts
+            children: state.relatedProducts!
                 .map((p) => ProductCard(product: p))
                 .toList(),
             handleOnTap: () {

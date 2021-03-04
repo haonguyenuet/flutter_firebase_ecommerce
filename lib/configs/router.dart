@@ -44,7 +44,7 @@ class AppRouter {
       case INITIALIZE_INFO:
         return MaterialPageRoute(builder: (_) => InitializeInfoScreen());
       case REGISTER:
-        var initialUser = settings.arguments as UserModel;
+        var initialUser = settings.arguments as UserModel?;
         return MaterialPageRoute(
             builder: (_) => RegisterScreen(initialUser: initialUser));
       case LOGIN_SUCCESS:
@@ -62,14 +62,14 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => FeedbackScreen(product: product));
       case ALL_PRODUCTS:
-        var category = settings.arguments as Category;
+        var category = settings.arguments as Category?;
         return MaterialPageRoute(
             builder: (_) => AllProductsScreen(category: category));
       case CART:
         return MaterialPageRoute(builder: (_) => CartScreen());
       case PAYMENT:
         return MaterialPageRoute(builder: (_) => PaymentScreen());
-       case ADD_DELIVERY_ADDRESS:
+      case ADD_DELIVERY_ADDRESS:
         return MaterialPageRoute(builder: (_) => AddDeliveryAddressScreen());
       default:
         return MaterialPageRoute(

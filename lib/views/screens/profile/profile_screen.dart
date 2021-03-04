@@ -20,19 +20,19 @@ class ProfileScreen extends StatelessWidget {
             ProfileMenuButton(
               text: "My Information",
               icon: "assets/icons/User Icon.svg",
-              press: () => {},
+              onPressed: () => {},
             ),
             ProfileMenuButton(
               text: "My Cart",
               icon: "assets/icons/Cart Icon.svg",
-              press: () {
+              onPressed: () {
                 Navigator.pushNamed(context, AppRouter.CART);
               },
             ),
             ProfileMenuButton(
               text: "Log Out",
               icon: "assets/icons/exit.svg",
-              press: () {
+              onPressed: () {
                 BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
               },
             ),

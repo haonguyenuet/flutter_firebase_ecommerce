@@ -9,9 +9,9 @@ import 'package:e_commerce_app/views/screens/register/widgets/register_header.da
 import 'bloc/bloc.dart';
 
 class RegisterScreen extends StatelessWidget {
-  final UserModel initialUser;
+  final UserModel? initialUser;
 
-  const RegisterScreen({Key key, @required this.initialUser}) : super(key: key);
+  const RegisterScreen({Key? key, required this.initialUser}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

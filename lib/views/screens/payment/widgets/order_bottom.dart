@@ -10,7 +10,7 @@ import 'package:flutter_svg/svg.dart';
 
 class OrderBottom extends StatelessWidget {
   const OrderBottom({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

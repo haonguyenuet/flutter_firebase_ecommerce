@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 class SimpleBlocObserver extends BlocObserver {
   @override
-  void onEvent(Bloc bloc, Object event) {
+  void onEvent(Bloc bloc, Object? event) {
     super.onEvent(bloc, event);
     log('onEvent', event);
   }
@@ -17,7 +17,7 @@ class SimpleBlocObserver extends BlocObserver {
             '\tnextState=${transition.nextState}');
   }
 
-  void log(String name, Object msg) {
+  void log(String name, Object? msg) {
     print(
         '===== ${DateFormat("HH:mm:ss-dd MMM, yyyy").format(DateTime.now())}: $name\n'
         '$msg');

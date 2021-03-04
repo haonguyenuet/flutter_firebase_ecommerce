@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:e_commerce_app/business_logic/entities/user.dart';
 
 import 'package:e_commerce_app/business_logic/repository/repository.dart';
@@ -11,9 +10,8 @@ import 'package:e_commerce_app/views/screens/register/bloc/register_state.dart';
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final AuthRepository _authRepository;
 
-  RegisterBloc({@required AuthRepository authRepository})
-      : assert(authRepository != null),
-        _authRepository = authRepository,
+  RegisterBloc({required AuthRepository authRepository})
+      : _authRepository = authRepository,
         super(RegisterState.empty());
 
   @override
@@ -98,7 +96,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       if (isLoggedIn) {
         yield RegisterState.success();
       } else {
-        final message = _authRepository.authException ?? "Login Failure";
+        final message = _authRepository.authException;
         yield RegisterState.failure(message);
       }
     } catch (_) {

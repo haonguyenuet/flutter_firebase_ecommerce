@@ -4,14 +4,14 @@ import 'package:flutter_svg/svg.dart';
 
 class CircleIconButton extends StatelessWidget {
   final double size;
-  final Function onPressed;
+  final Function? onPressed;
   final String svgIcon;
   final Color color;
 
   const CircleIconButton({
-    Key key,
-    @required this.size,
-    @required this.svgIcon,
+    Key? key,
+    required this.size,
+    required this.svgIcon,
     this.onPressed,
     this.color = mPrimaryLightColor,
   }) : super(key: key);
@@ -19,7 +19,7 @@ class CircleIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onPressed,
+      onTap: onPressed as void Function()?,
       child: Container(
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(

@@ -12,10 +12,10 @@ class ForgotPassForm extends StatefulWidget {
 class _ForgotPassFormState extends State<ForgotPassForm> {
   // local states
   final _formKey = GlobalKey<FormState>();
-  List<String> _errors = [];
-  String _email = "";
+  List<String?> _errors = [];
+  String? _email = "";
 
-  void addError({String error}) {
+  void addError({String? error}) {
     if (!_errors.contains(error)) {
       setState(() {
         _errors.add(error);
@@ -23,7 +23,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
     }
   }
 
-  void removeError({String error}) {
+  void removeError({String? error}) {
     if (_errors.contains(error)) {
       setState(() {
         _errors.remove(error);
@@ -43,7 +43,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           DefaultButton(
             child: Text("Continue"),
             onPressed: () {
-              if (_formKey.currentState.validate()) {}
+              if (_formKey.currentState!.validate()) {}
             },
           ),
         ],
@@ -67,7 +67,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         }
       },
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           addError(error: mEmailNullError);
           return "";
         } else if (value.isNotEmpty && !emailValidatorRegExp.hasMatch(value)) {

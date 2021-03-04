@@ -6,7 +6,7 @@ import 'package:e_commerce_app/constants/color_constant.dart';
 
 class Header extends StatefulWidget {
   const Header({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -52,19 +52,19 @@ class _HeaderState extends State<Header> {
                     color: Colors.white,
                   ),
                 ),
-                RatingBar.builder(
-                  initialRating: state.feedbackResponse.rating,
-                  minRating: 1,
-                  allowHalfRating: true,
-                  itemCount: 5,
-                  itemSize: 26,
-                  unratedColor: mAccentShadeColor,
-                  itemBuilder: (context, _) => Icon(
-                    Icons.star,
-                    color: Colors.amber,
-                  ),
-                  onRatingUpdate: null,
-                ),
+                // RatingBar.builder(
+                //   initialRating: state.feedbackResponse.rating!,
+                //   minRating: 1,
+                //   allowHalfRating: true,
+                //   itemCount: 5,
+                //   itemSize: 26,
+                //   unratedColor: mAccentShadeColor,
+                //   itemBuilder: (context, _) => Icon(
+                //     Icons.star,
+                //     color: Colors.amber,
+                //   ),
+                //   onRatingUpdate: null,
+                // ),
                 const SizedBox(height: 15),
                 Text(
                   "${state.feedbackResponse.numberOfFeedbacks} nhận xét",
@@ -129,14 +129,14 @@ class _HeaderState extends State<Header> {
 
 class StarButton extends StatelessWidget {
   const StarButton({
-    Key key,
-    @required this.numberOfStars,
+    Key? key,
+    required this.numberOfStars,
     this.handleOnTap,
     this.isActive = false,
   }) : super(key: key);
 
   final int numberOfStars;
-  final Function() handleOnTap;
+  final Function()? handleOnTap;
   final bool isActive;
 
   @override

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class IconButtonWithCounter extends StatelessWidget {
   const IconButtonWithCounter({
-    Key key,
-    @required this.counter,
-    @required this.icon,
+    Key? key,
+    required this.counter,
+    required this.icon,
     this.size,
     this.onPressed,
     this.color,
@@ -12,9 +12,9 @@ class IconButtonWithCounter extends StatelessWidget {
 
   final int counter;
   final IconData icon;
-  final Function onPressed;
-  final double size;
-  final Color color;
+  final Function? onPressed;
+  final double? size;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class IconButtonWithCounter extends StatelessWidget {
   _buildIcon() {
     return IconButton(
       icon: Icon(icon, size: size),
-      onPressed: onPressed,
+      onPressed: onPressed as void Function()?,
       color: color,
     );
   }

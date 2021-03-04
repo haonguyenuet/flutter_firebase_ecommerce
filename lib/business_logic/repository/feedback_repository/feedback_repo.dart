@@ -4,7 +4,7 @@ abstract class FeedbackRepository {
   /// Stream of feedback
   /// [pid] is product id
   /// Created by NDH
-  Stream<List<FeedbackItem>> feedbackStream(String pid);
+  Stream<List<FeedbackItem>>? feedbackStream(String pid);
 
   /// Add new doc to feedbacks collection
   /// [pid] is product id

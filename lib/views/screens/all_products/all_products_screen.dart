@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AllProductsScreen extends StatelessWidget {
-  final Category category;
+  final Category? category;
 
   const AllProductsScreen({
-    Key key,
+    Key? key,
     this.category,
   }) : super(key: key);
 

@@ -5,18 +5,17 @@ import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:e_commerce_app/business_logic/repository/product_repository/product_repo.dart';
 import 'package:e_commerce_app/views/screens/all_products/bloc/all_products_event.dart';
 import 'package:e_commerce_app/views/screens/all_products/bloc/all_products_state.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
   ProductRepository _productRepository;
-  Category _currCategory;
-  String _currKeyword = "";
+  late Category _currCategory;
+  String? _currKeyword = "";
   ProductSortOption _currSortOption = ProductSortOption();
 
-  AllProductsBloc({@required ProductRepository productRepository})
-      : assert(productRepository != null),
+  AllProductsBloc({required ProductRepository productRepository})
+      : 
         _productRepository = productRepository,
         super(DisplayListProducts.loading());
 
@@ -68,11 +67,11 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
   }
 
   /// Open screen event => state
-  Stream<AllProductsState> _mapOpenScreenToState(Category category) async* {
+  Stream<AllProductsState> _mapOpenScreenToState(Category? category) async* {
     try {
       yield CategoriesLoading();
       // Get categories
-      var categories = await _productRepository.getCategories() ?? [];
+      var categories = await _productRepository.getCategories();
       var selectedCategoryIndex = 0;
       if (category != null) {
         for (int i = 0; i < categories.length; i++) {
@@ -96,7 +95,7 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
 
   /// Search query changed => state
   Stream<AllProductsState> _mapSearchQueryChangedToState(
-      String keyword) async* {
+      String? keyword) async* {
     yield DisplayListProducts.loading();
     try {
       _currKeyword = keyword;
@@ -133,12 +132,12 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
 
     // Filter products by current keyword
     bool query(Product p) =>
-        _currKeyword.isEmpty ||
-        p.name.toLowerCase().contains(_currKeyword.toLowerCase());
+        _currKeyword!.isEmpty ||
+        p.name.toLowerCase().contains(_currKeyword!.toLowerCase());
     products = products.where(query).toList();
 
     // Sort
-    products.sort(mapOptionToSortMethod());
+    products.sort(mapOptionToSortMethod() as int Function(Product, Product)?);
 
     return products;
   }
@@ -172,7 +171,7 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
 
 /// Product sort options
 class ProductSortOption {
-  final PRODUCT_SORT_BY productSortBy;
+  final PRODUCT_SORT_BY? productSortBy;
   final PRODUCT_SORT_ORDER productSortOrder;
 
   ProductSortOption({

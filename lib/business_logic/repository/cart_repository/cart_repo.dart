@@ -4,7 +4,7 @@ abstract class CartRepository {
   /// Cart stream
   /// [uid] is user id
   /// Created by NDH
-  Stream<List<CartItem>> cartStream(String uid);
+  Stream<List<CartItem>>? cartStream(String uid);
 
   /// Add item
   /// [uid] is user id
@@ -16,7 +16,7 @@ abstract class CartRepository {
   /// [uid] is user id
   /// [pid] is cart item id
   /// Created by NDH
-  Future<void> removeCartItem(String uid, String cid);
+  Future<void> removeCartItem(String uid, String? cid);
 
   /// Clear cart
   /// [uid] is user id

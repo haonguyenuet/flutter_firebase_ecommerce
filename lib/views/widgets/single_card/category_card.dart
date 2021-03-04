@@ -5,12 +5,12 @@ import 'package:e_commerce_app/constants/color_constant.dart';
 
 class CategoryCard extends StatelessWidget {
   final Category category;
-  final Function onPressed;
+  final Function()? onPressed;
   final bool isActive;
 
   const CategoryCard({
-    Key key,
-    @required this.category,
+    Key? key,
+    required this.category,
     this.onPressed,
     this.isActive = true,
   }) : super(key: key);

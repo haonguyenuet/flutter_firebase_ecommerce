@@ -9,8 +9,8 @@ class FirebaseAuthRepository implements AuthRepository {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   GoogleSignIn _googleSignIn = GoogleSignIn();
   UserRepository _userRepository = FirebaseUserRepository();
-  String _authException = "";
-  User get currentFirebaseUser => _firebaseAuth.currentUser;
+  String _authException = "Authentication Failure";
+  User get loggedFirebaseUser => _firebaseAuth.currentUser!;
   String get authException => _authException;
 
   /// Don't use onAuthChange
@@ -25,7 +25,7 @@ class FirebaseAuthRepository implements AuthRepository {
       );
 
       /// Add id for new user
-      newUser = newUser.cloneWith(id: result.user.uid);
+      newUser = newUser.cloneWith(id: result.user!.uid);
 
       /// Create new doc in users collection
       _userRepository.addUserData(newUser);
@@ -51,7 +51,8 @@ class FirebaseAuthRepository implements AuthRepository {
   /// Created by NDH
   Future<void> logInWithGoogle() async {
     try {
-      final googleUser = await _googleSignIn.signIn();
+      final googleUser =
+          await (_googleSignIn.signIn() as Future<GoogleSignInAccount>);
       final googleAuth = await googleUser.authentication;
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
@@ -71,6 +72,8 @@ class FirebaseAuthRepository implements AuthRepository {
     await Future.wait([
       _firebaseAuth.signOut(),
       _googleSignIn.signOut(),
-    ]).catchError((error) => print(error));
+    ]).catchError((error) {
+      print(error);
+    });
   }
 }

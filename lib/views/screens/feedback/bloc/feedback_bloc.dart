@@ -4,21 +4,18 @@ import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:e_commerce_app/business_logic/repository/repository.dart';
 import 'package:e_commerce_app/views/screens/feedback/bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
 
 class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
   final FeedbackRepository _feedbackRepository;
   final ProductRepository _productRepository;
-  StreamSubscription _feedbackSubscription;
-  Product _currentProduct;
+  StreamSubscription? _feedbackSubscription;
+  Product? _currentProduct;
   double _currAverageRating = 0.0;
 
   FeedbackBloc({
-    @required FeedbackRepository feedbackRepository,
-    @required ProductRepository productRepository,
-  })  : assert(feedbackRepository != null),
-        assert(productRepository != null),
-        _feedbackRepository = feedbackRepository,
+    required FeedbackRepository feedbackRepository,
+    required ProductRepository productRepository,
+  })   : _feedbackRepository = feedbackRepository,
         _productRepository = productRepository,
         super(FeedbacksLoading());
 
@@ -40,18 +37,18 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
       _currentProduct = event.product;
       _feedbackSubscription?.cancel();
       _feedbackSubscription =
-          _feedbackRepository.feedbackStream(_currentProduct.id).listen(
+          _feedbackRepository.feedbackStream(_currentProduct!.id)!.listen(
                 (feedback) => add(FeedbacksUpdated(feedback)),
               );
     } catch (e) {
-      yield FeedbacksLoadFailure(e);
+      yield FeedbacksLoadFailure(e.toString());
     }
   }
 
   Stream<FeedbackState> _mapAddFeedbackItemToState(
       AddFeedbackItem event) async* {
     try {
-      _feedbackRepository.addNewFeedback(_currentProduct.id, event.feedback);
+      _feedbackRepository.addNewFeedback(_currentProduct!.id, event.feedback);
     } catch (e) {
       print(e);
     }
@@ -61,7 +58,7 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
     try {
       yield FeedbacksLoading();
       var feedbacks = await _feedbackRepository.getFeedbacksByStar(
-        _currentProduct.id,
+        _currentProduct!.id,
         event.star,
       );
       yield FeedbacksLoaded(FeedbacksResponse(
@@ -85,7 +82,7 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
     _currAverageRating = double.parse(averageRating.toStringAsFixed(1));
     // Update product rating
     _productRepository.updateProductRatingById(
-      _currentProduct.id,
+      _currentProduct!.id,
       _currAverageRating,
     );
     yield FeedbacksLoaded(FeedbacksResponse(
@@ -103,9 +100,9 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
 }
 
 class FeedbacksResponse {
-  final List<FeedbackItem> feedbacks;
-  final double rating;
-  final int numberOfFeedbacks;
+  final List<FeedbackItem>? feedbacks;
+  final double? rating;
+  final int? numberOfFeedbacks;
 
   FeedbacksResponse({this.numberOfFeedbacks, this.feedbacks, this.rating});
 }

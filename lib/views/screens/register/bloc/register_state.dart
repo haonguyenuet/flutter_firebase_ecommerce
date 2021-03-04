@@ -8,18 +8,18 @@ class RegisterState {
   final bool isSubmitting;
   final bool isSuccess;
   final bool isFailure;
-  final String message;
+  final String? message;
 
   bool get isFormValid =>
       isEmailValid && isPasswordValid && isConfirmPasswordValid;
 
   RegisterState(
-      {@required this.isEmailValid,
-      @required this.isPasswordValid,
-      @required this.isConfirmPasswordValid,
-      @required this.isSubmitting,
-      @required this.isSuccess,
-      @required this.isFailure,
+      {required this.isEmailValid,
+      required this.isPasswordValid,
+      required this.isConfirmPasswordValid,
+      required this.isSubmitting,
+      required this.isSuccess,
+      required this.isFailure,
       this.message});
 
   factory RegisterState.empty() {
@@ -70,7 +70,7 @@ class RegisterState {
   }
 
   RegisterState update(
-      {bool isEmailValid, bool isPasswordValid, bool isConfirmPasswordValid}) {
+      {bool? isEmailValid, bool? isPasswordValid, bool? isConfirmPasswordValid}) {
     return cloneWith(
       isEmailValid: isEmailValid,
       isPasswordValid: isPasswordValid,
@@ -83,14 +83,14 @@ class RegisterState {
   }
 
   RegisterState cloneWith({
-    bool isEmailValid,
-    bool isPasswordValid,
-    bool isConfirmPasswordValid,
-    bool isNameValid,
-    bool isSubmitting,
-    bool isSuccess,
-    bool isFailure,
-    String message,
+    bool? isEmailValid,
+    bool? isPasswordValid,
+    bool? isConfirmPasswordValid,
+    bool? isNameValid,
+    bool? isSubmitting,
+    bool? isSuccess,
+    bool? isFailure,
+    String? message,
   }) {
     return RegisterState(
       isEmailValid: isEmailValid ?? this.isEmailValid,

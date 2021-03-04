@@ -13,14 +13,14 @@ class ListProducts extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is DisplayListProducts) {
-          if (state.loading) {
+          if (state.loading!) {
             return Loading();
           }
-          if (state.msg.isNotEmpty) {
-            return Center(child: Text(state.msg));
+          if (state.msg!.isNotEmpty) {
+            return Center(child: Text(state.msg!));
           }
-          if (state.productsByCategory.length > 0) {
-            var products = state.productsByCategory;
+          if (state.productsByCategory!.length > 0) {
+            var products = state.productsByCategory!;
             return GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
