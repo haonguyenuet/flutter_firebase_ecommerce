@@ -1,6 +1,6 @@
 import 'package:e_commerce_app/business_logic/blocs/auth/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/feedback_item.dart';
-import 'package:e_commerce_app/constants/style_constant.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,7 +50,7 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
   _buildHeader() {
     return Align(
       alignment: Alignment.center,
-      child: Text('Add your feedback', style: TextStyle(fontSize: 16)),
+      child: Text('Add your feedback', style: FONT_CONST.REGULAR_DEFAULT_16),
     );
   }
 
@@ -77,13 +77,7 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "Rating:",
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        Text("Rating:", style: FONT_CONST.BOLD_DEFAULT_16),
         SizedBox(width: 10),
         RatingBar.builder(
           initialRating: rating.toDouble(),
@@ -111,7 +105,7 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
           child: Container(
             width: 200,
             child: DefaultButton(
-              child: Text("Send", style: mPrimaryFontStyle),
+              child: Text("Send", style: FONT_CONST.BOLD_WHITE_18),
               onPressed: () {
                 // create new feedback
                 FeedbackItem newFeedback = FeedbackItem(

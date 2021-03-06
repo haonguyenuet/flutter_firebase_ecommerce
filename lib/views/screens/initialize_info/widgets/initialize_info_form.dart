@@ -1,11 +1,10 @@
 import 'package:e_commerce_app/business_logic/entities/user.dart';
-import 'package:e_commerce_app/constants/style_constant.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/utils.dart';
 import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
-import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:flutter/services.dart';
 
 class InitializeInfoForm extends StatefulWidget {
@@ -39,11 +38,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
               alignment: Alignment.centerLeft,
               child: Text(
                 'Complete with your information',
-                style: TextStyle(
-                  color: mPrimaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
+                style: FONT_CONST.BOLD_PRIMARY_18,
               ),
             ),
             SizedBox(height: getProportionateScreenHeight(20)),
@@ -88,7 +83,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
     return DefaultButton(
       child: Text(
         'Continue'.toUpperCase(),
-        style: mPrimaryFontStyle,
+        style: FONT_CONST.BOLD_WHITE_18,
       ),
       onPressed: () {
         if (isContinueButtonEnabled()) {
@@ -127,7 +122,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
             ),
             child: Text(
               'Sign in',
-              style: TextStyle(color: mPrimaryColor),
+              style: FONT_CONST.REGULAR_PRIMARY,
             ),
           ),
         ],

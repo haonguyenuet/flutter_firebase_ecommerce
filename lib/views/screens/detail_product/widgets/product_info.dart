@@ -1,10 +1,9 @@
 import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:e_commerce_app/configs/router.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
-import 'package:e_commerce_app/constants/color_constant.dart';
 
 class ProductInfo extends StatefulWidget {
   const ProductInfo({
@@ -12,14 +11,14 @@ class ProductInfo extends StatefulWidget {
     required this.product,
   }) : super(key: key);
 
-  final Product? product;
+  final Product product;
 
   @override
   _ProductInfoState createState() => _ProductInfoState();
 }
 
 class _ProductInfoState extends State<ProductInfo> {
-  Product? get product => widget.product;
+  Product get product => widget.product;
   // local states
   bool seeMore = false;
 
@@ -57,10 +56,7 @@ class _ProductInfoState extends State<ProductInfo> {
   _productName() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15),
-      child: Text(
-        product!.name,
-        style: TextStyle(fontSize: 20),
-      ),
+      child: Text(product.name, style: FONT_CONST.MEDIUM_DEFAULT_20),
     );
   }
 
@@ -68,11 +64,8 @@ class _ProductInfoState extends State<ProductInfo> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15),
       child: Text(
-        "${formatNumber(product!.originalPrice)}₫",
-        style: TextStyle(
-          fontSize: 24,
-          color: mPrimaryColor,
-        ),
+        "${formatNumber(product.originalPrice)}₫",
+        style: FONT_CONST.MEDIUM_PRIMARY_24,
       ),
     );
   }
@@ -80,12 +73,12 @@ class _ProductInfoState extends State<ProductInfo> {
   _soldQuantity() {
     return Text.rich(
       TextSpan(
-        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+        style: FONT_CONST.BOLD_DEFAULT,
         children: [
           TextSpan(text: "Đã bán:"),
           TextSpan(
-            text: " ${product!.soldQuantity}",
-            style: TextStyle(fontSize: 16, color: mPrimaryColor),
+            text: " ${product.soldQuantity}",
+            style: FONT_CONST.BOLD_PRIMARY_16,
           ),
         ],
       ),
@@ -103,13 +96,7 @@ class _ProductInfoState extends State<ProductInfo> {
       },
       child: Row(
         children: [
-          Text(
-            "${product!.rating}",
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+          Text("${product.rating}", style: FONT_CONST.BOLD_DEFAULT_16),
           SizedBox(width: 5),
           SvgPicture.asset("assets/icons/Star Icon.svg"),
         ],
@@ -125,7 +112,7 @@ class _ProductInfoState extends State<ProductInfo> {
         alignment: Alignment.center,
         height: 40,
         decoration: BoxDecoration(
-          color: product!.isAvailable ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
+          color: product.isAvailable ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(25),
             bottomLeft: Radius.circular(25),
@@ -136,10 +123,10 @@ class _ProductInfoState extends State<ProductInfo> {
             SvgPicture.asset(
               "assets/icons/Check mark rounde.svg",
               color:
-                  product!.isAvailable ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
+                  product.isAvailable ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
             ),
             SizedBox(width: 5),
-            Text("${product!.isAvailable ? "Còn hàng" : "Hết hàng"}"),
+            Text("${product.isAvailable ? "Còn hàng" : "Hết hàng"}"),
           ],
         ),
       ),
@@ -153,7 +140,7 @@ class _ProductInfoState extends State<ProductInfo> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            product!.description,
+            product.description,
             maxLines: seeMore ? null : 2,
           ),
           SizedBox(height: 5),
@@ -167,11 +154,7 @@ class _ProductInfoState extends State<ProductInfo> {
             },
             child: Text(
               "${seeMore ? "See less" : "See more"}",
-              style: TextStyle(
-                color: mPrimaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-              ),
+              style: FONT_CONST.BOLD_PRIMARY,
             ),
           ),
         ],

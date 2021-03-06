@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/business_logic/blocs/profile/bloc.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,11 +28,7 @@ class ProfileHeader extends StatelessWidget {
                 ProfilePic(loggedUser: _loggedUser),
                 Text(
                   "${_loggedUser.name}",
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: FONT_CONST.BOLD_WHITE_20,
                 )
               ],
             );

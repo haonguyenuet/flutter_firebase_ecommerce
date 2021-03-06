@@ -8,8 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
-import 'package:e_commerce_app/constants/color_constant.dart';
-
 import 'package:e_commerce_app/views/screens/login/widgets/facebook_login_btn.dart';
 import 'package:e_commerce_app/views/screens/login/widgets/google_login_btn.dart';
 import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
@@ -41,17 +39,19 @@ class _LoginFormState extends State<LoginForm> {
       listener: (context, state) {
         /// Success
         if (state.isSuccess) {
+          Navigator.pop(context);
           _authenticationBloc.add(LoggedIn());
         }
 
         /// Failure
         if (state.isFailure) {
+          Navigator.pop(context);
           MyDialog.showInformation(context, content: state.message);
         }
 
         /// Logging
         if (state.isSubmitting) {
-          showProcessing(context, state.message!);
+          MyDialog.showWating(context);
         }
       },
       child: BlocBuilder<LoginBloc, LoginState>(
@@ -71,11 +71,7 @@ class _LoginFormState extends State<LoginForm> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Login to your account',
-                      style: TextStyle(
-                        color: mPrimaryColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
+                      style: FONT_CONST.BOLD_PRIMARY_18,
                     ),
                   ),
                   SizedBox(height: getProportionateScreenHeight(10)),
@@ -153,7 +149,10 @@ class _LoginFormState extends State<LoginForm> {
 
   _buildButtonLogin(LoginState state) {
     return DefaultButton(
-      child: Text('Login'.toUpperCase(), style: mPrimaryFontStyle),
+      child: Text(
+        'Login'.toUpperCase(),
+        style: FONT_CONST.BOLD_WHITE_18,
+      ),
       onPressed: () {
         if (isLoginButtonEnabled()) {
           _loginBloc.add(LoginWithCredential(
@@ -177,7 +176,7 @@ class _LoginFormState extends State<LoginForm> {
           child: Container(
             color: Colors.white,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 0),
               child: Text('Or'),
             ),
           ),
@@ -213,7 +212,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
             child: Text(
               'Register',
-              style: TextStyle(color: mPrimaryColor),
+              style: FONT_CONST.REGULAR_PRIMARY,
             ),
           ),
         ],

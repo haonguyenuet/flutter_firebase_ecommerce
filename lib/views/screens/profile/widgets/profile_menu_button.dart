@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -33,7 +34,7 @@ class ProfileMenuButton extends StatelessWidget {
               width: 22,
             ),
             SizedBox(width: 20),
-            Expanded(child: Text(text, style: TextStyle(color: mTextColor))),
+            Expanded(child: Text(text, style: FONT_CONST.MEDIUM_DEFAULT)),
             Icon(Icons.arrow_forward_ios, color: mTextColor),
           ],
         ),

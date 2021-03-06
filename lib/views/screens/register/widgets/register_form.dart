@@ -43,17 +43,19 @@ class _RegisterFormState extends State<RegisterForm> {
       listener: (context, state) {
         /// Success
         if (state.isSuccess) {
+          Navigator.pop(context);
           _authenticationBloc.add(LoggedIn());
         }
 
         /// Failure
         if (state.isFailure) {
-            MyDialog.showInformation(context, content: state.message);
+          Navigator.pop(context);
+          MyDialog.showInformation(context, content: state.message);
         }
 
         /// Registering
         if (state.isSubmitting) {
-          showProcessing(context, state.message!);
+          MyDialog.showWating(context);
         }
       },
       child: BlocBuilder<RegisterBloc, RegisterState>(
@@ -73,11 +75,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Register with email and password',
-                      style: TextStyle(
-                        color: mPrimaryColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
+                      style: FONT_CONST.BOLD_PRIMARY_18,
                     ),
                   ),
                   SizedBox(height: getProportionateScreenHeight(20)),
@@ -183,7 +181,7 @@ class _RegisterFormState extends State<RegisterForm> {
     return DefaultButton(
       child: Text(
         'Register'.toUpperCase(),
-        style: mPrimaryFontStyle,
+        style: FONT_CONST.BOLD_WHITE_18,
       ),
       onPressed: () {
         if (isRegisterButtonEnabled()) {
@@ -217,7 +215,7 @@ class _RegisterFormState extends State<RegisterForm> {
             ),
             child: Text(
               'Sign in',
-              style: TextStyle(color: mPrimaryColor),
+              style: FONT_CONST.REGULAR_PRIMARY,
             ),
           ),
         ],

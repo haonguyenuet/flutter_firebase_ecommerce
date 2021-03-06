@@ -1,8 +1,6 @@
 import 'package:e_commerce_app/views/widgets/others/logo.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
-import 'package:e_commerce_app/constants/color_constant.dart';
 
 class SplashScreen extends StatelessWidget {
   @override
@@ -17,7 +15,7 @@ class SplashScreen extends StatelessWidget {
             children: [
               Logo(),
               SizedBox(height: 10),
-              SpinKitDualRing(color: mPrimaryColor),
+              CircularProgressIndicator(),
             ],
           ),
         ),

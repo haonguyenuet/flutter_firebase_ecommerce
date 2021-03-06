@@ -13,6 +13,7 @@ void showProcessing(BuildContext context, String content) {
     ..hideCurrentSnackBar()
     ..showSnackBar(
       SnackBar(
+        duration: Duration(milliseconds: 1),
         content: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[

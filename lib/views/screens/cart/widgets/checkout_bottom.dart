@@ -1,11 +1,9 @@
 import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
 import 'package:e_commerce_app/configs/router.dart';
-import 'package:e_commerce_app/constants/style_constant.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_dialog.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
-import 'package:e_commerce_app/constants/color_constant.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -69,7 +67,7 @@ class CheckoutBottom extends StatelessWidget {
 
   _buildCheckoutButton(CartState state, BuildContext context) {
     return DefaultButton(
-      child: Text("Check Out", style: mPrimaryFontStyle),
+      child: Text("Check Out", style: FONT_CONST.BOLD_WHITE_18),
       onPressed: () {
         if (state is CartLoaded && state.cart.length > 0) {
           Navigator.pushNamed(context, AppRouter.PAYMENT);
@@ -87,12 +85,12 @@ class CheckoutBottom extends StatelessWidget {
     String totalPrice = formatNumber(state.totalCartPrice);
     return Text.rich(
       TextSpan(
-        style: TextStyle(color: mSecondaryColor, fontSize: 16),
+        style: FONT_CONST.REGULAR_DEFAULT_16,
         children: [
           TextSpan(text: "Total:\n"),
           TextSpan(
             text: "$totalPrice₫",
-            style: TextStyle(fontSize: 18, color: mPrimaryColor),
+            style: FONT_CONST.REGULAR_PRIMARY_18,
           ),
         ],
       ),

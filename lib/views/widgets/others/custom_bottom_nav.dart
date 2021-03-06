@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/constants/style_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -114,14 +115,7 @@ class BottomMenuButton extends StatelessWidget {
               color: isSelected ? mPrimaryColor : mSecondaryColor,
             ),
             SizedBox(width: 5),
-            if (isSelected)
-              Text(
-                buttonName,
-                style: TextStyle(
-                  color: mPrimaryColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              )
+            if (isSelected) Text(buttonName, style: FONT_CONST.BOLD_PRIMARY)
           ],
         ),
       ),

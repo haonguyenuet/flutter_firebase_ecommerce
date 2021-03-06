@@ -14,8 +14,9 @@ class HomeBanner extends StatefulWidget {
 
 class _HomeBannerState extends State<HomeBanner> {
   List<BannerItem> get banners => widget.banners;
+  final double aspectRatioBanner = 2 / 1;
   // local states
-  final aspectRatioBanner = 2 / 1;
+
   var currentIndex = 0;
 
   @override
@@ -38,9 +39,7 @@ class _HomeBannerState extends State<HomeBanner> {
               autoPlayCurve: Curves.linearToEaseOut,
               enlargeCenterPage: true,
               onPageChanged: (index, reason) {
-                setState(() {
-                  currentIndex = index;
-                });
+                setState(() => currentIndex = index);
               },
             ),
             items: banners.map((banner) {

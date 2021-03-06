@@ -13,17 +13,20 @@ class CategoriesLoading extends AllProductsState {}
 
 /// Adready categories data
 class CategoriesLoaded extends AllProductsState {
-  final List<Category>? categories;
-  final int? selectedCategoryIndex;
+  final List<Category> categories;
+  final int selectedCategoryIndex;
 
-  CategoriesLoaded({this.categories, this.selectedCategoryIndex});
+  CategoriesLoaded({
+    required this.categories,
+    required this.selectedCategoryIndex,
+  });
 
   @override
   List<Object?> get props => [categories];
 
   @override
   String toString() {
-    return 'CategoriesLoaded{response: ${categories!.length}}';
+    return 'CategoriesLoaded{response: ${categories.length}}';
   }
 }
 

@@ -1,10 +1,10 @@
 import 'package:e_commerce_app/business_logic/entities/feedback_item.dart';
 import 'package:e_commerce_app/business_logic/entities/user.dart';
 import 'package:e_commerce_app/business_logic/repository/user_repository/firebase_user_repo.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class FeedbackCard extends StatelessWidget {
   const FeedbackCard({
@@ -80,14 +80,11 @@ class FeedbackCard extends StatelessWidget {
   _buildFeedbackContent() {
     return Text(
       "${feedbackItem.content}",
-      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+      style: FONT_CONST.BOLD_DEFAULT_16,
     );
   }
 
   _buildCreatedDate() {
-    return Text(
-      "${formatTimeStamp(feedbackItem.timestamp!)}",
-      style: TextStyle(fontSize: 13),
-    );
+    return Text("${formatTimeStamp(feedbackItem.timestamp!)}");
   }
 }

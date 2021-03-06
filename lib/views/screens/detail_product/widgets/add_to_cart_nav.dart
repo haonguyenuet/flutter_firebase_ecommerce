@@ -2,6 +2,7 @@ import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:e_commerce_app/configs/router.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,14 +67,7 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
         ),
 
         /// Display the quantity of product
-        Text(
-          "$quantity",
-          style: TextStyle(
-            color: mPrimaryColor,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        Text("$quantity", style: FONT_CONST.BOLD_PRIMARY_16),
 
         /// Button increases the quantity of product
         Container(

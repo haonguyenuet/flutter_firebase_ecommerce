@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/constants/color_constant.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 /// A section
@@ -65,18 +65,11 @@ class SectionTitle extends StatelessWidget {
         children: [
           Text(
             title.toUpperCase(),
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: FONT_CONST.BOLD_DEFAULT_18,
           ),
           // See more button
           InkWell(
-            child: Text(
-              'See all',
-              style: TextStyle(
-                fontSize: 14,
-                color: mPrimaryColor,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            child: Text('See all', style: FONT_CONST.BOLD_PRIMARY),
             onTap: handleOnTap,
           )
         ],

@@ -18,7 +18,7 @@ class ProfilePic extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      clipBehavior: Clip.antiAlias,
+      clipBehavior: Clip.none,
       children: [
         Container(
           height: 150,
@@ -29,9 +29,9 @@ class ProfilePic extends StatelessWidget {
           ),
           child: CircleAvatar(
             backgroundImage: loggedUser.avatar!.isNotEmpty
-                    ? NetworkImage(loggedUser.avatar!)
-                    : AssetImage("assets/images/default_avatar.jpg")
-                as ImageProvider<Object>,
+                ? NetworkImage(loggedUser.avatar!)
+                : AssetImage("assets/images/default_avatar.jpg")
+                    as ImageProvider<Object>,
           ),
         ),
         Positioned(

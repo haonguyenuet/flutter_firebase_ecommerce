@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/views/screens/feedback/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,29 +47,25 @@ class _HeaderState extends State<Header> {
               children: [
                 Text(
                   "${state.feedbackResponse.rating}",
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                  style: FONT_CONST.BOLD_WHITE_26,
                 ),
-                // RatingBar.builder(
-                //   initialRating: state.feedbackResponse.rating!,
-                //   minRating: 1,
-                //   allowHalfRating: true,
-                //   itemCount: 5,
-                //   itemSize: 26,
-                //   unratedColor: mAccentShadeColor,
-                //   itemBuilder: (context, _) => Icon(
-                //     Icons.star,
-                //     color: Colors.amber,
-                //   ),
-                //   onRatingUpdate: null,
-                // ),
+                RatingBar.builder(
+                  initialRating: state.feedbackResponse.rating!,
+                  minRating: 1,
+                  allowHalfRating: true,
+                  itemCount: 5,
+                  itemSize: 26,
+                  unratedColor: mAccentShadeColor,
+                  itemBuilder: (context, _) => Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate: (value) {},
+                ),
                 const SizedBox(height: 15),
                 Text(
                   "${state.feedbackResponse.numberOfFeedbacks} nhận xét",
-                  style: TextStyle(fontSize: 14, color: Colors.white),
+                  style: FONT_CONST.MEDIUM_WHITE,
                 ),
               ],
             ),
@@ -154,7 +151,7 @@ class StarButton extends StatelessWidget {
           children: [
             Text(
               "$numberOfStars",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              style: FONT_CONST.BOLD_DEFAULT,
             ),
             const SizedBox(width: 5),
             Icon(

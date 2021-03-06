@@ -39,7 +39,6 @@ class _ToolBarState extends State<ToolBar> {
       builder: (context, state) {
         if (state is UpdateToolbarState) {
           return Container(
-            padding: EdgeInsets.only(top: 10),
             color: mDarkShadeColor,
             child: Row(
               children: <Widget>[
@@ -103,22 +102,14 @@ class _ToolBarState extends State<ToolBar> {
           textInputAction: TextInputAction.search,
           decoration: InputDecoration(
             hintText: 'Search',
-            contentPadding: EdgeInsets.only(top: 0),
+            contentPadding: EdgeInsets.all(0),
             prefixIcon: Icon(Icons.search),
             border: InputBorder.none,
-            hintStyle: TextStyle(color: Colors.grey),
           ),
         ),
       );
     } else
-      return Text(
-        'All Products',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-        ),
-      );
+      return Text('All Products', style: FONT_CONST.BOLD_WHITE_20);
   }
 
   _openSortOptionsDialog(BuildContext context, OpenSortOption state) async {

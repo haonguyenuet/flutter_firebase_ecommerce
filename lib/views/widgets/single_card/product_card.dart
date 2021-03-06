@@ -3,6 +3,7 @@ import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:e_commerce_app/views/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +36,8 @@ class ProductCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
-                offset: Offset(0, 2),
-                blurRadius: 6,
+                offset: Offset(0, 0.5),
+                blurRadius: 5,
                 color: mDarkShadeColor.withOpacity(0.2),
               ),
             ],
@@ -66,7 +67,7 @@ class ProductCard extends StatelessWidget {
   }
 
   _buildProductName() =>
-      Text(product.name, style: TextStyle(fontSize: 13), maxLines: 2);
+      Text(product.name, style: FONT_CONST.REGULAR_DEFAULT, maxLines: 2);
 
   _buildPriceAndAvailable() {
     return Row(
@@ -74,10 +75,7 @@ class ProductCard extends StatelessWidget {
       children: [
         Text(
           "${formatNumber(product.originalPrice)}₫",
-          style: TextStyle(
-            color: mPrimaryColor,
-            fontSize: 14,
-          ),
+          style: FONT_CONST.REGULAR_PRIMARY,
         ),
         Container(
           padding: EdgeInsets.all(5),
@@ -106,7 +104,7 @@ class ProductCard extends StatelessWidget {
             TextSpan(text: "Đã bán:"),
             TextSpan(
               text: " ${product.soldQuantity}",
-              style: TextStyle(fontSize: 13, color: mPrimaryColor),
+              style: FONT_CONST.MEDIUM_PRIMARY,
             ),
             TextSpan(text: " sản phẩm"),
           ],

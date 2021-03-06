@@ -16,8 +16,8 @@ class Categories extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is CategoriesLoaded) {
-          var _categories = state.categories;
-          var _selectedCategoryIndex = state.selectedCategoryIndex;
+          List<Category> _categories = state.categories;
+          int _selectedCategoryIndex = state.selectedCategoryIndex;
           return ListCategory(
             categories: _categories,
             selectedCategoryIndex: _selectedCategoryIndex,
@@ -31,13 +31,13 @@ class Categories extends StatelessWidget {
 
 /// List category
 class ListCategory extends StatefulWidget {
-  final List<Category>? categories;
-  final int? selectedCategoryIndex;
+  final List<Category> categories;
+  final int selectedCategoryIndex;
 
   const ListCategory({
     Key? key,
     required this.categories,
-    this.selectedCategoryIndex,
+    required this.selectedCategoryIndex,
   }) : super(key: key);
 
   @override
@@ -57,26 +57,27 @@ class _ListCategoryState extends State<ListCategory> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
-      margin: EdgeInsets.only(bottom: 0),
       padding: EdgeInsets.symmetric(vertical: 5),
       color: mDarkShadeColor,
-      child: ListView.builder(
+      child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        itemCount: widget.categories!.length,
-        itemBuilder: (context, index) {
-          return CategoryCard(
-            category: categories![index],
-            isActive: index == selectedIndex,
-            onPressed: () {
-              BlocProvider.of<AllProductsBloc>(context)
-                  .add(CategoryChanged(categories![index]));
-              setState(() {
-                selectedIndex = index;
-              });
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: List.generate(
+            categories!.length,
+            (index) {
+              return CategoryCard(
+                category: categories![index],
+                isActive: index == selectedIndex,
+                onPressed: () {
+                  BlocProvider.of<AllProductsBloc>(context)
+                      .add(CategoryChanged(categories![index]));
+                  setState(() => selectedIndex = index);
+                },
+              );
             },
-          );
-        },
+          ),
+        ),
       ),
     );
   }

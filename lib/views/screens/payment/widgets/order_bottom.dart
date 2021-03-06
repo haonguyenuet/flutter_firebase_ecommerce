@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
-import 'package:e_commerce_app/constants/style_constant.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
@@ -59,7 +59,7 @@ class OrderBottom extends StatelessWidget {
 
                 /// Checkout button
                 DefaultButton(
-                  child: Text("Order", style: mPrimaryFontStyle),
+                  child: Text("Order", style: FONT_CONST.BOLD_WHITE_18),
                   onPressed: () {},
                 ),
               ],

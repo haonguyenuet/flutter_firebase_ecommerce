@@ -18,7 +18,10 @@ class MyDialog {
         content: Text(content!),
         actions: <Widget>[
           TextButton(
-            child: Text('Close'),
+            child: Text(
+              'Close',
+              style: TextStyle(color: mPrimaryColor),
+            ),
             onPressed: () => Navigator.of(context).pop(),
           )
         ],
@@ -28,9 +31,14 @@ class MyDialog {
 
   static showWating(BuildContext context) {
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
-        content: Text("Wating..."),
+        content: Container(
+          height: 150,
+          alignment: Alignment.center,
+          child: CircularProgressIndicator(),
+        ),
       ),
     );
   }
@@ -51,12 +59,19 @@ class MyDialog {
         content: Text(content!),
         actions: <Widget>[
           TextButton(
-            child: Text('Cancel'),
+            child: Text(
+              'Cancel',
+              style: TextStyle(color: mPrimaryColor),
+            ),
             onPressed: () => Navigator.pop(context, false),
           ),
           TextButton(
-            child: Text(confirmButtonText),
+            child: Text(
+              confirmButtonText,
+              style: TextStyle(color: Colors.white),
+            ),
             onPressed: () => Navigator.pop(context, true),
+            style: TextButton.styleFrom(backgroundColor: mPrimaryColor),
           ),
         ],
       ),

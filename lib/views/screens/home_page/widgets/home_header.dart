@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/configs/router.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/views/widgets/buttons/cart_button.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
@@ -10,37 +11,36 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     final size = MediaQuery.of(context).size;
-    final percentOffset = shrinkOffset / _maxHeaderExtent;
-    var rangeSearchFieldWidth = (1 - percentOffset).clamp(0.9, 1);
-    return Container(
-      color: mDarkShadeColor,
+    final offsetPercent = shrinkOffset / _maxHeaderExtent;
+    var rangeSearchFieldWidth = (1 - offsetPercent).clamp(0.9, 1);
+    return AnimatedContainer(
+      duration: mAnimationDuration,
+      color: offsetPercent == 1 ? Colors.white : mDarkShadeColor,
       child: Stack(
         children: [
           Positioned(
             top: 15,
-            left: size.width * 0.5 - 50,
+            left: 15,
+            right: 15,
             height: 40,
-            child: AnimatedOpacity(
-              opacity: percentOffset > 0.1 ? 0 : 1,
-              duration: Duration(seconds: 1),
-              child: Text(
-                "Peachy",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
+            child: Row(
+              children: [
+                AnimatedOpacity(
+                  opacity: offsetPercent > 0.1 ? 0 : 1,
+                  duration: Duration(seconds: 1),
+                  child: Text(
+                    "Peachy",
+                    style: FONT_CONST.BOLD_WHITE_26,
+                  ),
                 ),
-              ),
+                Spacer(),
+                CartButton(
+                  color: offsetPercent == 1 ? mTextColor : Colors.white,
+                )
+              ],
             ),
           ),
           Positioned(
-            top: 15,
-            right: 15,
-            height: 40,
-            child: CartButton(),
-          ),
-          AnimatedPositioned(
-            duration: Duration(microseconds: 200),
             bottom: 15,
             left: 0,
             height: 40,
@@ -57,7 +57,7 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: "What do you search today?",
-                  contentPadding: EdgeInsets.only(top: 2),
+                  contentPadding: EdgeInsets.only(top: 3),
                   prefixIcon: Icon(Icons.search),
                 ),
               ),

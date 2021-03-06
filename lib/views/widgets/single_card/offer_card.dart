@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:e_commerce_app/configs/size_config.dart';
@@ -21,7 +22,7 @@ class SpecialOfferCard extends StatelessWidget {
     return GestureDetector(
       onTap: handleOnTap as void Function()?,
       child: Container(
-        margin: EdgeInsets.only(left: getProportionateScreenWidth(20)),
+        margin: EdgeInsets.only(left: 20),
         height: getProportionateScreenWidth(110),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
@@ -29,7 +30,7 @@ class SpecialOfferCard extends StatelessWidget {
             children: [
               Image.asset(
                 imageLink,
-                fit: BoxFit.cover,
+                fit: BoxFit.contain,
               ),
               Container(
                 decoration: BoxDecoration(
@@ -43,21 +44,12 @@ class SpecialOfferCard extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: Text.rich(
-                  TextSpan(
-                    style: TextStyle(color: Colors.white),
-                    children: [
-                      TextSpan(
-                        text: "$offerName\n",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
+              Positioned(
+                top: 10,
+                left: 20,
+                child: Text(
+                  "$offerName\n",
+                  style: FONT_CONST.BOLD_WHITE_26,
                 ),
               ),
             ],

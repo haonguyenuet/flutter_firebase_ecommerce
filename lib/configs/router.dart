@@ -39,8 +39,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => SplashScreen());
       case LOGIN:
         return MaterialPageRoute(builder: (_) => LoginScreen());
-      case FORGOT_PASSWORD:
-        return MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
+      // case FORGOT_PASSWORD:
+      //   return MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
       case INITIALIZE_INFO:
         return MaterialPageRoute(builder: (_) => InitializeInfoScreen());
       case REGISTER:

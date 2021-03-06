@@ -2,6 +2,7 @@ import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
 import 'package:e_commerce_app/business_logic/repository/product_repository/firebase_product_repo.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
 
 import 'package:e_commerce_app/views/widgets/buttons/circle_icon_button.dart';
@@ -83,7 +84,7 @@ class CartItemCard extends StatelessWidget {
         // Product Name
         Text(
           "${product.name}",
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          style: FONT_CONST.MEDIUM_DEFAULT_16,
           maxLines: 1,
         ),
 
@@ -92,7 +93,7 @@ class CartItemCard extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 5),
           child: Text(
             "${formatNumber(product.originalPrice)} ₫",
-            style: TextStyle(color: mPrimaryColor, fontSize: 17),
+            style: FONT_CONST.REGULAR_PRIMARY_18,
           ),
         ),
 
@@ -111,7 +112,7 @@ class CartItemCard extends StatelessWidget {
         CircleIconButton(
           svgIcon: "assets/icons/subtract.svg",
           color: Color(0xFFF5F6F9),
-          size: 14,
+          size: 12,
           onPressed: cartItem.quantity > 1
               ? () => _changeQuantity(context, product, cartItem.quantity - 1)
               : () {},
@@ -120,21 +121,14 @@ class CartItemCard extends StatelessWidget {
         // Quantity
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Text(
-            "${cartItem.quantity}",
-            style: TextStyle(
-              color: mPrimaryColor,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          child: Text("${cartItem.quantity}", style: FONT_CONST.BOLD_PRIMARY),
         ),
 
         // Increase button
         CircleIconButton(
           svgIcon: "assets/icons/add.svg",
           color: Color(0xFFF5F6F9),
-          size: 14,
+          size: 12,
           onPressed: cartItem.quantity < product.quantity
               ? () => _changeQuantity(context, product, cartItem.quantity + 1)
               : () {},

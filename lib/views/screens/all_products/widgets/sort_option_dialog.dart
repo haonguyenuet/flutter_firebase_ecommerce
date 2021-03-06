@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_dialog.dart';
 import 'package:e_commerce_app/views/screens/all_products/bloc/bloc.dart';
@@ -27,14 +26,7 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text(
-        "Sort options",
-        style: TextStyle(
-          color: mPrimaryColor,
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
+      title: Text("Sort options", style: FONT_CONST.BOLD_PRIMARY_18),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -103,7 +95,7 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
                   );
                 }
               },
-              child: Text("Select", style: mPrimaryFontStyle),
+              child: Text("Select", style: FONT_CONST.BOLD_WHITE_18),
             )
           ],
         ),

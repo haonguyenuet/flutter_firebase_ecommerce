@@ -49,7 +49,7 @@ class LoginSuccessScreen extends StatelessWidget {
     return SizedBox(
       width: SizeConfig.screenWidth * 0.6,
       child: DefaultButton(
-        child: Text("Back to home", style: mPrimaryFontStyle),
+        child: Text("Back to home", style: FONT_CONST.BOLD_WHITE_18),
         onPressed: () {
           Navigator.pushNamedAndRemoveUntil(
             context,
@@ -68,16 +68,12 @@ class LoginSuccessScreen extends StatelessWidget {
           var loggedUser = state.loggedUser;
           return Text.rich(
             TextSpan(
-              style: TextStyle(
-                color: mSecondaryColor,
-                fontSize: getProportionateScreenWidth(20),
-                fontWeight: FontWeight.bold,
-              ),
+              style: FONT_CONST.BOLD_DEFAULT_20,
               children: [
                 TextSpan(text: "Hello, "),
                 TextSpan(
                   text: "${loggedUser.name}",
-                  style: TextStyle(color: mPrimaryColor),
+                  style: FONT_CONST.BOLD_PRIMARY_20,
                 )
               ],
             ),
