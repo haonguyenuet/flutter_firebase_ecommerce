@@ -19,10 +19,11 @@ class RelatedProductsBloc
     if (event is LoadRelatedProducts) {
       try {
         var products = await _productRepository.getProductsByCategory(
-          event.categoryId,
+          event.product.categoryId,
         );
-        final relatedProducts =
-            products.where((product) => product.id != event.pid).toList();
+        final relatedProducts = products
+            .where((product) => product.id != event.product.id)
+            .toList();
         yield RelatedProductsLoaded(relatedProducts: relatedProducts);
       } catch (e) {
         yield RelatedProductsLoadFailure(e.toString());

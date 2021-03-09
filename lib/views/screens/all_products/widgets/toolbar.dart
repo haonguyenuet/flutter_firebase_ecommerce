@@ -21,7 +21,7 @@ class _ToolBarState extends State<ToolBar> {
       final keyword = _searchController.text;
       if (keyword.isNotEmpty) {
         BlocProvider.of<AllProductsBloc>(context)
-            .add(SearchQueryChanged(keyword: keyword));
+            .add(SearchQueryChanged(keyword));
       }
     });
   }
@@ -40,6 +40,7 @@ class _ToolBarState extends State<ToolBar> {
         if (state is UpdateToolbarState) {
           return Container(
             color: mDarkShadeColor,
+            padding: EdgeInsets.symmetric(vertical: 5),
             child: Row(
               children: <Widget>[
                 _buildLeading(context),

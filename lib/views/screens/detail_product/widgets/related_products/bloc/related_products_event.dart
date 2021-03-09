@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class RelatedProductsEvent extends Equatable {
@@ -6,11 +7,10 @@ abstract class RelatedProductsEvent extends Equatable {
 
 /// When user clicks to a specific product => load related products
 class LoadRelatedProducts extends RelatedProductsEvent {
-  final String pid;
-  final String categoryId;
+  final Product product;
 
-  LoadRelatedProducts(this.pid, this.categoryId);
-  
+  LoadRelatedProducts(this.product);
+
   @override
-  List<Object> get props => [pid, categoryId];
+  List<Object> get props => [product];
 }

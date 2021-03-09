@@ -6,18 +6,16 @@ import 'package:e_commerce_app/business_logic/repository/repository.dart';
 import 'package:e_commerce_app/business_logic/repository/storage_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   UserRepository _userRepository;
   StorageRepository _storageRepository;
-  StreamSubscription? _userProfileSubscription;
+  StreamSubscription? _profileStreamSub;
   UserModel? _loggedUser;
 
   ProfileBloc({
     required UserRepository userRepository,
     required StorageRepository storageRepository,
-  })  :
-        _userRepository = userRepository,
+  })   : _userRepository = userRepository,
         _storageRepository = storageRepository,
         super(ProfileLoading());
 
@@ -27,49 +25,91 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       yield* _mapLoadProfileToState(event);
     } else if (event is UploadAvatar) {
       yield* _mapUploadAvatarToState(event);
+    } else if (event is AddressListChanged) {
+      yield* _mapAddressListChangedToState(event);
     } else if (event is ProfileUpdated) {
       yield* _mapProfileUpdatedToState(event);
     }
   }
 
+  ///
   Stream<ProfileState> _mapLoadProfileToState(LoadProfile event) async* {
     try {
-      _userProfileSubscription?.cancel();
-      _userProfileSubscription = _userRepository
-          .loggedUserStream(event.loggedFirebaseUser)!
+      _profileStreamSub?.cancel();
+      _profileStreamSub = _userRepository
+          .loggedUserStream(event.loggedFirebaseUser)
           .listen((user) => add(ProfileUpdated(user)));
     } catch (e) {
-      print(e);
       yield ProfileLoadFailure(e.toString());
     }
   }
 
+  ///
   Stream<ProfileState> _mapUploadAvatarToState(UploadAvatar event) async* {
     try {
+      // Get image url from firebase storage
       String imageUrl = await _storageRepository.uploadImage(
         "users/profile/${_loggedUser!.id}",
         event.imageFile,
       );
+      // Clone logged user with updated avatar
       var updatedUser = _loggedUser!.cloneWith(avatar: imageUrl);
-      // Update user avatar
+      // Update user's avatar
       await _userRepository.updateUserData(updatedUser);
     } catch (e) {}
   }
 
+  ///
+  Stream<ProfileState> _mapAddressListChangedToState(
+      AddressListChanged event) async* {
+    try {
+      // Get current addresses
+      var addresses = List<DeliveryAddress>.from(_loggedUser!.addresses!);
+      if (event.deliveryAddress.isDefault) {
+        addresses =
+            addresses.map((item) => item.cloneWith(isDefault: false)).toList();
+      }
+      // Check method
+      switch (event.method) {
+        case ListMethod.ADD:
+          addresses.add(event.deliveryAddress);
+          break;
+        case ListMethod.DELETE:
+          addresses.remove(event.deliveryAddress);
+          break;
+        case ListMethod.UPDATE:
+          addresses = addresses.map((e) {
+            if (e.id == event.deliveryAddress.id) {
+              return event.deliveryAddress;
+            }
+            return e;
+          }).toList();
+          break;
+        default:
+      }
+      // Clone logged user with updated addresses
+      var updatedUser = _loggedUser!.cloneWith(addresses: addresses);
+      // Update user's addresses
+      await _userRepository.updateUserData(updatedUser);
+    } catch (e) {}
+  }
+
+  ///
   Stream<ProfileState> _mapProfileUpdatedToState(ProfileUpdated event) async* {
     try {
       _loggedUser = event.updatedUser;
       yield ProfileLoaded(event.updatedUser);
     } catch (e) {
-      print(e);
       yield ProfileLoadFailure(e.toString());
     }
   }
 
   @override
   Future<void> close() {
-    _userProfileSubscription?.cancel();
+    _profileStreamSub?.cancel();
     _loggedUser = null;
     return super.close();
   }
 }
+
+enum ListMethod { ADD, DELETE, UPDATE }

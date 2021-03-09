@@ -63,9 +63,22 @@ class _ProductInfoState extends State<ProductInfo> {
   _price() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15),
-      child: Text(
-        "${formatNumber(product.originalPrice)}₫",
-        style: FONT_CONST.MEDIUM_PRIMARY_24,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "${formatNumber(product.price)}₫",
+            style: FONT_CONST.MEDIUM_PRIMARY_24,
+          ),
+          if (product.percentOff > 0)
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              child: Text(
+                "${formatNumber(product.originalPrice)}₫",
+                style: TextStyle(decoration: TextDecoration.lineThrough),
+              ),
+            ),
+        ],
       ),
     );
   }

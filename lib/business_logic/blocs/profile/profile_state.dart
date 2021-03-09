@@ -17,7 +17,7 @@ class ProfileLoaded extends ProfileState {
 
   @override
   String toString() {
-    return "{ProfileLoaded: loggedUser:${this.loggedUser}}";
+    return "{ProfileLoaded: loggedUser:${this.loggedUser.toString()}}";
   }
 }
 
@@ -26,8 +26,5 @@ class ProfileLoadFailure extends ProfileState {
 
   ProfileLoadFailure(this.error);
 
-  @override
-  String toString() {
-    return "{ProfileLoadFailure: error:${this.error}}";
-  }
+  List<Object> get props => [error];
 }

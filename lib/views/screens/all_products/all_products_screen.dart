@@ -1,8 +1,8 @@
 import 'package:e_commerce_app/business_logic/entities/category.dart';
 import 'package:e_commerce_app/business_logic/repository/repository.dart';
 import 'package:e_commerce_app/views/screens/all_products/bloc/bloc.dart';
-import 'package:e_commerce_app/views/screens/all_products/widgets/categories.dart';
-import 'package:e_commerce_app/views/screens/all_products/widgets/list_products.dart';
+import 'package:e_commerce_app/views/screens/all_products/widgets/categories_tabs.dart';
+import 'package:e_commerce_app/views/screens/all_products/widgets/grid_products.dart';
 import 'package:e_commerce_app/views/screens/all_products/widgets/toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,8 +27,8 @@ class AllProductsScreen extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 ToolBar(),
-                Categories(),
-                Expanded(child: ListProducts()),
+                CategoriesTabs(),
+                Expanded(child: GridProducts()),
               ],
             ),
           ),

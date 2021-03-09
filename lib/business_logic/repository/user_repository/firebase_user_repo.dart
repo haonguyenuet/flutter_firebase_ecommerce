@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/business_logic/entities/user.dart';
+import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:e_commerce_app/business_logic/repository/user_repository/user_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -9,11 +9,11 @@ class FirebaseUserRepository implements UserRepository {
   /// Stream of logged user model
   /// [loggedFirebaseUser] is user of firebase auth
   /// Created by NDH
-  Stream<UserModel>? loggedUserStream(User? loggedFirebaseUser) {
+  Stream<UserModel> loggedUserStream(User loggedFirebaseUser) {
     return _userCollection
-        .doc(loggedFirebaseUser!.uid)
+        .doc(loggedFirebaseUser.uid)
         .snapshots()
-        .map((doc) => UserModel.fromMap(doc.id, doc.data()!));
+        .map((doc) => UserModel.fromMap(doc.data()!));
   }
 
   /// Get user by id
@@ -23,21 +23,62 @@ class FirebaseUserRepository implements UserRepository {
     return await _userCollection
         .doc(uid)
         .get()
-        .then((doc) => UserModel.fromMap(doc.id, doc.data()!))
+        .then((doc) => UserModel.fromMap(doc.data()!))
         .catchError((error) {});
   }
 
   /// Add new doc to users collection
   /// [user] is data of new user
   /// Created by NDH
-  Future<void> addUserData(UserModel user) async {
-    await _userCollection.doc(user.id).set(user.toMap());
+  Future<void> addUserData(UserModel newUser) async {
+    await _userCollection.doc(newUser.id).set(newUser.toMap());
   }
 
   /// Update a doc in users collection
   /// [user] is updated data of user
   /// Created by NDH
   Future<void> updateUserData(UserModel updatedUser) async {
-    await _userCollection.doc(updatedUser.id).update(updatedUser.toMap());
+    await _userCollection.doc(updatedUser.id).get().then((doc) async {
+      if (doc.exists) {
+        // update
+        await doc.reference.update(updatedUser.toMap());
+      }
+    }).catchError((error) {});
+  }
+
+  /// Get all delivery address
+  Stream<List<DeliveryAddress>> addressesStream(String uid) {
+    return _userCollection.doc(uid).collection("addresses").snapshots().map(
+        (snapshot) => snapshot.docs
+            .map((doc) => DeliveryAddress.fromMap(doc.data()!))
+            .toList());
+  }
+
+  /// Add item
+  /// Created by NDH
+  Future<void> addDeliveryAddress(
+    String uid,
+    DeliveryAddress deliveryAddress,
+  ) async {
+    await _userCollection
+        .doc(uid)
+        .collection("addresses")
+        .doc(deliveryAddress.id)
+        .set(deliveryAddress.toMap())
+        .catchError((error) {});
+  }
+
+  /// Remove item
+  /// Created by NDH
+  Future<void> removeDeliveryAddress(
+    String uid,
+    DeliveryAddress addressesItem,
+  ) async {
+    await _userCollection
+        .doc(uid)
+        .collection("addresses")
+        .doc(addressesItem.id)
+        .delete()
+        .catchError((error) {});
   }
 }

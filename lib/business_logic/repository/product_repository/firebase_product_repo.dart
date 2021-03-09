@@ -33,6 +33,21 @@ class FirebaseProductRepository implements ProductRepository {
         .catchError((error) {});
   }
 
+  /// Get discount product by percentOff
+  /// Created by NDH
+  @override
+  Future<List<Product>> getDiscountProducts() async {
+    return await productCollection
+        .orderBy("percentOff", descending: true)
+        .where("percentOff", isGreaterThan: 0)
+        .limit(10)
+        .get()
+        .then((snapshot) => snapshot.docs
+            .map((doc) => Product.fromMap(doc.id, doc.data()!))
+            .toList())
+        .catchError((error) {});
+  }
+
   /// Get products by category
   /// [categoryId] is id of category
   /// Created by NDH
@@ -76,11 +91,11 @@ class FirebaseProductRepository implements ProductRepository {
   @override
   Future<List<Category>> getCategories() async {
     return await FirebaseFirestore.instance
-            .collection("categories")
-            .get()
-            .then((snapshot) => snapshot.docs
-                .map((doc) => Category.fromMap(doc.id, doc.data()!))
-                .toList())
-            .catchError((err) {}) ;
+        .collection("categories")
+        .get()
+        .then((snapshot) => snapshot.docs
+            .map((doc) => Category.fromMap(doc.id, doc.data()!))
+            .toList())
+        .catchError((err) {});
   }
 }

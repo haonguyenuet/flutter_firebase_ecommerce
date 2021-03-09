@@ -1,20 +1,15 @@
-import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/views/widgets/buttons/cart_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class CustomAppBar extends StatelessWidget {
-  final Product product;
-
-  CustomAppBar({required this.product});
-
+class DetailProductAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
         child: Row(
           children: [
             _buildBackHomeButton(context),

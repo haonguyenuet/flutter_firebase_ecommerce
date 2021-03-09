@@ -33,7 +33,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       HomeResponse homeResponse = HomeResponse(
         banners: await _bannerRepository.getBanners(),
         categories: await _productRepository.getCategories(),
-        products: await _productRepository.getPopularProducts(),
+        popularProducts: await _productRepository.getPopularProducts(),
+        discountProducts: await _productRepository.getDiscountProducts(),
       );
       yield HomeLoaded(homeResponse: homeResponse);
     } catch (e) {
@@ -43,13 +44,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 }
 
 class HomeResponse {
-  final List<Product>? products;
-  final List<Category>? categories;
-  final List<BannerItem>? banners;
+  final List<Product> popularProducts;
+  final List<Product> discountProducts;
+  final List<Category> categories;
+  final List<BannerItem> banners;
 
   HomeResponse({
-    this.banners,
-    this.products,
-    this.categories,
+    required this.banners,
+    required this.popularProducts,
+    required this.categories,
+    required this.discountProducts,
   });
 }

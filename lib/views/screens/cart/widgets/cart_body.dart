@@ -20,12 +20,12 @@ class CartBody extends StatelessWidget {
                     itemCount: cart.length,
                     itemBuilder: (context, index) {
                       return Dismissible(
-                        key: Key(cart[index].pid),
+                        key: Key(cart[index].id),
                         direction: DismissDirection.endToStart,
                         onDismissed: (direction) {
                           // Remove this item from the cart
                           BlocProvider.of<CartBloc>(context)
-                              .add(RemoveCartItem(cart[index].pid));
+                              .add(RemoveCartItem(cart[index]));
                         },
                         background: Container(
                           padding: EdgeInsets.symmetric(horizontal: 40),

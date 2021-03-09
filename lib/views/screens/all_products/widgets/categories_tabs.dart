@@ -1,19 +1,14 @@
 import 'package:e_commerce_app/business_logic/entities/category.dart';
-import 'package:e_commerce_app/constants/color_constant.dart';
-import 'package:e_commerce_app/views/screens/all_products/bloc/all_products_bloc.dart';
-import 'package:e_commerce_app/views/screens/all_products/bloc/all_products_event.dart';
-import 'package:e_commerce_app/views/screens/all_products/bloc/all_products_state.dart';
-import 'package:e_commerce_app/views/widgets/custom_widgets.dart';
+import 'package:e_commerce_app/constants/constants.dart';
+import 'package:e_commerce_app/views/screens/all_products/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Categories extends StatelessWidget {
+class CategoriesTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AllProductsBloc, AllProductsState>(
-      buildWhen: (prevState, currState) {
-        return currState is CategoriesLoaded;
-      },
+      buildWhen: (prevState, currState) => currState is CategoriesLoaded,
       builder: (context, state) {
         if (state is CategoriesLoaded) {
           List<Category> _categories = state.categories;
@@ -45,7 +40,7 @@ class ListCategory extends StatefulWidget {
 }
 
 class _ListCategoryState extends State<ListCategory> {
-  List<Category>? get categories => widget.categories;
+  List<Category> get categories => widget.categories;
   int? selectedIndex;
 
   @override
@@ -58,26 +53,39 @@ class _ListCategoryState extends State<ListCategory> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 5),
-      color: mDarkShadeColor,
+      color: Colors.white,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: List.generate(
-            categories!.length,
-            (index) {
-              return CategoryCard(
-                category: categories![index],
-                isActive: index == selectedIndex,
-                onPressed: () {
-                  BlocProvider.of<AllProductsBloc>(context)
-                      .add(CategoryChanged(categories![index]));
-                  setState(() => selectedIndex = index);
-                },
-              );
-            },
+            categories.length,
+            (index) => _buildCategoryTab(context, categories[index], index),
           ),
         ),
+      ),
+    );
+  }
+
+  _buildCategoryTab(BuildContext context, Category category, int index) {
+    return GestureDetector(
+      onTap: () {
+        BlocProvider.of<AllProductsBloc>(context)
+            .add(CategoryChanged(category));
+        setState(() => selectedIndex = index);
+      },
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            child: Text("${category.name}", style: FONT_CONST.BOLD_DEFAULT_16),
+          ),
+          if (index == selectedIndex)
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(height: 3, width: 40, color: mPrimaryColor),
+            )
+        ],
       ),
     );
   }

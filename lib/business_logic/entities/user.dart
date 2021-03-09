@@ -1,65 +1,71 @@
+import 'package:e_commerce_app/business_logic/entities/delivery_address.dart';
 import 'package:equatable/equatable.dart';
 
 /// User model
 class UserModel extends Equatable {
+  /// The current user's id.
+  final String id;
+
   /// The current user's email address.
   final String email;
 
-  /// The current user's id.
-  final String? id;
-
   /// The current user's name (display name).
-  final String? name;
+  final String name;
 
   /// Url for the current user's photo.
-  final String? avatar;
-
-  /// The user's address
-  final List<dynamic>? address;
+  final String avatar;
 
   /// The user's phone number
-  final String? phoneNumber;
+  final String phoneNumber;
+
+  final List<DeliveryAddress>? addresses;
+
+  /// Get default address
+  DeliveryAddress get defaultAddress =>
+      addresses!.firstWhere((address) => address.isDefault);
 
   /// Constructor
   const UserModel({
     required this.email,
-    this.id,
-    this.address,
-    this.phoneNumber,
-    this.name,
-    this.avatar,
+    required this.id,
+    this.name = "",
+    this.avatar = "",
+    this.phoneNumber = "",
+    this.addresses,
   });
 
   /// Json data from server turns into model data
-  static UserModel fromMap(String id, Map<String, dynamic> data) {
+  static UserModel fromMap(Map<String, dynamic> data) {
     return UserModel(
-      id: id,
+      id: data["id"] ?? "",
       name: data["name"] ?? "",
+      email: data["email"] ?? "",
       avatar: data["avatar"] ?? "",
       phoneNumber: data["phoneNumber"] ?? "",
-      address: data["address"] ?? [],
-      email: data["email"] ?? 0 as String,
+      addresses: List<DeliveryAddress>.from(data["addresses"]!.map((item) {
+        return DeliveryAddress.fromMap(item);
+      })),
     );
   }
 
   /// From model data turns into json data => server
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> userData = {
+    return {
       "id": this.id,
       "email": this.email,
-      "address": this.address,
-      "phoneNumber": this.phoneNumber,
       "name": this.name,
       "avatar": this.avatar,
+      "phoneNumber": this.phoneNumber,
+      "addresses":
+          List<dynamic>.from(this.addresses!.map((item) => item.toMap()))
     };
-    return userData;
   }
 
   /// Clone and update
   UserModel cloneWith({
     email,
     id,
-    address,
+    addresses,
     phoneNumber,
     name,
     avatar,
@@ -67,25 +73,19 @@ class UserModel extends Equatable {
     return UserModel(
       email: email ?? this.email,
       id: id ?? this.id,
-      address: address ?? this.address,
       name: name ?? this.name,
       avatar: avatar ?? this.avatar,
       phoneNumber: phoneNumber ?? this.phoneNumber,
+      addresses: addresses ?? this.addresses,
     );
   }
 
-  /// Check user has all informations
-  bool isCompleteInfo() {
-    return this.name!.isNotEmpty &&
-        this.address!.isNotEmpty &&
-        this.phoneNumber!.isNotEmpty;
+  @override
+  String toString() {
+    return "UserModel:{email:${this.email},name:${this.name},phoneNumber:${this.phoneNumber},avatar:${this.avatar},addresses:${this.addresses}}";
   }
 
-  /// Represent to all category
-  static const empty =
-      UserModel(id: "", name: "", email: "", avatar: "", address: null);
-
-  /// Compare two users by uid
+  /// Compare two users
   @override
-  List<Object?> get props => [email, id, name, avatar];
+  List<Object?> get props => [email, id, name, avatar, phoneNumber, addresses];
 }

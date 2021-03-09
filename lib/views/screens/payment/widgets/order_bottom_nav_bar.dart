@@ -2,14 +2,12 @@ import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
-import 'package:e_commerce_app/constants/color_constant.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-class OrderBottom extends StatelessWidget {
-  const OrderBottom({
+class OrderBottomNavBar extends StatelessWidget {
+  const OrderBottomNavBar({
     Key? key,
   }) : super(key: key);
 
@@ -38,7 +36,6 @@ class OrderBottom extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                /// Total price
                 Row(
                   children: [
                     Container(
@@ -51,7 +48,9 @@ class OrderBottom extends StatelessWidget {
                       ),
                       child: SvgPicture.asset("assets/icons/receipt.svg"),
                     ),
-                    SizedBox(width: 15),
+                    SizedBox(width: 10),
+
+                    /// Total price
                     state is CartLoaded ? _buildTotalPrice(state) : Container(),
                   ],
                 ),
@@ -60,7 +59,7 @@ class OrderBottom extends StatelessWidget {
                 /// Checkout button
                 DefaultButton(
                   child: Text("Order", style: FONT_CONST.BOLD_WHITE_18),
-                  onPressed: () {},
+                  onPressed: () async {},
                 ),
               ],
             );
@@ -79,20 +78,20 @@ class OrderBottom extends StatelessWidget {
       children: [
         Text(
           "Total cost of goods: $totalPriceOfGoods₫",
-          style: TextStyle(fontSize: 16, color: mTextColor),
+          style: FONT_CONST.REGULAR_DEFAULT_16,
         ),
         Text(
           "Total delivery fee: $totalDeliveryFee₫",
-          style: TextStyle(fontSize: 16, color: mTextColor),
+          style: FONT_CONST.REGULAR_DEFAULT_16,
         ),
         Text.rich(
           TextSpan(
-            style: TextStyle(color: mSecondaryColor, fontSize: 16),
+            style: FONT_CONST.REGULAR_DEFAULT_16,
             children: [
               TextSpan(text: "Total: "),
               TextSpan(
                 text: "$totalPrice₫",
-                style: TextStyle(fontSize: 18, color: mPrimaryColor),
+                style: FONT_CONST.BOLD_PRIMARY_18,
               ),
             ],
           ),

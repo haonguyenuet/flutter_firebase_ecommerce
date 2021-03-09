@@ -15,7 +15,7 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
     var rangeSearchFieldWidth = (1 - offsetPercent).clamp(0.9, 1);
     return AnimatedContainer(
       duration: mAnimationDuration,
-      color: offsetPercent == 1 ? Colors.white : mDarkShadeColor,
+      color: offsetPercent > 0.2 ? Colors.white : mDarkShadeColor,
       child: Stack(
         children: [
           Positioned(
@@ -26,7 +26,7 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
             child: Row(
               children: [
                 AnimatedOpacity(
-                  opacity: offsetPercent > 0.1 ? 0 : 1,
+                  opacity: offsetPercent > 0.2 ? 0 : 1,
                   duration: Duration(seconds: 1),
                   child: Text(
                     "Peachy",
@@ -35,7 +35,7 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
                 ),
                 Spacer(),
                 CartButton(
-                  color: offsetPercent == 1 ? mTextColor : Colors.white,
+                  color: offsetPercent > 0.2 ? mTextColor : Colors.white,
                 )
               ],
             ),
@@ -54,6 +54,7 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
               child: TextField(
                 onTap: () =>
                     Navigator.pushNamed(context, AppRouter.ALL_PRODUCTS),
+                readOnly: true,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: "What do you search today?",

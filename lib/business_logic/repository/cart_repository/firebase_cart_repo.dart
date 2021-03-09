@@ -7,23 +7,18 @@ class FirebaseCartRepository implements CartRepository {
   var userCollection = FirebaseFirestore.instance.collection("users");
 
   /// Get all cart items
-  Stream<List<CartItem>>? cartStream(String uid) {
-    try {
-      return userCollection.doc(uid).collection("cart").snapshots().map(
-          (snapshot) => snapshot.docs
-              .map((doc) => CartItem.fromMap(doc.id, doc.data()!))
-              .toList());
-    } catch (e) {
-      print(e);
-    }
-    return null;
+  Stream<List<CartItem>> cartStream(String uid) {
+    return userCollection.doc(uid).collection("cart").snapshots().map(
+        (snapshot) => snapshot.docs
+            .map((doc) => CartItem.fromMap(doc.data()!))
+            .toList());
   }
 
   /// Add item
   /// Created by NDH
   Future<void> addCartItem(String uid, CartItem newItem) async {
     var userRef = userCollection.doc(uid);
-    await userRef.collection("cart").doc(newItem.pid).get().then((doc) async {
+    await userRef.collection("cart").doc(newItem.id).get().then((doc) async {
       if (doc.exists) {
         // old data + new data
         var quantity = doc.data()!["quantity"] + newItem.quantity;
@@ -42,11 +37,11 @@ class FirebaseCartRepository implements CartRepository {
 
   /// Remove item
   /// Created by NDH
-  Future<void> removeCartItem(String uid, String? cid) async {
+  Future<void> removeCartItem(String uid, CartItem cartItem) async {
     await userCollection
         .doc(uid)
         .collection("cart")
-        .doc(cid)
+        .doc(cartItem.id)
         .delete()
         .catchError((error) => print(error));
   }
@@ -69,13 +64,10 @@ class FirebaseCartRepository implements CartRepository {
   /// Created by NDH
   Future<void> updateCartItem(String uid, CartItem cartItem) async {
     var userRef = userCollection.doc(uid);
-    await userRef.collection("cart").doc(cartItem.pid).get().then((doc) async {
+    await userRef.collection("cart").doc(cartItem.id).get().then((doc) async {
       if (doc.exists) {
-        // old quantity + new quantity
-        var quantity = cartItem.quantity;
-        var price = cartItem.price;
         // update
-        await doc.reference.update({"quantity": quantity, "price": price});
+        await doc.reference.update(cartItem.toMap());
       }
     }).catchError((error) {
       print(error);

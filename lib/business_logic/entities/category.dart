@@ -2,47 +2,51 @@ import 'package:equatable/equatable.dart';
 
 /// Category model
 class Category extends Equatable {
-  final String cid;
+  final String id;
   final String name;
   final String? vietnameseName;
-  final String iconPath;
+  final String imageUrl;
 
   const Category({
-    required this.cid,
+    required this.id,
     required this.name,
     this.vietnameseName,
-    required this.iconPath,
+    required this.imageUrl,
   });
 
   /// Json data from server turns into model data
   static Category fromMap(String id, Map<String, dynamic> data) {
     return Category(
-      cid: id,
+      id: data["id"] ?? "",
       name: data["name"] ?? "",
       vietnameseName: data["vietnameseName"] ?? "",
-      iconPath: data["iconPath"] ?? "",
+      imageUrl: data["imageUrl"] ?? "",
     );
   }
 
   /// From model data turns into json data => server
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> categoryData = {
-      "cid": this.cid,
+    return {
+      "id": this.id,
       "name": this.name,
       "vietnameseName": this.vietnameseName,
-      "iconPath": this.iconPath,
+      "imageUrl": this.imageUrl,
     };
-    return categoryData;
   }
 
   /// Represent to all category
   static const all = Category(
-    cid: "default",
-    name: "All",
+    id: "default",
+    name: "All products",
     vietnameseName: "Tất cả",
-    iconPath: "assets/icons/all.svg",
+    imageUrl: "",
   );
 
   @override
-  List<Object?> get props => [this.cid];
+  String toString() {
+    return this.name;
+  }
+
+  @override
+  List<Object?> get props => [this.id];
 }

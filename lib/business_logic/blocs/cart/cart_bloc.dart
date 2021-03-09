@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CartBloc extends Bloc<CartEvent, CartState> {
   final CartRepository _cartRepository;
   User? _loggedFirebaseUser;
-  StreamSubscription? _cartSubscription;
+  StreamSubscription? _cartStreamSub;
 
   CartBloc({required CartRepository cartRepository})
       : _cartRepository = cartRepository,
@@ -34,9 +34,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   Stream<CartState> _mapLoadCartToState(LoadCart event) async* {
     try {
       _loggedFirebaseUser = event.loggedFirebaseUser;
-      _cartSubscription?.cancel();
-      _cartSubscription =
-          _cartRepository.cartStream(_loggedFirebaseUser!.uid)!.listen(
+      _cartStreamSub?.cancel();
+      _cartStreamSub =
+          _cartRepository.cartStream(_loggedFirebaseUser!.uid).listen(
                 (cart) => add(CartUpdated(cart)),
               );
     } catch (e) {
@@ -55,7 +55,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   Stream<CartState> _mapRemoveCartItemToState(RemoveCartItem event) async* {
     try {
-      await _cartRepository.removeCartItem(_loggedFirebaseUser!.uid, event.pid);
+      await _cartRepository.removeCartItem(
+        _loggedFirebaseUser!.uid,
+        event.cartItem,
+      );
     } catch (e) {
       print(e);
     }
@@ -64,7 +67,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   Stream<CartState> _mapUpdateCartItemToState(UpdateCartItem event) async* {
     try {
       await _cartRepository.updateCartItem(
-          _loggedFirebaseUser!.uid, event.cartItem);
+        _loggedFirebaseUser!.uid,
+        event.cartItem,
+      );
     } catch (e) {
       print(e);
     }
@@ -79,14 +84,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   Stream<CartState> _mapCartUpdatedToState(CartUpdated event) async* {
-    var sum = 0;
-    event.cart.forEach((c) => sum += c.price);
-    yield CartLoaded(event.cart, sum);
+    var totalCartPrice = 0;
+    event.cart.forEach((c) => totalCartPrice += c.price);
+    yield CartLoaded(event.cart, totalCartPrice);
   }
 
   @override
   Future<void> close() {
-    _cartSubscription?.cancel();
+    _cartStreamSub?.cancel();
     _loggedFirebaseUser = null;
     return super.close();
   }

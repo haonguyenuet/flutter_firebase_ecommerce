@@ -28,7 +28,7 @@ class ProductCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          padding: EdgeInsets.all(10),
           margin: EdgeInsets.all(10),
           width: 170,
           decoration: BoxDecoration(
@@ -42,13 +42,20 @@ class ProductCard extends StatelessWidget {
               ),
             ],
           ),
-          child: Wrap(
-            spacing: 5,
+          child: Stack(
+            clipBehavior: Clip.none,
             children: [
-              _buildProductImage(),
-              _buildProductName(),
-              _buildPriceAndAvailable(),
-              _buildSoldQuantity()
+              Wrap(
+                spacing: 5,
+                children: [
+                  _buildProductImage(),
+                  _buildProductName(),
+                  _buildPriceAndAvailable(),
+                  _buildSoldQuantity()
+                ],
+              ),
+              // Percent off
+              if (product.percentOff > 0) _buildPercentOff(),
             ],
           ),
         ),
@@ -74,7 +81,7 @@ class ProductCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          "${formatNumber(product.originalPrice)}₫",
+          "${formatNumber(product.price)}₫",
           style: FONT_CONST.REGULAR_PRIMARY,
         ),
         Container(
@@ -109,6 +116,23 @@ class ProductCard extends StatelessWidget {
             TextSpan(text: " sản phẩm"),
           ],
         ),
+      ),
+    );
+  }
+
+  _buildPercentOff() {
+    return Positioned(
+      top: -5,
+      right: -5,
+      child: Container(
+        alignment: Alignment.center,
+        height: 40,
+        width: 40,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: mPrimaryColor,
+        ),
+        child: Text("-${product.percentOff}%", style: FONT_CONST.BOLD_WHITE),
       ),
     );
   }

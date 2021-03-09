@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/views/screens/feedback/bloc/bloc.dart';
+import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class FeedbackState extends Equatable {
@@ -13,12 +13,14 @@ class FeedbacksLoading extends FeedbackState {}
 
 /// Feedbacks was loaded
 class FeedbacksLoaded extends FeedbackState {
-  final FeedbacksResponse feedbackResponse;
+  final List<FeedBack> feedbacks;
+  final double rating;
+  final int numberOfFeedbacks;
 
-  FeedbacksLoaded(this.feedbackResponse);
+  FeedbacksLoaded(this.feedbacks, this.rating, this.numberOfFeedbacks);
 
   @override
-  List<Object> get props => [feedbackResponse];
+  List<Object> get props => [feedbacks, rating, numberOfFeedbacks];
 }
 
 /// Feedbacks wasn't loaded

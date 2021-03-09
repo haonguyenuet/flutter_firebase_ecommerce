@@ -12,25 +12,15 @@ class CartButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(
-      buildWhen: (prevState, currState) => currState is CartLoaded,
-      builder: (context, state) {
-        if (state is CartLoaded) {
-          var counter = state.cart.length;
+        buildWhen: (prevState, currState) => currState is CartLoaded,
+        builder: (context, state) {
           return IconButtonWithCounter(
             icon: Icons.shopping_bag_outlined,
             onPressed: () => Navigator.pushNamed(context, AppRouter.CART),
-            counter: counter,
+            counter: state is CartLoaded ? state.cart.length : 0,
             size: 30,
             color: color,
           );
-        }
-        return IconButtonWithCounter(
-          icon: Icons.shopping_bag_outlined,
-          onPressed: () => Navigator.pushNamed(context, AppRouter.CART),
-          counter: 0,
-          size: 30,
-        );
-      },
-    );
+        });
   }
 }

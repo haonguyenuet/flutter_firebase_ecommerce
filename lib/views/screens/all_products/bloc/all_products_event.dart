@@ -26,12 +26,12 @@ class ClickIconSearch extends AllProductsEvent {}
 class ClickCloseSearch extends AllProductsEvent {}
 
 class SearchQueryChanged extends AllProductsEvent {
-  final String? keyword;
+  final String keyword;
 
-  SearchQueryChanged({this.keyword});
+  SearchQueryChanged(this.keyword);
 
   @override
-  List<Object?> get props => [keyword];
+  List<Object> get props => [keyword];
 
   @override
   String toString() {

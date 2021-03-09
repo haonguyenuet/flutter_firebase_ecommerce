@@ -88,6 +88,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
       onPressed: () {
         if (isContinueButtonEnabled()) {
           UserModel initialUser = UserModel(
+            id: "",
             email: "",
             name: _nameController.text,
             phoneNumber: _phoneNumberController.text,

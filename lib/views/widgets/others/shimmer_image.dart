@@ -44,7 +44,7 @@ class ShimmerImage extends StatelessWidget {
                 aspectRatio: aspectRatio!,
                 child: Image.network(imageUrl, fit: fit ?? BoxFit.contain),
               )
-            : Image.asset(imageUrl,
+            : Image.network(imageUrl,
                 width: width, height: height, fit: fit ?? BoxFit.contain),
       ],
     );

@@ -22,11 +22,11 @@ class CategoriesLoaded extends AllProductsState {
   });
 
   @override
-  List<Object?> get props => [categories];
+  List<Object?> get props => [categories, selectedCategoryIndex];
 
   @override
   String toString() {
-    return 'CategoriesLoaded{response: ${categories.length}}';
+    return 'CategoriesLoaded{categories: $categories, selectedCategoryIndex:$selectedCategoryIndex}';
   }
 }
 
@@ -37,31 +37,34 @@ class CategoriesLoadFailure extends AllProductsState {
   CategoriesLoadFailure(this.error);
 
   @override
+  List<Object?> get props => [error];
+
+  @override
   String toString() {
-    return 'HomeLoadFailure{e: $error}';
+    return 'HomeLoadFailure{error: $error}';
   }
 }
 
 /// Display list products
 class DisplayListProducts extends AllProductsState {
-  final List<Product>? productsByCategory;
+  final List<Product>? products;
   final bool? loading;
   final String? msg;
 
-  DisplayListProducts({this.productsByCategory, this.loading, this.msg});
+  DisplayListProducts({this.products, this.loading, this.msg});
 
   factory DisplayListProducts.loading() {
     return DisplayListProducts(
       msg: "",
-      productsByCategory: [],
+      products: [],
       loading: true,
     );
   }
 
-  factory DisplayListProducts.data(List<Product> productsByCategory) {
+  factory DisplayListProducts.data(List<Product> products) {
     return DisplayListProducts(
       msg: "",
-      productsByCategory: productsByCategory,
+      products: products,
       loading: false,
     );
   }
@@ -69,17 +72,17 @@ class DisplayListProducts extends AllProductsState {
   factory DisplayListProducts.error(String msg) {
     return DisplayListProducts(
       msg: msg,
-      productsByCategory: [],
+      products: [],
       loading: false,
     );
   }
 
   @override
-  List<Object?> get props => [productsByCategory, loading, msg];
+  List<Object?> get props => [products, loading, msg];
 
   @override
   String toString() {
-    return 'DisplayListProducts{productsByCategory: ${productsByCategory!.length}, loading: $loading, msg: $msg}';
+    return 'DisplayListProducts{products: ${products!.length}, loading: $loading, msg: $msg}';
   }
 }
 

@@ -1,8 +1,8 @@
 import 'package:e_commerce_app/constants/constants.dart';
-import 'package:e_commerce_app/views/screens/feedback/bloc/bloc.dart';
+import 'package:e_commerce_app/views/screens/feedbacks/bloc/bloc.dart';
+import 'package:e_commerce_app/views/widgets/others/rating_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 
 class Header extends StatefulWidget {
@@ -33,9 +33,7 @@ class _HeaderState extends State<Header> {
 
   _buildFeedbackStats() {
     return BlocBuilder<FeedbackBloc, FeedbackState>(
-      buildWhen: (prevState, currState) {
-        return currState is FeedbacksLoaded;
-      },
+      buildWhen: (prevState, currState) => currState is FeedbacksLoaded,
       builder: (context, state) {
         if (state is FeedbacksLoaded) {
           return Container(
@@ -46,25 +44,13 @@ class _HeaderState extends State<Header> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "${state.feedbackResponse.rating}",
+                  "${state.rating}",
                   style: FONT_CONST.BOLD_WHITE_26,
                 ),
-                RatingBar.builder(
-                  initialRating: state.feedbackResponse.rating!,
-                  minRating: 1,
-                  allowHalfRating: true,
-                  itemCount: 5,
-                  itemSize: 26,
-                  unratedColor: mAccentShadeColor,
-                  itemBuilder: (context, _) => Icon(
-                    Icons.star,
-                    color: Colors.amber,
-                  ),
-                  onRatingUpdate: (value) {},
-                ),
-                const SizedBox(height: 15),
+                RatingBar(initialRating: state.rating),
+                SizedBox(height: 15),
                 Text(
-                  "${state.feedbackResponse.numberOfFeedbacks} nhận xét",
+                  "${state.numberOfFeedbacks} nhận xét",
                   style: FONT_CONST.MEDIUM_WHITE,
                 ),
               ],
@@ -107,14 +93,15 @@ class _HeaderState extends State<Header> {
 
           // Get feedbacks by number of stars
           ...List.generate(5, (index) {
+            var numberOfStars = 5 - index;
             return StarButton(
-              numberOfStars: 5 - index,
-              isActive: selectedStarIndex == 5 - index,
+              numberOfStars: numberOfStars,
+              isActive: selectedStarIndex == numberOfStars,
               handleOnTap: () {
-                setState(() => selectedStarIndex = 5 - index);
+                setState(() => selectedStarIndex = numberOfStars);
                 // get feedbacks by star ( 1 -> 5)
                 BlocProvider.of<FeedbackBloc>(context)
-                    .add(StarChanged(5 - index));
+                    .add(StarChanged(numberOfStars));
               },
             );
           })

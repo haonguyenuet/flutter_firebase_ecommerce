@@ -16,21 +16,18 @@ class LoginSuccessScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: SizedBox(
+        child: Container(
           width: double.infinity,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(height: SizeConfig.screenHeight * 0.04),
-                  _buildSuccessImage(),
-                  SizedBox(height: SizeConfig.screenHeight * 0.04),
-                  _buildGreeting(),
-                  SizedBox(height: SizeConfig.screenHeight * 0.08),
-                  _buildBackHomeButton(context)
-                ],
-              ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: SizeConfig.screenHeight * 0.04),
+                _buildSuccessImage(),
+                SizedBox(height: SizeConfig.screenHeight * 0.04),
+                _buildGreeting(),
+                SizedBox(height: SizeConfig.screenHeight * 0.08),
+                _buildBackHomeButton(context)
+              ],
             ),
           ),
         ),

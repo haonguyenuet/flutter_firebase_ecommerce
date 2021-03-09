@@ -24,7 +24,7 @@ class CartItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: FirebaseProductRepository().getProductById(cartItem.pid),
+      future: FirebaseProductRepository().getProductById(cartItem.productId),
       builder: (context, snapshot) {
         var product = snapshot.data as Product;
         return snapshot.hasData
@@ -92,7 +92,7 @@ class CartItemCard extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(vertical: 5),
           child: Text(
-            "${formatNumber(product.originalPrice)} ₫",
+            "${formatNumber(product.price)} ₫",
             style: FONT_CONST.REGULAR_PRIMARY_18,
           ),
         ),
@@ -138,13 +138,11 @@ class CartItemCard extends StatelessWidget {
   }
 
   _changeQuantity(BuildContext context, Product product, int newQuantity) {
-    var newPrice = newQuantity * product.originalPrice;
-
     // update cart item
     BlocProvider.of<CartBloc>(context).add(UpdateCartItem(
       cartItem.cloneWith(
         quantity: newQuantity,
-        price: newPrice,
+        price: newQuantity * product.price,
       ),
     ));
   }

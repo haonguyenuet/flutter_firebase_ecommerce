@@ -11,12 +11,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
   ProductRepository _productRepository;
   late Category _currCategory;
-  String? _currKeyword = "";
+  String _currKeyword = "";
   ProductSortOption _currSortOption = ProductSortOption();
 
   AllProductsBloc({required ProductRepository productRepository})
-      : 
-        _productRepository = productRepository,
+      : _productRepository = productRepository,
         super(DisplayListProducts.loading());
 
   /// Debounce search query changed event
@@ -38,10 +37,8 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
       b.soldQuantity.compareTo(a.soldQuantity);
   int sortSoldQuantityAscending(Product a, Product b) =>
       a.soldQuantity.compareTo(b.soldQuantity);
-  int sortPriceDescending(Product a, Product b) =>
-      b.originalPrice.compareTo(a.originalPrice);
-  int sortPriceAscending(Product a, Product b) =>
-      a.originalPrice.compareTo(b.originalPrice);
+  int sortPriceDescending(Product a, Product b) => b.price.compareTo(a.price);
+  int sortPriceAscending(Product a, Product b) => a.price.compareTo(b.price);
 
   @override
   Stream<AllProductsState> mapEventToState(AllProductsEvent event) async* {
@@ -75,7 +72,7 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
       var selectedCategoryIndex = 0;
       if (category != null) {
         for (int i = 0; i < categories.length; i++) {
-          if (categories[i].cid == category.cid) selectedCategoryIndex = i;
+          if (categories[i].id == category.id) selectedCategoryIndex = i;
         }
       }
       yield CategoriesLoaded(
@@ -86,7 +83,7 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
       _currCategory = category == null ? categories[0] : category;
       // Get products by category
       var products =
-          await _productRepository.getProductsByCategory(_currCategory.cid);
+          await _productRepository.getProductsByCategory(_currCategory.id);
       yield DisplayListProducts.data(products);
     } catch (e) {
       yield DisplayListProducts.error(e.toString());
@@ -95,7 +92,7 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
 
   /// Search query changed => state
   Stream<AllProductsState> _mapSearchQueryChangedToState(
-      String? keyword) async* {
+      String keyword) async* {
     yield DisplayListProducts.loading();
     try {
       _currKeyword = keyword;
@@ -128,12 +125,12 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
   Future<List<Product>> getProducts() async {
     // Get products by current category
     var products =
-        await _productRepository.getProductsByCategory(_currCategory.cid);
+        await _productRepository.getProductsByCategory(_currCategory.id);
 
     // Filter products by current keyword
     bool query(Product p) =>
-        _currKeyword!.isEmpty ||
-        p.name.toLowerCase().contains(_currKeyword!.toLowerCase());
+        _currKeyword.isEmpty ||
+        p.name.toLowerCase().contains(_currKeyword.toLowerCase());
     products = products.where(query).toList();
 
     // Sort

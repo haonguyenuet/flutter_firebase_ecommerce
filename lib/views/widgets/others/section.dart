@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 class Section extends StatelessWidget {
   final String title;
   final List<Widget> children;
-  final Function()? handleOnTap;
+  final Function()? handleOnSeeAll;
 
   const Section({
     required this.title,
     required this.children,
-    this.handleOnTap,
+    this.handleOnSeeAll,
     Key? key,
   }) : super(key: key);
 
@@ -22,7 +22,7 @@ class Section extends StatelessWidget {
         /// Section title
         SectionTitle(
           title: title,
-          handleOnTap: handleOnTap,
+          handleOnSeeAll: handleOnSeeAll,
         ),
 
         /// Section content
@@ -50,11 +50,11 @@ class SectionTitle extends StatelessWidget {
   const SectionTitle({
     Key? key,
     required this.title,
-    this.handleOnTap,
+    this.handleOnSeeAll,
   }) : super(key: key);
 
   final String title;
-  final Function()? handleOnTap;
+  final Function()? handleOnSeeAll;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,7 @@ class SectionTitle extends StatelessWidget {
           // See more button
           InkWell(
             child: Text('See all', style: FONT_CONST.BOLD_PRIMARY),
-            onTap: handleOnTap,
+            onTap: handleOnSeeAll,
           )
         ],
       ),

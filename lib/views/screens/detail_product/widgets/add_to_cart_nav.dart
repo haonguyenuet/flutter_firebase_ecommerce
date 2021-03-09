@@ -55,11 +55,7 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
           child: AbsorbPointer(
             absorbing: quantity > 1 ? false : true,
             child: ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  quantity -= 1;
-                });
-              },
+              onPressed: () => setState(() => quantity -= 1),
               style: ElevatedButton.styleFrom(primary: Colors.white),
               child: Icon(Icons.remove, color: mPrimaryColor),
             ),
@@ -76,9 +72,7 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
           child: AbsorbPointer(
             absorbing: quantity < product.quantity ? false : true,
             child: ElevatedButton(
-              onPressed: () {
-                setState(() => quantity += 1);
-              },
+              onPressed: () => setState(() => quantity += 1),
               style: ElevatedButton.styleFrom(primary: Colors.white),
               child: Icon(Icons.add, color: mPrimaryColor),
             ),
@@ -97,9 +91,9 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
             ? () {
                 // Create new cart item
                 CartItem cartItem = CartItem(
-                  cid: product.id,
-                  pid: product.id,
-                  price: product.originalPrice * quantity,
+                  id: product.id,
+                  productId: product.id,
+                  price: product.price * quantity,
                   quantity: quantity,
                 );
                 // Add event AddToCart

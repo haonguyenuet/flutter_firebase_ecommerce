@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/views/screens/feedback/bloc/bloc.dart';
+import 'package:e_commerce_app/views/screens/feedbacks/bloc/bloc.dart';
 import 'package:e_commerce_app/views/widgets/others/loading.dart';
 import 'package:e_commerce_app/views/widgets/single_card/feedback_card.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +10,12 @@ class ListFeedbacks extends StatelessWidget {
     return BlocBuilder<FeedbackBloc, FeedbackState>(
       builder: (context, state) {
         if (state is FeedbacksLoaded) {
-          var feedbacks = state.feedbackResponse.feedbacks!;
+          var feedbacks = state.feedbacks;
           return feedbacks.length > 0
               ? ListView.builder(
                   itemCount: feedbacks.length,
                   itemBuilder: (context, index) {
-                    return FeedbackCard(feedbackItem: feedbacks[index]);
+                    return FeedbackCard(feedBack: feedbacks[index]);
                   },
                 )
               : Center(

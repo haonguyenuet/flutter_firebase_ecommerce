@@ -1,33 +1,35 @@
+import 'package:equatable/equatable.dart';
+
 /// Cart item model
-class CartItem {
+class CartItem extends Equatable {
   /// Cart item id
-  final String cid;
+  final String id;
 
   /// Product id
-  final String pid;
+  final String productId;
 
   /// Product quantity in the cart
   final int quantity;
 
-  /// Product price
+  /// Product price * quantity
   final int price;
 
   /// Checkout or not ?
-  bool? isActive;
+  final bool? isActive;
 
   /// Constructor
-  CartItem({
-    required this.cid,
-    required this.pid,
-    required this.price,
-    required this.quantity,
-  });
+  CartItem(
+      {required this.id,
+      required this.productId,
+      required this.price,
+      required this.quantity,
+      this.isActive});
 
   /// Json data from server turns into model data
-  static CartItem fromMap(String id, Map<String, dynamic> data) {
+  static CartItem fromMap(Map<String, dynamic> data) {
     return CartItem(
-      cid: id,
-      pid: data["pid"],
+      id: data["id"] ?? "",
+      productId: data["productId"],
       price: data["price"],
       quantity: data["quantity"] ?? 0,
     );
@@ -35,27 +37,29 @@ class CartItem {
 
   /// From model data turns into json data => server
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> cartItemData = {
-      "cid": this.cid,
-      "pid": this.pid,
+    return {
+      "id": this.id,
+      "productId": this.productId,
       "price": this.price,
       "quantity": this.quantity,
     };
-    return cartItemData;
   }
 
   /// Clone and update
   CartItem cloneWith({
-    cid,
-    pid,
+    id,
+    productId,
     price,
     quantity,
   }) {
     return CartItem(
-      cid: cid ?? this.cid,
-      pid: pid ?? this.pid,
+      id: id ?? this.id,
+      productId: productId ?? this.productId,
       price: price ?? this.price,
       quantity: quantity ?? this.quantity,
     );
   }
+
+  @override
+  List<Object?> get props => [id, quantity, price, productId];
 }

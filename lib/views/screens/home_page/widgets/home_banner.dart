@@ -45,7 +45,7 @@ class _HomeBannerState extends State<HomeBanner> {
             items: banners.map((banner) {
               return ShimmerImage(
                 aspectRatio: aspectRatioBanner,
-                imageUrl: banner.imageUrl!,
+                imageUrl: banner.imageUrl,
                 fit: BoxFit.contain,
               );
             }).toList(),

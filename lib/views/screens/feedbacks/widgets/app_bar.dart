@@ -1,6 +1,6 @@
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
-import 'package:e_commerce_app/views/screens/feedback/bloc/bloc.dart';
-import 'package:e_commerce_app/views/screens/feedback/widgets/feedback_bottom_sheet.dart';
+import 'package:e_commerce_app/views/screens/feedbacks/bloc/bloc.dart';
+import 'package:e_commerce_app/views/screens/feedbacks/widgets/feedback_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,16 +9,17 @@ class FeedbackAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: mDarkShadeColor,
-        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            _buildLeading(context),
-            _buildTitle(),
-            _buildActions(context),
-          ],
-        ));
+      color: mDarkShadeColor,
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          _buildLeading(context),
+          _buildTitle(),
+          _buildActions(context),
+        ],
+      ),
+    );
   }
 
   _buildLeading(BuildContext context) {
@@ -51,7 +52,7 @@ class FeedbackAppBar extends StatelessWidget {
   }
 
   void _openModalBottomSheet(BuildContext context) async {
-    var newFeedback = await showModalBottomSheet<FeedbackItem>(
+    var newFeedback = await showModalBottomSheet<FeedBack>(
       isScrollControlled: true,
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
@@ -66,7 +67,7 @@ class FeedbackAppBar extends StatelessWidget {
       },
     );
     if (newFeedback != null) {
-      BlocProvider.of<FeedbackBloc>(context).add(AddFeedbackItem(newFeedback));
+      BlocProvider.of<FeedbackBloc>(context).add(AddFeedback(newFeedback));
     }
   }
 }

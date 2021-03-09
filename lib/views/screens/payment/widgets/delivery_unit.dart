@@ -41,21 +41,13 @@ class DeliveryUnit extends StatelessWidget {
             ),
           ],
         ),
-        Text(
-          "Fast delivery",
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
-          ),
-        ),
-        Text("J&T Express"),
-        Text(
-          "Receive this order in 5 Th03 - 8 Th03",
-          style: TextStyle(
-            color: Colors.black38,
-          ),
-        )
+        // Text("J&T Express"),
+        // Text(
+        //   "Receive this order in 5 Th03 - 8 Th03",
+        //   style: TextStyle(
+        //     color: Colors.black38,
+        //   ),
+        // )
       ],
     );
   }

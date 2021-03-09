@@ -1,10 +1,10 @@
-import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
+import 'package:e_commerce_app/business_logic/entities/entites.dart';
 
 abstract class CartRepository {
   /// Cart stream
   /// [uid] is user id
   /// Created by NDH
-  Stream<List<CartItem>>? cartStream(String uid);
+  Stream<List<CartItem>> cartStream(String uid);
 
   /// Add item
   /// [uid] is user id
@@ -14,9 +14,9 @@ abstract class CartRepository {
 
   /// Remove item
   /// [uid] is user id
-  /// [pid] is cart item id
+  /// [cartItem] is data of cart item
   /// Created by NDH
-  Future<void> removeCartItem(String uid, String? cid);
+  Future<void> removeCartItem(String uid, CartItem cartItem);
 
   /// Clear cart
   /// [uid] is user id

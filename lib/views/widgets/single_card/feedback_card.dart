@@ -1,18 +1,18 @@
-import 'package:e_commerce_app/business_logic/entities/feedback_item.dart';
+import 'package:e_commerce_app/business_logic/entities/feedback.dart';
 import 'package:e_commerce_app/business_logic/entities/user.dart';
 import 'package:e_commerce_app/business_logic/repository/user_repository/firebase_user_repo.dart';
 import 'package:e_commerce_app/constants/constants.dart';
-import 'package:e_commerce_app/utils/my_formatter.dart';
+import 'package:e_commerce_app/utils/utils.dart';
+import 'package:e_commerce_app/views/widgets/others/rating_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class FeedbackCard extends StatelessWidget {
   const FeedbackCard({
     Key? key,
-    required this.feedbackItem,
+    required this.feedBack,
   }) : super(key: key);
 
-  final FeedbackItem feedbackItem;
+  final FeedBack feedBack;
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +41,15 @@ class FeedbackCard extends StatelessWidget {
 
   _buildUserInfo() {
     return FutureBuilder(
-      future: FirebaseUserRepository().getUserById(feedbackItem.uid),
+      future: FirebaseUserRepository().getUserById(feedBack.userId),
       builder: (context, snapshot) {
-        UserModel? user = snapshot.data as UserModel;
+        var user = snapshot.data as UserModel;
         return snapshot.hasData
             ? Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: (user.avatar!.isNotEmpty
-                            ? NetworkImage(user.avatar!)
+                    backgroundImage: (user.avatar.isNotEmpty
+                            ? NetworkImage(user.avatar)
                             : AssetImage("assets/images/default_avatar.jpg"))
                         as ImageProvider<Object>?,
                   ),
@@ -64,27 +64,20 @@ class FeedbackCard extends StatelessWidget {
   }
 
   _buildRating() {
-    return RatingBar.builder(
-      initialRating: feedbackItem.rating.toDouble(),
-      minRating: 1,
-      allowHalfRating: true,
+    return RatingBar(
+      initialRating: feedBack.rating.toDouble(),
       itemSize: 20,
-      itemBuilder: (context, _) => Icon(
-        Icons.star,
-        color: Colors.amber,
-      ),
-      onRatingUpdate: (double value) {},
     );
   }
 
   _buildFeedbackContent() {
     return Text(
-      "${feedbackItem.content}",
+      "${feedBack.content}",
       style: FONT_CONST.BOLD_DEFAULT_16,
     );
   }
 
   _buildCreatedDate() {
-    return Text("${formatTimeStamp(feedbackItem.timestamp!)}");
+    return Text("${formatTimeStamp(feedBack.timestamp)}");
   }
 }

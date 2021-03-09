@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:e_commerce_app/business_logic/repository/repository.dart';
-import 'package:e_commerce_app/views/screens/feedback/bloc/bloc.dart';
+import 'package:e_commerce_app/views/screens/feedbacks/bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
+class FeedbackBloc extends Bloc<FeedbacksEvent, FeedbackState> {
   final FeedbackRepository _feedbackRepository;
   final ProductRepository _productRepository;
   StreamSubscription? _feedbackSubscription;
@@ -20,11 +20,11 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
         super(FeedbacksLoading());
 
   @override
-  Stream<FeedbackState> mapEventToState(FeedbackEvent event) async* {
+  Stream<FeedbackState> mapEventToState(FeedbacksEvent event) async* {
     if (event is LoadFeedbacks) {
-      yield* _mapLoadFeedbackToState(event);
-    } else if (event is AddFeedbackItem) {
-      yield* _mapAddFeedbackItemToState(event);
+      yield* _mapLoadFeedbacksToState(event);
+    } else if (event is AddFeedback) {
+      yield* _mapFeedbackToState(event);
     } else if (event is StarChanged) {
       yield* _mapStarChangedToState(event);
     } else if (event is FeedbacksUpdated) {
@@ -32,7 +32,7 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
     }
   }
 
-  Stream<FeedbackState> _mapLoadFeedbackToState(LoadFeedbacks event) async* {
+  Stream<FeedbackState> _mapLoadFeedbacksToState(LoadFeedbacks event) async* {
     try {
       _currentProduct = event.product;
       _feedbackSubscription?.cancel();
@@ -45,8 +45,7 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
     }
   }
 
-  Stream<FeedbackState> _mapAddFeedbackItemToState(
-      AddFeedbackItem event) async* {
+  Stream<FeedbackState> _mapFeedbackToState(AddFeedback event) async* {
     try {
       _feedbackRepository.addNewFeedback(_currentProduct!.id, event.feedback);
     } catch (e) {
@@ -61,11 +60,11 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
         _currentProduct!.id,
         event.star,
       );
-      yield FeedbacksLoaded(FeedbacksResponse(
-        feedbacks: feedbacks,
-        rating: _currAverageRating,
-        numberOfFeedbacks: feedbacks.length,
-      ));
+      yield FeedbacksLoaded(
+        feedbacks,
+        _currAverageRating,
+        feedbacks.length,
+      );
     } catch (e) {
       print(e);
     }
@@ -85,24 +84,17 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
       _currentProduct!.id,
       _currAverageRating,
     );
-    yield FeedbacksLoaded(FeedbacksResponse(
-      feedbacks: feedbacks,
-      rating: _currAverageRating,
-      numberOfFeedbacks: feedbacks.length,
-    ));
+    yield FeedbacksLoaded(
+      feedbacks,
+      _currAverageRating,
+      feedbacks.length,
+    );
   }
 
   @override
   Future<void> close() {
+    _currentProduct = null;
     _feedbackSubscription?.cancel();
     return super.close();
   }
-}
-
-class FeedbacksResponse {
-  final List<FeedbackItem>? feedbacks;
-  final double? rating;
-  final int? numberOfFeedbacks;
-
-  FeedbacksResponse({this.numberOfFeedbacks, this.feedbacks, this.rating});
 }

@@ -28,8 +28,8 @@ class ProfilePic extends StatelessWidget {
             border: Border.all(color: Colors.white, width: 2),
           ),
           child: CircleAvatar(
-            backgroundImage: loggedUser.avatar!.isNotEmpty
-                ? NetworkImage(loggedUser.avatar!)
+            backgroundImage: loggedUser.avatar.isNotEmpty
+                ? NetworkImage(loggedUser.avatar)
                 : AssetImage("assets/images/default_avatar.jpg")
                     as ImageProvider<Object>,
           ),

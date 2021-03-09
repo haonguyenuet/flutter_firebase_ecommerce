@@ -4,7 +4,7 @@ import 'package:e_commerce_app/views/widgets/others/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ListProducts extends StatelessWidget {
+class GridProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AllProductsBloc, AllProductsState>(
@@ -19,8 +19,8 @@ class ListProducts extends StatelessWidget {
           if (state.msg!.isNotEmpty) {
             return Center(child: Text(state.msg!));
           }
-          if (state.productsByCategory!.length > 0) {
-            var products = state.productsByCategory!;
+          if (state.products!.length > 0) {
+            var products = state.products!;
             return GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,

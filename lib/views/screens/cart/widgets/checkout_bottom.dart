@@ -52,7 +52,7 @@ class CheckoutBottom extends StatelessWidget {
                       child: SvgPicture.asset("assets/icons/receipt.svg"),
                     ),
                     SizedBox(width: 15),
-                    state is CartLoaded ? _buildTotalPrice(state) : Container(),
+                    _buildTotalPrice(state),
                   ],
                 ),
                 SizedBox(height: 20),
@@ -81,8 +81,9 @@ class CheckoutBottom extends StatelessWidget {
     );
   }
 
-  _buildTotalPrice(CartLoaded state) {
-    String totalPrice = formatNumber(state.totalCartPrice);
+  _buildTotalPrice(CartState state) {
+    String totalPrice =
+        state is CartLoaded ? formatNumber(state.totalCartPrice) : "0";
     return Text.rich(
       TextSpan(
         style: FONT_CONST.REGULAR_DEFAULT_16,
@@ -90,7 +91,7 @@ class CheckoutBottom extends StatelessWidget {
           TextSpan(text: "Total:\n"),
           TextSpan(
             text: "$totalPrice₫",
-            style: FONT_CONST.REGULAR_PRIMARY_18,
+            style: FONT_CONST.BOLD_PRIMARY_18,
           ),
         ],
       ),

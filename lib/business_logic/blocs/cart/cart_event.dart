@@ -15,7 +15,7 @@ class LoadCart extends CartEvent {
 
   LoadCart(this.loggedFirebaseUser);
 
-  List<Object?> get props => [loggedFirebaseUser];
+  List<Object> get props => [loggedFirebaseUser];
 }
 
 /// When user clicks to a clear cart => clear cart event
@@ -43,12 +43,12 @@ class AddCartItem extends CartEvent {
 
 /// When user swipes to remove cart item => remove cart item event
 class RemoveCartItem extends CartEvent {
-  final String? pid;
+  final CartItem cartItem;
 
-  RemoveCartItem(this.pid);
+  RemoveCartItem(this.cartItem);
 
   @override
-  List<Object?> get props => [pid];
+  List<Object> get props => [cartItem];
 }
 
 /// When user clicks to change quantity => update cart event
@@ -58,5 +58,5 @@ class UpdateCartItem extends CartEvent {
   UpdateCartItem(this.cartItem);
 
   @override
-  List<Object> get props => [cartItem.cid];
+  List<Object> get props => [cartItem];
 }
