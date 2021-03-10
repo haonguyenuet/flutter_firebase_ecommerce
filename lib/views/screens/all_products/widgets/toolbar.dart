@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/views/screens/all_products/bloc/bloc.dart';
@@ -40,7 +41,10 @@ class _ToolBarState extends State<ToolBar> {
         if (state is UpdateToolbarState) {
           return Container(
             color: mDarkShadeColor,
-            padding: EdgeInsets.symmetric(vertical: 5),
+            padding: EdgeInsets.symmetric(
+              vertical: SizeConfig.defaultSize * 0.5,
+              horizontal: SizeConfig.defaultSize,
+            ),
             child: Row(
               children: <Widget>[
                 _buildLeading(context),
@@ -91,7 +95,7 @@ class _ToolBarState extends State<ToolBar> {
     if (state.showSearchField) {
       _searchController.text = "";
       return Container(
-        height: 38,
+        height: SizeConfig.defaultSize * 4,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           color: Colors.white,
@@ -103,7 +107,7 @@ class _ToolBarState extends State<ToolBar> {
           textInputAction: TextInputAction.search,
           decoration: InputDecoration(
             hintText: 'Search',
-            contentPadding: EdgeInsets.all(0),
+            contentPadding: EdgeInsets.only(top: 0),
             prefixIcon: Icon(Icons.search),
             border: InputBorder.none,
           ),

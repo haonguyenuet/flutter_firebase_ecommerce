@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/business_logic/blocs/profile/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/feedback.dart';
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
 import 'package:e_commerce_app/views/widgets/others/rating_bar.dart';
@@ -30,11 +31,11 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildHeader(),
-            SizedBox(height: 20),
+            SizedBox(height: SizeConfig.defaultSize * 2),
             _buildCommentSection(),
-            SizedBox(height: 20),
+            SizedBox(height: SizeConfig.defaultSize * 2),
             _buildRatingSection(),
-            SizedBox(height: 10),
+            SizedBox(height: SizeConfig.defaultSize),
             _buildAddButton(context),
           ],
         ),
@@ -59,7 +60,10 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
         autofocus: true,
         onChanged: (value) => setState(() => _content = value),
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: SizeConfig.defaultSize * 1.5,
+            vertical: SizeConfig.defaultSize,
+          ),
           border: InputBorder.none,
           hintText: "Type...",
         ),
@@ -73,7 +77,7 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text("Rating:", style: FONT_CONST.BOLD_DEFAULT_16),
-        SizedBox(width: 10),
+        SizedBox(width: SizeConfig.defaultSize),
         RatingBar(
           initialRating: 5,
           onRatingUpdate: (value) => setState(() => _rating = value),
@@ -88,7 +92,7 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
         return Align(
           alignment: Alignment.centerRight,
           child: SizedBox(
-            width: 200,
+            width: SizeConfig.defaultSize * 20,
             child: DefaultButton(
               child: Text("Send", style: FONT_CONST.BOLD_WHITE_18),
               onPressed: () {

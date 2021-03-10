@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/views/screens/all_products/bloc/bloc.dart';
 import 'package:e_commerce_app/views/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/views/widgets/others/loading.dart';
@@ -24,8 +25,8 @@ class GridProducts extends StatelessWidget {
             return GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 150 / 210,
-                mainAxisSpacing: 10,
+                childAspectRatio: 15 / 21,
+                mainAxisSpacing: SizeConfig.defaultSize,
                 crossAxisSpacing: 0,
               ),
               itemCount: products.length,
@@ -37,7 +38,7 @@ class GridProducts extends StatelessWidget {
           return Center(
               child: Image.asset(
             "assets/images/Not Found.png",
-            width: 200,
+            width: SizeConfig.defaultSize * 20,
           ));
         } else {
           return Center(child: Text("Something went wrong."));

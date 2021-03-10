@@ -16,7 +16,7 @@ class LoginSuccessScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
           child: SingleChildScrollView(
             child: Column(
@@ -26,7 +26,7 @@ class LoginSuccessScreen extends StatelessWidget {
                 SizedBox(height: SizeConfig.screenHeight * 0.04),
                 _buildGreeting(),
                 SizedBox(height: SizeConfig.screenHeight * 0.08),
-                _buildBackHomeButton(context)
+                _buildGoToHomeButton(context)
               ],
             ),
           ),
@@ -42,11 +42,11 @@ class LoginSuccessScreen extends StatelessWidget {
     );
   }
 
-  _buildBackHomeButton(BuildContext context) {
+  _buildGoToHomeButton(BuildContext context) {
     return SizedBox(
       width: SizeConfig.screenWidth * 0.6,
       child: DefaultButton(
-        child: Text("Back to home", style: FONT_CONST.BOLD_WHITE_18),
+        child: Text("Go to home", style: FONT_CONST.BOLD_WHITE_18),
         onPressed: () {
           Navigator.pushNamedAndRemoveUntil(
             context,

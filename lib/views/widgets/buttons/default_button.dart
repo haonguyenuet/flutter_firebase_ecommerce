@@ -15,13 +15,10 @@ class DefaultButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: getProportionateScreenHeight(50),
+      height: SizeConfig.defaultSize * 5,
       child: TextButton(
         onPressed: onPressed,
-        style: TextButton.styleFrom(
-          backgroundColor: mPrimaryColor,
-          elevation: 5,
-        ),
+        style: TextButton.styleFrom(backgroundColor: mPrimaryColor),
         child: child,
       ),
     );

@@ -1,13 +1,15 @@
 import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
 import 'package:e_commerce_app/business_logic/repository/product_repository/firebase_product_repo.dart';
 import 'package:e_commerce_app/configs/router.dart';
-import 'package:e_commerce_app/constants/color_constant.dart';
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
 
 import 'package:e_commerce_app/views/widgets/buttons/circle_icon_button.dart';
 import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
+import 'package:e_commerce_app/views/widgets/custom_widgets.dart';
+import 'package:e_commerce_app/views/widgets/others/custom_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,53 +28,40 @@ class CartItemCard extends StatelessWidget {
     return FutureBuilder(
       future: FirebaseProductRepository().getProductById(cartItem.productId),
       builder: (context, snapshot) {
-        var product = snapshot.data as Product;
-        return snapshot.hasData
-            ? GestureDetector(
-                onTap: () => Navigator.pushNamed(
-                  context,
-                  AppRouter.DETAIL_PRODUCT,
-                  arguments: product,
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: Container(
-                    margin: EdgeInsets.all(10),
-                    height: 140,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(0, 2),
-                          blurRadius: 6,
-                          color: mPrimaryColor.withOpacity(0.2),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        _buildCartItemImage(product),
-                        SizedBox(width: 10),
-                        Expanded(child: _buildCartItemInfo(product, context)),
-                      ],
-                    ),
-                  ),
-                ),
-              )
-            // Loading
-            : Container();
+        if (snapshot.hasData) {
+          var product = snapshot.data as Product;
+          return CustomCardWidget(
+            onTap: () => Navigator.pushNamed(
+              context,
+              AppRouter.DETAIL_PRODUCT,
+              arguments: product,
+            ),
+            margin: EdgeInsets.symmetric(
+              vertical: SizeConfig.defaultSize * 0.5,
+              horizontal: SizeConfig.defaultSize,
+            ),
+            child: Row(
+              children: [
+                _buildCartItemImage(product),
+                SizedBox(width: SizeConfig.defaultSize),
+                Expanded(child: _buildCartItemInfo(product, context)),
+              ],
+            ),
+          );
+        }
+
+        return Container();
       },
     );
   }
 
   _buildCartItemImage(Product product) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(10),
-          child: Image.network(product.images[0])),
+    return Padding(
+      padding: EdgeInsets.all(SizeConfig.defaultSize * 0.5),
+      child: ShimmerImage(
+        imageUrl: product.images[0],
+        height: SizeConfig.defaultSize * 13,
+      ),
     );
   }
 
@@ -80,6 +69,7 @@ class CartItemCard extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         // Product Name
         Text(
@@ -112,7 +102,7 @@ class CartItemCard extends StatelessWidget {
         CircleIconButton(
           svgIcon: "assets/icons/subtract.svg",
           color: Color(0xFFF5F6F9),
-          size: 12,
+          size: SizeConfig.defaultSize * 1.2,
           onPressed: cartItem.quantity > 1
               ? () => _changeQuantity(context, product, cartItem.quantity - 1)
               : () {},
@@ -120,7 +110,7 @@ class CartItemCard extends StatelessWidget {
 
         // Quantity
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
+          padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize),
           child: Text("${cartItem.quantity}", style: FONT_CONST.BOLD_PRIMARY),
         ),
 
@@ -128,7 +118,7 @@ class CartItemCard extends StatelessWidget {
         CircleIconButton(
           svgIcon: "assets/icons/add.svg",
           color: Color(0xFFF5F6F9),
-          size: 12,
+          size: SizeConfig.defaultSize * 1.2,
           onPressed: cartItem.quantity < product.quantity
               ? () => _changeQuantity(context, product, cartItem.quantity + 1)
               : () {},

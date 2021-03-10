@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:e_commerce_app/business_logic/blocs/profile/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/user.dart';
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -21,8 +22,8 @@ class ProfilePic extends StatelessWidget {
       clipBehavior: Clip.none,
       children: [
         Container(
-          height: 150,
-          width: 150,
+          height: SizeConfig.defaultSize * 15,
+          width: SizeConfig.defaultSize * 15,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(color: Colors.white, width: 2),
@@ -35,11 +36,11 @@ class ProfilePic extends StatelessWidget {
           ),
         ),
         Positioned(
-          right: -10,
+          right: -SizeConfig.defaultSize,
           bottom: 0,
           child: SizedBox(
-            height: 46,
-            width: 46,
+            height: SizeConfig.defaultSize * 4,
+            width: SizeConfig.defaultSize * 4,
             child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: Color(0xFFF5F6F9),

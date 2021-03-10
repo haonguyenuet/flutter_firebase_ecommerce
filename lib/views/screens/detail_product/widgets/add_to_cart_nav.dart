@@ -2,6 +2,7 @@ import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:e_commerce_app/configs/router.dart';
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
@@ -29,6 +30,7 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: SizeConfig.defaultSize * 6,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [BoxShadow(offset: Offset(0.15, 0.4), color: Colors.black)],
@@ -49,9 +51,8 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         /// Button decreases the quantity of product
-        Container(
-          height: 60,
-          width: 60,
+        AspectRatio(
+          aspectRatio: 1,
           child: AbsorbPointer(
             absorbing: quantity > 1 ? false : true,
             child: ElevatedButton(
@@ -66,9 +67,8 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
         Text("$quantity", style: FONT_CONST.BOLD_PRIMARY_16),
 
         /// Button increases the quantity of product
-        Container(
-          height: 60,
-          width: 60,
+        AspectRatio(
+          aspectRatio: 1,
           child: AbsorbPointer(
             absorbing: quantity < product.quantity ? false : true,
             child: ElevatedButton(
@@ -85,8 +85,9 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
   /// Build button add to cart
   _addToCartButton() {
     return Container(
-      height: 60,
-      child: ElevatedButton(
+      height: SizeConfig.defaultSize * 6,
+      color: mPrimaryColor,
+      child: TextButton(
         onPressed: product.quantity > 0
             ? () {
                 // Create new cart item
@@ -102,7 +103,6 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
                 Navigator.pushNamed(context, AppRouter.CART);
               }
             : null,
-        style: ElevatedButton.styleFrom(primary: mPrimaryColor),
         child: Icon(Icons.add_shopping_cart, color: Colors.white),
       ),
     );

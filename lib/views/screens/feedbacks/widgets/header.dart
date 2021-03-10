@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/views/screens/feedbacks/bloc/bloc.dart';
 import 'package:e_commerce_app/views/widgets/others/rating_bar.dart';
@@ -20,7 +21,7 @@ class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(bottom: 10),
+      padding: EdgeInsets.only(bottom: SizeConfig.defaultSize),
       color: mDarkShadeColor,
       child: Column(
         children: [
@@ -38,7 +39,7 @@ class _HeaderState extends State<Header> {
         if (state is FeedbacksLoaded) {
           return Container(
             width: double.infinity,
-            padding: EdgeInsets.all(15),
+            padding: EdgeInsets.all(SizeConfig.defaultSize * 1.5),
             alignment: Alignment.center,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -48,7 +49,7 @@ class _HeaderState extends State<Header> {
                   style: FONT_CONST.BOLD_WHITE_26,
                 ),
                 RatingBar(initialRating: state.rating),
-                SizedBox(height: 15),
+                SizedBox(height: SizeConfig.defaultSize),
                 Text(
                   "${state.numberOfFeedbacks} nhận xét",
                   style: FONT_CONST.MEDIUM_WHITE,
@@ -75,7 +76,10 @@ class _HeaderState extends State<Header> {
               BlocProvider.of<FeedbackBloc>(context).add(StarChanged(0));
             },
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 7),
+              padding: EdgeInsets.symmetric(
+                horizontal: SizeConfig.defaultSize * 2,
+                vertical: SizeConfig.defaultSize * 0.5,
+              ),
               decoration: BoxDecoration(
                 color: Color(0xFFF5F6F9),
                 borderRadius: BorderRadius.circular(20),
@@ -128,8 +132,11 @@ class StarButton extends StatelessWidget {
     return GestureDetector(
       onTap: handleOnTap,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 5),
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
+        margin: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 0.5),
+        padding: EdgeInsets.symmetric(
+          horizontal: SizeConfig.defaultSize * 1.5,
+          vertical: SizeConfig.defaultSize * 0.5,
+        ),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
@@ -144,7 +151,7 @@ class StarButton extends StatelessWidget {
             Icon(
               Icons.star,
               color: isActive ? Colors.amber : mAccentShadeColor,
-              size: 20,
+              size: SizeConfig.defaultSize * 2,
             ),
           ],
         ),

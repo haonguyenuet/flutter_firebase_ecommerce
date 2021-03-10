@@ -19,11 +19,6 @@ class HomeLoaded extends HomeState {
 
   @override
   List<Object?> get props => [homeResponse];
-
-  @override
-  String toString() {
-    return 'HomeLoaded{response: $homeResponse}';
-  }
 }
 
 /// Failure
@@ -31,9 +26,4 @@ class HomeLoadFailure extends HomeState {
   final String error;
 
   const HomeLoadFailure(this.error);
-
-  @override
-  String toString() {
-    return 'HomeLoadFailure{e: $error}';
-  }
 }

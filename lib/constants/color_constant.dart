@@ -6,6 +6,9 @@ const mAccentTintColor = Color(0xFF7b60c4);
 const mAccentShadeColor = Color(0xFF58458c);
 const mDarkShadeColor = Color(0xFF25164d);
 const mPrimaryLightColor = Color(0xFFD8DADF);
+const mBorderColor = Color(0xFFd3d1d1);
+const mBackgroundColor = Color(0xfff9f9f9);
+const mCardShadowColor = Color(0xFFd3d1d1);
 const mPrimaryGradientColor = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,

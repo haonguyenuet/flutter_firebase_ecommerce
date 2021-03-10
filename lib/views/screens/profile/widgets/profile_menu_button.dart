@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -18,10 +19,13 @@ class ProfileMenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      padding: EdgeInsets.symmetric(
+        horizontal: SizeConfig.defaultSize * 2,
+        vertical: SizeConfig.defaultSize,
+      ),
       child: TextButton(
         style: TextButton.styleFrom(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(SizeConfig.defaultSize * 2),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           backgroundColor: Color(0xFFF5F6F9),
         ),
@@ -31,9 +35,9 @@ class ProfileMenuButton extends StatelessWidget {
             SvgPicture.asset(
               icon,
               color: mPrimaryColor,
-              width: 22,
+              width: SizeConfig.defaultSize * 2,
             ),
-            SizedBox(width: 20),
+            SizedBox(width: SizeConfig.defaultSize * 2),
             Expanded(child: Text(text, style: FONT_CONST.MEDIUM_DEFAULT)),
             Icon(Icons.arrow_forward_ios, color: mTextColor),
           ],

@@ -24,7 +24,7 @@ class RelatedProductsBloc
         final relatedProducts = products
             .where((product) => product.id != event.product.id)
             .toList();
-        yield RelatedProductsLoaded(relatedProducts: relatedProducts);
+        yield RelatedProductsLoaded(relatedProducts);
       } catch (e) {
         yield RelatedProductsLoadFailure(e.toString());
       }

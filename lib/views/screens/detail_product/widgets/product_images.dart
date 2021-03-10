@@ -21,7 +21,7 @@ class _ProductImagesState extends State<ProductImages> {
       children: [
         /// Product image preview
         Container(
-          height: getProportionateScreenWidth(230),
+          height: SizeConfig.defaultSize * 23,
           child: PageView.builder(
             itemCount: product.images.length,
             itemBuilder: (context, index) {
@@ -53,7 +53,9 @@ class _ProductImagesState extends State<ProductImages> {
       duration: mAnimationDuration,
       margin: EdgeInsets.only(right: 5),
       height: 3,
-      width: _currentPage == index ? 60 : 30,
+      width: _currentPage == index
+          ? SizeConfig.defaultSize * 6
+          : SizeConfig.defaultSize * 3,
       decoration: BoxDecoration(
         color: _currentPage == index ? mPrimaryColor : Color(0xFFD8D8D8),
       ),

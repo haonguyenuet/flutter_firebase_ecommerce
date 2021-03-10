@@ -1,8 +1,10 @@
 import 'package:e_commerce_app/business_logic/entities/feedback.dart';
 import 'package:e_commerce_app/business_logic/entities/user.dart';
 import 'package:e_commerce_app/business_logic/repository/user_repository/firebase_user_repo.dart';
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/utils.dart';
+import 'package:e_commerce_app/views/widgets/others/custom_card_widget.dart';
 import 'package:e_commerce_app/views/widgets/others/rating_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -16,14 +18,14 @@ class FeedbackCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(top: BorderSide(color: Color(0xFFF5F6F9), width: 4)),
+    return CustomCardWidget(
+      margin: EdgeInsets.symmetric(
+        vertical: SizeConfig.defaultSize * 0.5,
+        horizontal: SizeConfig.defaultSize,
       ),
       padding: EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 10,
+        horizontal: SizeConfig.defaultSize * 2,
+        vertical: SizeConfig.defaultSize,
       ),
       child: Wrap(
         direction: Axis.vertical,
@@ -43,22 +45,23 @@ class FeedbackCard extends StatelessWidget {
     return FutureBuilder(
       future: FirebaseUserRepository().getUserById(feedBack.userId),
       builder: (context, snapshot) {
-        var user = snapshot.data as UserModel;
-        return snapshot.hasData
-            ? Row(
-                children: [
-                  CircleAvatar(
-                    backgroundImage: (user.avatar.isNotEmpty
-                            ? NetworkImage(user.avatar)
-                            : AssetImage("assets/images/default_avatar.jpg"))
-                        as ImageProvider<Object>?,
-                  ),
-                  SizedBox(width: 5),
-                  // User email
-                  Text(user.email),
-                ],
-              )
-            : Center(child: CircularProgressIndicator());
+        if (snapshot.hasData) {
+          var user = snapshot.data as UserModel;
+          return Row(
+            children: [
+              CircleAvatar(
+                backgroundImage: (user.avatar.isNotEmpty
+                        ? NetworkImage(user.avatar)
+                        : AssetImage("assets/images/default_avatar.jpg"))
+                    as ImageProvider<Object>?,
+              ),
+              SizedBox(width: 5),
+              // User email
+              Text(user.email),
+            ],
+          );
+        }
+        return Center(child: CircularProgressIndicator());
       },
     );
   }
@@ -66,7 +69,7 @@ class FeedbackCard extends StatelessWidget {
   _buildRating() {
     return RatingBar(
       initialRating: feedBack.rating.toDouble(),
-      itemSize: 20,
+      itemSize: SizeConfig.defaultSize * 2,
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/business_logic/entities/category.dart';
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/views/screens/all_products/bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -77,13 +78,20 @@ class _ListCategoryState extends State<ListCategory> {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            padding: EdgeInsets.symmetric(
+              horizontal: SizeConfig.defaultSize * 2,
+              vertical: SizeConfig.defaultSize * 0.5,
+            ),
             child: Text("${category.name}", style: FONT_CONST.BOLD_DEFAULT_16),
           ),
           if (index == selectedIndex)
             Align(
               alignment: Alignment.bottomCenter,
-              child: Container(height: 3, width: 40, color: mPrimaryColor),
+              child: Container(
+                height: 3,
+                width: SizeConfig.defaultSize * 4,
+                color: mPrimaryColor,
+              ),
             )
         ],
       ),

@@ -23,12 +23,12 @@ class CartScreen extends StatelessWidget {
           icon: Icon(Icons.clear_all_rounded),
           tooltip: "Clear all",
           onPressed: () async {
-            bool response = await (MyDialog.showConfirmation(
+            bool response = await MyDialog.showConfirmation(
               context,
               title: "Clear cart",
               content: "All cart items will be deleted from your cart",
               confirmButtonText: "Delete",
-            ) as Future<bool>);
+            ) as bool;
             if (response) {
               BlocProvider.of<CartBloc>(context).add(ClearCart());
             }

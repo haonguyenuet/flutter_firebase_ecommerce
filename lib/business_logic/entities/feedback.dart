@@ -31,7 +31,7 @@ class FeedBack extends Equatable {
   static FeedBack fromMap(Map<String, dynamic> data) {
     return FeedBack(
       id: data["id"] ?? "",
-      userId: data["userId"],
+      userId: data["userId"] ?? "",
       rating: data["rating"] ?? 0,
       content: data["content"] ?? "",
       timestamp: data["timestamp"] ?? Timestamp.now(),

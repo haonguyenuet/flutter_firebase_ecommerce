@@ -61,8 +61,12 @@ class _RegisterFormState extends State<RegisterForm> {
       child: BlocBuilder<RegisterBloc, RegisterState>(
         builder: (context, state) {
           return Container(
-            margin: EdgeInsets.symmetric(horizontal: 20),
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            margin:
+                EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
+            padding: EdgeInsets.symmetric(
+              horizontal: SizeConfig.defaultSize * 2,
+              vertical: SizeConfig.defaultSize * 3,
+            ),
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(10),
@@ -78,15 +82,15 @@ class _RegisterFormState extends State<RegisterForm> {
                       style: FONT_CONST.BOLD_PRIMARY_18,
                     ),
                   ),
-                  SizedBox(height: getProportionateScreenHeight(20)),
+                  SizedBox(height: SizeConfig.defaultSize * 2),
                   _buildEmailInput(),
-                  SizedBox(height: getProportionateScreenHeight(10)),
+                  SizedBox(height: SizeConfig.defaultSize),
                   _buildPasswordInput(),
-                  SizedBox(height: getProportionateScreenHeight(10)),
+                  SizedBox(height: SizeConfig.defaultSize),
                   _buildConfirmPasswordInput(),
-                  SizedBox(height: getProportionateScreenHeight(20)),
+                  SizedBox(height: SizeConfig.defaultSize),
                   _buildButtonRegister(),
-                  SizedBox(height: getProportionateScreenHeight(20)),
+                  SizedBox(height: SizeConfig.defaultSize * 2),
                   _buildHaveAccountText(),
                 ],
               ),

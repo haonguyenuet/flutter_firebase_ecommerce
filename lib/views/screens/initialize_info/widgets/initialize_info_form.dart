@@ -24,8 +24,11 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+      margin: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
+      padding: EdgeInsets.symmetric(
+        horizontal: SizeConfig.defaultSize * 1.5,
+        vertical: SizeConfig.defaultSize * 3,
+      ),
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
         borderRadius: BorderRadius.circular(10),
@@ -41,13 +44,13 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
                 style: FONT_CONST.BOLD_PRIMARY_18,
               ),
             ),
-            SizedBox(height: getProportionateScreenHeight(20)),
+            SizedBox(height: SizeConfig.defaultSize * 2),
             _buildNameInput(),
-            SizedBox(height: getProportionateScreenHeight(10)),
+            SizedBox(height: SizeConfig.defaultSize),
             _buildPhoneNumberInput(),
-            SizedBox(height: getProportionateScreenHeight(20)),
+            SizedBox(height: SizeConfig.defaultSize * 2),
             _buildButtonContinue(),
-            SizedBox(height: getProportionateScreenHeight(10)),
+            SizedBox(height: SizeConfig.defaultSize),
             _buildHaveAccountText(),
           ],
         ),
@@ -101,7 +104,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
         } else {
           MyDialog.showInformation(
             context,
-            content: "You need complete all fields",
+            content: "You need to complete all fields",
           );
         }
       },

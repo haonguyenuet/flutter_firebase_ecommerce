@@ -1,12 +1,19 @@
 import 'package:e_commerce_app/configs/router.dart';
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/views/widgets/buttons/cart_button.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 
 class HomePersistentHeader extends SliverPersistentHeaderDelegate {
-  double _minHeaderExtent = 70;
-  double _maxHeaderExtent = 120;
+  double _mainHeaderHeight = SizeConfig.defaultSize * 4;
+  double _searchFieldHeight = SizeConfig.defaultSize * 4;
+  double _insetVertical = SizeConfig.defaultSize * 1.5;
+  double _insetHorizontal = SizeConfig.defaultSize * 1.5;
+  // _mainHeaderHeight + 2*_insetVertical
+  double _minHeaderExtent = SizeConfig.defaultSize * 7;
+  // _mainHeaderHeight + _searchFieldHeight + 2*_insetVertical + 5
+  double _maxHeaderExtent = SizeConfig.defaultSize * 11 + 5;
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -19,10 +26,10 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
       child: Stack(
         children: [
           Positioned(
-            top: 15,
-            left: 15,
-            right: 15,
-            height: 40,
+            top: _insetVertical,
+            left: _insetHorizontal,
+            right: _insetHorizontal,
+            height: _mainHeaderHeight,
             child: Row(
               children: [
                 AnimatedOpacity(
@@ -41,12 +48,12 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
             ),
           ),
           Positioned(
-            bottom: 15,
+            bottom: _insetVertical,
             left: 0,
-            height: 40,
+            height: _searchFieldHeight,
             width: size.width * rangeSearchFieldWidth,
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 15),
+              margin: EdgeInsets.symmetric(horizontal: _insetHorizontal),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 color: Colors.white,
@@ -58,7 +65,7 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: "What do you search today?",
-                  contentPadding: EdgeInsets.only(top: 3),
+                  contentPadding: EdgeInsets.all(0),
                   prefixIcon: Icon(Icons.search),
                 ),
               ),

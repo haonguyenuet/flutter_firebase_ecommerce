@@ -32,7 +32,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
   }
 
-  ///
   Stream<ProfileState> _mapLoadProfileToState(LoadProfile event) async* {
     try {
       _profileStreamSub?.cancel();
@@ -44,7 +43,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
   }
 
-  ///
   Stream<ProfileState> _mapUploadAvatarToState(UploadAvatar event) async* {
     try {
       // Get image url from firebase storage
@@ -63,27 +61,27 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Stream<ProfileState> _mapAddressListChangedToState(
       AddressListChanged event) async* {
     try {
+      // Get delivery address from event
+      var deliveryAddress = event.deliveryAddress;
       // Get current addresses
       var addresses = List<DeliveryAddress>.from(_loggedUser!.addresses!);
-      if (event.deliveryAddress.isDefault) {
+      if (deliveryAddress.isDefault) {
         addresses =
             addresses.map((item) => item.cloneWith(isDefault: false)).toList();
       }
       // Check method
       switch (event.method) {
         case ListMethod.ADD:
-          addresses.add(event.deliveryAddress);
+          addresses.add(deliveryAddress);
           break;
         case ListMethod.DELETE:
-          addresses.remove(event.deliveryAddress);
+          addresses.remove(deliveryAddress);
           break;
         case ListMethod.UPDATE:
-          addresses = addresses.map((e) {
-            if (e.id == event.deliveryAddress.id) {
-              return event.deliveryAddress;
-            }
-            return e;
+          addresses = addresses.map((item) {
+            return item.id == deliveryAddress.id ? deliveryAddress : item;
           }).toList();
+
           break;
         default:
       }
@@ -94,7 +92,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } catch (e) {}
   }
 
-  ///
   Stream<ProfileState> _mapProfileUpdatedToState(ProfileUpdated event) async* {
     try {
       _loggedUser = event.updatedUser;

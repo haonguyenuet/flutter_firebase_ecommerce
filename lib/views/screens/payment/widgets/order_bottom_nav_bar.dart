@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:e_commerce_app/views/widgets/buttons/default_button.dart';
@@ -15,12 +16,12 @@ class OrderBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        padding: EdgeInsets.all(SizeConfig.defaultSize * 2),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
+            topLeft: Radius.circular(SizeConfig.defaultSize * 3),
+            topRight: Radius.circular(SizeConfig.defaultSize * 3),
           ),
           boxShadow: [
             BoxShadow(
@@ -39,22 +40,22 @@ class OrderBottomNavBar extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(10),
-                      height: 40,
-                      width: 40,
+                      padding: EdgeInsets.all(SizeConfig.defaultSize),
+                      height: SizeConfig.defaultSize * 4,
+                      width: SizeConfig.defaultSize * 4,
                       decoration: BoxDecoration(
                         color: Color(0xFFF5F6F9),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: SvgPicture.asset("assets/icons/receipt.svg"),
                     ),
-                    SizedBox(width: 10),
+                    SizedBox(width: SizeConfig.defaultSize),
 
                     /// Total price
                     state is CartLoaded ? _buildTotalPrice(state) : Container(),
                   ],
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: SizeConfig.defaultSize * 2),
 
                 /// Checkout button
                 DefaultButton(

@@ -7,7 +7,7 @@ class LoginHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: SizeConfig.screenHeight * 0.04),
+      padding: EdgeInsets.symmetric(vertical: SizeConfig.defaultSize * 5),
       child: Column(
         children: [
           Logo(),

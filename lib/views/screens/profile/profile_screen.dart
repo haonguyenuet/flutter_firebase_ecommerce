@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/business_logic/blocs/auth/bloc.dart';
 import 'package:e_commerce_app/configs/router.dart';
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/views/screens/profile/widgets/profile_header.dart';
 import 'package:e_commerce_app/views/screens/profile/widgets/profile_menu_button.dart';
@@ -12,11 +13,11 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(vertical: 20),
+        padding: EdgeInsets.symmetric(vertical: SizeConfig.defaultSize * 2),
         child: Column(
           children: [
             ProfileHeader(),
-            SizedBox(height: 20),
+            SizedBox(height: SizeConfig.defaultSize * 2),
             ProfileMenuButton(
               text: "My Information",
               icon: "assets/icons/User Icon.svg",

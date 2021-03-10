@@ -21,7 +21,7 @@ class UserModel extends Equatable {
   final List<DeliveryAddress>? addresses;
 
   /// Get default address
-  DeliveryAddress get defaultAddress =>
+  DeliveryAddress? get defaultAddress =>
       addresses!.firstWhere((address) => address.isDefault);
 
   /// Constructor

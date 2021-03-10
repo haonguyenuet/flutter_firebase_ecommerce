@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:flutter/material.dart';
 
 class IconButtonWithCounter extends StatelessWidget {
@@ -12,7 +13,7 @@ class IconButtonWithCounter extends StatelessWidget {
 
   final int counter;
   final IconData icon;
-  final Function? onPressed;
+  final Function()? onPressed;
   final double? size;
   final Color? color;
 
@@ -31,19 +32,19 @@ class IconButtonWithCounter extends StatelessWidget {
   _buildIcon() {
     return IconButton(
       icon: Icon(icon, size: size),
-      onPressed: onPressed as void Function()?,
+      onPressed: onPressed,
       color: color,
     );
   }
 
   _buildCounter() {
     return Positioned(
-      right: 2,
-      top: 5,
+      right: 0,
+      top: 2,
       child: Container(
         alignment: Alignment.center,
-        width: 20,
-        height: 20,
+        width: SizeConfig.defaultSize * 2,
+        height: SizeConfig.defaultSize * 2,
         decoration: BoxDecoration(
           color: Colors.red,
           shape: BoxShape.circle,
@@ -54,7 +55,7 @@ class IconButtonWithCounter extends StatelessWidget {
             "${counter > 9 ? "9+" : counter}",
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 10,
+              fontSize: SizeConfig.defaultSize,
               color: Colors.white,
             ),
           ),

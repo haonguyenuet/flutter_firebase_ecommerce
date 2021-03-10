@@ -6,6 +6,7 @@ import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:e_commerce_app/views/widgets/custom_widgets.dart';
+import 'package:e_commerce_app/views/widgets/others/custom_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -19,57 +20,39 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return CustomCardWidget(
       onTap: () => Navigator.pushNamed(
         context,
         AppRouter.DETAIL_PRODUCT,
         arguments: product,
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Container(
-          padding: EdgeInsets.all(10),
-          margin: EdgeInsets.all(10),
-          width: 170,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(0, 0.5),
-                blurRadius: 5,
-                color: mDarkShadeColor.withOpacity(0.2),
-              ),
-            ],
-          ),
-          child: Stack(
-            clipBehavior: Clip.none,
+      width: SizeConfig.defaultSize * 18,
+      padding: EdgeInsets.all(SizeConfig.defaultSize),
+      margin: EdgeInsets.all(SizeConfig.defaultSize),
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Wrap(
-                spacing: 5,
-                children: [
-                  _buildProductImage(),
-                  _buildProductName(),
-                  _buildPriceAndAvailable(),
-                  _buildSoldQuantity()
-                ],
-              ),
-              // Percent off
-              if (product.percentOff > 0) _buildPercentOff(),
+              _buildProductImage(),
+              _buildProductName(),
+              _buildPriceAndAvailable(),
+              _buildSoldQuantity()
             ],
           ),
-        ),
+
+          // Percent off
+          if (product.percentOff > 0) _buildPercentOff(),
+        ],
       ),
     );
   }
 
   _buildProductImage() {
-    return AspectRatio(
+    return ShimmerImage(
       aspectRatio: 1,
-      child: ShimmerImage(
-        aspectRatio: 1,
-        imageUrl: product.images[0],
-      ),
+      imageUrl: product.images[0],
     );
   }
 
@@ -86,8 +69,8 @@ class ProductCard extends StatelessWidget {
         ),
         Container(
           padding: EdgeInsets.all(5),
-          width: getProportionateScreenWidth(20),
-          height: getProportionateScreenWidth(20),
+          width: SizeConfig.defaultSize * 2,
+          height: SizeConfig.defaultSize * 2,
           decoration: BoxDecoration(
             color: product.isAvailable ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
             shape: BoxShape.circle,
@@ -122,12 +105,12 @@ class ProductCard extends StatelessWidget {
 
   _buildPercentOff() {
     return Positioned(
-      top: -5,
-      right: -5,
+      top: 0,
+      right: 0,
       child: Container(
         alignment: Alignment.center,
-        height: 40,
-        width: 40,
+        height: SizeConfig.defaultSize * 4,
+        width: SizeConfig.defaultSize * 4,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: mPrimaryColor,

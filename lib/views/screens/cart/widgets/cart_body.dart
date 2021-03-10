@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/views/widgets/others/loading.dart';
 import 'package:e_commerce_app/views/widgets/single_card/cart_item_card.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class CartBody extends StatelessWidget {
                 : Center(
                     child: Image.asset(
                     "assets/images/empty_cart.png",
-                    width: 200,
+                    width: SizeConfig.defaultSize * 20,
                   )),
           );
         }

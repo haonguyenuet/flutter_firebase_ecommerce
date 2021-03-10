@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -21,7 +22,7 @@ class CircleIconButton extends StatelessWidget {
     return InkWell(
       onTap: onPressed as void Function()?,
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(SizeConfig.defaultSize),
         decoration: BoxDecoration(
           color: color,
           shape: BoxShape.circle,

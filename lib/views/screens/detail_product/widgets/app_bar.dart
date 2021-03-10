@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/configs/router.dart';
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/views/widgets/buttons/cart_button.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,10 @@ class DetailProductAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+        padding: EdgeInsets.symmetric(
+          vertical: SizeConfig.defaultSize * 0.5,
+          horizontal: SizeConfig.defaultSize,
+        ),
         child: Row(
           children: [
             _buildBackHomeButton(context),
@@ -27,9 +31,9 @@ class DetailProductAppBar extends StatelessWidget {
         Navigator.pushReplacementNamed(context, AppRouter.HOME);
       },
       child: Container(
-        height: 40,
-        width: 40,
-        padding: EdgeInsets.all(12),
+        height: SizeConfig.defaultSize * 4,
+        width: SizeConfig.defaultSize * 4,
+        padding: EdgeInsets.all(SizeConfig.defaultSize * 1.2),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Color(0xFFF5F6F9),

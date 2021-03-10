@@ -17,7 +17,7 @@ class OpenScreen extends AllProductsEvent {
 
   @override
   String toString() {
-    return 'OpenScreen{keyword: $category}';
+    return 'OpenScreen{category: $category}';
   }
 }
 
@@ -49,7 +49,7 @@ class CategoryChanged extends AllProductsEvent {
 
   @override
   String toString() {
-    return 'CategoryChanged{keyword: $category}';
+    return 'CategoryChanged{category: $category}';
   }
 }
 

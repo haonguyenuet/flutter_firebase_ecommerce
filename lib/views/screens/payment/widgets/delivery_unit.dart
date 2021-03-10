@@ -1,4 +1,6 @@
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -6,7 +8,7 @@ class DeliveryUnit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(15),
+      padding: EdgeInsets.all(SizeConfig.defaultSize * 1.5),
       decoration: BoxDecoration(
         color: mAccentTintColor.withOpacity(0.2),
         border: Border(
@@ -29,16 +31,12 @@ class DeliveryUnit extends StatelessWidget {
       children: [
         Row(
           children: [
-            SvgPicture.asset("assets/icons/shipped.svg", width: 24),
-            SizedBox(width: 10),
-            Text(
-              "Delivery Unit",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: mDarkShadeColor,
-              ),
+            SvgPicture.asset(
+              "assets/icons/shipped.svg",
+              width: SizeConfig.defaultSize * 2.4,
             ),
+            SizedBox(width: SizeConfig.defaultSize),
+            Text("Delivery Unit", style: FONT_CONST.MEDIUM_DEFAULT_16),
           ],
         ),
         // Text("J&T Express"),

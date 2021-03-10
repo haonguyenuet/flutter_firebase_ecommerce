@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce_app/business_logic/entities/banner.dart';
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/views/widgets/others/shimmer_image.dart';
 import 'package:flutter/material.dart';
@@ -60,8 +61,8 @@ class _HomeBannerState extends State<HomeBanner> {
 
   _buildIndicators() {
     return Positioned(
-      left: 28,
-      bottom: 6,
+      left: SizeConfig.defaultSize * 1.5,
+      bottom: SizeConfig.defaultSize * 1.5,
       child: Row(
         children: [
           ...List.generate(banners.length, (index) {
@@ -76,11 +77,11 @@ class _HomeBannerState extends State<HomeBanner> {
     return AnimatedContainer(
       duration: mAnimationDuration,
       height: isSelected ? 6 : 5,
-      width: isSelected ? 20 : 16,
-      margin: EdgeInsets.symmetric(horizontal: 4),
+      width: isSelected ? 20 : 15,
+      margin: EdgeInsets.symmetric(horizontal: 3),
       decoration: BoxDecoration(
         color: isSelected ? Colors.white : Colors.black26,
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(5),
       ),
     );
   }

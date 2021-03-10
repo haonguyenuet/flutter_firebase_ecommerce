@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/configs/router.dart';
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/constants/style_constant.dart';
@@ -17,7 +18,10 @@ class CustomBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      padding: EdgeInsets.symmetric(
+        horizontal: SizeConfig.defaultSize * 1.5,
+        vertical: SizeConfig.defaultSize,
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -102,7 +106,10 @@ class BottomMenuButton extends StatelessWidget {
       onTap: onTap as void Function()?,
       child: AnimatedContainer(
         duration: mAnimationDuration,
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: EdgeInsets.symmetric(
+          horizontal: SizeConfig.defaultSize * 2,
+          vertical: SizeConfig.defaultSize,
+        ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color:

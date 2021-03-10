@@ -6,6 +6,7 @@ import 'package:e_commerce_app/business_logic/blocs/auth/auth_state.dart';
 import 'package:e_commerce_app/configs/themes/theme.dart';
 import 'business_logic/blocs/cart/bloc.dart';
 import 'configs/router.dart';
+import 'configs/size_config.dart';
 
 class AppView extends StatefulWidget {
   @override
@@ -19,50 +20,59 @@ class _AppViewState extends State<AppView> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Peachy Ecommerce',
-      theme: theme(),
-      navigatorKey: _navigatorKey,
-      onGenerateRoute: AppRouter.generateRoute,
-      initialRoute: AppRouter.SPLASH,
-      builder: (context, child) {
-        return BlocListener<AuthenticationBloc, AuthenticationState>(
-          listener: (context, state) {
-            if (state is Uninitialized) {
-              _navigator!.pushNamedAndRemoveUntil(
-                AppRouter.SPLASH,
-                (_) => false,
-              );
-            } else if (state is Unauthenticated) {
-              _navigator!.pushNamedAndRemoveUntil(
-                AppRouter.LOGIN,
-                (_) => false,
-              );
-            } else if (state is Authenticated) {
-              var _loggedFirebaseUser = state.loggedFirebaseUser;
-              // Load cart
-              BlocProvider.of<CartBloc>(context)
-                  .add(LoadCart(_loggedFirebaseUser));
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return OrientationBuilder(
+          builder: (context, orientation) {
+            SizeConfig().init(constraints, orientation);
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Peachy Ecommerce',
+              theme: theme(),
+              navigatorKey: _navigatorKey,
+              onGenerateRoute: AppRouter.generateRoute,
+              initialRoute: AppRouter.SPLASH,
+              builder: (context, child) {
+                return BlocListener<AuthenticationBloc, AuthenticationState>(
+                  listener: (context, state) {
+                    if (state is Uninitialized) {
+                      _navigator!.pushNamedAndRemoveUntil(
+                        AppRouter.SPLASH,
+                        (_) => false,
+                      );
+                    } else if (state is Unauthenticated) {
+                      _navigator!.pushNamedAndRemoveUntil(
+                        AppRouter.LOGIN,
+                        (_) => false,
+                      );
+                    } else if (state is Authenticated) {
+                      var _loggedFirebaseUser = state.loggedFirebaseUser;
+                      // Load cart
+                      BlocProvider.of<CartBloc>(context)
+                          .add(LoadCart(_loggedFirebaseUser));
 
-              // Load profile
-              BlocProvider.of<ProfileBloc>(context)
-                  .add(LoadProfile(_loggedFirebaseUser));
+                      // Load profile
+                      BlocProvider.of<ProfileBloc>(context)
+                          .add(LoadProfile(_loggedFirebaseUser));
 
-              // Go to login success screen
-              _navigator!.pushNamedAndRemoveUntil(
-                AppRouter.LOGIN_SUCCESS,
-                (_) => false,
-              );
-            } else {
-              // default case
-              _navigator!.pushNamedAndRemoveUntil(
-                AppRouter.SPLASH,
-                (_) => false,
-              );
-            }
+                      // Go to login success screen
+                      _navigator!.pushNamedAndRemoveUntil(
+                        AppRouter.LOGIN_SUCCESS,
+                        (_) => false,
+                      );
+                    } else {
+                      // default case
+                      _navigator!.pushNamedAndRemoveUntil(
+                        AppRouter.SPLASH,
+                        (_) => false,
+                      );
+                    }
+                  },
+                  child: child,
+                );
+              },
+            );
           },
-          child: child,
         );
       },
     );

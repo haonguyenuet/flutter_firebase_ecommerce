@@ -57,10 +57,13 @@ class _LoginFormState extends State<LoginForm> {
       child: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
           return Container(
-            margin: EdgeInsets.symmetric(horizontal: 20),
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            margin:
+                EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
+            padding: EdgeInsets.symmetric(
+              horizontal: SizeConfig.defaultSize * 1.5,
+              vertical: SizeConfig.defaultSize * 3,
+            ),
             decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(10),
               color: Colors.white,
             ),
@@ -74,22 +77,22 @@ class _LoginFormState extends State<LoginForm> {
                       style: FONT_CONST.BOLD_PRIMARY_18,
                     ),
                   ),
-                  SizedBox(height: getProportionateScreenHeight(10)),
+                  SizedBox(height: SizeConfig.defaultSize * 2),
                   _buildTextFieldUsername(),
-                  SizedBox(height: getProportionateScreenHeight(10)),
+                  SizedBox(height: SizeConfig.defaultSize),
                   _buildTextFieldPassword(),
-                  SizedBox(height: getProportionateScreenHeight(10)),
+                  SizedBox(height: SizeConfig.defaultSize),
                   Align(
                     alignment: Alignment.centerRight,
                     child: Text('Forgot password ?'),
                   ),
-                  SizedBox(height: getProportionateScreenHeight(20)),
+                  SizedBox(height: SizeConfig.defaultSize * 2),
                   _buildButtonLogin(state),
-                  SizedBox(height: getProportionateScreenHeight(20)),
+                  SizedBox(height: SizeConfig.defaultSize * 2),
                   _buildTextOr(),
-                  SizedBox(height: getProportionateScreenHeight(20)),
+                  SizedBox(height: SizeConfig.defaultSize * 2),
                   _buildSocialLogin(),
-                  SizedBox(height: getProportionateScreenHeight(20)),
+                  SizedBox(height: SizeConfig.defaultSize * 2),
                   _buildNoAccountText(),
                 ],
               ),
@@ -176,7 +179,10 @@ class _LoginFormState extends State<LoginForm> {
           child: Container(
             color: Colors.white,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+              padding: EdgeInsets.symmetric(
+                horizontal: SizeConfig.defaultSize,
+                vertical: 0,
+              ),
               child: Text('Or'),
             ),
           ),
@@ -187,11 +193,11 @@ class _LoginFormState extends State<LoginForm> {
 
   _buildSocialLogin() {
     return Container(
-      height: 60,
+      height: SizeConfig.defaultSize * 6,
       child: Row(
         children: <Widget>[
           GoogleLoginButton(),
-          SizedBox(width: 20),
+          SizedBox(width: SizeConfig.defaultSize * 2),
           FacebookLoginButton(),
         ],
       ),

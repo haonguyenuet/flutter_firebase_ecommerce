@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,18 +39,17 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => AuthenticationBloc(
-              authRepository: _authRepository,
-            )..add(AppStarted()),
+            create: (context) =>
+                AuthenticationBloc(authRepository: _authRepository)
+                  ..add(AppStarted()),
           ),
           BlocProvider(
             create: (context) => CartBloc(cartRepository: _cartRepository),
           ),
           BlocProvider(
             create: (context) => ProfileBloc(
-              userRepository: _userRepository,
-              storageRepository: _storageRepository,
-            ),
+                userRepository: _userRepository,
+                storageRepository: _storageRepository),
           ),
         ],
         child: AppView(),

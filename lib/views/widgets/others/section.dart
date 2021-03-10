@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -31,12 +32,10 @@ class Section extends StatelessWidget {
               ? CircularProgressIndicator()
               : SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: children,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: children,
                   ),
                 ),
         ),
@@ -59,7 +58,12 @@ class SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 20, right: 20, bottom: 5, top: 20),
+      padding: EdgeInsets.only(
+        left: SizeConfig.defaultSize * 2,
+        right: SizeConfig.defaultSize * 2,
+        bottom: SizeConfig.defaultSize * 0.5,
+        top: SizeConfig.defaultSize * 2,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -69,7 +73,7 @@ class SectionTitle extends StatelessWidget {
           ),
           // See more button
           InkWell(
-            child: Text('See all', style: FONT_CONST.BOLD_PRIMARY),
+            child: Text('See all', style: FONT_CONST.BOLD_PRIMARY_16),
             onTap: handleOnSeeAll,
           )
         ],

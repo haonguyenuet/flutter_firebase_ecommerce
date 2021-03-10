@@ -9,7 +9,7 @@ abstract class ProfileEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-///
+/// Load profile of logged firebase user in firestore
 class LoadProfile extends ProfileEvent {
   final User loggedFirebaseUser;
 
@@ -18,7 +18,7 @@ class LoadProfile extends ProfileEvent {
   List<Object?> get props => [loggedFirebaseUser];
 }
 
-///
+/// Upload user avatar
 class UploadAvatar extends ProfileEvent {
   final File imageFile;
 
@@ -27,7 +27,7 @@ class UploadAvatar extends ProfileEvent {
   List<Object> get props => [imageFile];
 }
 
-///
+/// Delivery addresses changed
 class AddressListChanged extends ProfileEvent {
   final DeliveryAddress deliveryAddress;
   final ListMethod method;
@@ -37,7 +37,7 @@ class AddressListChanged extends ProfileEvent {
   List<Object> get props => [deliveryAddress, method];
 }
 
-///
+/// Profile was updated
 class ProfileUpdated extends ProfileEvent {
   final UserModel updatedUser;
 

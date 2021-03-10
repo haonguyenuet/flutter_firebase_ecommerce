@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
 import 'package:e_commerce_app/configs/router.dart';
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,7 +19,7 @@ class CartButton extends StatelessWidget {
             icon: Icons.shopping_bag_outlined,
             onPressed: () => Navigator.pushNamed(context, AppRouter.CART),
             counter: state is CartLoaded ? state.cart.length : 0,
-            size: 30,
+            size: SizeConfig.defaultSize * 3,
             color: color,
           );
         });

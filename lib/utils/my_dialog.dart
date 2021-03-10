@@ -51,6 +51,7 @@ class MyDialog {
   }) {
     return showDialog<bool>(
       context: context,
+      barrierDismissible: false,
       builder: (context) => AlertDialog(
         title: Text(
           title,

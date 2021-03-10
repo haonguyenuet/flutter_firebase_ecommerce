@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_dialog.dart';
 import 'package:e_commerce_app/views/screens/all_products/bloc/bloc.dart';
@@ -35,7 +36,7 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("Sort by:"),
-                SizedBox(width: 10),
+                SizedBox(width: SizeConfig.defaultSize),
                 RadioListTile(
                   title: Text("Price"),
                   value: PRODUCT_SORT_BY.PRICE,
@@ -61,7 +62,7 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("Sort order:"),
-                SizedBox(width: 10),
+                SizedBox(width: SizeConfig.defaultSize),
                 RadioListTile(
                   title: Text("Descending"),
                   value: PRODUCT_SORT_ORDER.DESCENDING,
@@ -82,7 +83,7 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            SizedBox(height: SizeConfig.defaultSize),
             DefaultButton(
               onPressed: () {
                 // Because productSortOrder default is descending, so it's not null

@@ -1,4 +1,6 @@
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
+import 'package:e_commerce_app/configs/size_config.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/views/screens/feedbacks/bloc/bloc.dart';
 import 'package:e_commerce_app/views/screens/feedbacks/widgets/feedback_bottom_sheet.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,10 @@ class FeedbackAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: mDarkShadeColor,
-      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      padding: EdgeInsets.symmetric(
+        vertical: SizeConfig.defaultSize * 0.5,
+        horizontal: SizeConfig.defaultSize,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -43,11 +48,7 @@ class FeedbackAppBar extends StatelessWidget {
   _buildTitle() {
     return Text(
       'Feedbacks',
-      style: TextStyle(
-        fontSize: 20,
-        color: Colors.white,
-        fontWeight: FontWeight.bold,
-      ),
+      style: FONT_CONST.BOLD_WHITE_18,
     );
   }
 

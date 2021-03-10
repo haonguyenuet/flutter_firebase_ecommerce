@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
 import 'package:e_commerce_app/configs/router.dart';
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_dialog.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
@@ -17,7 +18,7 @@ class CheckoutBottom extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        padding: EdgeInsets.all(SizeConfig.defaultSize * 2),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -43,19 +44,19 @@ class CheckoutBottom extends StatelessWidget {
                   children: [
                     Container(
                       padding: EdgeInsets.all(10),
-                      height: 40,
-                      width: 40,
+                      height: SizeConfig.defaultSize * 4,
+                      width: SizeConfig.defaultSize * 4,
                       decoration: BoxDecoration(
                         color: Color(0xFFF5F6F9),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: SvgPicture.asset("assets/icons/receipt.svg"),
                     ),
-                    SizedBox(width: 15),
+                    SizedBox(width: SizeConfig.defaultSize * 1.5),
                     _buildTotalPrice(state),
                   ],
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: SizeConfig.defaultSize * 2),
                 _buildCheckoutButton(state, context),
               ],
             );
