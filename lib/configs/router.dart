@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
-import 'package:e_commerce_app/views/screens/delivery_address/delivery_address_screen.dart';
-import 'package:e_commerce_app/views/screens/all_products/all_products_screen.dart';
-import 'package:e_commerce_app/views/screens/cart/cart_screen.dart';
-import 'package:e_commerce_app/views/screens/detail_product/detail_product_screen.dart';
-import 'package:e_commerce_app/views/screens/feedbacks/feedbacks_screen.dart';
-import 'package:e_commerce_app/views/screens/initialize_info/initialize_info_screen.dart';
-import 'package:e_commerce_app/views/screens/login_success/login_success_screen.dart';
-import 'package:e_commerce_app/views/screens/payment/payment_screen.dart';
-import 'package:e_commerce_app/views/screens/profile/profile_screen.dart';
-import 'package:e_commerce_app/views/screens/home_page/home_screen.dart';
-import 'package:e_commerce_app/views/screens/login/login_screen.dart';
-import 'package:e_commerce_app/views/screens/register/register_screen.dart';
-import 'package:e_commerce_app/views/screens/splash/splash_screen.dart';
+import 'package:e_commerce_app/presentation/screens/delivery_address/delivery_address_screen.dart';
+import 'package:e_commerce_app/presentation/screens/all_products/all_products_screen.dart';
+import 'package:e_commerce_app/presentation/screens/cart/cart_screen.dart';
+import 'package:e_commerce_app/presentation/screens/detail_product/detail_product_screen.dart';
+import 'package:e_commerce_app/presentation/screens/feedbacks/feedbacks_screen.dart';
+import 'package:e_commerce_app/presentation/screens/initialize_info/initialize_info_screen.dart';
+import 'package:e_commerce_app/presentation/screens/login_success/login_success_screen.dart';
+import 'package:e_commerce_app/presentation/screens/payment/payment_screen.dart';
+import 'package:e_commerce_app/presentation/screens/profile/profile_screen.dart';
+import 'package:e_commerce_app/presentation/screens/home_page/home_screen.dart';
+import 'package:e_commerce_app/presentation/screens/login/login_screen.dart';
+import 'package:e_commerce_app/presentation/screens/register/register_screen.dart';
+import 'package:e_commerce_app/presentation/screens/splash/splash_screen.dart';
 
 class AppRouter {
-  static const String HOME = '/';
+  static const String HOME = '/home';
   static const String SPLASH = '/splash';
   static const String LOGIN = '/login';
   static const String INITIALIZE_INFO = '/initialize_info';
