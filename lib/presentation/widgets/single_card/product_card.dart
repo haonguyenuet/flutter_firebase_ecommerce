@@ -28,7 +28,7 @@ class ProductCard extends StatelessWidget {
       ),
       width: SizeConfig.defaultSize * 18,
       padding: EdgeInsets.all(SizeConfig.defaultSize),
-      margin: EdgeInsets.all(SizeConfig.defaultSize),
+      margin: EdgeInsets.all(SizeConfig.defaultSize * 0.5),
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -65,7 +65,7 @@ class ProductCard extends StatelessWidget {
       children: [
         Text(
           "${formatNumber(product.price)}₫",
-          style: FONT_CONST.REGULAR_PRIMARY,
+          style: FONT_CONST.MEDIUM_PRIMARY,
         ),
         Container(
           padding: EdgeInsets.all(5),

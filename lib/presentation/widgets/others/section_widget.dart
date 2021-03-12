@@ -3,12 +3,12 @@ import 'package:e_commerce_app/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 /// A section
-class Section extends StatelessWidget {
+class SectionWidget extends StatelessWidget {
   final String title;
   final List<Widget> children;
   final Function()? handleOnSeeAll;
 
-  const Section({
+  const SectionWidget({
     required this.title,
     required this.children,
     this.handleOnSeeAll,
@@ -32,10 +32,15 @@ class Section extends StatelessWidget {
               ? CircularProgressIndicator()
               : SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: children,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: SizeConfig.defaultSize,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: children,
+                    ),
                   ),
                 ),
         ),
@@ -59,8 +64,8 @@ class SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-        left: SizeConfig.defaultSize * 2,
-        right: SizeConfig.defaultSize * 2,
+        left: SizeConfig.defaultSize * 1.5,
+        right: SizeConfig.defaultSize * 1.5,
         bottom: SizeConfig.defaultSize * 0.5,
         top: SizeConfig.defaultSize * 2,
       ),

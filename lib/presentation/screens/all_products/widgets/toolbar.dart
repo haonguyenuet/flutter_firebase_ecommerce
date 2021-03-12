@@ -107,7 +107,9 @@ class _ToolBarState extends State<ToolBar> {
           textInputAction: TextInputAction.search,
           decoration: InputDecoration(
             hintText: 'Search',
-            contentPadding: EdgeInsets.only(top: 0),
+            hintStyle: FONT_CONST.REGULAR_DEFAULT_18,
+            prefixStyle: FONT_CONST.REGULAR_DEFAULT_18,
+            contentPadding: EdgeInsets.all(0),
             prefixIcon: Icon(Icons.search),
             border: InputBorder.none,
           ),

@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/business_logic/entities/user.dart';
 import 'package:e_commerce_app/constants/constants.dart';
+import 'package:e_commerce_app/presentation/widgets/others/custom_card_widget.dart';
 import 'package:e_commerce_app/utils/utils.dart';
 import 'package:e_commerce_app/presentation/widgets/buttons/default_button.dart';
 import 'package:flutter/material.dart';
@@ -23,16 +24,11 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return CustomCardWidget(
       margin: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
       padding: EdgeInsets.symmetric(
         horizontal: SizeConfig.defaultSize * 1.5,
         vertical: SizeConfig.defaultSize * 3,
-      ),
-      decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
       ),
       child: Form(
         child: Column(
@@ -93,6 +89,8 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
           UserModel initialUser = UserModel(
             id: "",
             email: "",
+            avatar: "",
+            addresses: [],
             name: _nameController.text,
             phoneNumber: _phoneNumberController.text,
           );
@@ -126,7 +124,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
             ),
             child: Text(
               'Sign in',
-              style: FONT_CONST.REGULAR_PRIMARY,
+              style: FONT_CONST.MEDIUM_PRIMARY_16,
             ),
           ),
         ],

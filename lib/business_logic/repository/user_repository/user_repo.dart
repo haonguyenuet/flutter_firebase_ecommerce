@@ -21,28 +21,4 @@ abstract class UserRepository {
   /// [user] is updated data of user
   /// Created by NDH
   Future<void> updateUserData(UserModel updatedUser);
-
-  /// DeliveryAddress stream
-  /// [uid] is user id
-  /// Created by NDH
-  Stream<List<DeliveryAddress>> addressesStream(String uid);
-
-  /// Add item
-  /// [uid] is user id
-  /// [newItem] is data of new delivery address
-  /// Created by NDH
-  Future<void> addDeliveryAddress(
-    String uid,
-    DeliveryAddress deliveryAddress,
-  );
-
-  /// Remove item
-  /// [uid] is user id
-  /// [cartItem] is data of delivery address
-  /// Created by NDH
-  Future<void> removeDeliveryAddress(
-    String uid,
-    DeliveryAddress deliveryAddress,
-  );
-
 }

@@ -19,16 +19,15 @@ class FirebaseAuthRepository implements AuthRepository {
   /// Created by NDH
   Future<void> signUp(UserModel newUser, String password) async {
     try {
-      var result = await _firebaseAuth.createUserWithEmailAndPassword(
+      var userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: newUser.email,
         password: password,
       );
+      // Add id for new user
+      newUser = newUser.cloneWith(id: userCredential.user!.uid);
 
-      /// Add id for new user
-      newUser = newUser.cloneWith(id: result.user!.uid);
-
-      /// Create new doc in users collection
-      _userRepository.addUserData(newUser);
+      // Create new doc in users collection
+      await _userRepository.addUserData(newUser);
     } on FirebaseAuthException catch (e) {
       _authException = e.message.toString();
     }

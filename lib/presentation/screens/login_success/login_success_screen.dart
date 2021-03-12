@@ -76,6 +76,9 @@ class LoginSuccessScreen extends StatelessWidget {
             ),
           );
         }
+        if (state is ProfileLoading) {
+          return Loading();
+        }
         return Center(child: Text("Something went wrongs."));
       },
     );

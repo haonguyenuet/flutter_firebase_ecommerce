@@ -14,8 +14,8 @@ class LoginScreen extends StatelessWidget {
         authRepository: RepositoryProvider.of<AuthRepository>(context),
       ),
       child: Scaffold(
-        backgroundColor: mAccentShadeColor,
-        body: SafeArea(
+        body: Container(
+          decoration: BoxDecoration(gradient: mPrimaryGradientColor),
           child: ListView(
             children: [
               LoginHeader(),

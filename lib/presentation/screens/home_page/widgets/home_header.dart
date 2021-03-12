@@ -65,7 +65,9 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: "What do you search today?",
-                  contentPadding: EdgeInsets.only(bottom: 0),
+                  hintStyle: FONT_CONST.REGULAR_DEFAULT_18,
+                  prefixStyle: FONT_CONST.REGULAR_DEFAULT_18,
+                  contentPadding: EdgeInsets.all(0),
                   prefixIcon: Icon(Icons.search),
                 ),
               ),

@@ -31,7 +31,10 @@ class FirebaseUserRepository implements UserRepository {
   /// [user] is data of new user
   /// Created by NDH
   Future<void> addUserData(UserModel newUser) async {
-    await _userCollection.doc(newUser.id).set(newUser.toMap());
+    await _userCollection
+        .doc(newUser.id)
+        .set(newUser.toMap())
+        .catchError((error) => print(error));
   }
 
   /// Update a doc in users collection
@@ -44,41 +47,5 @@ class FirebaseUserRepository implements UserRepository {
         await doc.reference.update(updatedUser.toMap());
       }
     }).catchError((error) {});
-  }
-
-  /// Get all delivery address
-  Stream<List<DeliveryAddress>> addressesStream(String uid) {
-    return _userCollection.doc(uid).collection("addresses").snapshots().map(
-        (snapshot) => snapshot.docs
-            .map((doc) => DeliveryAddress.fromMap(doc.data()!))
-            .toList());
-  }
-
-  /// Add item
-  /// Created by NDH
-  Future<void> addDeliveryAddress(
-    String uid,
-    DeliveryAddress deliveryAddress,
-  ) async {
-    await _userCollection
-        .doc(uid)
-        .collection("addresses")
-        .doc(deliveryAddress.id)
-        .set(deliveryAddress.toMap())
-        .catchError((error) {});
-  }
-
-  /// Remove item
-  /// Created by NDH
-  Future<void> removeDeliveryAddress(
-    String uid,
-    DeliveryAddress addressesItem,
-  ) async {
-    await _userCollection
-        .doc(uid)
-        .collection("addresses")
-        .doc(addressesItem.id)
-        .delete()
-        .catchError((error) {});
   }
 }

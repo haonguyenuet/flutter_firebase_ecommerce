@@ -20,25 +20,21 @@ class CategoryCard extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Stack(
-            children: [
-              ShimmerImage(
-                imageUrl: category.imageUrl,
-                height: SizeConfig.defaultSize * 9,
+        child: Stack(
+          children: [
+            ShimmerImage(
+              borderRadius: BorderRadius.circular(10),
+              imageUrl: category.imageUrl,
+            ),
+            Positioned(
+              bottom: -SizeConfig.defaultSize * 2,
+              left: SizeConfig.defaultSize * 2,
+              child: Text(
+                "${category.name}\n",
+                style: FONT_CONST.BOLD_WHITE_18,
               ),
-              Positioned(
-                bottom: -SizeConfig.defaultSize * 2,
-                left: SizeConfig.defaultSize * 2,
-                child: Text(
-                  "${category.name}\n",
-                  style: FONT_CONST.BOLD_WHITE_16,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

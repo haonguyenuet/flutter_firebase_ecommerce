@@ -38,7 +38,7 @@ class ProfileMenuButton extends StatelessWidget {
               width: SizeConfig.defaultSize * 2,
             ),
             SizedBox(width: SizeConfig.defaultSize * 2),
-            Expanded(child: Text(text, style: FONT_CONST.MEDIUM_DEFAULT)),
+            Expanded(child: Text(text, style: FONT_CONST.MEDIUM_DEFAULT_16)),
             Icon(Icons.arrow_forward_ios, color: mTextColor),
           ],
         ),

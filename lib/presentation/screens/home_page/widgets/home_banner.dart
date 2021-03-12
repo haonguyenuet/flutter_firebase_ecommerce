@@ -23,7 +23,8 @@ class _HomeBannerState extends State<HomeBanner> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: mDarkShadeColor,
+      padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
+      decoration: BoxDecoration(gradient: mPrimaryGradientColor),
       child: Stack(
         children: <Widget>[
           /// Banner images
@@ -47,6 +48,7 @@ class _HomeBannerState extends State<HomeBanner> {
               return ShimmerImage(
                 aspectRatio: aspectRatioBanner,
                 imageUrl: banner.imageUrl,
+                borderRadius: BorderRadius.circular(10),
                 fit: BoxFit.contain,
               );
             }).toList(),
@@ -61,8 +63,8 @@ class _HomeBannerState extends State<HomeBanner> {
 
   _buildIndicators() {
     return Positioned(
-      left: SizeConfig.defaultSize * 1.5,
-      bottom: SizeConfig.defaultSize * 1.5,
+      top: SizeConfig.defaultSize * 1.5,
+      right: SizeConfig.defaultSize * 1.5,
       child: Row(
         children: [
           ...List.generate(banners.length, (index) {
@@ -76,11 +78,11 @@ class _HomeBannerState extends State<HomeBanner> {
   _buildIndicatorNormal(bool isSelected) {
     return AnimatedContainer(
       duration: mAnimationDuration,
-      height: isSelected ? 6 : 5,
-      width: isSelected ? 20 : 15,
+      height: SizeConfig.defaultSize,
+      width: SizeConfig.defaultSize,
       margin: EdgeInsets.symmetric(horizontal: 3),
       decoration: BoxDecoration(
-        color: isSelected ? Colors.white : Colors.black26,
+        color: isSelected ? Colors.white : mDarkShadeColor,
         borderRadius: BorderRadius.circular(5),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/business_logic/blocs/profile/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/delivery_address.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/others/loading.dart';
 import 'package:e_commerce_app/presentation/widgets/single_card/delivery_address_card.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,8 @@ class DeliveryAddressScreen extends StatelessWidget {
               return Loading();
             }
             if (state is ProfileLoaded) {
-              var addressList = state.loggedUser.addresses!;
-              return addressList.length > 0
+              var addressList = state.loggedUser.addresses;
+              return addressList.isNotEmpty
                   ? ListView.builder(
                       itemCount: addressList.length,
                       itemBuilder: (context, index) {
@@ -33,7 +34,7 @@ class DeliveryAddressScreen extends StatelessWidget {
                         );
                       },
                     )
-                  : Container();
+                  : _buildNoAddress(context);
             }
             if (state is ProfileLoadFailure) {
               return Center(child: Text("Load Failure"));
@@ -55,6 +56,21 @@ class DeliveryAddressScreen extends StatelessWidget {
           onPressed: () => _openModalBottomSheet(context),
         ),
       ],
+    );
+  }
+
+  _buildNoAddress(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+          Image.asset("assets/images/add_address.jpg"),
+          TextButton(
+            onPressed: () => _openModalBottomSheet(context),
+            style: TextButton.styleFrom(backgroundColor: mPrimaryColor),
+            child: Text("Add new address", style: FONT_CONST.REGULAR_WHITE),
+          )
+        ],
+      ),
     );
   }
 

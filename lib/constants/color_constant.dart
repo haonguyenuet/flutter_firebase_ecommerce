@@ -10,9 +10,9 @@ const mBorderColor = Color(0xFFd3d1d1);
 const mBackgroundColor = Color(0xfff9f9f9);
 const mCardShadowColor = Color(0xFFd3d1d1);
 const mPrimaryGradientColor = LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: [Color.fromRGBO(107, 53, 189, 1), Color.fromRGBO(67, 53, 175, 1)]);
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [Color(0xFF25164d), Colors.white]);
 const mSecondaryColor = Color(0xFF979797);
 const mTextColor = Color(0xFF757575);
 

@@ -64,7 +64,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       // Get delivery address from event
       var deliveryAddress = event.deliveryAddress;
       // Get current addresses
-      var addresses = List<DeliveryAddress>.from(_loggedUser!.addresses!);
+      var addresses = List<DeliveryAddress>.from(_loggedUser!.addresses);
       if (deliveryAddress.isDefault) {
         addresses =
             addresses.map((item) => item.cloneWith(isDefault: false)).toList();

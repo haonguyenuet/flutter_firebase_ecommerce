@@ -8,7 +8,8 @@ class InitializeInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: mAccentShadeColor,
-      body: SafeArea(
+      body: Container(
+        decoration: BoxDecoration(gradient: mPrimaryGradientColor),
         child: ListView(
           children: [
             InitializeInfoHeader(),

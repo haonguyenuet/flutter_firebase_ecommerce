@@ -99,7 +99,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         final message = _authRepository.authException;
         yield RegisterState.failure(message);
       }
-    } catch (_) {
+    } catch (e) {
       yield RegisterState.failure("Register Failure");
     }
   }

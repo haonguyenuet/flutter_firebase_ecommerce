@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/business_logic/blocs/auth/bloc.dart';
 import 'package:e_commerce_app/constants/constants.dart';
+import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/utils/my_dialog.dart';
 import 'package:e_commerce_app/utils/utils.dart';
 import 'package:e_commerce_app/presentation/screens/login/bloc/bloc.dart';
@@ -10,7 +11,6 @@ import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/presentation/screens/login/widgets/facebook_login_btn.dart';
 import 'package:e_commerce_app/presentation/screens/login/widgets/google_login_btn.dart';
-import 'package:e_commerce_app/presentation/widgets/buttons/default_button.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -56,16 +56,12 @@ class _LoginFormState extends State<LoginForm> {
       },
       child: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
-          return Container(
+          return CustomCardWidget(
             margin:
                 EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
             padding: EdgeInsets.symmetric(
               horizontal: SizeConfig.defaultSize * 1.5,
               vertical: SizeConfig.defaultSize * 3,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
             ),
             child: Form(
               child: Column(
@@ -218,7 +214,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
             child: Text(
               'Register',
-              style: FONT_CONST.REGULAR_PRIMARY,
+              style: FONT_CONST.MEDIUM_PRIMARY_16,
             ),
           ),
         ],

@@ -18,20 +18,23 @@ class UserModel extends Equatable {
   /// The user's phone number
   final String phoneNumber;
 
-  final List<DeliveryAddress>? addresses;
+  final List<DeliveryAddress> addresses;
 
   /// Get default address
-  DeliveryAddress? get defaultAddress =>
-      addresses!.firstWhere((address) => address.isDefault);
+  DeliveryAddress? get defaultAddress {
+    return addresses.isEmpty
+        ? null
+        : addresses.firstWhere((address) => address.isDefault);
+  }
 
   /// Constructor
   const UserModel({
     required this.email,
     required this.id,
-    this.name = "",
-    this.avatar = "",
-    this.phoneNumber = "",
-    this.addresses,
+    required this.name,
+    required this.avatar,
+    required this.phoneNumber,
+    required this.addresses,
   });
 
   /// Json data from server turns into model data
@@ -57,7 +60,7 @@ class UserModel extends Equatable {
       "avatar": this.avatar,
       "phoneNumber": this.phoneNumber,
       "addresses":
-          List<dynamic>.from(this.addresses!.map((item) => item.toMap()))
+          List<dynamic>.from(this.addresses.map((item) => item.toMap()))
     };
   }
 

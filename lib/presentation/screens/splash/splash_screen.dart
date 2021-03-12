@@ -6,17 +6,15 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SizedBox(
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Logo(),
-              SizedBox(height: SizeConfig.defaultSize), // 10
-              CircularProgressIndicator(),
-            ],
-          ),
+      body: SizedBox(
+        width: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Logo(),
+            SizedBox(height: SizeConfig.defaultSize), // 10
+            CircularProgressIndicator(),
+          ],
         ),
       ),
     );

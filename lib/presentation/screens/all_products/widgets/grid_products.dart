@@ -23,6 +23,7 @@ class GridProducts extends StatelessWidget {
           if (state.products!.length > 0) {
             var products = state.products!;
             return GridView.builder(
+              shrinkWrap: true,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 15 / 21,

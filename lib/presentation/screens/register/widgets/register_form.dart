@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/business_logic/blocs/auth/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:e_commerce_app/constants/constants.dart';
+import 'package:e_commerce_app/presentation/widgets/others/custom_card_widget.dart';
 import 'package:e_commerce_app/utils/utils.dart';
 import 'package:e_commerce_app/presentation/screens/register/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
@@ -60,17 +61,12 @@ class _RegisterFormState extends State<RegisterForm> {
       },
       child: BlocBuilder<RegisterBloc, RegisterState>(
         builder: (context, state) {
-          return Container(
+          return CustomCardWidget(
             margin:
                 EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
             padding: EdgeInsets.symmetric(
-              horizontal: SizeConfig.defaultSize * 2,
+              horizontal: SizeConfig.defaultSize * 1.5,
               vertical: SizeConfig.defaultSize * 3,
-            ),
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
             ),
             child: Form(
               child: Column(
@@ -219,7 +215,7 @@ class _RegisterFormState extends State<RegisterForm> {
             ),
             child: Text(
               'Sign in',
-              style: FONT_CONST.REGULAR_PRIMARY,
+              style: FONT_CONST.MEDIUM_PRIMARY_16,
             ),
           ),
         ],

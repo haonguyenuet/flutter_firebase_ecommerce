@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:e_commerce_app/configs/router.dart';
+import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/presentation/screens/home_page/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/screens/home_page/widgets/home_banner.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
@@ -40,7 +41,7 @@ class HomeBody extends StatelessWidget {
   }
 
   _buildPopularProducts(BuildContext context, List<Product> popularProducts) {
-    return Section(
+    return SectionWidget(
       title: "Popular products",
       children: popularProducts.map((p) => ProductCard(product: p)).toList(),
       handleOnSeeAll: () => navigatorToAllProducts(context),
@@ -48,7 +49,7 @@ class HomeBody extends StatelessWidget {
   }
 
   _buildDiscountProducts(BuildContext context, List<Product> discountProducts) {
-    return Section(
+    return SectionWidget(
       title: "Discount products",
       children: discountProducts.map((p) => ProductCard(product: p)).toList(),
       handleOnSeeAll: () => navigatorToAllProducts(context),
@@ -56,14 +57,36 @@ class HomeBody extends StatelessWidget {
   }
 
   _buildHomeCategories(BuildContext context, List<Category> categories) {
-    return Section(
-      title: "Product Categories",
-      children: categories
-          .map((c) => CategoryCard(
-              category: c,
-              onPressed: () => navigatorToAllProducts(context, category: c)))
-          .toList(),
-      handleOnSeeAll: () => navigatorToAllProducts(context),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SectionTitle(
+          title: "Product Categories",
+          handleOnSeeAll: () => navigatorToAllProducts(context),
+        ),
+        Padding(
+          padding:
+              EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
+          child: GridView.builder(
+            itemCount: categories.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: SizeConfig.defaultSize,
+              crossAxisSpacing: SizeConfig.defaultSize,
+              childAspectRatio: 931 / 485,
+            ),
+            itemBuilder: (context, index) {
+              return CategoryCard(
+                category: categories[index],
+                onPressed: () => navigatorToAllProducts(context,
+                    category: categories[index]),
+              );
+            },
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+          ),
+        ),
+      ],
     );
   }
 

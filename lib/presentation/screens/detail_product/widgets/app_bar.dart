@@ -11,8 +11,8 @@ class DetailProductAppBar extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.symmetric(
-          vertical: SizeConfig.defaultSize * 0.5,
-          horizontal: SizeConfig.defaultSize,
+          vertical: SizeConfig.defaultSize,
+          horizontal: SizeConfig.defaultSize * 1.5,
         ),
         child: Row(
           children: [

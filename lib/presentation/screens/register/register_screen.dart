@@ -20,8 +20,8 @@ class RegisterScreen extends StatelessWidget {
         authRepository: RepositoryProvider.of<AuthRepository>(context),
       ),
       child: Scaffold(
-        backgroundColor: mAccentShadeColor,
-        body: SafeArea(
+        body: Container(
+          decoration: BoxDecoration(gradient: mPrimaryGradientColor),
           child: ListView(
             children: [
               RegisterHeader(),

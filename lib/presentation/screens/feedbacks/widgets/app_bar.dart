@@ -13,8 +13,8 @@ class FeedbackAppBar extends StatelessWidget {
     return Container(
       color: mDarkShadeColor,
       padding: EdgeInsets.symmetric(
-        vertical: SizeConfig.defaultSize * 0.5,
-        horizontal: SizeConfig.defaultSize,
+        vertical: SizeConfig.defaultSize,
+        horizontal: SizeConfig.defaultSize * 1.5,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

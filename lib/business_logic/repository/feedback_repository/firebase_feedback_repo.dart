@@ -63,7 +63,7 @@ class FirebaseFeedbackRepository implements FeedbackRepository {
     var productRef = productCollection.doc(pid);
     await productRef
         .collection("feedbacks")
-        .doc()
+        .doc(newItem.id)
         .set(newItem.toMap())
         .catchError((error) => print(error));
   }
