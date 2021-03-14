@@ -1,7 +1,8 @@
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:e_commerce_app/business_logic/repository/repository.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/screens/feedbacks/bloc/bloc.dart';
-import 'package:e_commerce_app/presentation/screens/feedbacks/widgets/app_bar.dart';
+import 'package:e_commerce_app/presentation/screens/feedbacks/widgets/feedback_bottom_sheet.dart';
 import 'package:e_commerce_app/presentation/screens/feedbacks/widgets/header.dart';
 import 'package:e_commerce_app/presentation/screens/feedbacks/widgets/list_feedbacks.dart';
 import 'package:flutter/material.dart';
@@ -20,17 +21,55 @@ class FeedbacksScreen extends StatelessWidget {
         feedbackRepository: RepositoryProvider.of<FeedbackRepository>(context),
         productRepository: RepositoryProvider.of<ProductRepository>(context),
       )..add(LoadFeedbacks(product)),
-      child: Scaffold(
-        body: SafeArea(
-          child: Column(
-            children: [
-              FeedbackAppBar(),
-              Header(),
-              Expanded(child: ListFeedbacks()),
-            ],
-          ),
-        ),
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            appBar: _buildAppBar(context),
+            body: SafeArea(
+              child: Column(
+                children: [
+                  Header(),
+                  Expanded(child: ListFeedbacks()),
+                ],
+              ),
+            ),
+            floatingActionButton: FloatingActionButton.extended(
+              onPressed: () => _openModalBottomSheet(context),
+              label: Text("Add your feedback"),
+              icon: Icon(Icons.add),
+            ),
+          );
+        },
       ),
     );
+  }
+
+  _buildAppBar(BuildContext context) {
+    return AppBar(
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back_sharp, color: mAccentTintColor),
+        onPressed: () => Navigator.pop(context),
+      ),
+      title: Text("Feedbacks", style: FONT_CONST.BOLD_WHITE_18),
+      backgroundColor: mDarkShadeColor,
+    );
+  }
+
+  _openModalBottomSheet(BuildContext context) async {
+    var newFeedback = await showModalBottomSheet<FeedBack>(
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
+      ),
+      context: context,
+      builder: (BuildContext context) => FeedbackBottomSheet(),
+    );
+    if (newFeedback != null) {
+      BlocProvider.of<FeedbackBloc>(context).add(AddFeedback(newFeedback));
+    }
   }
 }

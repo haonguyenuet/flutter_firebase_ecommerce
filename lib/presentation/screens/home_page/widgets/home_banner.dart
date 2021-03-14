@@ -25,53 +25,53 @@ class _HomeBannerState extends State<HomeBanner> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
       decoration: BoxDecoration(gradient: mPrimaryGradientColor),
-      child: Stack(
-        children: <Widget>[
-          /// Banner images
-          CarouselSlider(
-            options: CarouselOptions(
-              pageViewKey: PageStorageKey("home_banner"),
-              aspectRatio: aspectRatioBanner,
-              initialPage: 0,
-              viewportFraction: 1.0,
-              enableInfiniteScroll: true,
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 3),
-              autoPlayAnimationDuration: Duration(milliseconds: 800),
-              autoPlayCurve: Curves.linearToEaseOut,
-              enlargeCenterPage: true,
-              onPageChanged: (index, reason) {
-                setState(() => currentIndex = index);
-              },
-            ),
-            items: banners.map((banner) {
-              return ShimmerImage(
-                aspectRatio: aspectRatioBanner,
-                imageUrl: banner.imageUrl,
-                borderRadius: BorderRadius.circular(10),
-                fit: BoxFit.contain,
-              );
-            }).toList(),
-          ),
-
-          /// Bottom Left Dots
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildSlider(),
+          SizedBox(height: SizeConfig.defaultSize),
           _buildIndicators(),
         ],
       ),
     );
   }
 
-  _buildIndicators() {
-    return Positioned(
-      top: SizeConfig.defaultSize * 1.5,
-      right: SizeConfig.defaultSize * 1.5,
-      child: Row(
-        children: [
-          ...List.generate(banners.length, (index) {
-            return _buildIndicatorNormal(index == currentIndex);
-          })
-        ],
+  _buildSlider() {
+    return CarouselSlider(
+      options: CarouselOptions(
+        pageViewKey: PageStorageKey("home_banner"),
+        aspectRatio: aspectRatioBanner,
+        initialPage: 0,
+        viewportFraction: 1.0,
+        enableInfiniteScroll: true,
+        autoPlay: true,
+        autoPlayInterval: Duration(seconds: 3),
+        autoPlayAnimationDuration: Duration(milliseconds: 800),
+        autoPlayCurve: Curves.linearToEaseOut,
+        enlargeCenterPage: true,
+        onPageChanged: (index, reason) {
+          setState(() => currentIndex = index);
+        },
       ),
+      items: banners.map((banner) {
+        return ShimmerImage(
+          aspectRatio: aspectRatioBanner,
+          imageUrl: banner.imageUrl,
+          borderRadius: BorderRadius.circular(10),
+          fit: BoxFit.contain,
+        );
+      }).toList(),
+    );
+  }
+
+  _buildIndicators() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ...List.generate(banners.length, (index) {
+          return _buildIndicatorNormal(index == currentIndex);
+        })
+      ],
     );
   }
 
@@ -82,7 +82,7 @@ class _HomeBannerState extends State<HomeBanner> {
       width: SizeConfig.defaultSize,
       margin: EdgeInsets.symmetric(horizontal: 3),
       decoration: BoxDecoration(
-        color: isSelected ? Colors.white : mDarkShadeColor,
+        color: isSelected ? mPrimaryColor : Colors.black12,
         borderRadius: BorderRadius.circular(5),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/presentation/screens/map/map_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:e_commerce_app/presentation/screens/delivery_address/delivery_address_screen.dart';
@@ -28,6 +29,7 @@ class AppRouter {
   static const String CART = '/cart';
   static const String PAYMENT = '/payment';
   static const String DELIVERY_ADDRESS = '/delivery_address';
+  static const String MAP = '/map';
   static const String ALL_PRODUCTS = '/all_products';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -68,6 +70,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => PaymentScreen());
       case DELIVERY_ADDRESS:
         return MaterialPageRoute(builder: (_) => DeliveryAddressScreen());
+      case MAP:
+        return MaterialPageRoute(builder: (_) => MapScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

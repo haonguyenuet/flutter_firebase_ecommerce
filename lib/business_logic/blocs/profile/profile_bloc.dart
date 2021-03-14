@@ -32,6 +32,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
   }
 
+  /// Load Profile event => states
   Stream<ProfileState> _mapLoadProfileToState(LoadProfile event) async* {
     try {
       _profileStreamSub?.cancel();
@@ -43,6 +44,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
   }
 
+  /// Upload Avatar event => states
   Stream<ProfileState> _mapUploadAvatarToState(UploadAvatar event) async* {
     try {
       // Get image url from firebase storage
@@ -57,7 +59,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } catch (e) {}
   }
 
-  ///
+  /// Address List Changed event => states
   Stream<ProfileState> _mapAddressListChangedToState(
       AddressListChanged event) async* {
     try {
@@ -72,6 +74,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       // Check method
       switch (event.method) {
         case ListMethod.ADD:
+          // If current addresses is empty, so the first delivery address is always default
+          if (addresses.isEmpty) {
+            deliveryAddress = deliveryAddress.cloneWith(isDefault: true);
+          }
           addresses.add(deliveryAddress);
           break;
         case ListMethod.DELETE:
@@ -92,6 +98,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } catch (e) {}
   }
 
+  /// Profile Updated event => states
   Stream<ProfileState> _mapProfileUpdatedToState(ProfileUpdated event) async* {
     try {
       _loggedUser = event.updatedUser;

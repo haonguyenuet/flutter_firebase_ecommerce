@@ -10,5 +10,6 @@ export 'others/custom_bottom_nav.dart';
 export 'others/custom_card_widget.dart';
 export 'others/loading.dart';
 export 'others/logo.dart';
+export 'others/search_field_widget.dart';
 export 'others/section_widget.dart';
 export 'others/shimmer_image.dart';

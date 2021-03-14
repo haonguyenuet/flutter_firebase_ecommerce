@@ -3,6 +3,7 @@ import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/screens/all_products/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/screens/all_products/widgets/sort_option_dialog.dart';
+import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -94,26 +95,10 @@ class _ToolBarState extends State<ToolBar> {
   _buildTitle(UpdateToolbarState state) {
     if (state.showSearchField) {
       _searchController.text = "";
-      return Container(
-        height: SizeConfig.defaultSize * 4,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          color: Colors.white,
-        ),
-        child: TextField(
-          controller: _searchController,
-          keyboardType: TextInputType.text,
-          autofocus: true,
-          textInputAction: TextInputAction.search,
-          decoration: InputDecoration(
-            hintText: 'Search',
-            hintStyle: FONT_CONST.REGULAR_DEFAULT_18,
-            prefixStyle: FONT_CONST.REGULAR_DEFAULT_18,
-            contentPadding: EdgeInsets.all(0),
-            prefixIcon: Icon(Icons.search),
-            border: InputBorder.none,
-          ),
-        ),
+      return SearchFieldWidget(
+        searchController: _searchController,
+        autoFocus: true,
+        hintText: "Search",
       );
     } else
       return Text('All Products', style: FONT_CONST.BOLD_WHITE_20);

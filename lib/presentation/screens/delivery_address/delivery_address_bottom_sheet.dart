@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/business_logic/blocs/profile/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/delivery_address.dart';
+import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_dialog.dart';
@@ -24,6 +25,9 @@ class DeliveryAddressBottomSheet extends StatefulWidget {
 
 class _DeliveryAddressBottomSheetState
     extends State<DeliveryAddressBottomSheet> {
+  // [deliveryAddress] is null, that means addresses is empty
+  // So name and phoneNumber is default
+  // And _isDefaultAddress = true
   DeliveryAddress? get deliveryAddress => widget.deliveryAddress;
 
   // local states
@@ -32,16 +36,21 @@ class _DeliveryAddressBottomSheetState
   final TextEditingController _detailAddressController =
       TextEditingController();
 
-  bool _isDefaultAddress = false;
+  bool _isDefaultAddress = true;
 
   @override
   void initState() {
     super.initState();
+    var profileState = BlocProvider.of<ProfileBloc>(context).state;
+
     if (deliveryAddress != null) {
       _nameController.text = deliveryAddress!.receiverName;
       _phoneNumberController.text = deliveryAddress!.phoneNumber;
       _detailAddressController.text = deliveryAddress!.detailAddress;
       _isDefaultAddress = deliveryAddress!.isDefault;
+    } else if (profileState is ProfileLoaded) {
+      _nameController.text = profileState.loggedUser.name;
+      _phoneNumberController.text = profileState.loggedUser.phoneNumber;
     }
   }
 
@@ -127,7 +136,11 @@ class _DeliveryAddressBottomSheetState
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text("Use google map", style: FONT_CONST.MEDIUM_DEFAULT_18),
-          IconButton(icon: Icon(Icons.forward), onPressed: () {})
+          IconButton(
+              icon: Icon(Icons.forward),
+              onPressed: () {
+                Navigator.pushNamed(context, AppRouter.MAP);
+              })
         ],
       ),
     );
@@ -146,7 +159,7 @@ class _DeliveryAddressBottomSheetState
           ),
           CupertinoSwitch(
             value: _isDefaultAddress,
-            onChanged: deliveryAddress != null && deliveryAddress!.isDefault
+            onChanged: deliveryAddress == null || deliveryAddress!.isDefault
                 ? null
                 : (value) => setState(() => _isDefaultAddress = value),
             trackColor: mAccentShadeColor,

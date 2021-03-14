@@ -6,8 +6,15 @@ class Validators {
     r'^.{4,10}$',
   );
 
+  static final RegExp _phoneNumberRegExp =
+      RegExp(r'^(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})$');
+
   static isValidEmail(String email) {
     return _emailRegExp.hasMatch(email);
+  }
+
+  static isVietnamesePhoneNumber(String phoneNumber) {
+    return _phoneNumberRegExp.hasMatch(phoneNumber);
   }
 
   static isValidPassword(String password) {

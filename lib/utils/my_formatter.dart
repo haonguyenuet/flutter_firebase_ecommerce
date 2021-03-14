@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 String formatNumber(int number) {
   final tool = new NumberFormat("#,##0", "en_US");
-  return tool.format(number);
+  return tool.format(number).replaceAll(".", ",");
 }
 
 String formatTimeStamp(Timestamp timestamp) {

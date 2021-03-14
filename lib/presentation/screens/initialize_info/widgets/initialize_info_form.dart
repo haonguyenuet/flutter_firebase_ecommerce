@@ -14,6 +14,7 @@ class InitializeInfoForm extends StatefulWidget {
 }
 
 class _InitializeInfoFormState extends State<InitializeInfoForm> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
 
@@ -31,6 +32,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
         vertical: SizeConfig.defaultSize * 3,
       ),
       child: Form(
+        key: _formKey,
         child: Column(
           children: <Widget>[
             Align(
@@ -59,6 +61,9 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
     return TextFormField(
       controller: _nameController,
       keyboardType: TextInputType.text,
+      validator: (value) {
+        return Validators.isValidName(value!) ? null : "Invalid Name";
+      },
       decoration: InputDecoration(
         hintText: 'Name',
         suffixIcon: Icon(Icons.person),
@@ -70,6 +75,11 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
     return TextFormField(
       controller: _phoneNumberController,
       keyboardType: TextInputType.text,
+      validator: (value) {
+        return Validators.isVietnamesePhoneNumber(value!)
+            ? null
+            : "Invalid phone number";
+      },
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       decoration: InputDecoration(
         hintText: 'Phone number',
@@ -133,11 +143,8 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
   }
 
   bool isContinueButtonEnabled() {
-    return isPopulated;
+    return _formKey.currentState!.validate();
   }
-
-  bool get isPopulated =>
-      _nameController.text.isNotEmpty && _phoneNumberController.text.isNotEmpty;
 
   @override
   void dispose() {

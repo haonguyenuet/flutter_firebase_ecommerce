@@ -23,7 +23,7 @@ class CategoryCard extends StatelessWidget {
         child: Stack(
           children: [
             ShimmerImage(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(5),
               imageUrl: category.imageUrl,
             ),
             Positioned(

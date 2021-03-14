@@ -6,7 +6,6 @@
          additional functionality it is fine to subclass or reimplement
          FlutterApplication and put your custom class here. -->
     <application
-        android:name="io.flutter.app.FlutterApplication"
         android:label="e_commerce_app"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -43,5 +42,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+            <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyCujk4bJgwEECcDYwX9e0CRiYQFlWzhFU4"/>
     </application>
 </manifest>

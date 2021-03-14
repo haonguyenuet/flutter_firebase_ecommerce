@@ -59,10 +59,12 @@ class ProfilePic extends StatelessWidget {
   }
 
   void uploadAvatar(BuildContext context) async {
-    ImagePicker _imagePicker = ImagePicker();
-    PickedFile file =
-        (await _imagePicker.getImage(source: ImageSource.gallery))!;
-    File imageFile = File(file.path);
-    BlocProvider.of<ProfileBloc>(context).add(UploadAvatar(imageFile));
+    ImagePicker picker = ImagePicker();
+    File imageFile;
+    final file = await picker.getImage(source: ImageSource.gallery);
+    if (file != null) {
+      imageFile = File(file.path);
+      BlocProvider.of<ProfileBloc>(context).add(UploadAvatar(imageFile));
+    }
   }
 }

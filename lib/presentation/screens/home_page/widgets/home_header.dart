@@ -2,6 +2,7 @@ import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/buttons/cart_button.dart';
+import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 
@@ -54,22 +55,11 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
             width: size.width * rangeSearchFieldWidth,
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: _insetHorizontal),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: Colors.white,
-              ),
-              child: TextField(
+              child: SearchFieldWidget(
+                readOnly: true,
                 onTap: () =>
                     Navigator.pushNamed(context, AppRouter.ALL_PRODUCTS),
-                readOnly: true,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: "What do you search today?",
-                  hintStyle: FONT_CONST.REGULAR_DEFAULT_18,
-                  prefixStyle: FONT_CONST.REGULAR_DEFAULT_18,
-                  contentPadding: EdgeInsets.all(0),
-                  prefixIcon: Icon(Icons.search),
-                ),
+                hintText: "What would you search today?",
               ),
             ),
           )

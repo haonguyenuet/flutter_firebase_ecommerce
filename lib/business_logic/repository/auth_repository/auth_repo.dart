@@ -15,7 +15,7 @@ abstract class AuthRepository {
 
   /// Starts the Sign In with Google Flow.
   /// Created by NDH
-  Future<void> logInWithGoogle();
+  // Future<void> logInWithGoogle();
 
   bool isLoggedIn();
 

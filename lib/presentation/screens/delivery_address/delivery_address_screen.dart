@@ -1,6 +1,6 @@
 import 'package:e_commerce_app/business_logic/blocs/profile/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/delivery_address.dart';
-import 'package:e_commerce_app/constants/constants.dart';
+import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/presentation/widgets/others/loading.dart';
 import 'package:e_commerce_app/presentation/widgets/single_card/delivery_address_card.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ class DeliveryAddressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(context),
+      appBar: AppBar(title: Text("Delivery Address")),
       body: SafeArea(
         child: BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {
@@ -22,18 +22,7 @@ class DeliveryAddressScreen extends StatelessWidget {
             if (state is ProfileLoaded) {
               var addressList = state.loggedUser.addresses;
               return addressList.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: addressList.length,
-                      itemBuilder: (context, index) {
-                        return DeliveryAddressCard(
-                          deliveryAddress: addressList[index],
-                          onPressed: () => _openModalBottomSheet(
-                            context,
-                            deliveryAddress: addressList[index],
-                          ),
-                        );
-                      },
-                    )
+                  ? _buildContent(addressList)
                   : _buildNoAddress(context);
             }
             if (state is ProfileLoadFailure) {
@@ -44,32 +33,34 @@ class DeliveryAddressScreen extends StatelessWidget {
           },
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _openModalBottomSheet(context),
+        label: Text('Add new address'),
+        icon: Icon(Icons.add),
+        backgroundColor: mPrimaryColor,
+      ),
     );
   }
 
-  _buildAppBar(BuildContext context) {
-    return AppBar(
-      title: Text("Delivery Address"),
-      actions: [
-        IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () => _openModalBottomSheet(context),
-        ),
-      ],
+  _buildContent(List<DeliveryAddress> addressList) {
+    return ListView.builder(
+      itemCount: addressList.length,
+      itemBuilder: (context, index) {
+        return DeliveryAddressCard(
+          deliveryAddress: addressList[index],
+          onPressed: () => _openModalBottomSheet(
+            context,
+            deliveryAddress: addressList[index],
+          ),
+        );
+      },
     );
   }
 
   _buildNoAddress(BuildContext context) {
     return Center(
       child: Column(
-        children: [
-          Image.asset("assets/images/add_address.jpg"),
-          TextButton(
-            onPressed: () => _openModalBottomSheet(context),
-            style: TextButton.styleFrom(backgroundColor: mPrimaryColor),
-            child: Text("Add new address", style: FONT_CONST.REGULAR_WHITE),
-          )
-        ],
+        children: [Image.asset("assets/images/add_address.jpg")],
       ),
     );
   }

@@ -28,25 +28,32 @@ dependencies:
   cloud_firestore: ^1.0.0
   firebase_storage: ^8.0.0
   firebase_auth: ^1.0.0
-  google_sign_in: ^5.0.0
+ 
   #image
   image_picker: ^0.7.2
   #bloc
-  flutter_bloc: ^7.0.0-nullsafety.3
+  flutter_bloc: ^7.0.0-nullsafety.5
   #provider
   provider: ^5.0.0-nullsafety.5
   #payment
-  # stripe_payment: ^1.0.6
+  stripe_payment: ^1.0.6
   #data
   equatable: ^2.0.0
   meta: ^1.1.6
   intl: ^0.17.0
   rxdart: ^0.26.0
   #UI
-  flutter_spinkit: ^4.1.2+1
-  flutter_rating_bar: ^4.0.0
+  flutter_spinkit: ^5.0.0
   carousel_slider: ^4.0.0-nullsafety.0
   shimmer: ^2.0.0-nullsafety.0
+
+  #map
+  google_maps_flutter: ^2.0.1
+
+
+  #Others
+  flutter_zalopay_sdk: ^0.1.0
+  shared_preferences: ^2.0.4
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0

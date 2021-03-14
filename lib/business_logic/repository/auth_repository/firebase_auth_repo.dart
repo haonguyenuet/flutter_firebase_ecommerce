@@ -3,11 +3,11 @@ import 'package:e_commerce_app/business_logic/repository/auth_repository/auth_re
 import 'package:e_commerce_app/business_logic/repository/repository.dart';
 import 'package:e_commerce_app/business_logic/repository/user_repository/user_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthRepository implements AuthRepository {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  GoogleSignIn _googleSignIn = GoogleSignIn();
+  // GoogleSignIn _googleSignIn = GoogleSignIn();
   UserRepository _userRepository = FirebaseUserRepository();
   String _authException = "Authentication Failure";
   User get loggedFirebaseUser => _firebaseAuth.currentUser!;
@@ -48,30 +48,27 @@ class FirebaseAuthRepository implements AuthRepository {
 
   /// Starts the Sign In with Google Flow.
   /// Created by NDH
-  Future<void> logInWithGoogle() async {
-    try {
-      final googleUser =
-          await (_googleSignIn.signIn() as Future<GoogleSignInAccount>);
-      final googleAuth = await googleUser.authentication;
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-      await _firebaseAuth.signInWithCredential(credential);
-    } on FirebaseAuthException catch (e) {
-      _authException = e.message.toString();
-    }
-  }
+  // Future<void> logInWithGoogle() async {
+  //   try {
+  //     final googleUser =
+  //         await (_googleSignIn.signIn() as Future<GoogleSignInAccount>);
+  //     final googleAuth = await googleUser.authentication;
+  //     final credential = GoogleAuthProvider.credential(
+  //       accessToken: googleAuth.accessToken,
+  //       idToken: googleAuth.idToken,
+  //     );
+  //     await _firebaseAuth.signInWithCredential(credential);
+  //   } on FirebaseAuthException catch (e) {
+  //     _authException = e.message.toString();
+  //   }
+  // }
 
   bool isLoggedIn() => _firebaseAuth.currentUser != null;
 
   /// Signs out the current user
   /// Created by NDH
   Future<void> logOut() async {
-    await Future.wait([
-      _firebaseAuth.signOut(),
-      _googleSignIn.signOut(),
-    ]).catchError((error) {
+    await _firebaseAuth.signOut().catchError((error) {
       print(error);
     });
   }

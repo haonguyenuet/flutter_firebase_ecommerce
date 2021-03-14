@@ -27,6 +27,7 @@ class _RegisterFormState extends State<RegisterForm> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+
   bool _isShowPassword = false;
   bool _isShowConfirmPassword = false;
 
