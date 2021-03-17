@@ -24,7 +24,7 @@ class _HomeBannerState extends State<HomeBanner> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
-      decoration: BoxDecoration(gradient: mPrimaryGradientColor),
+      decoration: BoxDecoration(gradient: COLOR_CONST.primaryGradientColor),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -82,7 +82,7 @@ class _HomeBannerState extends State<HomeBanner> {
       width: SizeConfig.defaultSize,
       margin: EdgeInsets.symmetric(horizontal: 3),
       decoration: BoxDecoration(
-        color: isSelected ? mPrimaryColor : Colors.black12,
+        color: isSelected ? COLOR_CONST.primaryColor : Colors.black12,
         borderRadius: BorderRadius.circular(5),
       ),
     );

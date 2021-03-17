@@ -1,5 +1,7 @@
 import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
+import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
+import 'package:e_commerce_app/presentation/widgets/others/custom_dismissible.dart';
 import 'package:e_commerce_app/presentation/widgets/others/loading.dart';
 import 'package:e_commerce_app/presentation/widgets/single_card/cart_item_card.dart';
 import 'package:flutter/material.dart';
@@ -20,24 +22,10 @@ class CartBody extends StatelessWidget {
                 ? ListView.builder(
                     itemCount: cart.length,
                     itemBuilder: (context, index) {
-                      return Dismissible(
+                      return CustomDismissible(
                         key: Key(cart[index].id),
-                        direction: DismissDirection.endToStart,
-                        onDismissed: (direction) {
-                          // Remove this item from the cart
-                          BlocProvider.of<CartBloc>(context)
-                              .add(RemoveCartItem(cart[index]));
-                        },
-                        background: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 40),
-                          decoration: BoxDecoration(color: Color(0xFFFFE6E6)),
-                          child: Row(
-                            children: [
-                              Spacer(),
-                              Icon(Icons.remove_shopping_cart_outlined),
-                            ],
-                          ),
-                        ),
+                        onDismissed: () => _onDismissed,
+                        removeIcon: Icon(Icons.remove_shopping_cart),
                         child: CartItemCard(cartItem: cart[index]),
                       );
                     },
@@ -55,5 +43,9 @@ class CartBody extends StatelessWidget {
         return Center(child: Text("Something went wrong."));
       },
     );
+  }
+
+  void _onDismissed(BuildContext context, CartItem cartItem) {
+    BlocProvider.of<CartBloc>(context).add(RemoveCartItem(cartItem));
   }
 }

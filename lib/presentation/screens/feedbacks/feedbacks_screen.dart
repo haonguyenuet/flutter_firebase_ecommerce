@@ -5,6 +5,7 @@ import 'package:e_commerce_app/presentation/screens/feedbacks/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/screens/feedbacks/widgets/feedback_bottom_sheet.dart';
 import 'package:e_commerce_app/presentation/screens/feedbacks/widgets/header.dart';
 import 'package:e_commerce_app/presentation/screens/feedbacks/widgets/list_feedbacks.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,7 +36,7 @@ class FeedbacksScreen extends StatelessWidget {
             ),
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () => _openModalBottomSheet(context),
-              label: Text("Add your feedback"),
+              label: Text(Translate.of(context).translate("add_your_feedback")),
               icon: Icon(Icons.add),
             ),
           );
@@ -47,11 +48,14 @@ class FeedbacksScreen extends StatelessWidget {
   _buildAppBar(BuildContext context) {
     return AppBar(
       leading: IconButton(
-        icon: Icon(Icons.arrow_back_sharp, color: mAccentTintColor),
+        icon: Icon(Icons.arrow_back_sharp, color: COLOR_CONST.accentTintColor),
         onPressed: () => Navigator.pop(context),
       ),
-      title: Text("Feedbacks", style: FONT_CONST.BOLD_WHITE_18),
-      backgroundColor: mDarkShadeColor,
+      title: Text(
+        Translate.of(context).translate("feedback"),
+        style: FONT_CONST.BOLD_WHITE_18,
+      ),
+      backgroundColor: COLOR_CONST.darkShadeColor,
     );
   }
 

@@ -7,6 +7,7 @@ import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/presentation/widgets/others/custom_card_widget.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -38,7 +39,7 @@ class ProductCard extends StatelessWidget {
               _buildProductImage(),
               _buildProductName(),
               _buildPriceAndAvailable(),
-              _buildSoldQuantity()
+              _buildSoldQuantity(context)
             ],
           ),
 
@@ -84,19 +85,19 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  _buildSoldQuantity() {
+  _buildSoldQuantity(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Text.rich(
         TextSpan(
           style: TextStyle(fontSize: 12),
           children: [
-            TextSpan(text: "Đã bán:"),
+            TextSpan(text: Translate.of(context).translate("sold")),
             TextSpan(
               text: " ${product.soldQuantity}",
               style: FONT_CONST.MEDIUM_PRIMARY,
             ),
-            TextSpan(text: " sản phẩm"),
+            TextSpan(text: " " + Translate.of(context).translate("product")),
           ],
         ),
       ),
@@ -113,7 +114,7 @@ class ProductCard extends StatelessWidget {
         width: SizeConfig.defaultSize * 4,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: mPrimaryColor,
+          color: COLOR_CONST.primaryColor,
         ),
         child: Text("-${product.percentOff}%", style: FONT_CONST.BOLD_WHITE),
       ),

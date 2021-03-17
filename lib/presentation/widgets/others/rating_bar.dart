@@ -7,6 +7,7 @@ class RatingBar extends StatefulWidget {
   final double itemSize;
   final Color itemColor;
   final Color unratedColor;
+  final bool readOnly;
   final Function(int)? onRatingUpdate;
 
   const RatingBar({
@@ -15,8 +16,9 @@ class RatingBar extends StatefulWidget {
     this.itemCount = 5,
     this.itemSize = 24,
     this.itemColor = Colors.amber,
-    this.unratedColor = mAccentShadeColor,
+    this.unratedColor = COLOR_CONST.accentShadeColor,
     this.onRatingUpdate,
+    this.readOnly = false,
   }) : super(key: key);
   @override
   _RatingBarState createState() => _RatingBarState();
@@ -40,14 +42,13 @@ class _RatingBarState extends State<RatingBar> {
         widget.itemCount,
         (index) {
           return GestureDetector(
-            child: _buildStar(index),
-            onTap: () {
-              if (widget.onRatingUpdate != null) {
-                setState(() => _currRating = index + 1);
-                widget.onRatingUpdate!(index + 1);
-              }
-            },
-          );
+              child: _buildStar(index + 1),
+              onTap: widget.readOnly
+                  ? null
+                  : () {
+                      setState(() => _currRating = index + 1);
+                      widget.onRatingUpdate!(index + 1);
+                    });
         },
       ),
     );
@@ -55,14 +56,14 @@ class _RatingBarState extends State<RatingBar> {
 
   _buildStar(int index) {
     int currRatingCeil = _currRating.ceil();
-    if (index + 1 == currRatingCeil && currRatingCeil - _currRating != 0) {
+    if (index == currRatingCeil && currRatingCeil - _currRating != 0) {
       return Icon(
         Icons.star_half,
         size: widget.itemSize,
         color: widget.itemColor,
       );
     }
-    if (index + 1 > currRatingCeil) {
+    if (index > currRatingCeil) {
       return Icon(
         Icons.star,
         size: widget.itemSize,

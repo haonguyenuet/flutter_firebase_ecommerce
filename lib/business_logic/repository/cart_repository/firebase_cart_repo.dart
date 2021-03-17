@@ -73,4 +73,13 @@ class FirebaseCartRepository implements CartRepository {
       print(error);
     });
   }
+
+  ///Singleton factory
+  static final FirebaseCartRepository _instance = FirebaseCartRepository._internal();
+
+  factory FirebaseCartRepository() {
+    return _instance;
+  }
+
+  FirebaseCartRepository._internal();
 }

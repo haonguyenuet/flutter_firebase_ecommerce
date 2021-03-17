@@ -14,7 +14,7 @@ class CircleIconButton extends StatelessWidget {
     required this.size,
     required this.svgIcon,
     this.onPressed,
-    this.color = mPrimaryLightColor,
+    this.color = COLOR_CONST.secondaryColor,
   }) : super(key: key);
 
   @override

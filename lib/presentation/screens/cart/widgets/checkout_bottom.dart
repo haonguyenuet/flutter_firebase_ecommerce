@@ -5,6 +5,7 @@ import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_dialog.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:e_commerce_app/presentation/widgets/buttons/default_button.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -53,11 +54,11 @@ class CheckoutBottom extends StatelessWidget {
                       child: SvgPicture.asset("assets/icons/receipt.svg"),
                     ),
                     SizedBox(width: SizeConfig.defaultSize * 1.5),
-                    _buildTotalPrice(state),
+                    _buildTotalPrice(context, state),
                   ],
                 ),
                 SizedBox(height: SizeConfig.defaultSize * 2),
-                _buildCheckoutButton(state, context),
+                _buildCheckoutButton(context, state),
               ],
             );
           },
@@ -66,30 +67,33 @@ class CheckoutBottom extends StatelessWidget {
     );
   }
 
-  _buildCheckoutButton(CartState state, BuildContext context) {
+  _buildCheckoutButton(BuildContext context, CartState state) {
     return DefaultButton(
-      child: Text("Check Out", style: FONT_CONST.BOLD_WHITE_18),
+      child: Text(
+        Translate.of(context).translate("check_out"),
+        style: FONT_CONST.BOLD_WHITE_18,
+      ),
       onPressed: () {
         if (state is CartLoaded && state.cart.length > 0) {
           Navigator.pushNamed(context, AppRouter.PAYMENT);
         } else {
           MyDialog.showInformation(
             context,
-            content: "Your cart is empty",
+            content: Translate.of(context).translate("your_cart_is_empty"),
           );
         }
       },
     );
   }
 
-  _buildTotalPrice(CartState state) {
+  _buildTotalPrice(BuildContext context, CartState state) {
     String totalPrice =
         state is CartLoaded ? formatNumber(state.totalCartPrice) : "0";
     return Text.rich(
       TextSpan(
         style: FONT_CONST.REGULAR_DEFAULT_16,
         children: [
-          TextSpan(text: "Total:\n"),
+          TextSpan(text: Translate.of(context).translate("total") + "\n"),
           TextSpan(
             text: "$totalPrice₫",
             style: FONT_CONST.BOLD_PRIMARY_18,

@@ -18,7 +18,7 @@ class DefaultButton extends StatelessWidget {
       height: SizeConfig.defaultSize * 5,
       child: TextButton(
         onPressed: onPressed,
-        style: TextButton.styleFrom(backgroundColor: mPrimaryColor),
+        style: TextButton.styleFrom(backgroundColor: COLOR_CONST.primaryColor),
         child: child,
       ),
     );

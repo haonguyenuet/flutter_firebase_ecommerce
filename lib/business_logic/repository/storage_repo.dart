@@ -14,4 +14,13 @@ class StorageRepository {
     String downloadURL = await uploadTask.ref.getDownloadURL();
     return downloadURL;
   }
+
+  ///Singleton factory
+  static final StorageRepository _instance = StorageRepository._internal();
+
+  factory StorageRepository() {
+    return _instance;
+  }
+
+  StorageRepository._internal();
 }

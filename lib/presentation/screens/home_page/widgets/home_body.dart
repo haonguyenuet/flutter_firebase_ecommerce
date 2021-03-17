@@ -5,6 +5,7 @@ import 'package:e_commerce_app/presentation/screens/home_page/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/screens/home_page/widgets/home_banner.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/presentation/widgets/others/loading.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,7 +43,7 @@ class HomeBody extends StatelessWidget {
 
   _buildPopularProducts(BuildContext context, List<Product> popularProducts) {
     return SectionWidget(
-      title: "Popular products",
+      title: Translate.of(context).translate('popular_products'),
       children: popularProducts.map((p) => ProductCard(product: p)).toList(),
       handleOnSeeAll: () => navigatorToAllProducts(context),
     );
@@ -50,7 +51,7 @@ class HomeBody extends StatelessWidget {
 
   _buildDiscountProducts(BuildContext context, List<Product> discountProducts) {
     return SectionWidget(
-      title: "Discount products",
+      title: Translate.of(context).translate('discount_products'),
       children: discountProducts.map((p) => ProductCard(product: p)).toList(),
       handleOnSeeAll: () => navigatorToAllProducts(context),
     );
@@ -61,7 +62,7 @@ class HomeBody extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         SectionTitle(
-          title: "Product Categories",
+          title:Translate.of(context).translate('product_categories'),
           handleOnSeeAll: () => navigatorToAllProducts(context),
         ),
         Padding(

@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/presentation/screens/feedbacks/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/widgets/others/loading.dart';
 import 'package:e_commerce_app/presentation/widgets/single_card/feedback_card.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +20,7 @@ class ListFeedbacks extends StatelessWidget {
                   },
                 )
               : Center(
-                  child: Text("Hiện tại không có nhận xét nào về sản phẩm"),
+                  child: Text(Translate.of(context).translate("no_feedbacks")),
                 );
         }
         if (state is FeedbacksLoading) {

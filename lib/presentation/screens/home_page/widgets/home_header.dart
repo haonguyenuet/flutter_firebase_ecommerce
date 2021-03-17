@@ -3,6 +3,7 @@ import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/buttons/cart_button.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 
@@ -23,7 +24,7 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
     var rangeSearchFieldWidth = (1 - offsetPercent).clamp(0.9, 1);
     return AnimatedContainer(
       duration: mAnimationDuration,
-      color: offsetPercent > 0.2 ? Colors.white : mDarkShadeColor,
+      color: offsetPercent > 0.2 ? Colors.white : COLOR_CONST.darkShadeColor,
       child: Stack(
         children: [
           Positioned(
@@ -34,7 +35,7 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
             child: Row(
               children: [
                 AnimatedOpacity(
-                  opacity: offsetPercent > 0.2 ? 0 : 1,
+                  opacity: offsetPercent > 0.4 ? 0 : 1,
                   duration: Duration(seconds: 1),
                   child: Text(
                     "Peachy",
@@ -43,7 +44,9 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
                 ),
                 Spacer(),
                 CartButton(
-                  color: offsetPercent > 0.2 ? mTextColor : Colors.white,
+                  color: offsetPercent > 0.3
+                      ? COLOR_CONST.textColor
+                      : Colors.white,
                 )
               ],
             ),
@@ -59,7 +62,8 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
                 readOnly: true,
                 onTap: () =>
                     Navigator.pushNamed(context, AppRouter.ALL_PRODUCTS),
-                hintText: "What would you search today?",
+                hintText: Translate.of(context)
+                    .translate('what_would_you_search_today'),
               ),
             ),
           )

@@ -4,13 +4,11 @@ import 'package:equatable/equatable.dart';
 class Category extends Equatable {
   final String id;
   final String name;
-  final String? vietnameseName;
   final String imageUrl;
 
   const Category({
     required this.id,
     required this.name,
-    this.vietnameseName,
     required this.imageUrl,
   });
 
@@ -19,7 +17,6 @@ class Category extends Equatable {
     return Category(
       id: data["id"] ?? "",
       name: data["name"] ?? "",
-      vietnameseName: data["vietnameseName"] ?? "",
       imageUrl: data["imageUrl"] ?? "",
     );
   }
@@ -29,7 +26,6 @@ class Category extends Equatable {
     return {
       "id": this.id,
       "name": this.name,
-      "vietnameseName": this.vietnameseName,
       "imageUrl": this.imageUrl,
     };
   }
@@ -38,7 +34,6 @@ class Category extends Equatable {
   static const all = Category(
     id: "default",
     name: "All products",
-    vietnameseName: "Tất cả",
     imageUrl: "",
   );
 

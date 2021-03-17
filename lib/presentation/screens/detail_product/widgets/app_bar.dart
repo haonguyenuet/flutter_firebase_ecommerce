@@ -18,7 +18,7 @@ class DetailProductAppBar extends StatelessWidget {
           children: [
             _buildBackHomeButton(context),
             Spacer(),
-            CartButton(color: mTextColor),
+            CartButton(color: COLOR_CONST.textColor),
           ],
         ),
       ),

@@ -41,13 +41,13 @@ class CustomCardWidget extends StatelessWidget {
   _getDefaultDecoration() {
     return BoxDecoration(
       borderRadius: BorderRadius.circular(10),
-      border: Border.all(color: mBorderColor.withOpacity(0.3)),
+      border: Border.all(color: COLOR_CONST.borderColor.withOpacity(0.3)),
       color: Colors.white,
       boxShadow: [
         BoxShadow(
           blurRadius: 1,
           spreadRadius: 1,
-          color: mCardShadowColor.withOpacity(0.2),
+          color: COLOR_CONST.cardShadowColor.withOpacity(0.2),
           offset: Offset(0, 2),
         ),
       ],

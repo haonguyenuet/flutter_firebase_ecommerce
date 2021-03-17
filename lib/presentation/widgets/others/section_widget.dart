@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 /// A section
@@ -78,7 +79,10 @@ class SectionTitle extends StatelessWidget {
           ),
           // See more button
           InkWell(
-            child: Text('See all', style: FONT_CONST.BOLD_PRIMARY_16),
+            child: Text(
+              Translate.of(context).translate("see_all"),
+              style: FONT_CONST.BOLD_PRIMARY_16,
+            ),
             onTap: handleOnSeeAll,
           )
         ],

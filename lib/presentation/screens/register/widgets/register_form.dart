@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/business_logic/blocs/app_bloc.dart';
 import 'package:e_commerce_app/business_logic/blocs/auth/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:e_commerce_app/constants/constants.dart';
@@ -20,7 +21,6 @@ class RegisterForm extends StatefulWidget {
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-  late AuthenticationBloc _authenticationBloc;
   late RegisterBloc _registerBloc;
 
   final TextEditingController _emailController = TextEditingController();
@@ -33,7 +33,6 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   void initState() {
-    _authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
     _registerBloc = BlocProvider.of<RegisterBloc>(context);
 
     super.initState();
@@ -45,19 +44,19 @@ class _RegisterFormState extends State<RegisterForm> {
       listener: (context, state) {
         /// Success
         if (state.isSuccess) {
-          Navigator.pop(context);
-          _authenticationBloc.add(LoggedIn());
+          MyDialog.hideWaiting(context);
+          BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
         }
 
         /// Failure
         if (state.isFailure) {
-          Navigator.pop(context);
+          MyDialog.hideWaiting(context);
           MyDialog.showInformation(context, content: state.message);
         }
 
         /// Registering
         if (state.isSubmitting) {
-          MyDialog.showWating(context);
+          MyDialog.showWaiting(context);
         }
       },
       child: BlocBuilder<RegisterBloc, RegisterState>(
@@ -72,14 +71,6 @@ class _RegisterFormState extends State<RegisterForm> {
             child: Form(
               child: Column(
                 children: <Widget>[
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Register with email and password',
-                      style: FONT_CONST.BOLD_PRIMARY_18,
-                    ),
-                  ),
-                  SizedBox(height: SizeConfig.defaultSize * 2),
                   _buildEmailInput(),
                   SizedBox(height: SizeConfig.defaultSize),
                   _buildPasswordInput(),
@@ -106,12 +97,14 @@ class _RegisterFormState extends State<RegisterForm> {
         _registerBloc.add(EmailChanged(email: value));
       },
       validator: (_) {
-        return !_registerBloc.state.isEmailValid ? 'Invalid Email' : null;
+        return !_registerBloc.state.isEmailValid
+            ? Translate.of(context).translate('invalid_email')
+            : null;
       },
       autovalidateMode: AutovalidateMode.always,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-        hintText: 'Email',
+        hintText: Translate.of(context).translate('email'),
         suffixIcon: Icon(Icons.email_outlined),
       ),
     );
@@ -124,13 +117,15 @@ class _RegisterFormState extends State<RegisterForm> {
         _registerBloc.add(PasswordChanged(password: value));
       },
       validator: (_) {
-        return !_registerBloc.state.isPasswordValid ? 'Invalid Password' : null;
+        return !_registerBloc.state.isPasswordValid
+            ? Translate.of(context).translate('invalid_password')
+            : null;
       },
       autovalidateMode: AutovalidateMode.always,
       keyboardType: TextInputType.text,
       obscureText: !_isShowPassword,
       decoration: InputDecoration(
-        hintText: 'Password',
+        hintText: Translate.of(context).translate('password'),
         suffixIcon: IconButton(
           icon: _isShowPassword
               ? Icon(Icons.visibility)
@@ -156,14 +151,14 @@ class _RegisterFormState extends State<RegisterForm> {
       },
       validator: (_) {
         return !_registerBloc.state.isConfirmPasswordValid
-            ? 'Don\'t match password'
+            ? Translate.of(context).translate('don\'t_match_password')
             : null;
       },
       autovalidateMode: AutovalidateMode.always,
       keyboardType: TextInputType.text,
       obscureText: !_isShowConfirmPassword,
       decoration: InputDecoration(
-        hintText: 'Confirmed password',
+        hintText: Translate.of(context).translate('confirm_password'),
         suffixIcon: IconButton(
           icon: _isShowConfirmPassword
               ? Icon(Icons.visibility)
@@ -181,7 +176,7 @@ class _RegisterFormState extends State<RegisterForm> {
   _buildButtonRegister() {
     return DefaultButton(
       child: Text(
-        'Register'.toUpperCase(),
+        Translate.of(context).translate('register').toUpperCase(),
         style: FONT_CONST.BOLD_WHITE_18,
       ),
       onPressed: () {
@@ -206,7 +201,7 @@ class _RegisterFormState extends State<RegisterForm> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text('Already have an account! '),
+          Text(Translate.of(context).translate('already_have_an_account')),
           SizedBox(width: 5),
           GestureDetector(
             onTap: () => Navigator.pushNamedAndRemoveUntil(
@@ -215,7 +210,7 @@ class _RegisterFormState extends State<RegisterForm> {
               (_) => false,
             ),
             child: Text(
-              'Sign in',
+              Translate.of(context).translate('login'),
               style: FONT_CONST.MEDIUM_PRIMARY_16,
             ),
           ),

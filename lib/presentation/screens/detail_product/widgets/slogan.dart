@@ -46,7 +46,7 @@ class Slogan extends StatelessWidget {
           iconPath,
           width: SizeConfig.defaultSize * 2,
           height: SizeConfig.defaultSize * 2,
-          color: mPrimaryColor,
+          color: COLOR_CONST.primaryColor,
         ),
         SizedBox(width: SizeConfig.defaultSize * 0.5),
         Text(text),

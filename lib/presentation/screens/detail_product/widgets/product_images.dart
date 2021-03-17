@@ -57,7 +57,9 @@ class _ProductImagesState extends State<ProductImages> {
           ? SizeConfig.defaultSize * 6
           : SizeConfig.defaultSize * 3,
       decoration: BoxDecoration(
-        color: _currentPage == index ? mPrimaryColor : Color(0xFFD8D8D8),
+        color: _currentPage == index
+            ? COLOR_CONST.primaryColor
+            : Color(0xFFD8D8D8),
       ),
     );
   }

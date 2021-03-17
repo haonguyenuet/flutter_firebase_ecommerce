@@ -17,7 +17,7 @@ class ProfileHeader extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: SizeConfig.screenHeight * 0.3,
-      color: mDarkShadeColor,
+      color: COLOR_CONST.darkShadeColor,
       child: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
           if (state is ProfileLoaded) {

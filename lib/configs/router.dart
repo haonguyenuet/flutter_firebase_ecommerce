@@ -10,6 +10,7 @@ import 'package:e_commerce_app/presentation/screens/initialize_info/initialize_i
 import 'package:e_commerce_app/presentation/screens/login_success/login_success_screen.dart';
 import 'package:e_commerce_app/presentation/screens/payment/payment_screen.dart';
 import 'package:e_commerce_app/presentation/screens/profile/profile_screen.dart';
+import 'package:e_commerce_app/presentation/screens/settings/setting_screen.dart';
 import 'package:e_commerce_app/presentation/screens/home_page/home_screen.dart';
 import 'package:e_commerce_app/presentation/screens/login/login_screen.dart';
 import 'package:e_commerce_app/presentation/screens/register/register_screen.dart';
@@ -31,6 +32,7 @@ class AppRouter {
   static const String DELIVERY_ADDRESS = '/delivery_address';
   static const String MAP = '/map';
   static const String ALL_PRODUCTS = '/all_products';
+  static const String SETTING = '/setting';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -52,6 +54,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case PROFILE:
         return MaterialPageRoute(builder: (_) => ProfileScreen());
+      case SETTING:
+        return MaterialPageRoute(builder: (_) => SettingScreen());
       case DETAIL_PRODUCT:
         var product = settings.arguments as Product;
         return MaterialPageRoute(
@@ -82,4 +86,13 @@ class AppRouter {
         );
     }
   }
+
+  ///Singleton factory
+  static final AppRouter _instance = AppRouter._internal();
+
+  factory AppRouter() {
+    return _instance;
+  }
+
+  AppRouter._internal();
 }

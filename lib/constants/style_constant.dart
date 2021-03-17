@@ -9,6 +9,6 @@ const double mDefaultMargin = 15;
 OutlineInputBorder outlineInputBorder() {
   return OutlineInputBorder(
     borderRadius: BorderRadius.circular(5),
-    borderSide: BorderSide(color: mTextColor),
+    borderSide: BorderSide(color: COLOR_CONST.textColor),
   );
 }

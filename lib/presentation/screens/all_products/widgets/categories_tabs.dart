@@ -2,6 +2,7 @@ import 'package:e_commerce_app/business_logic/entities/category.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/screens/all_products/bloc/bloc.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,11 +13,9 @@ class CategoriesTabs extends StatelessWidget {
       buildWhen: (prevState, currState) => currState is CategoriesLoaded,
       builder: (context, state) {
         if (state is CategoriesLoaded) {
-          List<Category> _categories = state.categories;
-          int _selectedCategoryIndex = state.selectedCategoryIndex;
           return ListCategory(
-            categories: _categories,
-            selectedCategoryIndex: _selectedCategoryIndex,
+            categories: state.categories,
+            selectedCategoryIndex: state.selectedCategoryIndex,
           );
         }
         return Center(child: Text("Something went wrongs."));
@@ -42,7 +41,7 @@ class ListCategory extends StatefulWidget {
 
 class _ListCategoryState extends State<ListCategory> {
   List<Category> get categories => widget.categories;
-  int? selectedIndex;
+  late int selectedIndex;
 
   @override
   void initState() {
@@ -54,7 +53,6 @@ class _ListCategoryState extends State<ListCategory> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 5),
-      color: Colors.white,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
@@ -82,7 +80,10 @@ class _ListCategoryState extends State<ListCategory> {
               horizontal: SizeConfig.defaultSize * 2,
               vertical: SizeConfig.defaultSize * 0.5,
             ),
-            child: Text("${category.name}", style: FONT_CONST.BOLD_DEFAULT_16),
+            child: Text(
+              Translate.of(context).translate('${category.name}'),
+              style: FONT_CONST.BOLD_DEFAULT_16,
+            ),
           ),
           if (index == selectedIndex)
             Align(
@@ -90,7 +91,7 @@ class _ListCategoryState extends State<ListCategory> {
               child: Container(
                 height: 3,
                 width: SizeConfig.defaultSize * 4,
-                color: mPrimaryColor,
+                color: COLOR_CONST.primaryColor,
               ),
             )
         ],

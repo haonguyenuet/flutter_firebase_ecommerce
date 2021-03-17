@@ -4,6 +4,7 @@ import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/screens/all_products/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/screens/all_products/widgets/sort_option_dialog.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,7 +42,7 @@ class _ToolBarState extends State<ToolBar> {
       builder: (context, state) {
         if (state is UpdateToolbarState) {
           return Container(
-            color: mDarkShadeColor,
+            color: COLOR_CONST.darkShadeColor,
             padding: EdgeInsets.symmetric(
               vertical: SizeConfig.defaultSize * 0.5,
               horizontal: SizeConfig.defaultSize,
@@ -62,7 +63,7 @@ class _ToolBarState extends State<ToolBar> {
 
   _buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.arrow_back_ios, color: mAccentTintColor),
+      icon: Icon(Icons.arrow_back_ios, color: COLOR_CONST.accentTintColor),
       onPressed: () => Navigator.pop(context),
     );
   }
@@ -74,7 +75,7 @@ class _ToolBarState extends State<ToolBar> {
         IconButton(
           icon: Icon(
             state.showSearchField ? Icons.close : Icons.search,
-            color: mAccentTintColor,
+            color: COLOR_CONST.accentTintColor,
           ),
           onPressed: () {
             BlocProvider.of<AllProductsBloc>(context).add(
@@ -83,7 +84,7 @@ class _ToolBarState extends State<ToolBar> {
         ),
         // Sort action
         IconButton(
-          icon: Icon(Icons.sort, color: mAccentTintColor),
+          icon: Icon(Icons.sort, color: COLOR_CONST.accentTintColor),
           onPressed: () {
             BlocProvider.of<AllProductsBloc>(context).add(ClickIconSort());
           },
@@ -98,10 +99,10 @@ class _ToolBarState extends State<ToolBar> {
       return SearchFieldWidget(
         searchController: _searchController,
         autoFocus: true,
-        hintText: "Search",
+        hintText: Translate.of(context).translate('search'),
       );
     } else
-      return Text('All Products', style: FONT_CONST.BOLD_WHITE_20);
+      return Text(Translate.of(context).translate('all_products'), style: FONT_CONST.BOLD_WHITE_20);
   }
 
   _openSortOptionsDialog(BuildContext context, OpenSortOption state) async {

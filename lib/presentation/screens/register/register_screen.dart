@@ -9,7 +9,7 @@ import 'package:e_commerce_app/presentation/screens/register/widgets/register_he
 import 'bloc/bloc.dart';
 
 class RegisterScreen extends StatelessWidget {
-  final UserModel? initialUser;
+  final UserModel initialUser;
 
   const RegisterScreen({Key? key, required this.initialUser}) : super(key: key);
 
@@ -21,7 +21,7 @@ class RegisterScreen extends StatelessWidget {
       ),
       child: Scaffold(
         body: Container(
-          decoration: BoxDecoration(gradient: mPrimaryGradientColor),
+          decoration: BoxDecoration(gradient: COLOR_CONST.primaryGradientColor),
           child: ListView(
             children: [
               RegisterHeader(),

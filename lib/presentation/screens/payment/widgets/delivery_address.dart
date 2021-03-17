@@ -3,6 +3,7 @@ import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/single_card/delivery_address_card.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,13 +35,17 @@ class DeliveryAddressWidget extends StatelessWidget {
   _buildWarning(BuildContext context) {
     return Column(
       children: [
-        Text("You have no address, need at least a address to payment"),
+        Text(Translate.of(context).translate("no_address")),
         TextButton(
           onPressed: () {
             Navigator.pushNamed(context, AppRouter.DELIVERY_ADDRESS);
           },
-          style: TextButton.styleFrom(backgroundColor: mPrimaryColor),
-          child: Text("Add new address", style: TextStyle(color: Colors.white)),
+          style:
+              TextButton.styleFrom(backgroundColor: COLOR_CONST.primaryColor),
+          child: Text(
+            Translate.of(context).translate("add_new_address"),
+            style: TextStyle(color: Colors.white),
+          ),
         )
       ],
     );

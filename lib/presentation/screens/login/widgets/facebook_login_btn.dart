@@ -11,8 +11,9 @@ class FacebookLoginButton extends StatelessWidget {
         height: SizeConfig.defaultSize * 4,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: facebookButtonColor,
-          border: Border.all(width: 0.8, color: facebookButtonColorBorder),
+          color: COLOR_CONST.facebookButtonColor,
+          border: Border.all(
+              width: 0.8, color: COLOR_CONST.facebookButtonColorBorder),
         ),
         child: Row(
           children: <Widget>[

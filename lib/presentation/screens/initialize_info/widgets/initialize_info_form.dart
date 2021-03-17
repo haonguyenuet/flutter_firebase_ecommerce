@@ -35,14 +35,6 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Complete with your information',
-                style: FONT_CONST.BOLD_PRIMARY_18,
-              ),
-            ),
-            SizedBox(height: SizeConfig.defaultSize * 2),
             _buildNameInput(),
             SizedBox(height: SizeConfig.defaultSize),
             _buildPhoneNumberInput(),
@@ -62,10 +54,12 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
       controller: _nameController,
       keyboardType: TextInputType.text,
       validator: (value) {
-        return Validators.isValidName(value!) ? null : "Invalid Name";
+        return Validators.isValidName(value!)
+            ? null
+            : Translate.of(context).translate("invalid_name");
       },
       decoration: InputDecoration(
-        hintText: 'Name',
+        hintText: Translate.of(context).translate("name"),
         suffixIcon: Icon(Icons.person),
       ),
     );
@@ -78,11 +72,11 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
       validator: (value) {
         return Validators.isVietnamesePhoneNumber(value!)
             ? null
-            : "Invalid phone number";
+            : Translate.of(context).translate("invalid_phone_number");
       },
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       decoration: InputDecoration(
-        hintText: 'Phone number',
+        hintText: Translate.of(context).translate("phone_number"),
         suffixIcon: Icon(Icons.phone_callback),
       ),
     );
@@ -91,7 +85,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
   _buildButtonContinue() {
     return DefaultButton(
       child: Text(
-        'Continue'.toUpperCase(),
+        Translate.of(context).translate("continue").toUpperCase(),
         style: FONT_CONST.BOLD_WHITE_18,
       ),
       onPressed: () {
@@ -112,7 +106,8 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
         } else {
           MyDialog.showInformation(
             context,
-            content: "You need to complete all fields",
+            content: Translate.of(context)
+                .translate("you_need_to_complete_all_fields"),
           );
         }
       },
@@ -124,7 +119,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text('Already have an account! '),
+          Text(Translate.of(context).translate("already_have_an_account")),
           SizedBox(width: 5),
           GestureDetector(
             onTap: () => Navigator.pushNamedAndRemoveUntil(
@@ -133,7 +128,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
               (_) => false,
             ),
             child: Text(
-              'Sign in',
+              Translate.of(context).translate("login"),
               style: FONT_CONST.MEDIUM_PRIMARY_16,
             ),
           ),

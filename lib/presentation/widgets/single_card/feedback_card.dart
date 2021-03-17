@@ -1,12 +1,13 @@
 import 'package:e_commerce_app/business_logic/entities/feedback.dart';
 import 'package:e_commerce_app/business_logic/entities/user.dart';
-import 'package:e_commerce_app/business_logic/repository/user_repository/firebase_user_repo.dart';
+import 'package:e_commerce_app/business_logic/repository/repository.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/utils.dart';
 import 'package:e_commerce_app/presentation/widgets/others/custom_card_widget.dart';
 import 'package:e_commerce_app/presentation/widgets/others/rating_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FeedbackCard extends StatelessWidget {
   const FeedbackCard({
@@ -32,7 +33,7 @@ class FeedbackCard extends StatelessWidget {
         crossAxisAlignment: WrapCrossAlignment.start,
         spacing: 10,
         children: [
-          _buildUserInfo(),
+          _buildUserInfo(context),
           _buildRating(),
           _buildFeedbackContent(),
           _buildCreatedDate()
@@ -41,9 +42,10 @@ class FeedbackCard extends StatelessWidget {
     );
   }
 
-  _buildUserInfo() {
+  _buildUserInfo(BuildContext context) {
     return FutureBuilder(
-      future: FirebaseUserRepository().getUserById(feedBack.userId),
+      future: RepositoryProvider.of<UserRepository>(context)
+          .getUserById(feedBack.userId),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           var user = snapshot.data as UserModel;
@@ -68,6 +70,7 @@ class FeedbackCard extends StatelessWidget {
 
   _buildRating() {
     return RatingBar(
+      readOnly: true,
       initialRating: feedBack.rating.toDouble(),
       itemSize: SizeConfig.defaultSize * 2,
     );

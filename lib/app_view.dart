@@ -1,12 +1,14 @@
-import 'package:e_commerce_app/business_logic/blocs/profile/bloc.dart';
+import 'package:e_commerce_app/business_logic/blocs/app_bloc.dart';
+import 'package:e_commerce_app/business_logic/blocs/language/bloc.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:e_commerce_app/business_logic/blocs/auth/auth_bloc.dart';
-import 'package:e_commerce_app/business_logic/blocs/auth/auth_state.dart';
-import 'package:e_commerce_app/configs/themes/theme.dart';
+import 'business_logic/blocs/profile/bloc.dart';
+import 'business_logic/blocs/auth/bloc.dart';
 import 'business_logic/blocs/cart/bloc.dart';
-import 'configs/router.dart';
-import 'configs/size_config.dart';
+import 'configs/config.dart';
+import 'utils/translate.dart';
 
 class AppView extends StatefulWidget {
   @override
@@ -19,62 +21,62 @@ class _AppViewState extends State<AppView> {
   NavigatorState? get _navigator => _navigatorKey.currentState;
 
   @override
+  void dispose() {
+    AppBloc.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return OrientationBuilder(
-          builder: (context, orientation) {
-            SizeConfig().init(constraints, orientation);
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'Peachy Ecommerce',
-              theme: theme(),
-              navigatorKey: _navigatorKey,
-              onGenerateRoute: AppRouter.generateRoute,
-              initialRoute: AppRouter.SPLASH,
-              builder: (context, child) {
-                return BlocListener<AuthenticationBloc, AuthenticationState>(
-                  listener: (context, state) {
-                    if (state is Uninitialized) {
-                      _navigator!.pushNamedAndRemoveUntil(
-                        AppRouter.SPLASH,
-                        (_) => false,
-                      );
-                    } else if (state is Unauthenticated) {
-                      _navigator!.pushNamedAndRemoveUntil(
-                        AppRouter.LOGIN,
-                        (_) => false,
-                      );
-                    } else if (state is Authenticated) {
-                      var _loggedFirebaseUser = state.loggedFirebaseUser;
-                      // Load cart
-                      BlocProvider.of<CartBloc>(context)
-                          .add(LoadCart(_loggedFirebaseUser));
-
-                      // Load profile
-                      BlocProvider.of<ProfileBloc>(context)
-                          .add(LoadProfile(_loggedFirebaseUser));
-
-                      // Go to login success screen
-                      _navigator!.pushNamedAndRemoveUntil(
-                        AppRouter.LOGIN_SUCCESS,
-                        (_) => false,
-                      );
-                    } else {
-                      // default case
-                      _navigator!.pushNamedAndRemoveUntil(
-                        AppRouter.SPLASH,
-                        (_) => false,
-                      );
-                    }
-                  },
-                  child: child,
-                );
+    return BlocBuilder<LanguageBloc, LanguageState>(
+      builder: (context, state) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          navigatorKey: _navigatorKey,
+          title: 'Peachy E-Commerce',
+          theme: AppTheme.currentTheme,
+          onGenerateRoute: AppRouter.generateRoute,
+          locale: AppLanguage.defaultLanguage,
+          supportedLocales: AppLanguage.supportLanguage,
+          localizationsDelegates: [
+            Translate.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          initialRoute: AppRouter.SPLASH,
+          builder: (context, child) {
+            return BlocListener<AuthenticationBloc, AuthenticationState>(
+              listener: (context, state) {
+                if (state is Uninitialized) {
+                  _onNavigate(AppRouter.SPLASH);
+                } else if (state is Unauthenticated) {
+                  _onNavigate(AppRouter.LOGIN);
+                } else if (state is Authenticated) {
+                  _loadUserProfile(state.loggedFirebaseUser);
+                  _loadCart(state.loggedFirebaseUser);
+                  _onNavigate(AppRouter.LOGIN_SUCCESS);
+                } else {
+                  _onNavigate(AppRouter.SPLASH);
+                }
               },
+              child: child,
             );
           },
         );
       },
     );
+  }
+
+  void _onNavigate(String route) {
+    _navigator!.pushNamedAndRemoveUntil(route, (route) => false);
+  }
+
+  void _loadUserProfile(User loggedFirebaseUser) {
+    BlocProvider.of<ProfileBloc>(context).add(LoadProfile(loggedFirebaseUser));
+  }
+
+  void _loadCart(User loggedFirebaseUser) {
+    BlocProvider.of<CartBloc>(context).add(LoadCart(loggedFirebaseUser));
   }
 }

@@ -2,6 +2,7 @@ import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/screens/feedbacks/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/widgets/others/rating_bar.dart';
+import 'package:e_commerce_app/utils/translate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
@@ -22,7 +23,7 @@ class _HeaderState extends State<Header> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(bottom: SizeConfig.defaultSize),
-      color: mDarkShadeColor,
+      color: COLOR_CONST.darkShadeColor,
       child: Column(
         children: [
           _buildFeedbackStats(),
@@ -48,10 +49,11 @@ class _HeaderState extends State<Header> {
                   "${state.rating}",
                   style: FONT_CONST.BOLD_WHITE_26,
                 ),
-                RatingBar(initialRating: state.rating),
+                RatingBar(initialRating: state.rating, readOnly: true),
                 SizedBox(height: SizeConfig.defaultSize),
                 Text(
-                  "${state.numberOfFeedbacks} nhận xét",
+                  "${state.numberOfFeedbacks} " +
+                      Translate.of(context).translate("feedbacks"),
                   style: FONT_CONST.MEDIUM_WHITE,
                 ),
               ],
@@ -89,7 +91,9 @@ class _HeaderState extends State<Header> {
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: selectedStarIndex == 0 ? mPrimaryColor : mTextColor,
+                  color: selectedStarIndex == 0
+                      ? COLOR_CONST.primaryColor
+                      : COLOR_CONST.textColor,
                 ),
               ),
             ),
@@ -150,7 +154,7 @@ class StarButton extends StatelessWidget {
             const SizedBox(width: 5),
             Icon(
               Icons.star,
-              color: isActive ? Colors.amber : mAccentShadeColor,
+              color: isActive ? Colors.amber : COLOR_CONST.accentShadeColor,
               size: SizeConfig.defaultSize * 2,
             ),
           ],

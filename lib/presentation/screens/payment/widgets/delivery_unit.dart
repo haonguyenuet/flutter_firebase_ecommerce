@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/constants/constants.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -10,22 +11,22 @@ class DeliveryUnit extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(SizeConfig.defaultSize * 1.5),
       decoration: BoxDecoration(
-        color: mAccentTintColor.withOpacity(0.2),
+        color: COLOR_CONST.accentTintColor.withOpacity(0.2),
         border: Border(
-          top: BorderSide(color: mAccentTintColor, width: 1),
-          bottom: BorderSide(color: mAccentTintColor, width: 1),
+          top: BorderSide(color: COLOR_CONST.accentTintColor, width: 1),
+          bottom: BorderSide(color: COLOR_CONST.accentTintColor, width: 1),
         ),
       ),
       child: Row(
         children: [
-          Expanded(child: _buildInfo()),
+          Expanded(child: _buildInfo(context)),
           Text("30,000₫"),
         ],
       ),
     );
   }
 
-  _buildInfo() {
+  _buildInfo(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -36,7 +37,10 @@ class DeliveryUnit extends StatelessWidget {
               width: SizeConfig.defaultSize * 2.4,
             ),
             SizedBox(width: SizeConfig.defaultSize),
-            Text("Delivery Unit", style: FONT_CONST.MEDIUM_DEFAULT_16),
+            Text(
+              Translate.of(context).translate("delivery_unit"),
+              style: FONT_CONST.MEDIUM_DEFAULT_16,
+            ),
           ],
         ),
         // Text("J&T Express"),

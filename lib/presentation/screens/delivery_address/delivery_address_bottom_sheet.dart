@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/business_logic/blocs/app_bloc.dart';
 import 'package:e_commerce_app/business_logic/blocs/profile/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/delivery_address.dart';
 import 'package:e_commerce_app/configs/router.dart';
@@ -6,6 +7,7 @@ import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_dialog.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/presentation/widgets/others/custom_card_widget.dart';
+import 'package:e_commerce_app/utils/translate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -86,7 +88,7 @@ class _DeliveryAddressBottomSheetState
             controller: _nameController,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
-              labelText: "Name",
+              labelText: Translate.of(context).translate("name"),
               contentPadding: EdgeInsets.symmetric(
                 horizontal: SizeConfig.defaultSize * 2,
               ),
@@ -101,7 +103,7 @@ class _DeliveryAddressBottomSheetState
             keyboardType: TextInputType.text,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             decoration: InputDecoration(
-              labelText: "Phone Number",
+              labelText: Translate.of(context).translate("phone_number"),
               contentPadding: EdgeInsets.symmetric(
                 horizontal: SizeConfig.defaultSize * 2,
               ),
@@ -114,7 +116,7 @@ class _DeliveryAddressBottomSheetState
             controller: _detailAddressController,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
-              labelText: "Detail address",
+              labelText: Translate.of(context).translate("detail_address"),
               contentPadding: EdgeInsets.symmetric(
                 vertical: SizeConfig.defaultSize,
                 horizontal: SizeConfig.defaultSize * 2,
@@ -135,7 +137,10 @@ class _DeliveryAddressBottomSheetState
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("Use google map", style: FONT_CONST.MEDIUM_DEFAULT_18),
+          Text(
+            Translate.of(context).translate("use_google_map"),
+            style: FONT_CONST.MEDIUM_DEFAULT_18,
+          ),
           IconButton(
               icon: Icon(Icons.forward),
               onPressed: () {
@@ -154,7 +159,7 @@ class _DeliveryAddressBottomSheetState
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "Put this is default address",
+            Translate.of(context).translate("put_this_is_default_address"),
             style: FONT_CONST.MEDIUM_DEFAULT_18,
           ),
           CupertinoSwitch(
@@ -162,7 +167,7 @@ class _DeliveryAddressBottomSheetState
             onChanged: deliveryAddress == null || deliveryAddress!.isDefault
                 ? null
                 : (value) => setState(() => _isDefaultAddress = value),
-            trackColor: mAccentShadeColor,
+            trackColor: COLOR_CONST.accentShadeColor,
           ),
         ],
       ),
@@ -171,7 +176,10 @@ class _DeliveryAddressBottomSheetState
 
   _buildSubmitButton() {
     return DefaultButton(
-      child: Text("Done", style: FONT_CONST.BOLD_WHITE_18),
+      child: Text(
+        Translate.of(context).translate("confirm"),
+        style: FONT_CONST.BOLD_WHITE_18,
+      ),
       onPressed: () {
         if (isPopulated) {
           // Create new delivery address
@@ -197,7 +205,8 @@ class _DeliveryAddressBottomSheetState
         } else {
           MyDialog.showInformation(
             context,
-            content: "You need to complete all fields",
+            content: Translate.of(context)
+                .translate("you_need_to_complete_all_fields"),
           );
         }
       },
@@ -219,7 +228,10 @@ class _DeliveryAddressBottomSheetState
                 ));
                 Navigator.pop(context);
               },
-              child: Text("Delete", style: FONT_CONST.BOLD_WHITE_18),
+              child: Text(
+                Translate.of(context).translate("delete"),
+                style: FONT_CONST.BOLD_WHITE_18,
+              ),
             ),
           )
         : Container();

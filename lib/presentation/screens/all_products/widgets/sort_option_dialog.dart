@@ -3,6 +3,7 @@ import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_dialog.dart';
 import 'package:e_commerce_app/presentation/screens/all_products/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class SortOptionDialog extends StatefulWidget {
@@ -27,7 +28,7 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Sort options", style: FONT_CONST.BOLD_PRIMARY_18),
+      title: Text(Translate.of(context).translate('sort_options'), style: FONT_CONST.BOLD_PRIMARY_18),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -35,10 +36,10 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Sort by:"),
+                Text(Translate.of(context).translate('sort_by') + ":") ,
                 SizedBox(width: SizeConfig.defaultSize),
                 RadioListTile(
-                  title: Text("Price"),
+                  title: Text(Translate.of(context).translate('price')),
                   value: PRODUCT_SORT_BY.PRICE,
                   groupValue: sortOption?.productSortBy,
                   onChanged: (dynamic value) {
@@ -48,7 +49,7 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
                   },
                 ),
                 RadioListTile(
-                  title: Text("Sold Quantity"),
+                  title: Text(Translate.of(context).translate('sold_quantity')),
                   value: PRODUCT_SORT_BY.SOLD_QUANTITY,
                   groupValue: sortOption?.productSortBy,
                   onChanged: (dynamic value) {
@@ -61,10 +62,10 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Sort order:"),
+                Text(Translate.of(context).translate('sort_order') + ":"),
                 SizedBox(width: SizeConfig.defaultSize),
                 RadioListTile(
-                  title: Text("Descending"),
+                  title: Text(Translate.of(context).translate('descending')),
                   value: PRODUCT_SORT_ORDER.DESCENDING,
                   groupValue: sortOption?.productSortOrder,
                   onChanged: (dynamic value) {
@@ -73,7 +74,7 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
                   },
                 ),
                 RadioListTile(
-                  title: Text("Ascending"),
+                  title: Text(Translate.of(context).translate('ascending')),
                   value: PRODUCT_SORT_ORDER.ASCENDING,
                   groupValue: sortOption?.productSortOrder,
                   onChanged: (dynamic value) {

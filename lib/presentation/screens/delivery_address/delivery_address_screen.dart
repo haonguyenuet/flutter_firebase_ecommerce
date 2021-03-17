@@ -3,6 +3,7 @@ import 'package:e_commerce_app/business_logic/entities/delivery_address.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/presentation/widgets/others/loading.dart';
 import 'package:e_commerce_app/presentation/widgets/single_card/delivery_address_card.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,7 +13,9 @@ class DeliveryAddressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Delivery Address")),
+      appBar: AppBar(
+        title: Text(Translate.of(context).translate("delivery_address")),
+      ),
       body: SafeArea(
         child: BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {
@@ -35,9 +38,11 @@ class DeliveryAddressScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _openModalBottomSheet(context),
-        label: Text('Add new address'),
+        label: Text(
+          Translate.of(context).translate("add_new_address"),
+        ),
         icon: Icon(Icons.add),
-        backgroundColor: mPrimaryColor,
+        backgroundColor: COLOR_CONST.primaryColor,
       ),
     );
   }

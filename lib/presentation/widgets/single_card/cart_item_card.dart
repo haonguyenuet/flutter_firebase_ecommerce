@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
-import 'package:e_commerce_app/business_logic/repository/product_repository/firebase_product_repo.dart';
+import 'package:e_commerce_app/business_logic/repository/product_repository/product_repo.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
@@ -26,7 +26,7 @@ class CartItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: FirebaseProductRepository().getProductById(cartItem.productId),
+      future: RepositoryProvider.of<ProductRepository>(context).getProductById(cartItem.productId),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           var product = snapshot.data as Product;
@@ -40,6 +40,7 @@ class CartItemCard extends StatelessWidget {
               vertical: SizeConfig.defaultSize * 0.5,
               horizontal: SizeConfig.defaultSize,
             ),
+            padding: EdgeInsets.only(right: SizeConfig.defaultSize),
             child: Row(
               children: [
                 _buildCartItemImage(product),

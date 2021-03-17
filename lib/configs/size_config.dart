@@ -20,4 +20,13 @@ class SizeConfig {
       defaultSize = screenWidth * 10 / 414;
     }
   }
+
+  ///Singleton factory
+  static final SizeConfig _instance = SizeConfig._internal();
+
+  factory SizeConfig() {
+    return _instance;
+  }
+
+  SizeConfig._internal();
 }

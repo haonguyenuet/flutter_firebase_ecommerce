@@ -4,6 +4,7 @@ import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/presentation/screens/detail_product/widgets/related_products/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/widgets/others/section_widget.dart';
 import 'package:e_commerce_app/presentation/widgets/single_card/product_card.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,7 +28,7 @@ class RelatedProducts extends StatelessWidget {
           }
           if (state is RelatedProductsLoaded) {
             return SectionWidget(
-              title: "Related product",
+              title: Translate.of(context).translate('related_products'),
               children: state.relatedProducts
                   .map((p) => ProductCard(product: p))
                   .toList(),

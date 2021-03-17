@@ -98,4 +98,13 @@ class FirebaseProductRepository implements ProductRepository {
             .toList())
         .catchError((err) {});
   }
+
+  ///Singleton factory
+  static final FirebaseProductRepository _instance = FirebaseProductRepository._internal();
+
+  factory FirebaseProductRepository() {
+    return _instance;
+  }
+
+  FirebaseProductRepository._internal();
 }

@@ -15,4 +15,13 @@ class FirebaseBannerRepository implements BannerRepository {
             .toList())
         .catchError((err) {});
   }
+
+  ///Singleton factory
+  static final FirebaseBannerRepository _instance = FirebaseBannerRepository._internal();
+
+  factory FirebaseBannerRepository() {
+    return _instance;
+  }
+
+  FirebaseBannerRepository._internal();
 }

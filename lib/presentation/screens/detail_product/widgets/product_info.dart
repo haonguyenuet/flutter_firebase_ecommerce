@@ -3,6 +3,7 @@ import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -89,7 +90,7 @@ class _ProductInfoState extends State<ProductInfo> {
       TextSpan(
         style: FONT_CONST.BOLD_DEFAULT,
         children: [
-          TextSpan(text: "Đã bán:"),
+          TextSpan(text: Translate.of(context).translate('sold')),
           TextSpan(
             text: " ${product.soldQuantity}",
             style: FONT_CONST.BOLD_PRIMARY_16,
@@ -140,7 +141,8 @@ class _ProductInfoState extends State<ProductInfo> {
                   product.isAvailable ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
             ),
             SizedBox(width: 5),
-            Text("${product.isAvailable ? "Còn hàng" : "Hết hàng"}"),
+            Text(
+                "${product.isAvailable ? Translate.of(context).translate('available') : Translate.of(context).translate('not_available')}"),
           ],
         ),
       ),
@@ -167,7 +169,7 @@ class _ProductInfoState extends State<ProductInfo> {
               });
             },
             child: Text(
-              "${seeMore ? "See less" : "See more"}",
+              "${seeMore ? Translate.of(context).translate('see_less') : Translate.of(context).translate('see_all')}",
               style: FONT_CONST.BOLD_PRIMARY,
             ),
           ),

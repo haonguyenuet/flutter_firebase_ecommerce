@@ -23,6 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   #map
   google_maps_flutter: ^2.0.1
   #firebase
@@ -30,7 +32,7 @@ dependencies:
   cloud_firestore: ^1.0.0
   firebase_storage: ^8.0.0
   firebase_auth: ^1.0.0
- 
+  google_sign_in: ^5.0.0
   #image
   image_picker: ^0.7.2
   #bloc
@@ -73,6 +75,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/locale/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

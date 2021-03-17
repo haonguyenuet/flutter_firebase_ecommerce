@@ -28,7 +28,7 @@ class CustomBottomNav extends StatelessWidget {
           BoxShadow(
             offset: Offset(0, -0.1),
             blurRadius: 5,
-            color: mDarkShadeColor.withOpacity(0.2),
+            color: COLOR_CONST.darkShadeColor.withOpacity(0.2),
           )
         ],
       ),
@@ -112,14 +112,17 @@ class BottomMenuButton extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color:
-              isSelected ? mPrimaryColor.withOpacity(0.16) : Colors.transparent,
+          color: isSelected
+              ? COLOR_CONST.primaryColor.withOpacity(0.16)
+              : Colors.transparent,
         ),
         child: Row(
           children: [
             SvgPicture.asset(
               iconPath,
-              color: isSelected ? mPrimaryColor : mSecondaryColor,
+              color: isSelected
+                  ? COLOR_CONST.primaryColor
+                  : COLOR_CONST.secondaryColor,
             ),
             SizedBox(width: 5),
             if (isSelected) Text(buttonName, style: FONT_CONST.BOLD_PRIMARY)

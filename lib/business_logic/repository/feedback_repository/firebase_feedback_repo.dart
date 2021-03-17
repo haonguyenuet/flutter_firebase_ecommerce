@@ -67,4 +67,13 @@ class FirebaseFeedbackRepository implements FeedbackRepository {
         .set(newItem.toMap())
         .catchError((error) => print(error));
   }
+
+  ///Singleton factory
+  static final FirebaseFeedbackRepository _instance = FirebaseFeedbackRepository._internal();
+
+  factory FirebaseFeedbackRepository() {
+    return _instance;
+  }
+
+  FirebaseFeedbackRepository._internal();
 }

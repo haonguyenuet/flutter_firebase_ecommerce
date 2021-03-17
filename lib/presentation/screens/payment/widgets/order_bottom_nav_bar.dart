@@ -3,6 +3,7 @@ import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:e_commerce_app/presentation/widgets/buttons/default_button.dart';
+import 'package:e_commerce_app/utils/translate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -52,14 +53,19 @@ class OrderBottomNavBar extends StatelessWidget {
                     SizedBox(width: SizeConfig.defaultSize),
 
                     /// Total price
-                    state is CartLoaded ? _buildTotalPrice(state) : Container(),
+                    state is CartLoaded
+                        ? _buildTotalPrice(context, state)
+                        : Container(),
                   ],
                 ),
                 SizedBox(height: SizeConfig.defaultSize * 2),
 
                 /// Checkout button
                 DefaultButton(
-                  child: Text("Order", style: FONT_CONST.BOLD_WHITE_18),
+                  child: Text(
+                    Translate.of(context).translate("order"),
+                    style: FONT_CONST.BOLD_WHITE_18,
+                  ),
                   onPressed: () async {},
                 ),
               ],
@@ -70,7 +76,7 @@ class OrderBottomNavBar extends StatelessWidget {
     );
   }
 
-  _buildTotalPrice(CartLoaded state) {
+  _buildTotalPrice(BuildContext context, CartLoaded state) {
     var totalPriceOfGoods = formatNumber(state.totalCartPrice);
     var totalDeliveryFee = formatNumber(30000);
     var totalPrice = formatNumber(state.totalCartPrice + 30000);
@@ -78,18 +84,20 @@ class OrderBottomNavBar extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Total cost of goods: $totalPriceOfGoods₫",
+          Translate.of(context).translate("total_price") +
+              ": $totalPriceOfGoods₫",
           style: FONT_CONST.REGULAR_DEFAULT_16,
         ),
         Text(
-          "Total delivery fee: $totalDeliveryFee₫",
+          Translate.of(context).translate("total_delivery_fee") +
+              ": $totalDeliveryFee₫",
           style: FONT_CONST.REGULAR_DEFAULT_16,
         ),
         Text.rich(
           TextSpan(
             style: FONT_CONST.REGULAR_DEFAULT_16,
             children: [
-              TextSpan(text: "Total: "),
+              TextSpan(text: Translate.of(context).translate("total") + ": "),
               TextSpan(
                 text: "$totalPrice₫",
                 style: FONT_CONST.BOLD_PRIMARY_18,

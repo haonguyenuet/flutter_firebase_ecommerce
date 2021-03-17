@@ -5,6 +5,7 @@ import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/buttons/default_button.dart';
 import 'package:e_commerce_app/presentation/widgets/others/rating_bar.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
@@ -46,7 +47,10 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
   _buildHeader() {
     return Align(
       alignment: Alignment.center,
-      child: Text('Add your feedback', style: FONT_CONST.REGULAR_DEFAULT_16),
+      child: Text(
+        Translate.of(context).translate('your_feedback'),
+        style: FONT_CONST.REGULAR_DEFAULT_16,
+      ),
     );
   }
 
@@ -54,7 +58,7 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: mPrimaryLightColor,
+        color: COLOR_CONST.backgroundColor,
       ),
       child: TextField(
         autofocus: true,
@@ -65,7 +69,7 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
             vertical: SizeConfig.defaultSize,
           ),
           border: InputBorder.none,
-          hintText: "Type...",
+          hintText: Translate.of(context).translate('type_something'),
         ),
         maxLines: null,
       ),
@@ -76,7 +80,8 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Rating:", style: FONT_CONST.BOLD_DEFAULT_16),
+        Text(Translate.of(context).translate('rating') + ": ",
+            style: FONT_CONST.BOLD_DEFAULT_16),
         SizedBox(width: SizeConfig.defaultSize),
         RatingBar(
           initialRating: 5,
@@ -94,7 +99,10 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
           child: SizedBox(
             width: SizeConfig.defaultSize * 20,
             child: DefaultButton(
-              child: Text("Send", style: FONT_CONST.BOLD_WHITE_18),
+              child: Text(
+                Translate.of(context).translate('send'),
+                style: FONT_CONST.BOLD_WHITE_18,
+              ),
               onPressed: () {
                 // create new feedback
                 FeedBack newFeedback = FeedBack(

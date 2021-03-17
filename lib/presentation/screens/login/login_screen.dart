@@ -15,7 +15,7 @@ class LoginScreen extends StatelessWidget {
       ),
       child: Scaffold(
         body: Container(
-          decoration: BoxDecoration(gradient: mPrimaryGradientColor),
+          decoration: BoxDecoration(gradient: COLOR_CONST.primaryGradientColor),
           child: ListView(
             children: [
               LoginHeader(),

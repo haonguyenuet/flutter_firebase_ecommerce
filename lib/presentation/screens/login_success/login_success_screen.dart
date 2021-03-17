@@ -3,6 +3,7 @@ import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,7 +13,7 @@ class LoginSuccessScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text("Login Success"),
+        title: Text(Translate.of(context).translate('login_success')),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -46,7 +47,8 @@ class LoginSuccessScreen extends StatelessWidget {
     return SizedBox(
       width: SizeConfig.screenWidth * 0.6,
       child: DefaultButton(
-        child: Text("Go to home", style: FONT_CONST.BOLD_WHITE_18),
+        child: Text(Translate.of(context).translate('go_to_home'),
+            style: FONT_CONST.BOLD_WHITE_18),
         onPressed: () {
           Navigator.pushNamedAndRemoveUntil(
             context,
@@ -67,7 +69,7 @@ class LoginSuccessScreen extends StatelessWidget {
             TextSpan(
               style: FONT_CONST.BOLD_DEFAULT_20,
               children: [
-                TextSpan(text: "Hello, "),
+                TextSpan(text: Translate.of(context).translate('hello,')),
                 TextSpan(
                   text: "${loggedUser.name}",
                   style: FONT_CONST.BOLD_PRIMARY_20,

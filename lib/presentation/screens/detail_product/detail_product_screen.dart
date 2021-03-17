@@ -15,9 +15,9 @@ class DetailProductScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
           children: [
             DetailProductAppBar(),
             Expanded(
@@ -32,8 +32,8 @@ class DetailProductScreen extends StatelessWidget {
             )
           ],
         ),
+        bottomNavigationBar: AddToCartNavigation(product: product),
       ),
-      bottomNavigationBar: AddToCartNavigation(product: product),
     );
   }
 }

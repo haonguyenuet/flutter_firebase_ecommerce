@@ -7,9 +7,9 @@ class InitializeInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: mAccentShadeColor,
+      backgroundColor: COLOR_CONST.accentShadeColor,
       body: Container(
-        decoration: BoxDecoration(gradient: mPrimaryGradientColor),
+        decoration: BoxDecoration(gradient: COLOR_CONST.primaryGradientColor),
         child: ListView(
           children: [
             InitializeInfoHeader(),

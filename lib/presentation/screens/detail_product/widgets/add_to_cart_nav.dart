@@ -66,7 +66,7 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
               _quantityChanged(quantity);
             },
             style: ElevatedButton.styleFrom(primary: Colors.white),
-            child: Icon(Icons.remove, color: mPrimaryColor),
+            child: Icon(Icons.remove, color: COLOR_CONST.primaryColor),
           ),
         ),
 
@@ -94,7 +94,7 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
               _quantityChanged(quantity);
             },
             style: ElevatedButton.styleFrom(primary: Colors.white),
-            child: Icon(Icons.add, color: mPrimaryColor),
+            child: Icon(Icons.add, color: COLOR_CONST.primaryColor),
           ),
         ),
       ],
@@ -116,7 +116,7 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
   _addToCartButton() {
     return Container(
       height: SizeConfig.defaultSize * 6,
-      color: mPrimaryColor,
+      color: COLOR_CONST.primaryColor,
       child: TextButton(
         onPressed: product.quantity > 0
             ? () {

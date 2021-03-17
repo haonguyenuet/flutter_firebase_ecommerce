@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/business_logic/blocs/app_bloc.dart';
 import 'package:e_commerce_app/business_logic/blocs/auth/bloc.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
@@ -18,7 +19,6 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  late AuthenticationBloc _authenticationBloc;
   late LoginBloc _loginBloc;
 
   final TextEditingController _emailController = TextEditingController();
@@ -27,7 +27,6 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   void initState() {
-    _authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
     _loginBloc = BlocProvider.of<LoginBloc>(context);
 
     super.initState();
@@ -39,19 +38,19 @@ class _LoginFormState extends State<LoginForm> {
       listener: (context, state) {
         /// Success
         if (state.isSuccess) {
-          Navigator.pop(context);
-          _authenticationBloc.add(LoggedIn());
+          MyDialog.hideWaiting(context);
+          BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
         }
 
         /// Failure
         if (state.isFailure) {
-          Navigator.pop(context);
+          MyDialog.hideWaiting(context);
           MyDialog.showInformation(context, content: state.message);
         }
 
         /// Logging
         if (state.isSubmitting) {
-          MyDialog.showWating(context);
+          MyDialog.showWaiting(context);
         }
       },
       child: BlocBuilder<LoginBloc, LoginState>(
@@ -66,21 +65,14 @@ class _LoginFormState extends State<LoginForm> {
             child: Form(
               child: Column(
                 children: <Widget>[
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Login to your account',
-                      style: FONT_CONST.BOLD_PRIMARY_18,
-                    ),
-                  ),
-                  SizedBox(height: SizeConfig.defaultSize * 2),
                   _buildTextFieldUsername(),
                   SizedBox(height: SizeConfig.defaultSize),
                   _buildTextFieldPassword(),
                   SizedBox(height: SizeConfig.defaultSize),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: Text('Forgot password ?'),
+                    child: Text(
+                        Translate.of(context).translate('forgot_password')),
                   ),
                   SizedBox(height: SizeConfig.defaultSize * 2),
                   _buildButtonLogin(state),
@@ -107,12 +99,14 @@ class _LoginFormState extends State<LoginForm> {
         _loginBloc.add(EmailChanged(email: value));
       },
       validator: (_) {
-        return !_loginBloc.state.isEmailValid ? 'Invalid Email' : null;
+        return !_loginBloc.state.isEmailValid
+            ? Translate.of(context).translate('invalid_email')
+            : null;
       },
       autovalidateMode: AutovalidateMode.always,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-        hintText: 'Email',
+        hintText: Translate.of(context).translate('email'),
         suffixIcon: Icon(Icons.email_outlined),
       ),
     );
@@ -125,13 +119,15 @@ class _LoginFormState extends State<LoginForm> {
         _loginBloc.add(PasswordChanged(password: value));
       },
       validator: (_) {
-        return !_loginBloc.state.isPasswordValid ? 'Invalid Password' : null;
+        return !_loginBloc.state.isPasswordValid
+            ? Translate.of(context).translate('invalid_password')
+            : null;
       },
       autovalidateMode: AutovalidateMode.always,
       keyboardType: TextInputType.text,
       obscureText: !_isShowPassword,
       decoration: InputDecoration(
-        hintText: 'Password',
+        hintText: Translate.of(context).translate('password'),
         suffixIcon: IconButton(
           icon: _isShowPassword
               ? Icon(Icons.visibility)
@@ -149,7 +145,7 @@ class _LoginFormState extends State<LoginForm> {
   _buildButtonLogin(LoginState state) {
     return DefaultButton(
       child: Text(
-        'Login'.toUpperCase(),
+        Translate.of(context).translate('login').toUpperCase(),
         style: FONT_CONST.BOLD_WHITE_18,
       ),
       onPressed: () {
@@ -179,7 +175,7 @@ class _LoginFormState extends State<LoginForm> {
                 horizontal: SizeConfig.defaultSize,
                 vertical: 0,
               ),
-              child: Text('Or'),
+              child: Text(Translate.of(context).translate('or')),
             ),
           ),
         )
@@ -205,7 +201,7 @@ class _LoginFormState extends State<LoginForm> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text('Don\'t have an account ?'),
+          Text(Translate.of(context).translate('don\'t_have_an_account')),
           SizedBox(width: 5),
           GestureDetector(
             onTap: () => Navigator.pushNamed(
@@ -213,7 +209,7 @@ class _LoginFormState extends State<LoginForm> {
               AppRouter.INITIALIZE_INFO,
             ),
             child: Text(
-              'Register',
+              Translate.of(context).translate('register'),
               style: FONT_CONST.MEDIUM_PRIMARY_16,
             ),
           ),

@@ -34,12 +34,12 @@ class ProfileMenuButton extends StatelessWidget {
           children: [
             SvgPicture.asset(
               icon,
-              color: mPrimaryColor,
+              color: COLOR_CONST.primaryColor,
               width: SizeConfig.defaultSize * 2,
             ),
             SizedBox(width: SizeConfig.defaultSize * 2),
             Expanded(child: Text(text, style: FONT_CONST.MEDIUM_DEFAULT_16)),
-            Icon(Icons.arrow_forward_ios, color: mTextColor),
+            Icon(Icons.arrow_forward_ios, color: COLOR_CONST.textColor),
           ],
         ),
       ),

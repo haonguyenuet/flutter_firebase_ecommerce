@@ -24,4 +24,13 @@ class Validators {
   static isValidName(String name) {
     return name.isNotEmpty;
   }
+
+  ///Singleton factory
+  static final Validators _instance = Validators._internal();
+
+  factory Validators() {
+    return _instance;
+  }
+
+  Validators._internal();
 }

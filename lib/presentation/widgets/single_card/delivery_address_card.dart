@@ -2,6 +2,7 @@ import 'package:e_commerce_app/business_logic/entities/delivery_address.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/others/custom_card_widget.dart';
+import 'package:e_commerce_app/utils/translate.dart';
 import 'package:flutter/material.dart';
 
 class DeliveryAddressCard extends StatelessWidget {
@@ -31,16 +32,19 @@ class DeliveryAddressCard extends StatelessWidget {
               Icon(
                 Icons.location_city_rounded,
                 size: SizeConfig.defaultSize * 2,
-                color: mPrimaryColor,
+                color: COLOR_CONST.primaryColor,
               ),
               SizedBox(width: SizeConfig.defaultSize),
               Text(
-                "Delivery Address",
+                Translate.of(context).translate("delivery_address"),
                 style: FONT_CONST.MEDIUM_DEFAULT_16,
               ),
               Spacer(),
               if (deliveryAddress.isDefault)
-                Text("[Default]", style: FONT_CONST.REGULAR_PRIMARY),
+                Text(
+                  "[" + Translate.of(context).translate("default") + "]",
+                  style: FONT_CONST.REGULAR_PRIMARY,
+                ),
             ],
           ),
           Text(

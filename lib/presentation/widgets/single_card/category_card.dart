@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import 'package:e_commerce_app/configs/size_config.dart';
@@ -27,10 +28,10 @@ class CategoryCard extends StatelessWidget {
               imageUrl: category.imageUrl,
             ),
             Positioned(
-              bottom: -SizeConfig.defaultSize * 2,
+              bottom: SizeConfig.defaultSize,
               left: SizeConfig.defaultSize * 2,
               child: Text(
-                "${category.name}\n",
+                Translate.of(context).translate("${category.name}"),
                 style: FONT_CONST.BOLD_WHITE_18,
               ),
             ),

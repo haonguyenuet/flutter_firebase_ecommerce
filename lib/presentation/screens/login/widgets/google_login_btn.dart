@@ -11,10 +11,10 @@ class GoogleLoginButton extends StatelessWidget {
         height: SizeConfig.defaultSize * 4,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: googleButtonColor,
+          color: COLOR_CONST.googleButtonColor,
           border: Border.all(
             width: 0.8,
-            color: googleButtonColorBorder,
+            color: COLOR_CONST.googleButtonColorBorder,
           ),
         ),
         child: Row(

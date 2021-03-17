@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:e_commerce_app/business_logic/repository/user_repository/user_repo.dart';
@@ -48,4 +50,13 @@ class FirebaseUserRepository implements UserRepository {
       }
     }).catchError((error) {});
   }
+
+  ///Singleton factory
+  static final FirebaseUserRepository _instance = FirebaseUserRepository._internal();
+
+  factory FirebaseUserRepository() {
+    return _instance;
+  }
+
+  FirebaseUserRepository._internal();
 }
