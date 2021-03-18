@@ -1,15 +1,12 @@
-import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
-import 'package:e_commerce_app/business_logic/repository/product_repository/product_repo.dart';
+import 'package:e_commerce_app/business_logic/common_blocs/cart/bloc.dart';
+import 'package:e_commerce_app/business_logic/entities/entites.dart';
+import 'package:e_commerce_app/business_logic/repository/app_repository.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
-
 import 'package:e_commerce_app/presentation/widgets/buttons/circle_icon_button.dart';
-import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
-import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
-import 'package:e_commerce_app/presentation/widgets/others/custom_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,7 +23,8 @@ class CartItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: RepositoryProvider.of<ProductRepository>(context).getProductById(cartItem.productId),
+      future:
+          AppRepository.productRepository.getProductById(cartItem.productId),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           var product = snapshot.data as Product;
@@ -105,7 +103,7 @@ class CartItemCard extends StatelessWidget {
           color: Color(0xFFF5F6F9),
           size: SizeConfig.defaultSize * 1.2,
           onPressed: cartItem.quantity > 1
-              ? () => _changeQuantity(context, product, cartItem.quantity - 1)
+              ? () => _onChangeQuantity(context, product, cartItem.quantity - 1)
               : () {},
         ),
 
@@ -121,14 +119,14 @@ class CartItemCard extends StatelessWidget {
           color: Color(0xFFF5F6F9),
           size: SizeConfig.defaultSize * 1.2,
           onPressed: cartItem.quantity < product.quantity
-              ? () => _changeQuantity(context, product, cartItem.quantity + 1)
+              ? () => _onChangeQuantity(context, product, cartItem.quantity + 1)
               : () {},
         )
       ],
     );
   }
 
-  _changeQuantity(BuildContext context, Product product, int newQuantity) {
+  _onChangeQuantity(BuildContext context, Product product, int newQuantity) {
     // update cart item
     BlocProvider.of<CartBloc>(context).add(UpdateCartItem(
       cartItem.cloneWith(

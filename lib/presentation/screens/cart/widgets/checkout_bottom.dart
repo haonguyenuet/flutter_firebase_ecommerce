@@ -1,8 +1,8 @@
-import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
+import 'package:e_commerce_app/business_logic/common_blocs/cart/bloc.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
-import 'package:e_commerce_app/utils/my_dialog.dart';
+import 'package:e_commerce_app/utils/dialog.dart';
 import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:e_commerce_app/presentation/widgets/buttons/default_button.dart';
 import 'package:e_commerce_app/utils/utils.dart';
@@ -77,7 +77,7 @@ class CheckoutBottom extends StatelessWidget {
         if (state is CartLoaded && state.cart.length > 0) {
           Navigator.pushNamed(context, AppRouter.PAYMENT);
         } else {
-          MyDialog.showInformation(
+          UtilDialog.showInformation(
             context,
             content: Translate.of(context).translate("your_cart_is_empty"),
           );

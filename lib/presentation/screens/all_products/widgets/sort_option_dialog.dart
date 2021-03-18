@@ -1,6 +1,5 @@
-import 'package:e_commerce_app/configs/size_config.dart';
+import 'package:e_commerce_app/configs/config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
-import 'package:e_commerce_app/utils/my_dialog.dart';
 import 'package:e_commerce_app/presentation/screens/all_products/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/utils/utils.dart';
@@ -28,7 +27,8 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(Translate.of(context).translate('sort_options'), style: FONT_CONST.BOLD_PRIMARY_18),
+      title: Text(Translate.of(context).translate('sort_options'),
+          style: FONT_CONST.BOLD_PRIMARY_18),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -36,7 +36,7 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(Translate.of(context).translate('sort_by') + ":") ,
+                Text(Translate.of(context).translate('sort_by') + ":"),
                 SizedBox(width: SizeConfig.defaultSize),
                 RadioListTile(
                   title: Text(Translate.of(context).translate('price')),
@@ -91,7 +91,7 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
                 if (sortOption!.productSortBy != null) {
                   Navigator.pop(context, sortOption);
                 } else {
-                  MyDialog.showInformation(
+                  UtilDialog.showInformation(
                     context,
                     content: "Sort by isn't selected",
                   );

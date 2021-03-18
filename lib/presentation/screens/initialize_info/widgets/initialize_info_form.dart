@@ -54,7 +54,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
       controller: _nameController,
       keyboardType: TextInputType.text,
       validator: (value) {
-        return Validators.isValidName(value!)
+        return UtilValidators.isValidName(value!)
             ? null
             : Translate.of(context).translate("invalid_name");
       },
@@ -70,7 +70,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
       controller: _phoneNumberController,
       keyboardType: TextInputType.text,
       validator: (value) {
-        return Validators.isVietnamesePhoneNumber(value!)
+        return UtilValidators.isVietnamesePhoneNumber(value!)
             ? null
             : Translate.of(context).translate("invalid_phone_number");
       },
@@ -104,7 +104,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
             arguments: initialUser,
           );
         } else {
-          MyDialog.showInformation(
+          UtilDialog.showInformation(
             context,
             content: Translate.of(context)
                 .translate("you_need_to_complete_all_fields"),
@@ -129,7 +129,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
             ),
             child: Text(
               Translate.of(context).translate("login"),
-              style: FONT_CONST.MEDIUM_PRIMARY_16,
+              style: FONT_CONST.BOLD_PRIMARY_16,
             ),
           ),
         ],

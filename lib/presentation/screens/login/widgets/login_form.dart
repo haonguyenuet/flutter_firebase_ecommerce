@@ -1,17 +1,13 @@
-import 'package:e_commerce_app/business_logic/blocs/app_bloc.dart';
-import 'package:e_commerce_app/business_logic/blocs/auth/bloc.dart';
+import 'package:e_commerce_app/business_logic/common_blocs/auth/bloc.dart';
+import 'package:e_commerce_app/configs/config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
-import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
-import 'package:e_commerce_app/utils/my_dialog.dart';
-import 'package:e_commerce_app/utils/utils.dart';
 import 'package:e_commerce_app/presentation/screens/login/bloc/bloc.dart';
+import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:e_commerce_app/configs/router.dart';
-import 'package:e_commerce_app/configs/size_config.dart';
-import 'package:e_commerce_app/presentation/screens/login/widgets/facebook_login_btn.dart';
-import 'package:e_commerce_app/presentation/screens/login/widgets/google_login_btn.dart';
+import '../widgets/facebook_login_btn.dart';
+import '../widgets/google_login_btn.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -38,19 +34,19 @@ class _LoginFormState extends State<LoginForm> {
       listener: (context, state) {
         /// Success
         if (state.isSuccess) {
-          MyDialog.hideWaiting(context);
+          UtilDialog.hideWaiting(context);
           BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
         }
 
         /// Failure
         if (state.isFailure) {
-          MyDialog.hideWaiting(context);
-          MyDialog.showInformation(context, content: state.message);
+          UtilDialog.hideWaiting(context);
+          UtilDialog.showInformation(context, content: state.message);
         }
 
         /// Logging
         if (state.isSubmitting) {
-          MyDialog.showWaiting(context);
+          UtilDialog.showWaiting(context);
         }
       },
       child: BlocBuilder<LoginBloc, LoginState>(
@@ -210,7 +206,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
             child: Text(
               Translate.of(context).translate('register'),
-              style: FONT_CONST.MEDIUM_PRIMARY_16,
+              style: FONT_CONST.BOLD_PRIMARY_16,
             ),
           ),
         ],

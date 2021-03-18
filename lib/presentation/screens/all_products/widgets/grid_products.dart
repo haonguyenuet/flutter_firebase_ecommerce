@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/configs/size_config.dart';
+import 'package:e_commerce_app/constants/image_constant.dart';
 import 'package:e_commerce_app/presentation/screens/all_products/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/presentation/widgets/others/loading.dart';
@@ -37,10 +38,11 @@ class GridProducts extends StatelessWidget {
             );
           }
           return Center(
-              child: Image.asset(
-            "assets/images/Not Found.png",
-            width: SizeConfig.defaultSize * 20,
-          ));
+            child: Image.asset(
+              IMAGE_CONST.NOT_FOUND,
+              width: SizeConfig.defaultSize * 20,
+            ),
+          );
         } else {
           return Center(child: Text("Something went wrong."));
         }

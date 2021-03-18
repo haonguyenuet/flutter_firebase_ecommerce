@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
-import 'package:e_commerce_app/business_logic/repository/repository.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/screens/feedbacks/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/screens/feedbacks/widgets/feedback_bottom_sheet.dart';
@@ -9,8 +8,6 @@ import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'bloc/feedback_bloc.dart';
-
 class FeedbacksScreen extends StatelessWidget {
   final Product product;
 
@@ -18,10 +15,7 @@ class FeedbacksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => FeedbackBloc(
-        feedbackRepository: RepositoryProvider.of<FeedbackRepository>(context),
-        productRepository: RepositoryProvider.of<ProductRepository>(context),
-      )..add(LoadFeedbacks(product)),
+      create: (context) => FeedbackBloc()..add(LoadFeedbacks(product)),
       child: Builder(
         builder: (context) {
           return Scaffold(
@@ -36,7 +30,10 @@ class FeedbacksScreen extends StatelessWidget {
             ),
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () => _openModalBottomSheet(context),
-              label: Text(Translate.of(context).translate("add_your_feedback")),
+              label: Text(
+                Translate.of(context).translate("add_your_feedback"),
+                style: FONT_CONST.BOLD_WHITE_16,
+              ),
               icon: Icon(Icons.add),
             ),
           );

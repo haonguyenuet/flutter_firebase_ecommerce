@@ -1,4 +1,5 @@
-import 'package:e_commerce_app/presentation/screens/home_page/bloc/home_bloc.dart';
+
+import 'package:e_commerce_app/presentation/screens/home_page/bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class HomeState extends Equatable {

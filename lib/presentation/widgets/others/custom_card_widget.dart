@@ -31,14 +31,14 @@ class CustomCardWidget extends StatelessWidget {
           height: height,
           margin: margin,
           padding: padding,
-          decoration: decoration ?? _getDefaultDecoration(),
+          decoration: decoration ?? _defaultDecoration(),
           child: child,
         ),
       ),
     );
   }
 
-  _getDefaultDecoration() {
+  _defaultDecoration() {
     return BoxDecoration(
       borderRadius: BorderRadius.circular(10),
       border: Border.all(color: COLOR_CONST.borderColor.withOpacity(0.3)),

@@ -1,6 +1,7 @@
-import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
+import 'package:e_commerce_app/business_logic/common_blocs/cart/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
+import 'package:e_commerce_app/constants/image_constant.dart';
 import 'package:e_commerce_app/presentation/widgets/others/custom_dismissible.dart';
 import 'package:e_commerce_app/presentation/widgets/others/loading.dart';
 import 'package:e_commerce_app/presentation/widgets/single_card/cart_item_card.dart';
@@ -24,7 +25,9 @@ class CartBody extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return CustomDismissible(
                         key: Key(cart[index].id),
-                        onDismissed: () => _onDismissed,
+                        onDismissed: (direction) {
+                          _onDismissed(context, cart[index]);
+                        },
                         removeIcon: Icon(Icons.remove_shopping_cart),
                         child: CartItemCard(cartItem: cart[index]),
                       );
@@ -32,7 +35,7 @@ class CartBody extends StatelessWidget {
                   )
                 : Center(
                     child: Image.asset(
-                    "assets/images/empty_cart.png",
+                    IMAGE_CONST.CART_EMPTY,
                     width: SizeConfig.defaultSize * 20,
                   )),
           );

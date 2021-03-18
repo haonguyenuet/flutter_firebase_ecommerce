@@ -1,22 +1,14 @@
-import 'package:e_commerce_app/business_logic/entities/banner.dart';
-import 'package:e_commerce_app/business_logic/entities/category.dart';
-import 'package:e_commerce_app/business_logic/entities/product.dart';
-import 'package:e_commerce_app/business_logic/repository/banner_repository/banner_repo.dart';
-import 'package:e_commerce_app/business_logic/repository/product_repository/product_repo.dart';
-import 'package:e_commerce_app/presentation/screens/home_page/bloc/home_event.dart';
-import 'package:e_commerce_app/presentation/screens/home_page/bloc/home_state.dart';
+import 'package:e_commerce_app/business_logic/entities/entites.dart';
+import 'package:e_commerce_app/business_logic/repository/app_repository.dart';
+import 'package:e_commerce_app/business_logic/repository/repository.dart';
+import 'package:e_commerce_app/presentation/screens/home_page/bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final BannerRepository _bannerRepository;
-  final ProductRepository _productRepository;
+  final BannerRepository _bannerRepository = AppRepository.bannerRepository;
+  final ProductRepository _productRepository = AppRepository.productRepository;
 
-  HomeBloc(
-      {required BannerRepository bannerRepository,
-      required ProductRepository productRepository})
-      : _bannerRepository = bannerRepository,
-        _productRepository = productRepository,
-        super(HomeLoading());
+  HomeBloc() : super(HomeLoading());
 
   @override
   Stream<HomeState> mapEventToState(HomeEvent event) async* {
@@ -44,10 +36,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 }
 
 class HomeResponse {
+  final List<BannerItem> banners;
+  final List<Category> categories;
   final List<Product> popularProducts;
   final List<Product> discountProducts;
-  final List<Category> categories;
-  final List<BannerItem> banners;
 
   HomeResponse({
     required this.banners,

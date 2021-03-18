@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/business_logic/blocs/profile/bloc.dart';
+import 'package:e_commerce_app/business_logic/common_blocs/profile/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/feedback.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';

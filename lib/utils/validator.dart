@@ -1,4 +1,4 @@
-class Validators {
+class UtilValidators {
   static final RegExp _emailRegExp = RegExp(
     r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$',
   );
@@ -26,11 +26,11 @@ class Validators {
   }
 
   ///Singleton factory
-  static final Validators _instance = Validators._internal();
+  static final UtilValidators _instance = UtilValidators._internal();
 
-  factory Validators() {
+  factory UtilValidators() {
     return _instance;
   }
 
-  Validators._internal();
+  UtilValidators._internal();
 }

@@ -1,23 +1,19 @@
 import 'dart:async';
-
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
+import 'package:e_commerce_app/business_logic/repository/app_repository.dart';
 import 'package:e_commerce_app/business_logic/repository/repository.dart';
 import 'package:e_commerce_app/presentation/screens/feedbacks/bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FeedbackBloc extends Bloc<FeedbacksEvent, FeedbackState> {
-  final FeedbackRepository _feedbackRepository;
-  final ProductRepository _productRepository;
+  final FeedbackRepository _feedbackRepository =
+      AppRepository.feedbackRepository;
+  final ProductRepository _productRepository = AppRepository.productRepository;
   StreamSubscription? _feedbackSubscription;
   Product? _currentProduct;
   double _currAverageRating = 0.0;
 
-  FeedbackBloc({
-    required FeedbackRepository feedbackRepository,
-    required ProductRepository productRepository,
-  })   : _feedbackRepository = feedbackRepository,
-        _productRepository = productRepository,
-        super(FeedbacksLoading());
+  FeedbackBloc() : super(FeedbacksLoading());
 
   @override
   Stream<FeedbackState> mapEventToState(FeedbacksEvent event) async* {

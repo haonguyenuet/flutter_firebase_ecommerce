@@ -58,7 +58,7 @@ class _ProductInfoState extends State<ProductInfo> {
   _productName() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
-      child: Text(product.name, style: FONT_CONST.MEDIUM_DEFAULT_20),
+      child: Text(product.name, style: FONT_CONST.BOLD_DEFAULT_20),
     );
   }
 
@@ -70,7 +70,7 @@ class _ProductInfoState extends State<ProductInfo> {
         children: [
           Text(
             "${formatNumber(product.price)}₫",
-            style: FONT_CONST.MEDIUM_PRIMARY_24,
+            style: FONT_CONST.BOLD_PRIMARY_24,
           ),
           if (product.percentOff > 0)
             Padding(
@@ -157,6 +157,7 @@ class _ProductInfoState extends State<ProductInfo> {
         children: [
           Text(
             product.description,
+            style: FONT_CONST.REGULAR_DEFAULT_16,
             maxLines: seeMore ? null : 2,
           ),
           SizedBox(height: 5),

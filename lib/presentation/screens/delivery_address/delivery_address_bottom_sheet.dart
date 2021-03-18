@@ -1,10 +1,9 @@
-import 'package:e_commerce_app/business_logic/blocs/app_bloc.dart';
-import 'package:e_commerce_app/business_logic/blocs/profile/bloc.dart';
+import 'package:e_commerce_app/business_logic/common_blocs/profile/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/delivery_address.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
-import 'package:e_commerce_app/utils/my_dialog.dart';
+import 'package:e_commerce_app/utils/dialog.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/presentation/widgets/others/custom_card_widget.dart';
 import 'package:e_commerce_app/utils/translate.dart';
@@ -139,7 +138,7 @@ class _DeliveryAddressBottomSheetState
         children: [
           Text(
             Translate.of(context).translate("use_google_map"),
-            style: FONT_CONST.MEDIUM_DEFAULT_18,
+            style: FONT_CONST.BOLD_DEFAULT_18,
           ),
           IconButton(
               icon: Icon(Icons.forward),
@@ -160,7 +159,7 @@ class _DeliveryAddressBottomSheetState
         children: [
           Text(
             Translate.of(context).translate("put_this_is_default_address"),
-            style: FONT_CONST.MEDIUM_DEFAULT_18,
+            style: FONT_CONST.BOLD_DEFAULT_18,
           ),
           CupertinoSwitch(
             value: _isDefaultAddress,
@@ -203,7 +202,7 @@ class _DeliveryAddressBottomSheetState
 
           Navigator.pop(context);
         } else {
-          MyDialog.showInformation(
+          UtilDialog.showInformation(
             context,
             content: Translate.of(context)
                 .translate("you_need_to_complete_all_fields"),
@@ -235,6 +234,13 @@ class _DeliveryAddressBottomSheetState
             ),
           )
         : Container();
+  }
+
+  outlineInputBorder() {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(5),
+      borderSide: BorderSide(color: COLOR_CONST.textColor),
+    );
   }
 
   bool get isPopulated =>

@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
-import 'package:e_commerce_app/business_logic/repository/repository.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/presentation/screens/detail_product/widgets/related_products/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/widgets/others/section_widget.dart';
@@ -15,9 +14,8 @@ class RelatedProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RelatedProductsBloc(
-        productRepository: RepositoryProvider.of<ProductRepository>(context),
-      )..add(LoadRelatedProducts(product)),
+      create: (context) =>
+          RelatedProductsBloc()..add(LoadRelatedProducts(product)),
       child: BlocBuilder<RelatedProductsBloc, RelatedProductsState>(
         builder: (context, state) {
           if (state is RelatedProductsLoading) {

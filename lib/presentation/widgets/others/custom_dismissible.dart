@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomDismissible extends StatelessWidget {
-  final Function() onDismissed;
+  final Function(DismissDirection) onDismissed;
   final Widget child;
   final Icon? removeIcon;
   final Key key;
@@ -17,7 +17,7 @@ class CustomDismissible extends StatelessWidget {
     return Dismissible(
       key: key,
       direction: DismissDirection.endToStart,
-      onDismissed: (direction) {},
+      onDismissed: onDismissed,
       background: Container(
         padding: EdgeInsets.symmetric(horizontal: 40),
         decoration: BoxDecoration(color: Color(0xFFFFE6E6)),

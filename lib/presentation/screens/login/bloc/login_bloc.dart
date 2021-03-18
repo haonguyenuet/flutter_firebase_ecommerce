@@ -1,16 +1,14 @@
 import 'package:bloc/bloc.dart';
+import 'package:e_commerce_app/business_logic/repository/app_repository.dart';
 import 'package:e_commerce_app/business_logic/repository/repository.dart';
-import 'package:e_commerce_app/utils/validator.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:rxdart/rxdart.dart';
-import 'login_event.dart';
-import 'login_state.dart';
+import 'bloc.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final AuthRepository _authRepository;
+  final AuthRepository _authRepository = AppRepository.authRepository;
 
-  LoginBloc({required AuthRepository authRepository})
-      : _authRepository = authRepository,
-        super(LoginState.empty());
+  LoginBloc() : super(LoginState.empty());
 
   @override
   Stream<Transition<LoginEvent, LoginState>> transformEvents(
@@ -37,12 +35,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   /// Map from email changed event => states
   Stream<LoginState> _mapEmailChangedToState(String email) async* {
-    yield state.update(isEmailValid: Validators.isValidEmail(email));
+    yield state.update(isEmailValid: UtilValidators.isValidEmail(email));
   }
 
   /// Map from  password changed event => states
   Stream<LoginState> _mapPasswordChangedToState(String password) async* {
-    yield state.update(isPasswordValid: Validators.isValidPassword(password));
+    yield state.update(
+        isPasswordValid: UtilValidators.isValidPassword(password));
   }
 
   /// Map from login event => states

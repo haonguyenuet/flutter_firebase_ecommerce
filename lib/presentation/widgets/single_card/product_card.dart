@@ -34,7 +34,7 @@ class ProductCard extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           Column(
-            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildProductImage(),
               _buildProductName(),
@@ -66,10 +66,10 @@ class ProductCard extends StatelessWidget {
       children: [
         Text(
           "${formatNumber(product.price)}₫",
-          style: FONT_CONST.MEDIUM_PRIMARY,
+          style: FONT_CONST.BOLD_PRIMARY,
         ),
         Container(
-          padding: EdgeInsets.all(5),
+          padding: EdgeInsets.all(2),
           width: SizeConfig.defaultSize * 2,
           height: SizeConfig.defaultSize * 2,
           decoration: BoxDecoration(
@@ -95,9 +95,9 @@ class ProductCard extends StatelessWidget {
             TextSpan(text: Translate.of(context).translate("sold")),
             TextSpan(
               text: " ${product.soldQuantity}",
-              style: FONT_CONST.MEDIUM_PRIMARY,
+              style: FONT_CONST.REGULAR_PRIMARY,
             ),
-            TextSpan(text: " " + Translate.of(context).translate("product")),
+            TextSpan(text: " " + Translate.of(context).translate("products")),
           ],
         ),
       ),

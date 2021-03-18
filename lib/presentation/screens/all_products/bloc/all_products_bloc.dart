@@ -1,22 +1,19 @@
 import 'dart:async';
-
-import 'package:e_commerce_app/business_logic/entities/category.dart';
-import 'package:e_commerce_app/business_logic/entities/product.dart';
-import 'package:e_commerce_app/business_logic/repository/product_repository/product_repo.dart';
-import 'package:e_commerce_app/presentation/screens/all_products/bloc/all_products_event.dart';
-import 'package:e_commerce_app/presentation/screens/all_products/bloc/all_products_state.dart';
+import 'package:e_commerce_app/business_logic/entities/entites.dart';
+import 'package:e_commerce_app/business_logic/repository/app_repository.dart';
+import 'package:e_commerce_app/business_logic/repository/repository.dart';
+import 'package:e_commerce_app/presentation/screens/all_products/bloc/bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
-  ProductRepository _productRepository;
+  ProductRepository _productRepository = AppRepository.productRepository;
+  // Criteria filters
   late Category _currCategory;
   String _currKeyword = "";
   ProductSortOption _currSortOption = ProductSortOption();
 
-  AllProductsBloc({required ProductRepository productRepository})
-      : _productRepository = productRepository,
-        super(DisplayListProducts.loading());
+  AllProductsBloc() : super(DisplayListProducts.loading());
 
   /// Debounce search query changed event
   @override

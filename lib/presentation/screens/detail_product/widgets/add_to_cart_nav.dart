@@ -1,10 +1,10 @@
-import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
+import 'package:e_commerce_app/business_logic/common_blocs/cart/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
-import 'package:e_commerce_app/utils/my_dialog.dart';
+import 'package:e_commerce_app/utils/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:flutter/services.dart';
@@ -105,7 +105,7 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
     if (quantity > 0 && quantity < product.quantity) {
       _quantityController.text = quantity.toString();
     } else {
-      MyDialog.showInformation(
+      UtilDialog.showInformation(
         context,
         content: "Quantity is invalid",
       );

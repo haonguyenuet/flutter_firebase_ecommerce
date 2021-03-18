@@ -4,21 +4,21 @@ import 'package:flutter/material.dart';
 
 class FONT_CONST {
   static final REGULAR = TextStyle(
-    fontFamily: 'Poppins',
+    fontFamily: 'Roboto',
     fontWeight: FontWeight.w400,
     color: Colors.black,
     fontSize: SizeConfig.defaultSize * 1.4,
   );
 
   static final MEDIUM = TextStyle(
-    fontFamily: 'Poppins',
+    fontFamily: 'Roboto',
     fontWeight: FontWeight.w500,
     color: Colors.black,
     fontSize: SizeConfig.defaultSize * 1.4,
   );
 
   static final BOLD = TextStyle(
-    fontFamily: 'Poppins',
+    fontFamily: 'Roboto',
     fontWeight: FontWeight.w600,
     color: Colors.black,
     fontSize: SizeConfig.defaultSize * 1.4,
@@ -50,7 +50,7 @@ class FONT_CONST {
   static final REGULAR_WHITE_20 =
       REGULAR_WHITE.copyWith(fontSize: SizeConfig.defaultSize * 2);
 
-  //MEDIUM
+  //MEDIUM (SEMIBOLD)
   static final MEDIUM_DEFAULT = MEDIUM.copyWith(color: COLOR_CONST.textColor);
   static final MEDIUM_DEFAULT_16 =
       MEDIUM_DEFAULT.copyWith(fontSize: SizeConfig.defaultSize * 1.6);
@@ -94,6 +94,8 @@ class FONT_CONST {
       BOLD_PRIMARY.copyWith(fontSize: SizeConfig.defaultSize * 1.8);
   static final BOLD_PRIMARY_20 =
       BOLD_PRIMARY.copyWith(fontSize: SizeConfig.defaultSize * 2);
+  static final BOLD_PRIMARY_24 =
+      BOLD_PRIMARY.copyWith(fontSize: SizeConfig.defaultSize * 2.4);
 
   static final BOLD_WHITE = BOLD.copyWith(color: Colors.white);
   static final BOLD_WHITE_16 =

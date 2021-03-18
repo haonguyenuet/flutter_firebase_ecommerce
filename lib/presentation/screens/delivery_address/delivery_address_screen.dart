@@ -1,6 +1,7 @@
-import 'package:e_commerce_app/business_logic/blocs/profile/bloc.dart';
+import 'package:e_commerce_app/business_logic/common_blocs/profile/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/delivery_address.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/others/loading.dart';
 import 'package:e_commerce_app/presentation/widgets/single_card/delivery_address_card.dart';
 import 'package:e_commerce_app/utils/utils.dart';
@@ -40,6 +41,7 @@ class DeliveryAddressScreen extends StatelessWidget {
         onPressed: () => _openModalBottomSheet(context),
         label: Text(
           Translate.of(context).translate("add_new_address"),
+          style: FONT_CONST.BOLD_WHITE_16,
         ),
         icon: Icon(Icons.add),
         backgroundColor: COLOR_CONST.primaryColor,

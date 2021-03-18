@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
+import 'package:e_commerce_app/business_logic/common_blocs/cart/bloc.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

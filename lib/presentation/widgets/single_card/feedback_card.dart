@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/business_logic/entities/feedback.dart';
 import 'package:e_commerce_app/business_logic/entities/user.dart';
+import 'package:e_commerce_app/business_logic/repository/app_repository.dart';
 import 'package:e_commerce_app/business_logic/repository/repository.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
@@ -7,8 +8,6 @@ import 'package:e_commerce_app/utils/utils.dart';
 import 'package:e_commerce_app/presentation/widgets/others/custom_card_widget.dart';
 import 'package:e_commerce_app/presentation/widgets/others/rating_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 class FeedbackCard extends StatelessWidget {
   const FeedbackCard({
     Key? key,
@@ -44,8 +43,7 @@ class FeedbackCard extends StatelessWidget {
 
   _buildUserInfo(BuildContext context) {
     return FutureBuilder(
-      future: RepositoryProvider.of<UserRepository>(context)
-          .getUserById(feedBack.userId),
+      future: AppRepository.userRepository.getUserById(feedBack.userId),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           var user = snapshot.data as UserModel;

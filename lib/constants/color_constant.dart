@@ -8,13 +8,14 @@ class COLOR_CONST {
   static const borderColor = Color(0xFFd3d1d1);
   static const backgroundColor = Color(0xfff9f9f9);
   static const cardShadowColor = Color(0xFFd3d1d1);
+  static const dividerColor = Colors.black12;
   static const primaryGradientColor = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [Color(0xFF25164d), Colors.white],
   );
   static const secondaryColor = Color(0xFF979797);
-  static const textColor = Color(0xFF757575);
+  static const textColor = Color(0xFF5a5a5a);
   static const googleButtonColor = Color(0xFFFFF1F0);
   static const googleButtonColorBorder = Color(0xFFF14336);
   static const facebookButtonColor = Color(0xFFF5F9FF);

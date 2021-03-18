@@ -1,7 +1,8 @@
-import 'package:e_commerce_app/business_logic/blocs/profile/bloc.dart';
+import 'package:e_commerce_app/business_logic/common_blocs/profile/bloc.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
+import 'package:e_commerce_app/constants/image_constant.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class LoginSuccessScreen extends StatelessWidget {
 
   _buildSuccessImage() {
     return Image.asset(
-      "assets/images/success.png",
+      IMAGE_CONST.LOGIN_SUCCESS,
       height: SizeConfig.screenHeight * 0.5,
     );
   }

@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:e_commerce_app/business_logic/blocs/profile/bloc.dart';
+import 'package:e_commerce_app/business_logic/common_blocs/profile/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/user.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +35,7 @@ class ProfilePic extends StatelessWidget {
           ),
         ),
         Positioned(
-          right: -SizeConfig.defaultSize,
+          right: SizeConfig.defaultSize,
           bottom: 0,
           child: SizedBox(
             height: SizeConfig.defaultSize * 4,

@@ -1,6 +1,6 @@
 import 'package:e_commerce_app/business_logic/entities/category.dart';
-import 'package:equatable/equatable.dart';
 import 'package:e_commerce_app/presentation/screens/all_products/bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 
 class AllProductsEvent extends Equatable {
   @override

@@ -102,7 +102,8 @@ class _ToolBarState extends State<ToolBar> {
         hintText: Translate.of(context).translate('search'),
       );
     } else
-      return Text(Translate.of(context).translate('all_products'), style: FONT_CONST.BOLD_WHITE_20);
+      return Text(Translate.of(context).translate('all_products'),
+          style: FONT_CONST.BOLD_WHITE_20);
   }
 
   _openSortOptionsDialog(BuildContext context, OpenSortOption state) async {

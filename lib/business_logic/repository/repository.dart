@@ -10,4 +10,5 @@ export 'cart_repository/cart_repo.dart';
 export 'cart_repository/firebase_cart_repo.dart';
 export 'feedback_repository/feedback_repo.dart';
 export 'feedback_repository/firebase_feedback_repo.dart';
-export 'storage_repo.dart';
+export 'storage_repository/storage_repo.dart';
+export 'app_repository.dart';

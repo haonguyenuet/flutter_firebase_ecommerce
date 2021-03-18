@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/business_logic/blocs/profile/bloc.dart';
+import 'package:e_commerce_app/business_logic/common_blocs/profile/bloc.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/constants/constants.dart';

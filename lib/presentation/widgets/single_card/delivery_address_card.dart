@@ -40,11 +40,7 @@ class DeliveryAddressCard extends StatelessWidget {
                 style: FONT_CONST.MEDIUM_DEFAULT_16,
               ),
               Spacer(),
-              if (deliveryAddress.isDefault)
-                Text(
-                  "[" + Translate.of(context).translate("default") + "]",
-                  style: FONT_CONST.REGULAR_PRIMARY,
-                ),
+              _defaultText(context),
             ],
           ),
           Text(
@@ -58,5 +54,14 @@ class DeliveryAddressCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _defaultText(BuildContext context) {
+    return deliveryAddress.isDefault
+        ? Text(
+            "[" + Translate.of(context).translate("default") + "]",
+            style: FONT_CONST.REGULAR_PRIMARY,
+          )
+        : Container();
   }
 }

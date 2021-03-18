@@ -1,7 +1,5 @@
-import 'package:e_commerce_app/business_logic/blocs/auth/bloc.dart';
-import 'package:e_commerce_app/configs/router.dart';
-import 'package:e_commerce_app/configs/size_config.dart';
-import 'package:e_commerce_app/constants/constants.dart';
+import 'package:e_commerce_app/business_logic/common_blocs/auth/bloc.dart';
+import 'package:e_commerce_app/configs/config.dart';
 import 'package:e_commerce_app/presentation/screens/profile/widgets/profile_header.dart';
 import 'package:e_commerce_app/presentation/screens/profile/widgets/profile_menu_button.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';

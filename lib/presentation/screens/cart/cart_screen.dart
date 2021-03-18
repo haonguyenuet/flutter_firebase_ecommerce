@@ -1,8 +1,7 @@
-import 'package:e_commerce_app/business_logic/blocs/app_bloc.dart';
 import 'package:e_commerce_app/presentation/screens/cart/widgets/cart_body.dart';
 import 'package:e_commerce_app/presentation/screens/cart/widgets/checkout_bottom.dart';
 import 'package:flutter/material.dart';
-import 'package:e_commerce_app/business_logic/blocs/cart/bloc.dart';
+import 'package:e_commerce_app/business_logic/common_blocs/cart/bloc.dart';
 import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,7 +27,7 @@ class CartScreen extends StatelessWidget {
   }
 
   _onClearCart(BuildContext context) async {
-    final response = await MyDialog.showConfirmation(
+    final response = await UtilDialog.showConfirmation(
       context,
       title: Translate.of(context).translate("clear_cart"),
       content: Text(

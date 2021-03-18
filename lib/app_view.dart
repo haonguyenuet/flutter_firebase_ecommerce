@@ -1,12 +1,14 @@
-import 'package:e_commerce_app/business_logic/blocs/app_bloc.dart';
-import 'package:e_commerce_app/business_logic/blocs/language/bloc.dart';
+import 'package:e_commerce_app/configs/application.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'business_logic/blocs/profile/bloc.dart';
-import 'business_logic/blocs/auth/bloc.dart';
-import 'business_logic/blocs/cart/bloc.dart';
+import 'business_logic/common_blocs/common_bloc.dart';
+import 'business_logic/common_blocs/application/bloc.dart';
+import 'business_logic/common_blocs/language/bloc.dart';
+import 'business_logic/common_blocs/profile/bloc.dart';
+import 'business_logic/common_blocs/auth/bloc.dart';
+import 'business_logic/common_blocs/cart/bloc.dart';
 import 'configs/config.dart';
 import 'utils/translate.dart';
 
@@ -21,8 +23,14 @@ class _AppViewState extends State<AppView> {
   NavigatorState? get _navigator => _navigatorKey.currentState;
 
   @override
+  void initState() {
+    CommonBloc.applicationBloc.add(SetupApplication());
+    super.initState();
+  }
+
+  @override
   void dispose() {
-    AppBloc.dispose();
+    CommonBloc.dispose();
     super.dispose();
   }
 
@@ -31,11 +39,12 @@ class _AppViewState extends State<AppView> {
     return BlocBuilder<LanguageBloc, LanguageState>(
       builder: (context, state) {
         return MaterialApp(
-          debugShowCheckedModeBanner: false,
           navigatorKey: _navigatorKey,
-          title: 'Peachy E-Commerce',
+          debugShowCheckedModeBanner: Application.debug,
+          title: Application.title,
           theme: AppTheme.currentTheme,
           onGenerateRoute: AppRouter.generateRoute,
+          initialRoute: AppRouter.SPLASH,
           locale: AppLanguage.defaultLanguage,
           supportedLocales: AppLanguage.supportLanguage,
           localizationsDelegates: [
@@ -44,7 +53,6 @@ class _AppViewState extends State<AppView> {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          initialRoute: AppRouter.SPLASH,
           builder: (context, child) {
             return BlocListener<AuthenticationBloc, AuthenticationState>(
               listener: (context, state) {

@@ -13,3 +13,4 @@ export 'others/logo.dart';
 export 'others/search_field_widget.dart';
 export 'others/section_widget.dart';
 export 'others/shimmer_image.dart';
+export 'others/custom_list_tile.dart';
