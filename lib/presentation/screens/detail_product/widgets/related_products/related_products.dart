@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
+import 'package:e_commerce_app/business_logic/repository/app_repository.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/presentation/screens/detail_product/widgets/related_products/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/widgets/others/section_widget.dart';
@@ -30,7 +31,7 @@ class RelatedProducts extends StatelessWidget {
               children: state.relatedProducts
                   .map((p) => ProductCard(product: p))
                   .toList(),
-              handleOnSeeAll: () {
+              handleOnSeeAll: () async {
                 Navigator.pushNamed(context, AppRouter.ALL_PRODUCTS);
               },
             );

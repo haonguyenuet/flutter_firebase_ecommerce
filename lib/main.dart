@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:e_commerce_app/business_logic/common_blocs/common_bloc.dart';
 import 'package:e_commerce_app/configs/config.dart';
 import 'package:firebase_core/firebase_core.dart';

@@ -8,6 +8,7 @@ class SearchFieldWidget extends StatelessWidget {
   final bool autoFocus;
   final Function()? onTap;
   final String? hintText;
+  final double? height;
 
   const SearchFieldWidget({
     Key? key,
@@ -16,14 +17,15 @@ class SearchFieldWidget extends StatelessWidget {
     this.onTap,
     this.searchController,
     this.hintText = "",
+    this.height,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: SizeConfig.defaultSize * 4,
+      height: height == null ? SizeConfig.defaultSize * 4 : height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: Colors.white,
+        borderRadius: BorderRadius.circular(SizeConfig.defaultSize * 2),
+        color: COLOR_CONST.cardShadowColor.withOpacity(0.3),
       ),
       child: TextField(
         controller: searchController,

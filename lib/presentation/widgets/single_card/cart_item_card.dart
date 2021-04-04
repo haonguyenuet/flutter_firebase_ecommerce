@@ -59,6 +59,7 @@ class CartItemCard extends StatelessWidget {
       padding: EdgeInsets.all(SizeConfig.defaultSize * 0.5),
       child: ShimmerImage(
         imageUrl: product.images[0],
+        width: SizeConfig.defaultSize * 13,
         height: SizeConfig.defaultSize * 13,
       ),
     );
@@ -99,7 +100,7 @@ class CartItemCard extends StatelessWidget {
       children: [
         // Decrease button
         CircleIconButton(
-          svgIcon: "assets/icons/subtract.svg",
+          svgIcon: ICON_CONST.SUBTRACT,
           color: Color(0xFFF5F6F9),
           size: SizeConfig.defaultSize * 1.2,
           onPressed: cartItem.quantity > 1
@@ -110,12 +111,12 @@ class CartItemCard extends StatelessWidget {
         // Quantity
         Padding(
           padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize),
-          child: Text("${cartItem.quantity}", style: FONT_CONST.BOLD_PRIMARY),
+          child: Text("${cartItem.quantity}", style: FONT_CONST.BOLD_DEFAULT),
         ),
 
         // Increase button
         CircleIconButton(
-          svgIcon: "assets/icons/add.svg",
+          svgIcon: ICON_CONST.ADD,
           color: Color(0xFFF5F6F9),
           size: SizeConfig.defaultSize * 1.2,
           onPressed: cartItem.quantity < product.quantity

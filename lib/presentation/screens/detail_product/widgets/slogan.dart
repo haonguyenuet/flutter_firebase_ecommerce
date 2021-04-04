@@ -14,10 +14,11 @@ class Slogan extends StatelessWidget {
           vertical: SizeConfig.defaultSize,
         ),
         decoration: BoxDecoration(
-            border: Border(
-          top: BorderSide(color: Colors.black12, width: 1),
-          bottom: BorderSide(color: Colors.black12, width: 1),
-        )),
+          border: Border(
+            top: BorderSide(color: Colors.black12, width: 1),
+            bottom: BorderSide(color: Colors.black12, width: 1),
+          ),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

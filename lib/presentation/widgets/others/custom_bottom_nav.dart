@@ -31,12 +31,12 @@ class CustomBottomNav extends StatelessWidget {
       ),
       child: SafeArea(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             /// Home
             BottomMenuButton(
               isSelected: selectedMenu == MenuState.home,
-              iconPath: "assets/icons/Shop Icon.svg",
+              iconPath: ICON_CONST.HOME,
               buttonName: "Home",
               onTap: () {
                 Navigator.pushNamedAndRemoveUntil(
@@ -47,26 +47,10 @@ class CustomBottomNav extends StatelessWidget {
               },
             ),
 
-            /// Message
-            BottomMenuButton(
-              isSelected: false,
-              iconPath: "assets/icons/Settings.svg",
-              buttonName: "Message",
-              onTap: () {},
-            ),
-
-            /// Search
-            BottomMenuButton(
-              isSelected: false,
-              iconPath: "assets/icons/Heart Icon.svg",
-              buttonName: "Message",
-              onTap: () {},
-            ),
-
             /// Profile
             BottomMenuButton(
               isSelected: selectedMenu == MenuState.profile,
-              iconPath: "assets/icons/User Icon.svg",
+              iconPath: ICON_CONST.USER,
               buttonName: "Profile",
               onTap: () {
                 Navigator.pushNamedAndRemoveUntil(
@@ -95,12 +79,12 @@ class BottomMenuButton extends StatelessWidget {
 
   final bool isSelected;
   final String iconPath, buttonName;
-  final Function onTap;
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap as void Function()?,
+      onTap: onTap,
       child: AnimatedContainer(
         duration: mAnimationDuration,
         padding: EdgeInsets.symmetric(

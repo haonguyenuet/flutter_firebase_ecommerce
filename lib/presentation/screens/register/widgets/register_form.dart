@@ -57,7 +57,7 @@ class _RegisterFormState extends State<RegisterForm> {
       },
       child: BlocBuilder<RegisterBloc, RegisterState>(
         builder: (context, state) {
-          return CustomCardWidget(
+          return Container(
             margin:
                 EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
             padding: EdgeInsets.symmetric(

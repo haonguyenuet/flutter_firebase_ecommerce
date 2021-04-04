@@ -10,7 +10,7 @@ class FeedbackBloc extends Bloc<FeedbacksEvent, FeedbackState> {
       AppRepository.feedbackRepository;
   final ProductRepository _productRepository = AppRepository.productRepository;
   StreamSubscription? _feedbackSubscription;
-  Product? _currentProduct;
+  late Product _currentProduct;
   double _currAverageRating = 0.0;
 
   FeedbackBloc() : super(FeedbacksLoading());
@@ -20,7 +20,7 @@ class FeedbackBloc extends Bloc<FeedbacksEvent, FeedbackState> {
     if (event is LoadFeedbacks) {
       yield* _mapLoadFeedbacksToState(event);
     } else if (event is AddFeedback) {
-      yield* _mapFeedbackToState(event);
+      yield* _mapAddFeedbackToState(event);
     } else if (event is StarChanged) {
       yield* _mapStarChangedToState(event);
     } else if (event is FeedbacksUpdated) {
@@ -33,7 +33,7 @@ class FeedbackBloc extends Bloc<FeedbacksEvent, FeedbackState> {
       _currentProduct = event.product;
       _feedbackSubscription?.cancel();
       _feedbackSubscription =
-          _feedbackRepository.feedbackStream(_currentProduct!.id)!.listen(
+          _feedbackRepository.feedbackStream(_currentProduct.id)!.listen(
                 (feedback) => add(FeedbacksUpdated(feedback)),
               );
     } catch (e) {
@@ -41,9 +41,12 @@ class FeedbackBloc extends Bloc<FeedbacksEvent, FeedbackState> {
     }
   }
 
-  Stream<FeedbackState> _mapFeedbackToState(AddFeedback event) async* {
+  Stream<FeedbackState> _mapAddFeedbackToState(AddFeedback event) async* {
     try {
-      _feedbackRepository.addNewFeedback(_currentProduct!.id, event.feedback);
+      await _feedbackRepository.addNewFeedback(
+        _currentProduct.id,
+        event.feedback,
+      );
     } catch (e) {
       print(e);
     }
@@ -53,7 +56,7 @@ class FeedbackBloc extends Bloc<FeedbacksEvent, FeedbackState> {
     try {
       yield FeedbacksLoading();
       var feedbacks = await _feedbackRepository.getFeedbacksByStar(
-        _currentProduct!.id,
+        _currentProduct.id,
         event.star,
       );
       yield FeedbacksLoaded(
@@ -67,17 +70,18 @@ class FeedbackBloc extends Bloc<FeedbacksEvent, FeedbackState> {
   }
 
   Stream<FeedbackState> _mapFeedbacksUpdatedToState(
-      FeedbacksUpdated event) async* {
+    FeedbacksUpdated event,
+  ) async* {
     // Calculate again average product rating
-    var totalRating = 0;
+    double totalRating = 0;
     var feedbacks = event.feedbacks;
     feedbacks.forEach((f) => totalRating += f.rating);
-    var averageRating =
+    double averageRating =
         feedbacks.length > 0 ? totalRating / feedbacks.length : 0.0;
     _currAverageRating = double.parse(averageRating.toStringAsFixed(1));
     // Update product rating
     _productRepository.updateProductRatingById(
-      _currentProduct!.id,
+      _currentProduct.id,
       _currAverageRating,
     );
     yield FeedbacksLoaded(
@@ -89,7 +93,6 @@ class FeedbackBloc extends Bloc<FeedbacksEvent, FeedbackState> {
 
   @override
   Future<void> close() {
-    _currentProduct = null;
     _feedbackSubscription?.cancel();
     return super.close();
   }

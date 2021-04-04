@@ -21,7 +21,7 @@ dependencies:
   cloud_firestore: ^1.0.0
   firebase_storage: ^8.0.0
   firebase_auth: ^1.0.0
-  google_sign_in: ^5.0.0
+  # google_sign_in: ^5.0.1
   #image
   image_picker: ^0.7.2
   #bloc
@@ -29,7 +29,7 @@ dependencies:
   #provider
   provider: ^5.0.0-nullsafety.5
   #payment
-  stripe_payment: ^1.0.6
+  square_in_app_payments: ^1.6.0
   #data
   equatable: ^2.0.0
   meta: ^1.1.6
@@ -45,10 +45,14 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   flutter_svg: ^0.21.0-nullsafety.0 # Help us to use svg in our app
+  flutter_launcher_icons: ^0.9.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/ic_launcher.png"
 # The following section is specific to Flutter.
 flutter:
   # The following line ensures that the Material Icons font is

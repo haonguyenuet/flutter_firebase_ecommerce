@@ -1,0 +1,139 @@
+import 'package:e_commerce_app/business_logic/entities/category.dart';
+import 'package:e_commerce_app/configs/size_config.dart';
+import 'package:e_commerce_app/constants/color_constant.dart';
+import 'package:e_commerce_app/constants/constants.dart';
+import 'package:e_commerce_app/presentation/screens/categories/bloc/bloc.dart';
+import 'package:e_commerce_app/presentation/screens/categories/widgets/sort_option_dialog.dart';
+import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
+import 'package:e_commerce_app/utils/utils.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class ToolBarWidget extends StatefulWidget {
+  final Category currCategory;
+
+  const ToolBarWidget({Key? key, required this.currCategory}) : super(key: key);
+
+  @override
+  _ToolBarWidgetState createState() => _ToolBarWidgetState();
+}
+
+class _ToolBarWidgetState extends State<ToolBarWidget> {
+  TextEditingController _searchController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+
+    _searchController.addListener(() {
+      final keyword = _searchController.text;
+      if (keyword.isNotEmpty) {
+        BlocProvider.of<AllProductsBloc>(context)
+            .add(SearchQueryChanged(keyword));
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<AllProductsBloc, AllProductsState>(
+      listenWhen: (prevState, currState) => currState is OpenSortOption,
+      listener: (context, state) {
+        if (state is OpenSortOption && state.isOpen) {
+          _openSortOptionsDialog(context, state);
+        }
+      },
+      buildWhen: (prevState, currState) => currState is UpdateToolbarState,
+      builder: (context, state) {
+        if (state is UpdateToolbarState) {
+          return Container(
+            padding: EdgeInsets.symmetric(
+              vertical: SizeConfig.defaultSize * 0.5,
+              horizontal: SizeConfig.defaultSize,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 1,
+                  spreadRadius: 1,
+                  color: COLOR_CONST.cardShadowColor.withOpacity(0.2),
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Row(
+              children: <Widget>[
+                _buildLeading(context),
+                Expanded(child: _buildTitle(state)),
+                _buildActions(context, state),
+              ],
+            ),
+          );
+        }
+        return Container();
+      },
+    );
+  }
+
+  _buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back_ios, color: COLOR_CONST.textColor),
+      onPressed: () => Navigator.pop(context),
+    );
+  }
+
+  _buildActions(BuildContext context, UpdateToolbarState state) {
+    return Row(
+      children: [
+        // Search action
+        IconButton(
+          icon: Icon(
+            state.showSearchField ? Icons.close : Icons.search,
+            color: COLOR_CONST.textColor,
+          ),
+          onPressed: () {
+            BlocProvider.of<AllProductsBloc>(context).add(
+                state.showSearchField ? ClickCloseSearch() : ClickIconSearch());
+          },
+        ),
+        // Sort action
+        IconButton(
+          icon: Icon(Icons.sort, color: COLOR_CONST.textColor),
+          onPressed: () {
+            BlocProvider.of<AllProductsBloc>(context).add(ClickIconSort());
+          },
+        ),
+      ],
+    );
+  }
+
+  _buildTitle(UpdateToolbarState state) {
+    if (state.showSearchField) {
+      _searchController.text = "";
+      return SearchFieldWidget(
+        searchController: _searchController,
+        autoFocus: false,
+        hintText: Translate.of(context).translate('search'),
+      );
+    } else
+      return Text(
+        Translate.of(context).translate(widget.currCategory.name),
+        style: FONT_CONST.BOLD_DEFAULT_20,
+      );
+  }
+
+  _openSortOptionsDialog(BuildContext context, OpenSortOption state) async {
+    var sortOption = await showDialog<ProductSortOption>(
+      context: context,
+      builder: (context) {
+        return SortOptionDialog(currSortOption: state.currSortOption);
+      },
+    );
+    if (sortOption != null) {
+      BlocProvider.of<AllProductsBloc>(context)
+          .add(SortOptionsChanged(sortOption));
+    }
+    BlocProvider.of<AllProductsBloc>(context).add(CloseSortOption());
+  }
+}

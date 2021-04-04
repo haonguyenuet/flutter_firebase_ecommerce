@@ -1,8 +1,6 @@
 import 'package:e_commerce_app/presentation/screens/login/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:e_commerce_app/constants/color_constant.dart';
-
 import 'package:e_commerce_app/presentation/screens/login/widgets/login_form.dart';
 import 'package:e_commerce_app/presentation/screens/login/widgets/login_header.dart';
 
@@ -12,14 +10,11 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => LoginBloc(),
       child: Scaffold(
-        body: Container(
-          decoration: BoxDecoration(gradient: COLOR_CONST.primaryGradientColor),
-          child: ListView(
-            children: [
-              LoginHeader(),
-              LoginForm(),
-            ],
-          ),
+        body: ListView(
+          children: [
+            LoginHeader(),
+            LoginForm(),
+          ],
         ),
       ),
     );

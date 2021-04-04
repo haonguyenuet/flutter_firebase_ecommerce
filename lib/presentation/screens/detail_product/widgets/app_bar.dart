@@ -1,6 +1,6 @@
-import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/buttons/cart_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,7 +16,7 @@ class DetailProductAppBar extends StatelessWidget {
         ),
         child: Row(
           children: [
-            _buildBackHomeButton(context),
+            _buildBackButton(context),
             Spacer(),
             CartButton(color: COLOR_CONST.textColor),
           ],
@@ -25,10 +25,10 @@ class DetailProductAppBar extends StatelessWidget {
     );
   }
 
-  _buildBackHomeButton(BuildContext context) {
+  _buildBackButton(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushReplacementNamed(context, AppRouter.HOME);
+        Navigator.pop(context);
       },
       child: Container(
         height: SizeConfig.defaultSize * 4,
@@ -38,7 +38,7 @@ class DetailProductAppBar extends StatelessWidget {
           shape: BoxShape.circle,
           color: Color(0xFFF5F6F9),
         ),
-        child: SvgPicture.asset("assets/icons/cancel.svg"),
+        child: SvgPicture.asset(ICON_CONST.CANCEL),
       ),
     );
   }

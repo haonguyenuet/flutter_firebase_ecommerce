@@ -23,8 +23,7 @@ class _HomeBannerState extends State<HomeBanner> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
-      decoration: BoxDecoration(gradient: COLOR_CONST.primaryGradientColor),
+      padding: EdgeInsets.all(SizeConfig.defaultSize * 1.5),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

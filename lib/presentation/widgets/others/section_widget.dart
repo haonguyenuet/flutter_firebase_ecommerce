@@ -18,34 +18,40 @@ class SectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        /// Section title
-        SectionTitle(
-          title: title,
-          handleOnSeeAll: handleOnSeeAll,
-        ),
+    return Container(
+      margin: EdgeInsets.only(top: SizeConfig.defaultSize * 1.5),
+      padding: EdgeInsets.symmetric(vertical: SizeConfig.defaultSize * 1.5),
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// Section title
+          SectionTitle(
+            title: title,
+            handleOnSeeAll: handleOnSeeAll,
+          ),
+          SizedBox(height: SizeConfig.defaultSize),
 
-        /// Section content
-        Container(
-          child: children.length == 0
-              ? CircularProgressIndicator()
-              : SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: SizeConfig.defaultSize,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: children,
+          /// Section content
+          Container(
+            child: children.length == 0
+                ? CircularProgressIndicator()
+                : SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: SizeConfig.defaultSize,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: children,
+                      ),
                     ),
                   ),
-                ),
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }
@@ -64,12 +70,7 @@ class SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(
-        left: SizeConfig.defaultSize * 1.5,
-        right: SizeConfig.defaultSize * 1.5,
-        bottom: SizeConfig.defaultSize * 0.5,
-        top: SizeConfig.defaultSize * 2,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

@@ -23,7 +23,7 @@ class _HeaderState extends State<Header> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(bottom: SizeConfig.defaultSize),
-      color: COLOR_CONST.darkShadeColor,
+      color: COLOR_CONST.primaryColor,
       child: Column(
         children: [
           _buildFeedbackStats(),
@@ -154,7 +154,7 @@ class StarButton extends StatelessWidget {
             const SizedBox(width: 5),
             Icon(
               Icons.star,
-              color: isActive ? Colors.amber : COLOR_CONST.accentShadeColor,
+              color: isActive ? Colors.amber : COLOR_CONST.textColor,
               size: SizeConfig.defaultSize * 2,
             ),
           ],

@@ -26,9 +26,10 @@ class _ProductImagesState extends State<ProductImages> {
             itemCount: product.images.length,
             itemBuilder: (context, index) {
               return Container(
-                  alignment: Alignment.center,
-                  color: Colors.white,
-                  child: Image.network(product.images[index]));
+                alignment: Alignment.center,
+                color: Colors.white,
+                child: Image.network(product.images[index]),
+              );
             },
             onPageChanged: (index) {
               setState(() {

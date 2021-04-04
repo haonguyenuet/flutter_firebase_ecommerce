@@ -23,7 +23,7 @@ class MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Google Map")),
+      appBar: AppBar(title: Text("Map")),
       body: Stack(
         children: [
           GoogleMap(

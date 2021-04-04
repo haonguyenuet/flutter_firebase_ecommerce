@@ -58,7 +58,7 @@ class ProductCard extends StatelessWidget {
   }
 
   _buildProductName() =>
-      Text(product.name, style: FONT_CONST.REGULAR_DEFAULT, maxLines: 2);
+      Text(product.name, style: FONT_CONST.BOLD_DEFAULT, maxLines: 2);
 
   _buildPriceAndAvailable() {
     return Row(
@@ -77,7 +77,7 @@ class ProductCard extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           child: SvgPicture.asset(
-            "assets/icons/Check mark rounde.svg",
+            ICON_CONST.CHECK_MARK,
             color: product.isAvailable ? Color(0xFFFF4848) : Colors.black26,
           ),
         ),
@@ -90,12 +90,12 @@ class ProductCard extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Text.rich(
         TextSpan(
-          style: TextStyle(fontSize: 12),
+          style: TextStyle(fontSize: 12, color: COLOR_CONST.textColor),
           children: [
             TextSpan(text: Translate.of(context).translate("sold")),
             TextSpan(
               text: " ${product.soldQuantity}",
-              style: FONT_CONST.REGULAR_PRIMARY,
+              style: FONT_CONST.BOLD_DEFAULT,
             ),
             TextSpan(text: " " + Translate.of(context).translate("products")),
           ],
@@ -106,18 +106,44 @@ class ProductCard extends StatelessWidget {
 
   _buildPercentOff() {
     return Positioned(
-      top: 0,
-      right: 0,
-      child: Container(
-        alignment: Alignment.center,
-        height: SizeConfig.defaultSize * 4,
-        width: SizeConfig.defaultSize * 4,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: COLOR_CONST.primaryColor,
+      top: -10,
+      right: -10,
+      child: ClipPath(
+        clipper: CustomDiscountCard(),
+        child: Container(
+          alignment: Alignment.center,
+          height: SizeConfig.defaultSize * 6,
+          padding:
+              EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 0.5),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(2),
+            color: COLOR_CONST.discountColor,
+          ),
+          child: Text("-${product.percentOff}%", style: FONT_CONST.BOLD_WHITE),
         ),
-        child: Text("-${product.percentOff}%", style: FONT_CONST.BOLD_WHITE),
       ),
     );
+  }
+}
+
+class CustomDiscountCard extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    double height = size.height;
+    double width = size.width;
+
+    path.lineTo(0, height);
+    path.lineTo(width / 2, height * 0.85);
+    path.lineTo(width, height);
+    path.lineTo(width, 0);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return true;
   }
 }

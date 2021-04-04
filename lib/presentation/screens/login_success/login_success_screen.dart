@@ -12,11 +12,6 @@ class LoginSuccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(Translate.of(context).translate('login_success')),
-        centerTitle: true,
-      ),
       body: SafeArea(
         child: SizedBox(
           width: double.infinity,
@@ -39,14 +34,14 @@ class LoginSuccessScreen extends StatelessWidget {
 
   _buildSuccessImage() {
     return Image.asset(
-      IMAGE_CONST.LOGIN_SUCCESS,
+      IMAGE_CONST.SUCCESS,
       height: SizeConfig.screenHeight * 0.5,
     );
   }
 
   _buildGoToHomeButton(BuildContext context) {
     return SizedBox(
-      width: SizeConfig.screenWidth * 0.6,
+      width: SizeConfig.screenWidth * 0.8,
       child: DefaultButton(
         child: Text(Translate.of(context).translate('go_to_home'),
             style: FONT_CONST.BOLD_WHITE_18),

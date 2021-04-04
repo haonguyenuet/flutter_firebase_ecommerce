@@ -49,7 +49,7 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
       alignment: Alignment.center,
       child: Text(
         Translate.of(context).translate('your_feedback'),
-        style: FONT_CONST.REGULAR_DEFAULT_16,
+        style: FONT_CONST.BOLD_DEFAULT_20,
       ),
     );
   }
@@ -78,10 +78,9 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
 
   _buildRatingSection() {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(Translate.of(context).translate('rating') + ": ",
-            style: FONT_CONST.BOLD_DEFAULT_16),
+            style: FONT_CONST.BOLD_DEFAULT_18),
         SizedBox(width: SizeConfig.defaultSize),
         RatingBar(
           initialRating: 5,

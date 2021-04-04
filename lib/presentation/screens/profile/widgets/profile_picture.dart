@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:e_commerce_app/business_logic/common_blocs/profile/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/user.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
+import 'package:e_commerce_app/constants/constants.dart';
+import 'package:e_commerce_app/constants/image_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -30,7 +32,7 @@ class ProfilePic extends StatelessWidget {
           child: CircleAvatar(
             backgroundImage: loggedUser.avatar.isNotEmpty
                 ? NetworkImage(loggedUser.avatar)
-                : AssetImage("assets/images/default_avatar.jpg")
+                : AssetImage(IMAGE_CONST.DEFAULT_AVATAR)
                     as ImageProvider<Object>,
           ),
         ),
@@ -49,7 +51,7 @@ class ProfilePic extends StatelessWidget {
                 ),
               ),
               onPressed: () => uploadAvatar(context),
-              child: SvgPicture.asset("assets/icons/Camera Icon.svg"),
+              child: SvgPicture.asset(ICON_CONST.CAMERA),
             ),
           ),
         )

@@ -1,10 +1,11 @@
 import 'package:e_commerce_app/configs/config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
   static final ThemeData currentTheme = ThemeData(
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: COLOR_CONST.backgroundColor,
     fontFamily: "Roboto",
     appBarTheme: appBarTheme,
     textTheme: textTheme,
@@ -16,16 +17,13 @@ class AppTheme {
 
   static final appBarTheme = AppBarTheme(
     color: Colors.white,
-    elevation: 0,
+    shadowColor: COLOR_CONST.cardShadowColor,
+    elevation: 0.4,
     brightness: Brightness.light,
-    iconTheme: IconThemeData(color: Colors.black),
+    iconTheme: IconThemeData(color: COLOR_CONST.textColor),
+    actionsIconTheme: IconThemeData(color: COLOR_CONST.textColor),
     centerTitle: true,
-    textTheme: TextTheme(
-      headline6: TextStyle(
-        color: COLOR_CONST.textColor,
-        fontSize: SizeConfig.defaultSize * 2.5,
-      ),
-    ),
+    textTheme: TextTheme(headline6: FONT_CONST.BOLD_DEFAULT_20),
   );
 
   static final textTheme = TextTheme(

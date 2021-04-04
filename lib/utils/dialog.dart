@@ -8,6 +8,7 @@ class UtilDialog {
     BuildContext context, {
     String? title,
     String? content,
+    Function()? onClose,
   }) {
     showDialog(
       context: context,
@@ -25,7 +26,8 @@ class UtilDialog {
               Translate.of(context).translate("close"),
               style: TextStyle(color: COLOR_CONST.primaryColor),
             ),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed:
+                onClose != null ? onClose : () => Navigator.of(context).pop(),
           )
         ],
       ),
@@ -55,7 +57,6 @@ class UtilDialog {
     String? title,
     required Widget content,
     String confirmButtonText = "Yes",
-   
   }) {
     return showDialog<bool>(
       context: context,

@@ -106,9 +106,14 @@
   "all": "Tất cả",
   "price": "Giá bán",
   "payment": "Thanh toán",
+  "payment_method": "Phương thức thanh toán",
+  "ship_cod": "Ship COD",
+  "use_credit_card": "Sử dụng thẻ tín dụng",
+  "payment_on_receipt_of_goods": "Thanh toán khi nhận hàng",
+  "online": "Trực tuyến",
   "total": "Tổng ",
   "total_price": "Tổng giá sản phẩm",
-  "total_delivery_fee":"Tổng chi phí vận chuyển",
+  "total_delivery_fee": "Tổng chi phí vận chuyển",
   "products": "sản phẩm",
   "your_feedback": "Phản hồi của bạn",
   "support": "Support",
@@ -116,6 +121,9 @@
   "check_out": "Thủ tục thanh toán",
   "continue": "Tiếp tục",
   "don't_match_password": "Mật khẩu không khớp",
-  "login_slogan": "Đăng nhập bằng email và mật khẩu\nHoặc có thể đăng nhập bằng liên kết mạng xã hội",
-  "message_for_you" : "Tin nhắn cho bạn"
+  "login_slogan": "Đăng nhập bằng email và mật khẩu",
+  "message_for_you": "Tin nhắn cho bạn",
+  "recent_search": "Tìm kiếm gần đây",
+  "hot_keywords": "Từ khóa đang hot",
+  "search_by_product_name": "Tìm kiếm theo tên sản phẩm"
 }

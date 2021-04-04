@@ -29,7 +29,7 @@ class FeedbacksScreen extends StatelessWidget {
               ),
             ),
             floatingActionButton: FloatingActionButton.extended(
-              onPressed: () => _openModalBottomSheet(context),
+              onPressed: () => _openFeedbackBottomSheet(context),
               label: Text(
                 Translate.of(context).translate("add_your_feedback"),
                 style: FONT_CONST.BOLD_WHITE_16,
@@ -45,18 +45,19 @@ class FeedbacksScreen extends StatelessWidget {
   _buildAppBar(BuildContext context) {
     return AppBar(
       leading: IconButton(
-        icon: Icon(Icons.arrow_back_sharp, color: COLOR_CONST.accentTintColor),
+        icon: Icon(Icons.arrow_back_sharp, color: Colors.white),
         onPressed: () => Navigator.pop(context),
       ),
       title: Text(
         Translate.of(context).translate("feedback"),
-        style: FONT_CONST.BOLD_WHITE_18,
+        style: FONT_CONST.BOLD_WHITE_20,
       ),
-      backgroundColor: COLOR_CONST.darkShadeColor,
+      backgroundColor: COLOR_CONST.primaryColor,
+      elevation: 0,
     );
   }
 
-  _openModalBottomSheet(BuildContext context) async {
+  _openFeedbackBottomSheet(BuildContext context) async {
     var newFeedback = await showModalBottomSheet<FeedBack>(
       isScrollControlled: true,
       backgroundColor: Colors.white,

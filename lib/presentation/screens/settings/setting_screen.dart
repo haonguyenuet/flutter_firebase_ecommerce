@@ -30,7 +30,7 @@ class _SettingScreenState extends State<SettingScreen> {
           children: [
             CustomListTile(
               title: Translate.of(context).translate("language"),
-              icon: Icon(Icons.language, color: COLOR_CONST.primaryColor),
+              leading: Icon(Icons.language, color: COLOR_CONST.primaryColor),
               trailing: Text(
                 Translate.of(context).translate(UtilLanguage.getLanguageName(
                     AppLanguage.defaultLanguage.languageCode)),
@@ -39,7 +39,7 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             CustomListTile(
               title: Translate.of(context).translate("theme"),
-              icon: Icon(Icons.color_lens, color: COLOR_CONST.primaryColor),
+              leading: Icon(Icons.color_lens, color: COLOR_CONST.primaryColor),
             ),
           ],
         ),

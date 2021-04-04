@@ -25,7 +25,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomCardWidget(
+    return Container(
       margin: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
       padding: EdgeInsets.symmetric(
         horizontal: SizeConfig.defaultSize * 1.5,

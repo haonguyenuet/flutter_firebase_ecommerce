@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 
 class CustomListTile extends StatelessWidget {
   final String title;
-  final String? subTitle;
+  final Widget? subTitle;
   final Widget? trailing;
-  final Widget? icon;
+  final Widget? leading;
   final Function()? onPressed;
   final bool bottomBorder;
 
@@ -16,7 +16,7 @@ class CustomListTile extends StatelessWidget {
     required this.title,
     this.subTitle,
     this.trailing,
-    this.icon,
+    this.leading,
     this.onPressed,
     this.bottomBorder = true,
   }) : super(key: key);
@@ -25,38 +25,34 @@ class CustomListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onPressed,
-      child: Row(
-        children: [
-          _iconWidget(),
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                border: _bottomBorder(),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 16, bottom: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(title, style: FONT_CONST.BOLD_PRIMARY_18),
-                          _subTitle()
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize),
-                    child: trailing ?? Container(),
-                  )
+      child: Container(
+        padding: EdgeInsets.only(
+          bottom: SizeConfig.defaultSize * 2,
+          top: SizeConfig.defaultSize * 2,
+        ),
+        margin: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
+        decoration: BoxDecoration(
+          border: _bottomBorder(),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _leadingWidget(),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: FONT_CONST.BOLD_DEFAULT_18),
+                  _subTitle()
                 ],
               ),
             ),
-          ),
-        ],
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize),
+              child: trailing ?? Container(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -64,20 +60,17 @@ class CustomListTile extends StatelessWidget {
   _subTitle() {
     return subTitle != null
         ? Padding(
-            padding: EdgeInsets.only(top: 8),
-            child: Text(
-              subTitle!,
-              style: FONT_CONST.REGULAR_PRIMARY_16,
-            ),
+            padding: EdgeInsets.only(top: 5),
+            child: subTitle,
           )
         : Container();
   }
 
-  _iconWidget() {
-    return icon != null
-        ? Padding(
-            padding: EdgeInsets.only(left: 16, right: 16),
-            child: icon,
+  _leadingWidget() {
+    return leading != null
+        ? SizedBox(
+            width: SizeConfig.defaultSize * 10,
+            child: leading,
           )
         : Container();
   }

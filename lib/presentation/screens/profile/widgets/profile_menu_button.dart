@@ -27,7 +27,7 @@ class ProfileMenuButton extends StatelessWidget {
         style: TextButton.styleFrom(
           padding: EdgeInsets.all(SizeConfig.defaultSize * 2),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-          backgroundColor: Color(0xFFF5F6F9),
+          backgroundColor: COLOR_CONST.cardShadowColor.withOpacity(0.3),
         ),
         onPressed: onPressed,
         child: Row(

@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/business_logic/entities/user.dart';
-import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/screens/register/register/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,14 +15,11 @@ class RegisterScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => RegisterBloc(),
       child: Scaffold(
-        body: Container(
-          decoration: BoxDecoration(gradient: COLOR_CONST.primaryGradientColor),
-          child: ListView(
-            children: [
-              RegisterHeader(),
-              RegisterForm(intialUser: initialUser),
-            ],
-          ),
+        body: ListView(
+          children: [
+            RegisterHeader(),
+            RegisterForm(intialUser: initialUser),
+          ],
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/business_logic/common_blocs/auth/bloc.dart';
 import 'package:e_commerce_app/configs/config.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/screens/profile/widgets/profile_header.dart';
 import 'package:e_commerce_app/presentation/screens/profile/widgets/profile_menu_button.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
@@ -19,21 +20,21 @@ class ProfileScreen extends StatelessWidget {
             SizedBox(height: SizeConfig.defaultSize * 2),
             ProfileMenuButton(
               text: Translate.of(context).translate("settings"),
-              icon: "assets/icons/Settings.svg",
+              icon: ICON_CONST.SETTING,
               onPressed: () {
                 Navigator.pushNamed(context, AppRouter.SETTING);
               },
             ),
             ProfileMenuButton(
               text: Translate.of(context).translate("cart"),
-              icon: "assets/icons/Cart Icon.svg",
+              icon: ICON_CONST.CART,
               onPressed: () {
                 Navigator.pushNamed(context, AppRouter.CART);
               },
             ),
             ProfileMenuButton(
               text: Translate.of(context).translate("log_out"),
-              icon: "assets/icons/exit.svg",
+              icon: ICON_CONST.LOG_OUT,
               onPressed: () {
                 BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
               },

@@ -86,6 +86,10 @@ class FONT_CONST {
       BOLD_DEFAULT.copyWith(fontSize: SizeConfig.defaultSize * 1.8);
   static final BOLD_DEFAULT_20 =
       BOLD_DEFAULT.copyWith(fontSize: SizeConfig.defaultSize * 2);
+  static final BOLD_DEFAULT_24 =
+      BOLD_DEFAULT.copyWith(fontSize: SizeConfig.defaultSize * 2.4);
+  static final BOLD_DEFAULT_26 =
+      BOLD_DEFAULT.copyWith(fontSize: SizeConfig.defaultSize * 2.6);
 
   static final BOLD_PRIMARY = BOLD.copyWith(color: COLOR_CONST.primaryColor);
   static final BOLD_PRIMARY_16 =
@@ -96,6 +100,8 @@ class FONT_CONST {
       BOLD_PRIMARY.copyWith(fontSize: SizeConfig.defaultSize * 2);
   static final BOLD_PRIMARY_24 =
       BOLD_PRIMARY.copyWith(fontSize: SizeConfig.defaultSize * 2.4);
+  static final BOLD_PRIMARY_26 =
+      BOLD_PRIMARY.copyWith(fontSize: SizeConfig.defaultSize * 2.6);
 
   static final BOLD_WHITE = BOLD.copyWith(color: Colors.white);
   static final BOLD_WHITE_16 =
@@ -106,6 +112,8 @@ class FONT_CONST {
       BOLD_WHITE.copyWith(fontSize: SizeConfig.defaultSize * 2);
   static final BOLD_WHITE_26 =
       BOLD_WHITE.copyWith(fontSize: SizeConfig.defaultSize * 2.6);
+  static final BOLD_WHITE_32 =
+      BOLD_WHITE.copyWith(fontSize: SizeConfig.defaultSize * 3.2);
 
   ///Singleton factory
   static final FONT_CONST _instance = FONT_CONST._internal();

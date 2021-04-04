@@ -28,17 +28,17 @@ class ShimmerImage extends StatelessWidget {
         children: [
           /// Holder image
           Shimmer.fromColors(
-            baseColor: Colors.grey[200]!,
+            baseColor: Colors.grey[300]!,
             highlightColor: Colors.grey[100]!,
             child: this.aspectRatio != null
                 ? AspectRatio(
                     aspectRatio: aspectRatio!,
-                    child: _buildHolderIcon(),
+                    child: _buildHolder(),
                   )
-                : Container(
+                : SizedBox(
                     width: width,
                     height: height,
-                    child: _buildHolderIcon(),
+                    child: _buildHolder(),
                   ),
           ),
 
@@ -55,12 +55,9 @@ class ShimmerImage extends StatelessWidget {
     );
   }
 
-  Widget _buildHolderIcon() {
-    return Center(
-      child: Icon(
-        Icons.crop_original,
-        size: iconHolderSize,
-      ),
+  Widget _buildHolder() {
+    return Container(
+      color: Colors.grey[200],
     );
   }
 }

@@ -27,7 +27,8 @@ class _ProductInfoState extends State<ProductInfo> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: SizeConfig.defaultSize * 3),
+      margin: EdgeInsets.only(top: SizeConfig.defaultSize * 1.5),
+      padding: EdgeInsets.symmetric(vertical: SizeConfig.defaultSize * 2),
       color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

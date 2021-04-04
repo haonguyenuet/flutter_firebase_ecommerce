@@ -14,6 +14,7 @@ class DeliveryAddressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(Translate.of(context).translate("delivery_address")),
       ),
@@ -38,7 +39,7 @@ class DeliveryAddressScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _openModalBottomSheet(context),
+        onPressed: () => _openDeliveryBottomSheet(context),
         label: Text(
           Translate.of(context).translate("add_new_address"),
           style: FONT_CONST.BOLD_WHITE_16,
@@ -55,7 +56,7 @@ class DeliveryAddressScreen extends StatelessWidget {
       itemBuilder: (context, index) {
         return DeliveryAddressCard(
           deliveryAddress: addressList[index],
-          onPressed: () => _openModalBottomSheet(
+          onPressed: () => _openDeliveryBottomSheet(
             context,
             deliveryAddress: addressList[index],
           ),
@@ -66,13 +67,11 @@ class DeliveryAddressScreen extends StatelessWidget {
 
   _buildNoAddress(BuildContext context) {
     return Center(
-      child: Column(
-        children: [Image.asset("assets/images/add_address.jpg")],
-      ),
+      child: Image.asset(IMAGE_CONST.ADD_ADDRESS),
     );
   }
 
-  _openModalBottomSheet(BuildContext context,
+  _openDeliveryBottomSheet(BuildContext context,
       {DeliveryAddress? deliveryAddress}) {
     showModalBottomSheet(
       isScrollControlled: true,

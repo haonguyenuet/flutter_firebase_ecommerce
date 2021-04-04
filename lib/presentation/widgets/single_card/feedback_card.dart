@@ -4,10 +4,13 @@ import 'package:e_commerce_app/business_logic/repository/app_repository.dart';
 import 'package:e_commerce_app/business_logic/repository/repository.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
+import 'package:e_commerce_app/constants/image_constant.dart';
+import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/utils/utils.dart';
 import 'package:e_commerce_app/presentation/widgets/others/custom_card_widget.dart';
 import 'package:e_commerce_app/presentation/widgets/others/rating_bar.dart';
 import 'package:flutter/material.dart';
+
 class FeedbackCard extends StatelessWidget {
   const FeedbackCard({
     Key? key,
@@ -52,7 +55,7 @@ class FeedbackCard extends StatelessWidget {
               CircleAvatar(
                 backgroundImage: (user.avatar.isNotEmpty
                         ? NetworkImage(user.avatar)
-                        : AssetImage("assets/images/default_avatar.jpg"))
+                        : AssetImage(IMAGE_CONST.DEFAULT_AVATAR))
                     as ImageProvider<Object>?,
               ),
               SizedBox(width: 5),
@@ -61,7 +64,7 @@ class FeedbackCard extends StatelessWidget {
             ],
           );
         }
-        return Center(child: CircularProgressIndicator());
+        return Center(child: Loading());
       },
     );
   }

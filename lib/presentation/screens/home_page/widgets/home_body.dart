@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/configs/config.dart';
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/screens/home_page/bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
@@ -44,7 +45,6 @@ class HomeBody extends StatelessWidget {
     return SectionWidget(
       title: Translate.of(context).translate('popular_products'),
       children: popularProducts.map((p) => ProductCard(product: p)).toList(),
-      handleOnSeeAll: () => navigatorToAllProducts(context),
     );
   }
 
@@ -52,45 +52,40 @@ class HomeBody extends StatelessWidget {
     return SectionWidget(
       title: Translate.of(context).translate('discount_products'),
       children: discountProducts.map((p) => ProductCard(product: p)).toList(),
-      handleOnSeeAll: () => navigatorToAllProducts(context),
     );
   }
 
   _buildHomeCategories(BuildContext context, List<Category> categories) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SectionTitle(
-          title: Translate.of(context).translate('product_categories'),
-          handleOnSeeAll: () => navigatorToAllProducts(context),
-        ),
-        Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
-          child: GridView.builder(
+    return Container(
+      padding: EdgeInsets.all(SizeConfig.defaultSize * 1.5),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          GridView.builder(
             itemCount: categories.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              mainAxisSpacing: SizeConfig.defaultSize,
-              crossAxisSpacing: SizeConfig.defaultSize,
+              mainAxisSpacing: 5,
+              crossAxisSpacing: 5,
               childAspectRatio: 931 / 485,
             ),
             itemBuilder: (context, index) {
               return CategoryCard(
-                category: categories[index],
-                onPressed: () => navigatorToAllProducts(context,
-                    category: categories[index]),
-              );
+                  category: categories[index],
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      AppRouter.ALL_PRODUCTS,
+                      arguments: categories[index],
+                    );
+                  });
             },
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
           ),
-        ),
-      ],
+        ],
+      ),
     );
-  }
-
-  void navigatorToAllProducts(BuildContext context, {Category? category}) {
-    Navigator.pushNamed(context, AppRouter.ALL_PRODUCTS, arguments: category);
   }
 }

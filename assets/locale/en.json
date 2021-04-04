@@ -131,9 +131,14 @@
   "price": "Price",
   "city": "City",
   "payment": "Payment",
+  "payment_method": "Payment method",
+  "ship_cod": "Ship COD",
+  "use_credit_card": "Use credit card",
+  "payment_on_receipt_of_goods": "Payment on receipt of goods",
+  "online": "Online",
   "total": "Total",
   "total_price": "Total price",
-  "total_delivery_fee":"Total delivery fee",
+  "total_delivery_fee": "Total delivery fee",
   "products": "products",
   "your_feedback": "Your feeback",
   "support": "Support",
@@ -141,6 +146,9 @@
   "check_out": "Check out",
   "continue": "Continue",
   "don't_match_password": "Don't match password",
-  "login_slogan": "Sign in with your email and password\n or continue with social media",
-  "message_for_you": "Message for you"
+  "login_slogan": "Sign in with your email and password",
+  "message_for_you": "Message for you",
+  "recent_search": "Recent search",
+  "hot_keywords": "Hot keywords",
+  "search_by_product_name": "Search by product name"
 }

@@ -15,10 +15,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class DeliveryAddressBottomSheet extends StatefulWidget {
   final DeliveryAddress? deliveryAddress;
 
-  const DeliveryAddressBottomSheet({
-    Key? key,
-    this.deliveryAddress,
-  }) : super(key: key);
+  const DeliveryAddressBottomSheet({Key? key, this.deliveryAddress})
+      : super(key: key);
   @override
   _DeliveryAddressBottomSheetState createState() =>
       _DeliveryAddressBottomSheetState();

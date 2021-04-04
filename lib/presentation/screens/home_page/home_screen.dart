@@ -11,9 +11,9 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => HomeBloc()..add(LoadHome()),
-      child: SafeArea(
-        child: Scaffold(
-          body: CustomScrollView(
+      child: Scaffold(
+        body: SafeArea(
+          child: CustomScrollView(
             slivers: [
               SliverPersistentHeader(
                 delegate: HomePersistentHeader(),
@@ -22,8 +22,8 @@ class HomeScreen extends StatelessWidget {
               HomeBody(),
             ],
           ),
-          bottomNavigationBar: CustomBottomNav(selectedMenu: MenuState.home),
         ),
+        bottomNavigationBar: CustomBottomNav(selectedMenu: MenuState.home),
       ),
     );
   }

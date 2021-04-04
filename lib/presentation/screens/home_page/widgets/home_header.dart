@@ -24,7 +24,17 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
     var rangeSearchFieldWidth = (1 - offsetPercent).clamp(0.9, 1);
     return AnimatedContainer(
       duration: mAnimationDuration,
-      color: offsetPercent > 0.2 ? Colors.white : COLOR_CONST.darkShadeColor,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 1,
+            spreadRadius: 1,
+            color: COLOR_CONST.cardShadowColor.withOpacity(0.2),
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
       child: Stack(
         children: [
           Positioned(
@@ -35,19 +45,15 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
             child: Row(
               children: [
                 AnimatedOpacity(
-                  opacity: offsetPercent > 0.4 ? 0 : 1,
-                  duration: Duration(seconds: 1),
+                  opacity: offsetPercent > 0.1 ? 0 : 1,
+                  duration: Duration(microseconds: 500),
                   child: Text(
                     "Peachy",
-                    style: FONT_CONST.BOLD_WHITE_26,
+                    style: FONT_CONST.BOLD_PRIMARY_26,
                   ),
                 ),
                 Spacer(),
-                CartButton(
-                  color: offsetPercent > 0.3
-                      ? COLOR_CONST.textColor
-                      : Colors.white,
-                )
+                CartButton(color: COLOR_CONST.textColor)
               ],
             ),
           ),
@@ -60,8 +66,7 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
               margin: EdgeInsets.symmetric(horizontal: _insetHorizontal),
               child: SearchFieldWidget(
                 readOnly: true,
-                onTap: () =>
-                    Navigator.pushNamed(context, AppRouter.ALL_PRODUCTS),
+                onTap: () => Navigator.pushNamed(context, AppRouter.SEARCH),
                 hintText: Translate.of(context)
                     .translate('what_would_you_search_today'),
               ),

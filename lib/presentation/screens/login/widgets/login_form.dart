@@ -51,7 +51,7 @@ class _LoginFormState extends State<LoginForm> {
       },
       child: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
-          return CustomCardWidget(
+          return Container(
             margin:
                 EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
             padding: EdgeInsets.symmetric(
@@ -74,8 +74,6 @@ class _LoginFormState extends State<LoginForm> {
                   _buildButtonLogin(state),
                   SizedBox(height: SizeConfig.defaultSize * 2),
                   _buildTextOr(),
-                  SizedBox(height: SizeConfig.defaultSize * 2),
-                  _buildSocialLogin(),
                   SizedBox(height: SizeConfig.defaultSize * 2),
                   _buildNoAccountText(),
                 ],
@@ -165,7 +163,7 @@ class _LoginFormState extends State<LoginForm> {
         Align(
           alignment: Alignment.center,
           child: Container(
-            color: Colors.white,
+            color: COLOR_CONST.backgroundColor,
             child: Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: SizeConfig.defaultSize,

@@ -16,7 +16,7 @@ class RatingBar extends StatefulWidget {
     this.itemCount = 5,
     this.itemSize = 24,
     this.itemColor = Colors.amber,
-    this.unratedColor = COLOR_CONST.accentShadeColor,
+    this.unratedColor = COLOR_CONST.textColor,
     this.onRatingUpdate,
     this.readOnly = false,
   }) : super(key: key);
