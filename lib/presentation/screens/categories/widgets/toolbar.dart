@@ -28,7 +28,7 @@ class _ToolBarWidgetState extends State<ToolBarWidget> {
     _searchController.addListener(() {
       final keyword = _searchController.text;
       if (keyword.isNotEmpty) {
-        BlocProvider.of<AllProductsBloc>(context)
+        BlocProvider.of<CategoriesBloc>(context)
             .add(SearchQueryChanged(keyword));
       }
     });
@@ -36,7 +36,7 @@ class _ToolBarWidgetState extends State<ToolBarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AllProductsBloc, AllProductsState>(
+    return BlocConsumer<CategoriesBloc, CategoriesState>(
       listenWhen: (prevState, currState) => currState is OpenSortOption,
       listener: (context, state) {
         if (state is OpenSortOption && state.isOpen) {
@@ -93,7 +93,7 @@ class _ToolBarWidgetState extends State<ToolBarWidget> {
             color: COLOR_CONST.textColor,
           ),
           onPressed: () {
-            BlocProvider.of<AllProductsBloc>(context).add(
+            BlocProvider.of<CategoriesBloc>(context).add(
                 state.showSearchField ? ClickCloseSearch() : ClickIconSearch());
           },
         ),
@@ -101,7 +101,7 @@ class _ToolBarWidgetState extends State<ToolBarWidget> {
         IconButton(
           icon: Icon(Icons.sort, color: COLOR_CONST.textColor),
           onPressed: () {
-            BlocProvider.of<AllProductsBloc>(context).add(ClickIconSort());
+            BlocProvider.of<CategoriesBloc>(context).add(ClickIconSort());
           },
         ),
       ],
@@ -131,9 +131,9 @@ class _ToolBarWidgetState extends State<ToolBarWidget> {
       },
     );
     if (sortOption != null) {
-      BlocProvider.of<AllProductsBloc>(context)
+      BlocProvider.of<CategoriesBloc>(context)
           .add(SortOptionsChanged(sortOption));
     }
-    BlocProvider.of<AllProductsBloc>(context).add(CloseSortOption());
+    BlocProvider.of<CategoriesBloc>(context).add(CloseSortOption());
   }
 }

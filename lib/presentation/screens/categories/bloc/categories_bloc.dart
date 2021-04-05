@@ -6,19 +6,19 @@ import 'package:e_commerce_app/presentation/screens/categories/bloc/bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
+class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   ProductRepository _productRepository = AppRepository.productRepository;
+  late Category _category;
   // Criteria filters
-  late Category _currCategory;
   String _currKeyword = "";
   ProductSortOption _currSortOption = ProductSortOption();
 
-  AllProductsBloc() : super(DisplayListProducts.loading());
+  CategoriesBloc() : super(DisplayListProducts.loading());
 
   /// Debounce search query changed event
   @override
-  Stream<Transition<AllProductsEvent, AllProductsState>> transformEvents(
-      Stream<AllProductsEvent> events, transitionFn) {
+  Stream<Transition<CategoriesEvent, CategoriesState>> transformEvents(
+      Stream<CategoriesEvent> events, transitionFn) {
     var debounceStream = events
         .where((event) => event is SearchQueryChanged)
         .debounceTime(Duration(milliseconds: 300));
@@ -38,7 +38,7 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
   int sortPriceAscending(Product a, Product b) => a.price.compareTo(b.price);
 
   @override
-  Stream<AllProductsState> mapEventToState(AllProductsEvent event) async* {
+  Stream<CategoriesState> mapEventToState(CategoriesEvent event) async* {
     if (event is OpenScreen) {
       yield UpdateToolbarState(showSearchField: false);
       yield* _mapOpenScreenToState(event.category);
@@ -59,22 +59,17 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
   }
 
   /// Open screen event => state
-  Stream<AllProductsState> _mapOpenScreenToState(Category category) async* {
+  Stream<CategoriesState> _mapOpenScreenToState(Category category) async* {
     try {
-      // Set _currCategory
-      _currCategory = category;
-      // Get products by category
-      var products =
-          await _productRepository.getProductsByCategory(_currCategory.id);
-      yield DisplayListProducts.data(products);
+      _category = category;
+      yield DisplayListProducts.data(await getProducts());
     } catch (e) {
       yield DisplayListProducts.error(e.toString());
     }
   }
 
   /// Search query changed => state
-  Stream<AllProductsState> _mapSearchQueryChangedToState(
-      String keyword) async* {
+  Stream<CategoriesState> _mapSearchQueryChangedToState(String keyword) async* {
     yield DisplayListProducts.loading();
     try {
       _currKeyword = keyword;
@@ -85,33 +80,54 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
   }
 
   /// Sort option changed => state
-  Stream<AllProductsState> _mapSortOptionsChangedToState(
+  Stream<CategoriesState> _mapSortOptionsChangedToState(
       ProductSortOption productSortOption) async* {
     _currSortOption = productSortOption;
+
     yield UpdateToolbarState(showSearchField: false);
+
     yield* _mapSearchQueryChangedToState("");
   }
 
   /// This should be done at server side
-  Future<List<Product>> getProducts() async {
-    // Get products by current category
-    var products =
-        await _productRepository.getProductsByCategory(_currCategory.id);
-
+  Future<PriceSegment> getProducts() async {
+    // Get products by category
+    List<Product> productsByCategory =
+        await _productRepository.getProductsByCategory(_category.id);
     // Filter products by current keyword
     bool query(Product p) =>
         _currKeyword.isEmpty ||
         p.name.toLowerCase().contains(_currKeyword.toLowerCase());
-    products = products.where(query).toList();
+    productsByCategory = productsByCategory.where(query).toList();
 
     // Sort
-    products.sort(mapOptionToSortMethod() as int Function(Product, Product)?);
+    productsByCategory.sort(_mapOptionToSortMethod());
 
-    return products;
+    // Products are classified according to price segments
+    List<Product> productsInLowRange = [];
+    List<Product> productsInMidRange = [];
+    List<Product> productsInHighRange = [];
+
+    productsByCategory.forEach((product) {
+      if (product.price <= PriceSegment.LOW_SEGMENT) {
+        productsInLowRange.add(product);
+      } else if (product.price > PriceSegment.LOW_SEGMENT &&
+          product.price <= PriceSegment.HIGH_SEGMENT) {
+        productsInMidRange.add(product);
+      } else {
+        productsInHighRange.add(product);
+      }
+    });
+
+    return PriceSegment(
+      productsInLowRange: productsInLowRange,
+      productsInMidRange: productsInMidRange,
+      productsInHighRange: productsInHighRange,
+    );
   }
 
   /// Map sort options
-  Function mapOptionToSortMethod() {
+  int Function(Product, Product) _mapOptionToSortMethod() {
     if (_currSortOption.productSortBy == PRODUCT_SORT_BY.SOLD_QUANTITY &&
         _currSortOption.productSortOrder == PRODUCT_SORT_ORDER.DESCENDING) {
       return sortSoldQuantityDescending;
@@ -135,6 +151,22 @@ class AllProductsBloc extends Bloc<AllProductsEvent, AllProductsState> {
   Future<void> close() {
     return super.close();
   }
+}
+
+// Products by price segment
+class PriceSegment {
+  static const LOW_SEGMENT = 1000000;
+  static const HIGH_SEGMENT = 4000000;
+
+  final List<Product> productsInLowRange;
+  final List<Product> productsInMidRange;
+  final List<Product> productsInHighRange;
+
+  PriceSegment({
+    required this.productsInLowRange,
+    required this.productsInMidRange,
+    required this.productsInHighRange,
+  });
 }
 
 /// Product sort options

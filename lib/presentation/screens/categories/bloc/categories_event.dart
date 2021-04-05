@@ -2,12 +2,12 @@ import 'package:e_commerce_app/business_logic/entities/category.dart';
 import 'package:e_commerce_app/presentation/screens/categories/bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-class AllProductsEvent extends Equatable {
+class CategoriesEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class OpenScreen extends AllProductsEvent {
+class OpenScreen extends CategoriesEvent {
   final Category category;
 
   OpenScreen(this.category);
@@ -21,11 +21,11 @@ class OpenScreen extends AllProductsEvent {
   }
 }
 
-class ClickIconSearch extends AllProductsEvent {}
+class ClickIconSearch extends CategoriesEvent {}
 
-class ClickCloseSearch extends AllProductsEvent {}
+class ClickCloseSearch extends CategoriesEvent {}
 
-class SearchQueryChanged extends AllProductsEvent {
+class SearchQueryChanged extends CategoriesEvent {
   final String keyword;
 
   SearchQueryChanged(this.keyword);
@@ -39,17 +39,17 @@ class SearchQueryChanged extends AllProductsEvent {
   }
 }
 
-class ClickIconSort extends AllProductsEvent {
+class ClickIconSort extends CategoriesEvent {
   @override
   List<Object> get props => [DateTime.now().millisecond];
 }
 
-class CloseSortOption extends AllProductsEvent {
+class CloseSortOption extends CategoriesEvent {
   @override
   List<Object> get props => [DateTime.now().millisecond];
 }
 
-class SortOptionsChanged extends AllProductsEvent {
+class SortOptionsChanged extends CategoriesEvent {
   final ProductSortOption productSortOption;
 
   SortOptionsChanged(this.productSortOption);

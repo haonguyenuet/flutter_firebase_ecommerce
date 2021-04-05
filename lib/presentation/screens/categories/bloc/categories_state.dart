@@ -1,32 +1,37 @@
-import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:e_commerce_app/presentation/screens/categories/bloc/categories_bloc.dart';
 import 'package:equatable/equatable.dart';
 
-class AllProductsState extends Equatable {
+class CategoriesState extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
 /// Display list products
-class DisplayListProducts extends AllProductsState {
-  final List<Product>? products;
-  final bool? loading;
-  final String? msg;
+class DisplayListProducts extends CategoriesState {
+  final PriceSegment? priceSegment;
+  final bool loading;
+  final String msg;
 
-  DisplayListProducts({this.products, this.loading, this.msg});
+  DisplayListProducts({
+    this.priceSegment,
+    required this.loading,
+    required this.msg,
+  });
 
   factory DisplayListProducts.loading() {
     return DisplayListProducts(
       msg: "",
-      products: [],
+      priceSegment: null,
       loading: true,
     );
   }
 
-  factory DisplayListProducts.data(List<Product> products) {
+  factory DisplayListProducts.data(
+    PriceSegment priceSegment,
+  ) {
     return DisplayListProducts(
       msg: "",
-      products: products,
+      priceSegment: priceSegment,
       loading: false,
     );
   }
@@ -34,22 +39,17 @@ class DisplayListProducts extends AllProductsState {
   factory DisplayListProducts.error(String msg) {
     return DisplayListProducts(
       msg: msg,
-      products: [],
+      priceSegment: null,
       loading: false,
     );
   }
 
   @override
-  List<Object?> get props => [products, loading, msg];
-
-  @override
-  String toString() {
-    return 'DisplayListProducts{products: ${products!.length}, loading: $loading, msg: $msg}';
-  }
+  List<Object?> get props => [priceSegment, loading, msg];
 }
 
 /// Update toolbar
-class UpdateToolbarState extends AllProductsState {
+class UpdateToolbarState extends CategoriesState {
   final bool showSearchField;
 
   UpdateToolbarState({required this.showSearchField});
@@ -64,7 +64,7 @@ class UpdateToolbarState extends AllProductsState {
 }
 
 /// Open sort option dialog
-class OpenSortOption extends AllProductsState {
+class OpenSortOption extends CategoriesState {
   final bool isOpen;
   final ProductSortOption currSortOption;
 
