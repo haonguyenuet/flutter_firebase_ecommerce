@@ -1,6 +1,5 @@
 import 'package:e_commerce_app/business_logic/entities/user.dart';
 import 'package:e_commerce_app/constants/constants.dart';
-import 'package:e_commerce_app/presentation/widgets/others/custom_card_widget.dart';
 import 'package:e_commerce_app/utils/utils.dart';
 import 'package:e_commerce_app/presentation/widgets/buttons/default_button.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +13,9 @@ class InitializeInfoForm extends StatefulWidget {
 }
 
 class _InitializeInfoFormState extends State<InitializeInfoForm> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
 
   @override
   void initState() {
@@ -32,7 +31,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
         vertical: SizeConfig.defaultSize * 3,
       ),
       child: Form(
-        key: _formKey,
+        key: formKey,
         child: Column(
           children: <Widget>[
             _buildNameInput(),
@@ -51,7 +50,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
   /// Build content
   _buildNameInput() {
     return TextFormField(
-      controller: _nameController,
+      controller: nameController,
       keyboardType: TextInputType.text,
       validator: (value) {
         return UtilValidators.isValidName(value!)
@@ -67,7 +66,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
 
   _buildPhoneNumberInput() {
     return TextFormField(
-      controller: _phoneNumberController,
+      controller: phoneNumberController,
       keyboardType: TextInputType.text,
       validator: (value) {
         return UtilValidators.isVietnamesePhoneNumber(value!)
@@ -95,8 +94,8 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
             email: "",
             avatar: "",
             addresses: [],
-            name: _nameController.text,
-            phoneNumber: _phoneNumberController.text,
+            name: nameController.text,
+            phoneNumber: phoneNumberController.text,
           );
           Navigator.pushNamed(
             context,
@@ -138,13 +137,13 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
   }
 
   bool isContinueButtonEnabled() {
-    return _formKey.currentState!.validate();
+    return formKey.currentState!.validate();
   }
 
   @override
   void dispose() {
-    _phoneNumberController.dispose();
-    _nameController.dispose();
+    phoneNumberController.dispose();
+    nameController.dispose();
     super.dispose();
   }
 }

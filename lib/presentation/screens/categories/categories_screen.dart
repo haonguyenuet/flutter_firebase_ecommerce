@@ -6,10 +6,10 @@ import 'package:e_commerce_app/presentation/screens/categories/widgets/toolbar.d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AllProductsScreen extends StatelessWidget {
+class CategoriesScreen extends StatelessWidget {
   final Category category;
 
-  const AllProductsScreen({
+  const CategoriesScreen({
     Key? key,
     required this.category,
   }) : super(key: key);

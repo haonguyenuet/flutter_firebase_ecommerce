@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:equatable/equatable.dart';
 
 /// Cart item model
@@ -5,7 +6,7 @@ class CartItem extends Equatable {
   /// Cart item id
   final String id;
 
-  /// Product id
+  /// Product Id
   final String productId;
 
   /// Product quantity in the cart
@@ -14,16 +15,17 @@ class CartItem extends Equatable {
   /// Product price * quantity
   final int price;
 
-  /// Checkout or not ?
-  final bool? isActive;
+  /// Product info, only use in client side
+  final Product? productInfo;
 
   /// Constructor
-  CartItem(
-      {required this.id,
-      required this.productId,
-      required this.price,
-      required this.quantity,
-      this.isActive});
+  CartItem({
+    required this.id,
+    required this.productId,
+    required this.price,
+    required this.quantity,
+    this.productInfo,
+  });
 
   /// Json data from server turns into model data
   static CartItem fromMap(Map<String, dynamic> data) {
@@ -49,12 +51,14 @@ class CartItem extends Equatable {
   CartItem cloneWith({
     id,
     productId,
+    productInfo,
     price,
     quantity,
   }) {
     return CartItem(
       id: id ?? this.id,
       productId: productId ?? this.productId,
+      productInfo: productInfo ?? this.productInfo,
       price: price ?? this.price,
       quantity: quantity ?? this.quantity,
     );

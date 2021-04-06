@@ -4,11 +4,12 @@ import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/image_constant.dart';
 import 'package:e_commerce_app/presentation/widgets/others/custom_dismissible.dart';
 import 'package:e_commerce_app/presentation/widgets/others/loading.dart';
+import 'package:e_commerce_app/presentation/widgets/others/promo_widget.dart';
 import 'package:e_commerce_app/presentation/widgets/single_card/cart_item_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CartBody extends StatelessWidget {
+class ListCartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(
@@ -21,8 +22,11 @@ class CartBody extends StatelessWidget {
           return SafeArea(
             child: cart.length > 0
                 ? ListView.builder(
-                    itemCount: cart.length,
+                    itemCount: cart.length + 1,
                     itemBuilder: (context, index) {
+                      if (index == cart.length) {
+                        return PromoWidget();
+                      }
                       return CustomDismissible(
                         key: Key(cart[index].id),
                         onDismissed: (direction) {

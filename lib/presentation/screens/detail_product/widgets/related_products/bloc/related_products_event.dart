@@ -14,3 +14,12 @@ class LoadRelatedProducts extends RelatedProductsEvent {
   @override
   List<Object> get props => [product];
 }
+
+class OnSeeAll extends RelatedProductsEvent {
+  final String categoryId;
+
+  OnSeeAll(this.categoryId);
+
+  @override
+  List<Object> get props => [categoryId];
+}

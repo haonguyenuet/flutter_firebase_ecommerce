@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
-import 'package:e_commerce_app/business_logic/repository/app_repository.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/presentation/screens/detail_product/widgets/related_products/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/widgets/others/section_widget.dart';
@@ -17,7 +16,18 @@ class RelatedProducts extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
           RelatedProductsBloc()..add(LoadRelatedProducts(product)),
-      child: BlocBuilder<RelatedProductsBloc, RelatedProductsState>(
+      child: BlocConsumer<RelatedProductsBloc, RelatedProductsState>(
+        listenWhen: (preState, currState) => currState is GoToCategoriesScreen,
+        listener: (context, state) {
+          if (state is GoToCategoriesScreen) {
+            Navigator.pushNamed(
+              context,
+              AppRouter.CATEGORIES,
+              arguments: state.category,
+            );
+          }
+        },
+        buildWhen: (preState, currState) => currState is! GoToCategoriesScreen,
         builder: (context, state) {
           if (state is RelatedProductsLoading) {
             return Center(child: CircularProgressIndicator());
@@ -31,8 +41,9 @@ class RelatedProducts extends StatelessWidget {
               children: state.relatedProducts
                   .map((p) => ProductCard(product: p))
                   .toList(),
-              handleOnSeeAll: () async {
-                Navigator.pushNamed(context, AppRouter.ALL_PRODUCTS);
+              handleOnSeeAll: () {
+                BlocProvider.of<RelatedProductsBloc>(context)
+                    .add(OnSeeAll(product.categoryId));
               },
             );
           }

@@ -1,11 +1,10 @@
 import 'package:e_commerce_app/business_logic/common_blocs/cart/bloc.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
-import 'package:e_commerce_app/presentation/screens/payment/payment_bottom_sheet.dart';
+import 'package:e_commerce_app/presentation/screens/cart/widgets/payment_bottom_sheet.dart';
 import 'package:e_commerce_app/utils/dialog.dart';
-import 'package:e_commerce_app/utils/my_formatter.dart';
-import 'package:e_commerce_app/presentation/widgets/buttons/default_button.dart';
 import 'package:e_commerce_app/utils/utils.dart';
+import 'package:e_commerce_app/presentation/widgets/buttons/default_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,10 +21,6 @@ class CheckoutBottom extends StatelessWidget {
         padding: EdgeInsets.all(SizeConfig.defaultSize * 2),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-          ),
           boxShadow: [
             BoxShadow(
               offset: Offset(0, -0.5),
@@ -35,30 +30,34 @@ class CheckoutBottom extends StatelessWidget {
           ],
         ),
         child: BlocBuilder<CartBloc, CartState>(
+          buildWhen: (preState, currState) => currState is CartLoaded,
           builder: (context, state) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildTotalPrice(context, state),
-                SizedBox(height: SizeConfig.defaultSize * 2),
-                _buildCheckoutButton(context, state),
-              ],
-            );
+            if (state is CartLoaded) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildTotalPrice(context, state),
+                  SizedBox(height: SizeConfig.defaultSize * 2),
+                  _buildCheckoutButton(context, state),
+                ],
+              );
+            }
+            return Container();
           },
         ),
       ),
     );
   }
 
-  _buildCheckoutButton(BuildContext context, CartState state) {
+  _buildCheckoutButton(BuildContext context, CartLoaded state) {
     return DefaultButton(
       child: Text(
         Translate.of(context).translate("check_out"),
         style: FONT_CONST.BOLD_WHITE_18,
       ),
       onPressed: () {
-        if (state is CartLoaded && state.cart.length > 0) {
+        if (state.cart.length > 0) {
           _openPaymentBottomSheet(context);
         } else {
           UtilDialog.showInformation(
@@ -70,9 +69,7 @@ class CheckoutBottom extends StatelessWidget {
     );
   }
 
-  _buildTotalPrice(BuildContext context, CartState state) {
-    String totalPrice =
-        state is CartLoaded ? formatNumber(state.totalCartPrice) : "0";
+  _buildTotalPrice(BuildContext context, CartLoaded state) {
     return Row(
       children: [
         Container(
@@ -88,16 +85,16 @@ class CheckoutBottom extends StatelessWidget {
         SizedBox(width: SizeConfig.defaultSize * 1.5),
         Text.rich(
           TextSpan(
-            style: FONT_CONST.BOLD_DEFAULT_20,
+            style: FONT_CONST.BOLD_DEFAULT_18,
             children: [
-              TextSpan(text: Translate.of(context).translate("total") + "\n"),
+              TextSpan(text: Translate.of(context).translate("total") + ":\n"),
               TextSpan(
-                text: "$totalPrice₫",
-                style: FONT_CONST.BOLD_PRIMARY_24,
+                text: "${state.priceOfGoods.toPrice()}",
+                style: FONT_CONST.BOLD_PRIMARY_20,
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }

@@ -7,6 +7,7 @@ class AppRepository {
   static final productRepository = FirebaseProductRepository();
   static final bannerRepository = FirebaseBannerRepository();
   static final cartRepository = FirebaseCartRepository();
+  static final orderRepository = FirebaseOrderRepository();
   static final feedbackRepository = FirebaseFeedbackRepository();
   static final storageRepository = StorageRepository();
 

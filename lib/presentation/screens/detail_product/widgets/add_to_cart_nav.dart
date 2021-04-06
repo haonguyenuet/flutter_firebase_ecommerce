@@ -21,17 +21,17 @@ class AddToCartNavigation extends StatefulWidget {
 
 class _AddToCartNavigationState extends State<AddToCartNavigation> {
   Product get product => widget.product;
-  TextEditingController _quantityController = TextEditingController();
+  TextEditingController quantityController = TextEditingController();
   @override
   void initState() {
     super.initState();
-    _quantityController.text = "1";
+    quantityController.text = "1";
   }
 
   @override
   void dispose() {
     super.dispose();
-    _quantityController.dispose();
+    quantityController.dispose();
   }
 
   @override
@@ -62,7 +62,7 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
           aspectRatio: 1,
           child: ElevatedButton(
             onPressed: () {
-              int quantity = int.parse(_quantityController.text) - 1;
+              int quantity = int.parse(quantityController.text) - 1;
               _quantityChanged(quantity);
             },
             style: ElevatedButton.styleFrom(primary: Colors.white),
@@ -73,7 +73,7 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
         /// Display the _quantity of product
         Expanded(
           child: TextField(
-            controller: _quantityController,
+            controller: quantityController,
             textAlign: TextAlign.center,
             onChanged: (value) {
               int quantity = int.parse(value);
@@ -90,7 +90,7 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
           aspectRatio: 1,
           child: ElevatedButton(
             onPressed: () {
-              int quantity = int.parse(_quantityController.text) + 1;
+              int quantity = int.parse(quantityController.text) + 1;
               _quantityChanged(quantity);
             },
             style: ElevatedButton.styleFrom(primary: Colors.white),
@@ -103,7 +103,7 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
 
   _quantityChanged(int quantity) {
     if (quantity > 0 && quantity < product.quantity) {
-      _quantityController.text = quantity.toString();
+      quantityController.text = quantity.toString();
     } else {
       UtilDialog.showInformation(
         context,
@@ -124,8 +124,8 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
                 CartItem cartItem = CartItem(
                   id: product.id,
                   productId: product.id,
-                  quantity: int.parse(_quantityController.text),
-                  price: product.price * int.parse(_quantityController.text),
+                  quantity: int.parse(quantityController.text),
+                  price: product.price * int.parse(quantityController.text),
                 );
                 // Add event AddToCart
                 BlocProvider.of<CartBloc>(context).add(AddCartItem(cartItem));

@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/configs/config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/screens/home_page/bloc/bloc.dart';
+import 'package:e_commerce_app/presentation/widgets/others/promo_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:e_commerce_app/presentation/screens/home_page/widgets/home_banner.dart';
@@ -22,6 +23,7 @@ class HomeBody extends StatelessWidget {
                 children: [
                   HomeBanner(banners: homeResponse.banners),
                   _buildHomeCategories(context, homeResponse.categories),
+                  PromoWidget(),
                   _buildPopularProducts(context, homeResponse.popularProducts),
                   _buildDiscountProducts(
                       context, homeResponse.discountProducts),
@@ -76,7 +78,7 @@ class HomeBody extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushNamed(
                       context,
-                      AppRouter.ALL_PRODUCTS,
+                      AppRouter.CATEGORIES,
                       arguments: categories[index],
                     );
                   });

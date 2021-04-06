@@ -26,16 +26,15 @@ class _DeliveryAddressBottomSheetState
     extends State<DeliveryAddressBottomSheet> {
   // [deliveryAddress] is null, that means addresses is empty
   // So name and phoneNumber is default
-  // And _isDefaultAddress = true
+  // And isDefaultAddress = true
   DeliveryAddress? get deliveryAddress => widget.deliveryAddress;
 
   // local states
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
-  final TextEditingController _detailAddressController =
-      TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController detailAddressController = TextEditingController();
 
-  bool _isDefaultAddress = true;
+  bool isDefaultAddress = true;
 
   @override
   void initState() {
@@ -43,13 +42,13 @@ class _DeliveryAddressBottomSheetState
     var profileState = BlocProvider.of<ProfileBloc>(context).state;
 
     if (deliveryAddress != null) {
-      _nameController.text = deliveryAddress!.receiverName;
-      _phoneNumberController.text = deliveryAddress!.phoneNumber;
-      _detailAddressController.text = deliveryAddress!.detailAddress;
-      _isDefaultAddress = deliveryAddress!.isDefault;
+      nameController.text = deliveryAddress!.receiverName;
+      phoneNumberController.text = deliveryAddress!.phoneNumber;
+      detailAddressController.text = deliveryAddress!.detailAddress;
+      isDefaultAddress = deliveryAddress!.isDefault;
     } else if (profileState is ProfileLoaded) {
-      _nameController.text = profileState.loggedUser.name;
-      _phoneNumberController.text = profileState.loggedUser.phoneNumber;
+      nameController.text = profileState.loggedUser.name;
+      phoneNumberController.text = profileState.loggedUser.phoneNumber;
     }
   }
 
@@ -82,7 +81,7 @@ class _DeliveryAddressBottomSheetState
         children: [
           // Name input
           TextFormField(
-            controller: _nameController,
+            controller: nameController,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
               labelText: Translate.of(context).translate("name"),
@@ -96,7 +95,7 @@ class _DeliveryAddressBottomSheetState
           SizedBox(height: SizeConfig.defaultSize),
           // Phone number input
           TextFormField(
-            controller: _phoneNumberController,
+            controller: phoneNumberController,
             keyboardType: TextInputType.text,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             decoration: InputDecoration(
@@ -110,7 +109,7 @@ class _DeliveryAddressBottomSheetState
           SizedBox(height: SizeConfig.defaultSize),
           // Detail address input
           TextFormField(
-            controller: _detailAddressController,
+            controller: detailAddressController,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
               labelText: Translate.of(context).translate("detail_address"),
@@ -160,10 +159,10 @@ class _DeliveryAddressBottomSheetState
             style: FONT_CONST.BOLD_DEFAULT_18,
           ),
           CupertinoSwitch(
-            value: _isDefaultAddress,
+            value: isDefaultAddress,
             onChanged: deliveryAddress == null || deliveryAddress!.isDefault
                 ? null
-                : (value) => setState(() => _isDefaultAddress = value),
+                : (value) => setState(() => isDefaultAddress = value),
             trackColor: COLOR_CONST.accentShadeColor,
           ),
         ],
@@ -184,10 +183,10 @@ class _DeliveryAddressBottomSheetState
             id: deliveryAddress != null
                 ? deliveryAddress!.id
                 : UniqueKey().toString(),
-            receiverName: _nameController.text,
-            phoneNumber: _phoneNumberController.text,
-            detailAddress: _detailAddressController.text,
-            isDefault: _isDefaultAddress,
+            receiverName: nameController.text,
+            phoneNumber: phoneNumberController.text,
+            detailAddress: detailAddressController.text,
+            isDefault: isDefaultAddress,
           );
           // Define method submit
           var _method =
@@ -242,7 +241,7 @@ class _DeliveryAddressBottomSheetState
   }
 
   bool get isPopulated =>
-      _nameController.text.isNotEmpty &&
-      _phoneNumberController.text.isNotEmpty &&
-      _detailAddressController.text.isNotEmpty;
+      nameController.text.isNotEmpty &&
+      phoneNumberController.text.isNotEmpty &&
+      detailAddressController.text.isNotEmpty;
 }

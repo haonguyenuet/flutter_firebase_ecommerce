@@ -10,12 +10,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfilePic extends StatelessWidget {
+  final UserModel loggedUser;
+
   ProfilePic({
     Key? key,
     required this.loggedUser,
   }) : super(key: key);
-
-  final UserModel loggedUser;
 
   @override
   Widget build(BuildContext context) {

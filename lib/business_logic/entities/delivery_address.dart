@@ -60,6 +60,11 @@ class DeliveryAddress extends Equatable {
   }
 
   @override
+  String toString() {
+    return "${this.receiverName}, ${this.phoneNumber}\n${this.detailAddress}";
+  }
+
+  @override
   List<Object> get props =>
       [id, receiverName, phoneNumber, detailAddress, isDefault];
 }

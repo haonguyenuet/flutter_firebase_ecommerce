@@ -99,8 +99,21 @@ class FirebaseProductRepository implements ProductRepository {
         .catchError((err) {});
   }
 
+  /// Get category by id
+  /// Created by NDH
+  @override
+  Future<Category> getCategoryById(String categoryId) async {
+    return await FirebaseFirestore.instance
+        .collection("categories")
+        .doc(categoryId)
+        .get()
+        .then((doc) => Category.fromMap(doc.id, doc.data()!))
+        .catchError((err) {});
+  }
+
   ///Singleton factory
-  static final FirebaseProductRepository _instance = FirebaseProductRepository._internal();
+  static final FirebaseProductRepository _instance =
+      FirebaseProductRepository._internal();
 
   factory FirebaseProductRepository() {
     return _instance;

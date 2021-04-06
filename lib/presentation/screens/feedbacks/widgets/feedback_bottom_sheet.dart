@@ -9,6 +9,7 @@ import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
+import 'package:uuid/uuid.dart';
 
 class FeedbackBottomSheet extends StatefulWidget {
   const FeedbackBottomSheet({Key? key}) : super(key: key);
@@ -19,8 +20,22 @@ class FeedbackBottomSheet extends StatefulWidget {
 
 class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
   // local states
-  int _rating = 5;
-  String _content = "";
+  int rating = 5;
+  String content = "";
+
+  FeedBack? _createNewFeedback() {
+    ProfileState profileState = BlocProvider.of<ProfileBloc>(context).state;
+    if (profileState is ProfileLoaded) {
+      return FeedBack(
+        id: Uuid().v1(),
+        userId: profileState.loggedUser.id,
+        rating: rating,
+        content: content,
+        timestamp: Timestamp.now(),
+      );
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +77,7 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
       ),
       child: TextField(
         autofocus: true,
-        onChanged: (value) => setState(() => _content = value),
+        onChanged: (value) => setState(() => content = value),
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(
             horizontal: SizeConfig.defaultSize * 1.5,
@@ -84,7 +99,7 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
         SizedBox(width: SizeConfig.defaultSize),
         RatingBar(
           initialRating: 5,
-          onRatingUpdate: (value) => setState(() => _rating = value),
+          onRatingUpdate: (value) => setState(() => rating = value),
         )
       ],
     );
@@ -103,15 +118,9 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
                 style: FONT_CONST.BOLD_WHITE_18,
               ),
               onPressed: () {
-                // create new feedback
-                FeedBack newFeedback = FeedBack(
-                  id: UniqueKey().toString(),
-                  userId: state is ProfileLoaded ? state.loggedUser.id : "",
-                  rating: _rating,
-                  content: _content,
-                  timestamp: Timestamp.now(),
-                );
-                // return new feedback to main screen
+                // Create new feedback
+                var newFeedback = _createNewFeedback();
+                // Return new feedback to main screen
                 Navigator.pop(context, newFeedback);
               },
             ),

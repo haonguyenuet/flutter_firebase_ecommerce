@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/presentation/screens/chat/chat_screen.dart';
+import 'package:e_commerce_app/presentation/screens/detail_order_screen.dart/detail_order_screen.dart';
 import 'package:e_commerce_app/presentation/screens/map/map_screen.dart';
-import 'package:e_commerce_app/presentation/screens/payment/payment_success_screen.dart';
+import 'package:e_commerce_app/presentation/screens/my_orders/my_orders_screen.dart';
 import 'package:e_commerce_app/presentation/screens/search/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
@@ -30,10 +31,11 @@ class AppRouter {
   static const String DETAIL_PRODUCT = '/detail_product';
   static const String FEEDBACK = '/feedback';
   static const String CART = '/cart';
-  static const String PAYMENT_SUCCESS = '/payment_success';
+  static const String MY_ORDERS = '/my_orders';
+  static const String DETAIL_ORDER = '/detail_order';
   static const String DELIVERY_ADDRESS = '/delivery_address';
   static const String MAP = '/map';
-  static const String ALL_PRODUCTS = '/all_products';
+  static const String CATEGORIES = '/categories';
   static const String SETTING = '/setting';
   static const String CHAT = '/chat';
   static const String SEARCH = '/search';
@@ -68,14 +70,18 @@ class AppRouter {
         var product = settings.arguments as Product;
         return MaterialPageRoute(
             builder: (_) => FeedbacksScreen(product: product));
-      case ALL_PRODUCTS:
+      case CATEGORIES:
         var category = settings.arguments as Category;
         return MaterialPageRoute(
-            builder: (_) => AllProductsScreen(category: category));
+            builder: (_) => CategoriesScreen(category: category));
       case CART:
         return MaterialPageRoute(builder: (_) => CartScreen());
-      case PAYMENT_SUCCESS:
-        return MaterialPageRoute(builder: (_) => PaymentSuccessScreen());
+      case MY_ORDERS:
+        return MaterialPageRoute(builder: (_) => MyOrdersScreen());
+      case DETAIL_ORDER:
+        var order = settings.arguments as Order;
+        return MaterialPageRoute(
+            builder: (_) => DetailOrderScreen(order: order));
       case DELIVERY_ADDRESS:
         return MaterialPageRoute(builder: (_) => DeliveryAddressScreen());
       case MAP:

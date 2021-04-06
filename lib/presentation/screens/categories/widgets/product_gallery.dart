@@ -4,7 +4,6 @@ import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/screens/categories/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/screens/categories/widgets/grid_products.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
-import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,19 +14,19 @@ class ProductGallery extends StatefulWidget {
 
 class _ProductGalleryState extends State<ProductGallery>
     with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+  late TabController tabController;
   int currentTabIndex = 0;
 
   @override
   void initState() {
-    _tabController = TabController(
+    tabController = TabController(
       length: 3,
       vsync: this,
     );
 
-    _tabController.addListener(() {
+    tabController.addListener(() {
       setState(() {
-        currentTabIndex = _tabController.index;
+        currentTabIndex = tabController.index;
       });
     });
 
@@ -54,7 +53,7 @@ class _ProductGalleryState extends State<ProductGallery>
                 SizedBox(height: SizeConfig.defaultSize),
                 Expanded(
                   child: TabBarView(
-                    controller: _tabController,
+                    controller: tabController,
                     children: <Widget>[
                       GridProducts(products: priceSegment.productsInLowRange),
                       GridProducts(products: priceSegment.productsInMidRange),
@@ -77,7 +76,7 @@ class _ProductGalleryState extends State<ProductGallery>
     return DefaultTabController(
       length: 3,
       child: TabBar(
-        controller: _tabController,
+        controller: tabController,
         tabs: <Widget>[
           Tab(text: '< 1 triệu đồng'),
           Tab(text: ' 1 - 4 triệu đồng'),

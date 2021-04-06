@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/configs/config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -29,8 +30,15 @@ class CustomCardWidget extends StatelessWidget {
         child: Container(
           width: width,
           height: height,
-          margin: margin,
-          padding: padding,
+          margin: margin == null
+              ? EdgeInsets.symmetric(
+                  vertical: SizeConfig.defaultSize * 0.5,
+                  horizontal: SizeConfig.defaultSize,
+                )
+              : margin,
+          padding: padding == null
+              ? EdgeInsets.all(SizeConfig.defaultSize * 1.5)
+              : padding,
           decoration: decoration ?? _defaultDecoration(),
           child: child,
         ),

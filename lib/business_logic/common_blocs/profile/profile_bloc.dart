@@ -8,6 +8,7 @@ import 'package:e_commerce_app/business_logic/repository/storage_repository/stor
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
+  AuthRepository _authRepository = AppRepository.authRepository;
   UserRepository _userRepository = AppRepository.userRepository;
   StorageRepository _storageRepository = AppRepository.storageRepository;
   StreamSubscription? _profileStreamSub;
@@ -33,8 +34,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     try {
       _profileStreamSub?.cancel();
       _profileStreamSub = _userRepository
-          .loggedUserStream(event.loggedFirebaseUser)
-          .listen((user) => add(ProfileUpdated(user)));
+          .loggedUserStream(_authRepository.loggedFirebaseUser)
+          .listen((cart) => add(ProfileUpdated(cart)));
     } catch (e) {
       yield ProfileLoadFailure(e.toString());
     }

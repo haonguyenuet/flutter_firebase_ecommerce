@@ -20,13 +20,13 @@ class ToolBarWidget extends StatefulWidget {
 }
 
 class _ToolBarWidgetState extends State<ToolBarWidget> {
-  TextEditingController _searchController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
 
-    _searchController.addListener(() {
-      final keyword = _searchController.text;
+    searchController.addListener(() {
+      final keyword = searchController.text;
       if (keyword.isNotEmpty) {
         BlocProvider.of<CategoriesBloc>(context)
             .add(SearchQueryChanged(keyword));
@@ -110,9 +110,9 @@ class _ToolBarWidgetState extends State<ToolBarWidget> {
 
   _buildTitle(UpdateToolbarState state) {
     if (state.showSearchField) {
-      _searchController.text = "";
+      searchController.text = "";
       return SearchFieldWidget(
-        searchController: _searchController,
+        searchController: searchController,
         autoFocus: false,
         hintText: Translate.of(context).translate('search'),
       );

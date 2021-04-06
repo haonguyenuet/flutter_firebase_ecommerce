@@ -1,10 +1,9 @@
 import 'package:e_commerce_app/business_logic/common_blocs/cart/bloc.dart';
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
-import 'package:e_commerce_app/business_logic/repository/app_repository.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
-import 'package:e_commerce_app/utils/my_formatter.dart';
+import 'package:e_commerce_app/utils/utils.dart';
 import 'package:e_commerce_app/presentation/widgets/buttons/circle_icon_button.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
@@ -22,35 +21,25 @@ class CartItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future:
-          AppRepository.productRepository.getProductById(cartItem.productId),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          var product = snapshot.data as Product;
-          return CustomCardWidget(
-            onTap: () => Navigator.pushNamed(
-              context,
-              AppRouter.DETAIL_PRODUCT,
-              arguments: product,
-            ),
-            margin: EdgeInsets.symmetric(
-              vertical: SizeConfig.defaultSize * 0.5,
-              horizontal: SizeConfig.defaultSize,
-            ),
-            padding: EdgeInsets.only(right: SizeConfig.defaultSize),
-            child: Row(
-              children: [
-                _buildCartItemImage(product),
-                SizedBox(width: SizeConfig.defaultSize),
-                Expanded(child: _buildCartItemInfo(product, context)),
-              ],
-            ),
-          );
-        }
-
-        return Container();
-      },
+    var product = cartItem.productInfo!;
+    return CustomCardWidget(
+      onTap: () => Navigator.pushNamed(
+        context,
+        AppRouter.DETAIL_PRODUCT,
+        arguments: product,
+      ),
+      margin: EdgeInsets.symmetric(
+        vertical: SizeConfig.defaultSize * 0.5,
+        horizontal: SizeConfig.defaultSize,
+      ),
+      padding: EdgeInsets.only(right: SizeConfig.defaultSize),
+      child: Row(
+        children: [
+          _buildCartItemImage(product),
+          SizedBox(width: SizeConfig.defaultSize),
+          Expanded(child: _buildCartItemInfo(product, context)),
+        ],
+      ),
     );
   }
 
@@ -82,7 +71,7 @@ class CartItemCard extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(vertical: 5),
           child: Text(
-            "${formatNumber(product.price)} ₫",
+            "${product.price.toPrice()}",
             style: FONT_CONST.REGULAR_PRIMARY_18,
           ),
         ),

@@ -14,7 +14,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  TextEditingController _searchControler = TextEditingController();
+  TextEditingController searchControler = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class _SearchScreenState extends State<SearchScreen> {
         body: SafeArea(
           child: Column(
             children: [
-              SearchBar(searchController: _searchControler),
+              SearchBar(searchController: searchControler),
               Expanded(child: _buildContent()),
             ],
           ),
@@ -120,7 +120,7 @@ class _SearchScreenState extends State<SearchScreen> {
             },
             leading: ShimmerImage(imageUrl: results[index].images[0]),
             title: results[index].name,
-            subTitle: Text("${formatNumber(results[index].price)}đ"),
+            subTitle: Text("${results[index].price.toPrice()}"),
           );
         },
       );
@@ -138,7 +138,7 @@ class _SearchScreenState extends State<SearchScreen> {
   _buildSuggestionItem(String keyword) {
     return GestureDetector(
       onTap: () {
-        _searchControler.text = keyword;
+        searchControler.text = keyword;
       },
       child: Container(
         padding: EdgeInsets.symmetric(

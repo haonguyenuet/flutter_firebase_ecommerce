@@ -14,7 +14,7 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  late Locale _selectedLanguage;
+  late Locale selectedLanguage;
   List<Locale> supportLanguage = AppLanguage.supportLanguage;
 
   @override
@@ -49,7 +49,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   void _showLanguageSetting() async {
     setState(() {
-      _selectedLanguage = AppLanguage.defaultLanguage;
+      selectedLanguage = AppLanguage.defaultLanguage;
     });
     final response = await UtilDialog.showConfirmation(
       context,
@@ -65,9 +65,9 @@ class _SettingScreenState extends State<SettingScreen> {
                     Translate.of(context).translate(
                         UtilLanguage.getLanguageName(language.languageCode)),
                   ),
-                  value: language == _selectedLanguage,
+                  value: language == selectedLanguage,
                   onChanged: (value) {
-                    setState(() => _selectedLanguage = language);
+                    setState(() => selectedLanguage = language);
                   },
                 );
               }),
@@ -80,7 +80,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
     if (response) {
       BlocProvider.of<LanguageBloc>(context)
-          .add(LanguageChanged(_selectedLanguage));
+          .add(LanguageChanged(selectedLanguage));
     }
   }
 }

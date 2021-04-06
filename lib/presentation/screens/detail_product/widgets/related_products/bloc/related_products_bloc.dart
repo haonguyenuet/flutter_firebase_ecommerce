@@ -14,17 +14,30 @@ class RelatedProductsBloc
   Stream<RelatedProductsState> mapEventToState(
       RelatedProductsEvent event) async* {
     if (event is LoadRelatedProducts) {
-      try {
-        var products = await _productRepository.getProductsByCategory(
-          event.product.categoryId,
-        );
-        final relatedProducts = products
-            .where((product) => product.id != event.product.id)
-            .toList();
-        yield RelatedProductsLoaded(relatedProducts);
-      } catch (e) {
-        yield RelatedProductsLoadFailure(e.toString());
-      }
+      yield* _mapLoadRelatedProductsToState(event);
+    } else if (event is OnSeeAll) {
+      yield*    _mapOnSeeAllToState(event);
     }
+  }
+
+  Stream<RelatedProductsState> _mapLoadRelatedProductsToState(
+      LoadRelatedProducts event) async* {
+    try {
+      var products = await _productRepository.getProductsByCategory(
+        event.product.categoryId,
+      );
+      final relatedProducts =
+          products.where((product) => product.id != event.product.id).toList();
+      yield RelatedProductsLoaded(relatedProducts);
+    } catch (e) {
+      yield RelatedProductsLoadFailure(e.toString());
+    }
+  }
+
+  Stream<RelatedProductsState> _mapOnSeeAllToState(OnSeeAll event) async* {
+    try {
+      var category = await _productRepository.getCategoryById(event.categoryId);
+      yield GoToCategoriesScreen(category);
+    } catch (e) {}
   }
 }

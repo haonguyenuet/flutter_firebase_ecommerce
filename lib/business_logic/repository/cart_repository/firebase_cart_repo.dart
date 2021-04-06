@@ -8,10 +8,14 @@ class FirebaseCartRepository implements CartRepository {
 
   /// Get all cart items
   Stream<List<CartItem>> cartStream(String uid) {
-    return userCollection.doc(uid).collection("cart").snapshots().map(
-        (snapshot) => snapshot.docs
-            .map((doc) => CartItem.fromMap(doc.data()!))
-            .toList());
+    return userCollection
+        .doc(uid)
+        .collection("cart")
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((doc) {
+              var data = doc.data()!;
+              return CartItem.fromMap(data);
+            }).toList());
   }
 
   /// Add item
@@ -75,7 +79,8 @@ class FirebaseCartRepository implements CartRepository {
   }
 
   ///Singleton factory
-  static final FirebaseCartRepository _instance = FirebaseCartRepository._internal();
+  static final FirebaseCartRepository _instance =
+      FirebaseCartRepository._internal();
 
   factory FirebaseCartRepository() {
     return _instance;

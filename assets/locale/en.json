@@ -137,8 +137,9 @@
   "payment_on_receipt_of_goods": "Payment on receipt of goods",
   "online": "Online",
   "total": "Total",
-  "total_price": "Total price",
-  "total_delivery_fee": "Total delivery fee",
+  "price_of_goods": "Price of goods",
+  "delivery_fee": "Delivery fee",
+  "coupon": "Coupon",
   "products": "products",
   "your_feedback": "Your feeback",
   "support": "Support",
@@ -150,5 +151,9 @@
   "message_for_you": "Message for you",
   "recent_search": "Recent search",
   "hot_keywords": "Hot keywords",
-  "search_by_product_name": "Search by product name"
+  "search_by_product_name": "Search by product name",
+  "ship_to": "Ship to",
+  "payment_success": "Payment Success",
+  "detail_order": "Detail order",
+  "my_orders": "My orders"
 }

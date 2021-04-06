@@ -14,7 +14,7 @@ class ProductImages extends StatefulWidget {
 class _ProductImagesState extends State<ProductImages> {
   Product get product => widget.product;
   // local states
-  int _currentPage = 0;
+  int currentPage = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -33,7 +33,7 @@ class _ProductImagesState extends State<ProductImages> {
             },
             onPageChanged: (index) {
               setState(() {
-                _currentPage = index;
+                currentPage = index;
               });
             },
           ),
@@ -54,13 +54,12 @@ class _ProductImagesState extends State<ProductImages> {
       duration: mAnimationDuration,
       margin: EdgeInsets.only(right: 5),
       height: 3,
-      width: _currentPage == index
+      width: currentPage == index
           ? SizeConfig.defaultSize * 6
           : SizeConfig.defaultSize * 3,
       decoration: BoxDecoration(
-        color: _currentPage == index
-            ? COLOR_CONST.primaryColor
-            : Color(0xFFD8D8D8),
+        color:
+            currentPage == index ? COLOR_CONST.primaryColor : Color(0xFFD8D8D8),
       ),
     );
   }

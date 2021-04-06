@@ -15,15 +15,15 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  late LoginBloc _loginBloc;
+  late LoginBloc loginBloc;
 
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  bool _isShowPassword = false;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool isShowPassword = false;
 
   @override
   void initState() {
-    _loginBloc = BlocProvider.of<LoginBloc>(context);
+    loginBloc = BlocProvider.of<LoginBloc>(context);
 
     super.initState();
   }
@@ -88,12 +88,12 @@ class _LoginFormState extends State<LoginForm> {
   /// Build content
   _buildTextFieldUsername() {
     return TextFormField(
-      controller: _emailController,
+      controller: emailController,
       onChanged: (value) {
-        _loginBloc.add(EmailChanged(email: value));
+        loginBloc.add(EmailChanged(email: value));
       },
       validator: (_) {
-        return !_loginBloc.state.isEmailValid
+        return !loginBloc.state.isEmailValid
             ? Translate.of(context).translate('invalid_email')
             : null;
       },
@@ -108,27 +108,27 @@ class _LoginFormState extends State<LoginForm> {
 
   _buildTextFieldPassword() {
     return TextFormField(
-      controller: _passwordController,
+      controller: passwordController,
       onChanged: (value) {
-        _loginBloc.add(PasswordChanged(password: value));
+        loginBloc.add(PasswordChanged(password: value));
       },
       validator: (_) {
-        return !_loginBloc.state.isPasswordValid
+        return !loginBloc.state.isPasswordValid
             ? Translate.of(context).translate('invalid_password')
             : null;
       },
       autovalidateMode: AutovalidateMode.always,
       keyboardType: TextInputType.text,
-      obscureText: !_isShowPassword,
+      obscureText: !isShowPassword,
       decoration: InputDecoration(
         hintText: Translate.of(context).translate('password'),
         suffixIcon: IconButton(
-          icon: _isShowPassword
+          icon: isShowPassword
               ? Icon(Icons.visibility)
               : Icon(Icons.visibility_off),
           onPressed: () {
             setState(() {
-              _isShowPassword = !_isShowPassword;
+              isShowPassword = !isShowPassword;
             });
           },
         ),
@@ -144,9 +144,9 @@ class _LoginFormState extends State<LoginForm> {
       ),
       onPressed: () {
         if (isLoginButtonEnabled()) {
-          _loginBloc.add(LoginWithCredential(
-            email: _emailController.text,
-            password: _passwordController.text,
+          loginBloc.add(LoginWithCredential(
+            email: emailController.text,
+            password: passwordController.text,
           ));
         }
       },
@@ -213,11 +213,11 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   bool isLoginButtonEnabled() {
-    return _loginBloc.state.isFormValid &&
-        !_loginBloc.state.isSubmitting &&
+    return loginBloc.state.isFormValid &&
+        !loginBloc.state.isSubmitting &&
         isPopulated;
   }
 
   bool get isPopulated =>
-      _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
+      emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
 }

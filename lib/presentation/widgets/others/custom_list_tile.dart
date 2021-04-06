@@ -42,7 +42,7 @@ class CustomListTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: FONT_CONST.BOLD_DEFAULT_18),
+                  Text(title, style: FONT_CONST.BOLD_DEFAULT_18, maxLines: 2),
                   _subTitle()
                 ],
               ),

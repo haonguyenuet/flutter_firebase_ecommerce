@@ -2,7 +2,6 @@ import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
-import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -70,14 +69,14 @@ class _ProductInfoState extends State<ProductInfo> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "${formatNumber(product.price)}₫",
+            "${product.price.toPrice()}",
             style: FONT_CONST.BOLD_PRIMARY_24,
           ),
           if (product.percentOff > 0)
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 5),
               child: Text(
-                "${formatNumber(product.originalPrice)}₫",
+                "${product.originalPrice.toPrice()}",
                 style: TextStyle(decoration: TextDecoration.lineThrough),
               ),
             ),

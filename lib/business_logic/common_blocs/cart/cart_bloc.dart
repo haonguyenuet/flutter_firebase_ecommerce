@@ -2,12 +2,16 @@ import 'dart:async';
 
 import 'package:e_commerce_app/business_logic/common_blocs/cart/bloc.dart';
 import 'package:e_commerce_app/business_logic/repository/app_repository.dart';
+import 'package:e_commerce_app/business_logic/repository/auth_repository/auth_repo.dart';
 import 'package:e_commerce_app/business_logic/repository/cart_repository/cart_repo.dart';
+import 'package:e_commerce_app/business_logic/repository/product_repository/product_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
+  final AuthRepository _authRepository = AppRepository.authRepository;
   final CartRepository _cartRepository = AppRepository.cartRepository;
+  final ProductRepository _productRepository = AppRepository.productRepository;
   late User _loggedFirebaseUser;
   StreamSubscription? _cartStreamSub;
 
@@ -32,12 +36,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   Stream<CartState> _mapLoadCartToState(LoadCart event) async* {
     try {
-      _loggedFirebaseUser = event.loggedFirebaseUser;
       _cartStreamSub?.cancel();
-      _cartStreamSub =
-          _cartRepository.cartStream(_loggedFirebaseUser.uid).listen(
-                (cart) => add(CartUpdated(cart)),
-              );
+      _loggedFirebaseUser = _authRepository.loggedFirebaseUser;
+      _cartStreamSub = _cartRepository
+          .cartStream(_loggedFirebaseUser.uid)
+          .listen((cart) => add(CartUpdated(cart)));
     } catch (e) {
       yield CartLoadFailure(e.toString());
     }
@@ -83,9 +86,26 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   Stream<CartState> _mapCartUpdatedToState(CartUpdated event) async* {
-    var totalCartPrice = 0;
-    event.cart.forEach((c) => totalCartPrice += c.price);
-    yield CartLoaded(event.cart, totalCartPrice);
+    yield CartLoading();
+
+    var updatedCart = event.updatedCart;
+    var priceOfGoods = 0;
+    for (var i = 0; i < updatedCart.length; i++) {
+      priceOfGoods += updatedCart[i].price;
+      // Get product by id that is provided from cart item
+      try {
+        var productInfo =
+            await _productRepository.getProductById(updatedCart[i].productId);
+        updatedCart[i] = updatedCart[i].cloneWith(productInfo: productInfo);
+      } catch (e) {
+        yield CartLoadFailure(e.toString());
+      }
+    }
+
+    yield CartLoaded(
+      cart: updatedCart,
+      priceOfGoods: priceOfGoods,
+    );
   }
 
   @override

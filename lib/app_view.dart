@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/configs/application.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,6 +33,16 @@ class _AppViewState extends State<AppView> {
     super.dispose();
   }
 
+  void _onNavigate(String route) {
+    _navigator!.pushNamedAndRemoveUntil(route, (route) => false);
+  }
+
+  void _loadData() {
+    // Only load data when authenticated
+    BlocProvider.of<ProfileBloc>(context).add(LoadProfile());
+    BlocProvider.of<CartBloc>(context).add(LoadCart());
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LanguageBloc, LanguageState>(
@@ -61,8 +70,7 @@ class _AppViewState extends State<AppView> {
                 } else if (state is Unauthenticated) {
                   _onNavigate(AppRouter.LOGIN);
                 } else if (state is Authenticated) {
-                  _loadUserProfile(state.loggedFirebaseUser);
-                  _loadCart(state.loggedFirebaseUser);
+                  _loadData();
                   _onNavigate(AppRouter.LOGIN_SUCCESS);
                 } else {
                   _onNavigate(AppRouter.SPLASH);
@@ -74,17 +82,5 @@ class _AppViewState extends State<AppView> {
         );
       },
     );
-  }
-
-  void _onNavigate(String route) {
-    _navigator!.pushNamedAndRemoveUntil(route, (route) => false);
-  }
-
-  void _loadUserProfile(User loggedFirebaseUser) {
-    BlocProvider.of<ProfileBloc>(context).add(LoadProfile(loggedFirebaseUser));
-  }
-
-  void _loadCart(User loggedFirebaseUser) {
-    BlocProvider.of<CartBloc>(context).add(LoadCart(loggedFirebaseUser));
   }
 }

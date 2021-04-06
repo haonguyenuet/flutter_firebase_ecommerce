@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/business_logic/entities/category.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:equatable/equatable.dart';
 
@@ -27,4 +28,12 @@ class RelatedProductsLoadFailure extends RelatedProductsState {
   RelatedProductsLoadFailure(this.error);
   @override
   List<Object> get props => [error];
+}
+
+class GoToCategoriesScreen extends RelatedProductsState {
+  final Category category;
+
+  GoToCategoriesScreen(this.category);
+  @override
+  List<Object> get props => [category];
 }

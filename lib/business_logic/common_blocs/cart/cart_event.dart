@@ -1,6 +1,5 @@
 import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class CartEvent extends Equatable {
   const CartEvent();
@@ -10,25 +9,19 @@ abstract class CartEvent extends Equatable {
 }
 
 /// When open cart screen -> load cart event
-class LoadCart extends CartEvent {
-  final User loggedFirebaseUser;
-
-  LoadCart(this.loggedFirebaseUser);
-
-  List<Object> get props => [loggedFirebaseUser];
-}
+class LoadCart extends CartEvent {}
 
 /// When user clicks to a clear cart => clear cart event
 class ClearCart extends CartEvent {}
 
 /// Cart was cleared
 class CartUpdated extends CartEvent {
-  final List<CartItem> cart;
+  final List<CartItem> updatedCart;
 
-  CartUpdated(this.cart);
+  CartUpdated(this.updatedCart);
 
   @override
-  List<Object> get props => [cart];
+  List<Object> get props => [updatedCart];
 }
 
 /// When user clicks to add button => add cart item event

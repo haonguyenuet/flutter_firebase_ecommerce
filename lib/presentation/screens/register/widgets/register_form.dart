@@ -17,19 +17,19 @@ class RegisterForm extends StatefulWidget {
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-  late RegisterBloc _registerBloc;
+  late RegisterBloc registerBloc;
 
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
       TextEditingController();
 
-  bool _isShowPassword = false;
-  bool _isShowConfirmPassword = false;
+  bool isShowPassword = false;
+  bool isShowConfirmPassword = false;
 
   @override
   void initState() {
-    _registerBloc = BlocProvider.of<RegisterBloc>(context);
+    registerBloc = BlocProvider.of<RegisterBloc>(context);
 
     super.initState();
   }
@@ -88,12 +88,12 @@ class _RegisterFormState extends State<RegisterForm> {
   /// Build content
   _buildEmailInput() {
     return TextFormField(
-      controller: _emailController,
+      controller: emailController,
       onChanged: (value) {
-        _registerBloc.add(EmailChanged(email: value));
+        registerBloc.add(EmailChanged(email: value));
       },
       validator: (_) {
-        return !_registerBloc.state.isEmailValid
+        return !registerBloc.state.isEmailValid
             ? Translate.of(context).translate('invalid_email')
             : null;
       },
@@ -108,27 +108,27 @@ class _RegisterFormState extends State<RegisterForm> {
 
   _buildPasswordInput() {
     return TextFormField(
-      controller: _passwordController,
+      controller: passwordController,
       onChanged: (value) {
-        _registerBloc.add(PasswordChanged(password: value));
+        registerBloc.add(PasswordChanged(password: value));
       },
       validator: (_) {
-        return !_registerBloc.state.isPasswordValid
+        return !registerBloc.state.isPasswordValid
             ? Translate.of(context).translate('invalid_password')
             : null;
       },
       autovalidateMode: AutovalidateMode.always,
       keyboardType: TextInputType.text,
-      obscureText: !_isShowPassword,
+      obscureText: !isShowPassword,
       decoration: InputDecoration(
         hintText: Translate.of(context).translate('password'),
         suffixIcon: IconButton(
-          icon: _isShowPassword
+          icon: isShowPassword
               ? Icon(Icons.visibility)
               : Icon(Icons.visibility_off),
           onPressed: () {
             setState(() {
-              _isShowPassword = !_isShowPassword;
+              isShowPassword = !isShowPassword;
             });
           },
         ),
@@ -138,30 +138,30 @@ class _RegisterFormState extends State<RegisterForm> {
 
   _buildConfirmPasswordInput() {
     return TextFormField(
-      controller: _confirmPasswordController,
+      controller: confirmPasswordController,
       onChanged: (value) {
-        _registerBloc.add(ConfirmPasswordChanged(
-          password: _passwordController.text,
+        registerBloc.add(ConfirmPasswordChanged(
+          password: passwordController.text,
           confirmPassword: value,
         ));
       },
       validator: (_) {
-        return !_registerBloc.state.isConfirmPasswordValid
+        return !registerBloc.state.isConfirmPasswordValid
             ? Translate.of(context).translate('don\'t_match_password')
             : null;
       },
       autovalidateMode: AutovalidateMode.always,
       keyboardType: TextInputType.text,
-      obscureText: !_isShowConfirmPassword,
+      obscureText: !isShowConfirmPassword,
       decoration: InputDecoration(
         hintText: Translate.of(context).translate('confirm_password'),
         suffixIcon: IconButton(
-          icon: _isShowConfirmPassword
+          icon: isShowConfirmPassword
               ? Icon(Icons.visibility)
               : Icon(Icons.visibility_off),
           onPressed: () {
             setState(() {
-              _isShowConfirmPassword = !_isShowConfirmPassword;
+              isShowConfirmPassword = !isShowConfirmPassword;
             });
           },
         ),
@@ -178,13 +178,13 @@ class _RegisterFormState extends State<RegisterForm> {
       onPressed: () {
         if (isRegisterButtonEnabled()) {
           UserModel newUser = widget.intialUser!.cloneWith(
-            email: _emailController.text,
+            email: emailController.text,
           );
-          _registerBloc.add(
+          registerBloc.add(
             Submitted(
               newUser: newUser,
-              password: _passwordController.text,
-              confirmPassword: _confirmPasswordController.text,
+              password: passwordController.text,
+              confirmPassword: confirmPasswordController.text,
             ),
           );
         }
@@ -216,13 +216,13 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   bool isRegisterButtonEnabled() {
-    return _registerBloc.state.isFormValid &&
-        !_registerBloc.state.isSubmitting &&
+    return registerBloc.state.isFormValid &&
+        !registerBloc.state.isSubmitting &&
         isPopulated;
   }
 
   bool get isPopulated =>
-      _emailController.text.isNotEmpty &&
-      _passwordController.text.isNotEmpty &&
-      _confirmPasswordController.text.isNotEmpty;
+      emailController.text.isNotEmpty &&
+      passwordController.text.isNotEmpty &&
+      confirmPasswordController.text.isNotEmpty;
 }

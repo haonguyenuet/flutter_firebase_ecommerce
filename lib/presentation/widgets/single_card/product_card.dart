@@ -4,7 +4,6 @@ import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/business_logic/entities/product.dart';
 import 'package:e_commerce_app/constants/constants.dart';
-import 'package:e_commerce_app/utils/my_formatter.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/presentation/widgets/others/custom_card_widget.dart';
 import 'package:e_commerce_app/utils/utils.dart';
@@ -65,7 +64,7 @@ class ProductCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          "${formatNumber(product.price)}₫",
+          "${product.price.toPrice()}",
           style: FONT_CONST.BOLD_PRIMARY,
         ),
         Container(

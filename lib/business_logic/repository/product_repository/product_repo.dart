@@ -33,4 +33,8 @@ abstract class ProductRepository {
   /// Get all categories
   /// Created by NDH
   Future<List<Category>> getCategories();
+
+  /// Get category by id
+  /// Created by NDH
+  Future<Category> getCategoryById(String caregoryId);
 }

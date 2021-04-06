@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/presentation/screens/cart/widgets/cart_body.dart';
+import 'package:e_commerce_app/presentation/screens/cart/widgets/list_cart_item.dart';
 import 'package:e_commerce_app/presentation/screens/cart/widgets/checkout_bottom.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/business_logic/common_blocs/cart/bloc.dart';
@@ -10,7 +10,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(context),
-      body: CartBody(),
+      body: ListCartItem(),
       bottomNavigationBar: CheckoutBottom(),
     );
   }

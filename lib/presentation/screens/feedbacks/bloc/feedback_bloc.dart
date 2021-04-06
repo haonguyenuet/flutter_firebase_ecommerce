@@ -9,9 +9,10 @@ class FeedbackBloc extends Bloc<FeedbacksEvent, FeedbackState> {
   final FeedbackRepository _feedbackRepository =
       AppRepository.feedbackRepository;
   final ProductRepository _productRepository = AppRepository.productRepository;
-  StreamSubscription? _feedbackSubscription;
+
   late Product _currentProduct;
   double _currAverageRating = 0.0;
+  StreamSubscription? _feedbackSubscription;
 
   FeedbackBloc() : super(FeedbacksLoading());
 
@@ -72,6 +73,7 @@ class FeedbackBloc extends Bloc<FeedbacksEvent, FeedbackState> {
   Stream<FeedbackState> _mapFeedbacksUpdatedToState(
     FeedbacksUpdated event,
   ) async* {
+    yield FeedbacksLoading();
     // Calculate again average product rating
     double totalRating = 0;
     var feedbacks = event.feedbacks;

@@ -6,9 +6,8 @@ import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/constants/image_constant.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
-import 'package:e_commerce_app/utils/utils.dart';
 import 'package:e_commerce_app/presentation/widgets/others/custom_card_widget.dart';
-import 'package:e_commerce_app/presentation/widgets/others/rating_bar.dart';
+import 'package:e_commerce_app/utils/formatter.dart';
 import 'package:flutter/material.dart';
 
 class FeedbackCard extends StatelessWidget {
@@ -22,14 +21,6 @@ class FeedbackCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomCardWidget(
-      margin: EdgeInsets.symmetric(
-        vertical: SizeConfig.defaultSize * 0.5,
-        horizontal: SizeConfig.defaultSize,
-      ),
-      padding: EdgeInsets.symmetric(
-        horizontal: SizeConfig.defaultSize * 2,
-        vertical: SizeConfig.defaultSize,
-      ),
       child: Wrap(
         direction: Axis.vertical,
         crossAxisAlignment: WrapCrossAlignment.start,
@@ -85,6 +76,6 @@ class FeedbackCard extends StatelessWidget {
   }
 
   _buildCreatedDate() {
-    return Text("${formatTimeStamp(feedBack.timestamp)}");
+    return Text("${UtilFormatter.formatTimeStamp(feedBack.timestamp)}");
   }
 }

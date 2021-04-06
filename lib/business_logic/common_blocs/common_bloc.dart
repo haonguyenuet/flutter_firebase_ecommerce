@@ -2,6 +2,7 @@ import 'package:e_commerce_app/business_logic/common_blocs/application/bloc.dart
 import 'package:e_commerce_app/business_logic/common_blocs/auth/bloc.dart';
 import 'package:e_commerce_app/business_logic/common_blocs/cart/bloc.dart';
 import 'package:e_commerce_app/business_logic/common_blocs/language/bloc.dart';
+import 'package:e_commerce_app/business_logic/common_blocs/order/bloc.dart';
 import 'package:e_commerce_app/business_logic/common_blocs/profile/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,6 +12,7 @@ class CommonBloc {
   static final authencationBloc = AuthenticationBloc();
   static final languageBloc = LanguageBloc();
   static final cartBloc = CartBloc();
+  static final orderBloc = OrderBloc();
   static final profileBloc = ProfileBloc();
 
   static final List<BlocProvider> blocProviders = [
@@ -29,6 +31,9 @@ class CommonBloc {
     BlocProvider<CartBloc>(
       create: (context) => cartBloc,
     ),
+    BlocProvider<OrderBloc>(
+      create: (context) => orderBloc,
+    ),
   ];
 
   /// Dispose
@@ -36,6 +41,7 @@ class CommonBloc {
     applicationBloc.close();
     authencationBloc.close();
     cartBloc.close();
+    orderBloc.close();
     profileBloc.close();
     languageBloc.close();
   }
