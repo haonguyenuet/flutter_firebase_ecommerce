@@ -20,7 +20,7 @@ class SectionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: SizeConfig.defaultSize * 1.5),
-      padding: EdgeInsets.symmetric(vertical: SizeConfig.defaultSize * 1.5),
+      padding: EdgeInsets.symmetric(vertical: SizeConfig.defaultPadding),
       color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +70,7 @@ class SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
+      padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultPadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

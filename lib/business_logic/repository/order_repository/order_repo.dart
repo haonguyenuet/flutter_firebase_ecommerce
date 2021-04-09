@@ -10,4 +10,9 @@ abstract class OrderRepository {
   /// [newOrder] is data of new order
   /// Created by NDH
   Future<void> addOrder(Order newOrder);
+
+  /// Add item
+  /// [newOrder] is data of new order
+  /// Created by NDH
+  Future<void> removeOrder(Order order);
 }

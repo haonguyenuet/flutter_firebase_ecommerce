@@ -143,7 +143,7 @@
   "products": "products",
   "your_feedback": "Your feeback",
   "support": "Support",
-  "created": "Created",
+  "created_at": "Created at",
   "check_out": "Check out",
   "continue": "Continue",
   "don't_match_password": "Don't match password",
@@ -155,5 +155,14 @@
   "ship_to": "Ship to",
   "payment_success": "Payment Success",
   "detail_order": "Detail order",
-  "my_orders": "My orders"
+  "my_orders": "My orders",
+  "be_delivering": "Be delivering ...",
+  "delivered": "Delivered",
+  "cancel": "Cancel",
+  "quantity": "Quantity",
+  "item": "items",
+  "order_successfully": "Order successfully",
+  "cancel_successfully": "Cancel successfully",
+  "add_successfully": "Add successfully",
+  "save": "Save"
 }

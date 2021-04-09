@@ -14,6 +14,8 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       yield* _mapLoadMyOrdersToState(event);
     } else if (event is AddOrder) {
       yield* _mapAddOrderToState(event);
+    } else if (event is RemoveOrder) {
+      yield* _mapRemoveOrderToState(event);
     }
   }
 
@@ -22,7 +24,22 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       var loggedFirebaseUser = _authRepository.loggedFirebaseUser;
       List<Order> orders =
           await _orderRepository.getOrders(loggedFirebaseUser.uid);
-      yield MyOrdersLoaded(myOrders: orders);
+
+      // Classify orders
+      List<Order> deliveringOrders = [];
+      List<Order> deliveredOrders = [];
+
+      orders.forEach((order) {
+        if (order.isDelivering) {
+          deliveringOrders.add(order);
+        } else {
+          deliveredOrders.add(order);
+        }
+      });
+      yield MyOrdersLoaded(
+        deliveringOrders: deliveringOrders,
+        deliveredOrders: deliveredOrders,
+      );
     } catch (e) {
       yield MyOrdersLoadFailure(e.toString());
     }
@@ -33,6 +50,15 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       var newOrder =
           event.newOrder.cloneWith(uid: _authRepository.loggedFirebaseUser.uid);
       await _orderRepository.addOrder(newOrder);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Stream<OrderState> _mapRemoveOrderToState(RemoveOrder event) async* {
+    try {
+      await _orderRepository.removeOrder(event.order);
+      add(LoadMyOrders());
     } catch (e) {
       print(e.toString());
     }

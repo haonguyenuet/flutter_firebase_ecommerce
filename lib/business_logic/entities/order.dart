@@ -15,7 +15,13 @@ class Order extends Equatable {
   final int coupon;
   final Timestamp createdAt;
 
-  bool get isShipping => this.createdAt.compareTo(Timestamp.now()) > 0;
+  bool get isDelivering {
+    var now = Timestamp.now();
+    return now.compareTo(receivedDate) < 0;
+  }
+
+  Timestamp get receivedDate =>
+      Timestamp.fromDate(this.createdAt.toDate().add(Duration(days: 3)));
 
   Order({
     required this.id,
@@ -61,7 +67,6 @@ class Order extends Equatable {
       "deliveryFee": this.deliveryFee,
       "coupon": this.coupon,
       "createdAt": this.createdAt,
-      "isShipping": this.isShipping,
     };
   }
 

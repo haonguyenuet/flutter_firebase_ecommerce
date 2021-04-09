@@ -6,36 +6,33 @@ import 'package:flutter_svg/svg.dart';
 class Slogan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: SizeConfig.defaultSize * 2,
-          vertical: SizeConfig.defaultSize,
+    return Container(
+      padding: EdgeInsets.symmetric(
+        vertical: SizeConfig.defaultSize,
+        horizontal: SizeConfig.defaultPadding,
+      ),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(color: Colors.black12, width: 1),
+          bottom: BorderSide(color: Colors.black12, width: 1),
         ),
-        decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(color: Colors.black12, width: 1),
-            bottom: BorderSide(color: Colors.black12, width: 1),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _buildSloganItem(
+            iconPath: "assets/icons/return-free.svg",
+            text: "Free return",
           ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildSloganItem(
-              iconPath: "assets/icons/return-free.svg",
-              text: "Free return",
-            ),
-            _buildSloganItem(
-              iconPath: "assets/icons/safety.svg",
-              text: "Authentic 100%",
-            ),
-            _buildSloganItem(
-              iconPath: "assets/icons/shipping.svg",
-              text: "Fast delivery",
-            ),
-          ],
-        ),
+          _buildSloganItem(
+            iconPath: "assets/icons/safety.svg",
+            text: "Authentic 100%",
+          ),
+          _buildSloganItem(
+            iconPath: "assets/icons/shipping.svg",
+            text: "Fast delivery",
+          ),
+        ],
       ),
     );
   }

@@ -1,8 +1,6 @@
-import 'package:e_commerce_app/configs/enum.dart';
 import 'package:e_commerce_app/presentation/screens/home_page/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/screens/home_page/widgets/home_body.dart';
 import 'package:e_commerce_app/presentation/screens/home_page/widgets/home_header.dart';
-import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,7 +21,6 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
-        bottomNavigationBar: CustomBottomNav(selectedMenu: MenuState.home),
       ),
     );
   }

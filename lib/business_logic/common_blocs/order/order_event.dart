@@ -1,6 +1,5 @@
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class OrderEvent extends Equatable {
   const OrderEvent();
@@ -9,13 +8,7 @@ abstract class OrderEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadMyOrders extends OrderEvent {
-  final User loggedFirebaseUser;
-
-  LoadMyOrders(this.loggedFirebaseUser);
-
-  List<Object> get props => [loggedFirebaseUser];
-}
+class LoadMyOrders extends OrderEvent {}
 
 class AddOrder extends OrderEvent {
   final Order newOrder;
@@ -23,4 +16,12 @@ class AddOrder extends OrderEvent {
   AddOrder(this.newOrder);
 
   List<Object> get props => [newOrder];
+}
+
+class RemoveOrder extends OrderEvent {
+  final Order order;
+
+  RemoveOrder(this.order);
+
+  List<Object> get props => [order];
 }

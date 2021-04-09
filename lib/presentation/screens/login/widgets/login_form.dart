@@ -6,8 +6,6 @@ import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../widgets/facebook_login_btn.dart';
-import '../widgets/google_login_btn.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -26,6 +24,24 @@ class _LoginFormState extends State<LoginForm> {
     loginBloc = BlocProvider.of<LoginBloc>(context);
 
     super.initState();
+  }
+
+  bool get isPopulated =>
+      emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
+
+  bool isLoginButtonEnabled() {
+    return loginBloc.state.isFormValid &&
+        !loginBloc.state.isSubmitting &&
+        isPopulated;
+  }
+
+  void onLogin() {
+    if (isLoginButtonEnabled()) {
+      loginBloc.add(LoginWithCredential(
+        email: emailController.text,
+        password: passwordController.text,
+      ));
+    }
   }
 
   @override
@@ -55,7 +71,7 @@ class _LoginFormState extends State<LoginForm> {
             margin:
                 EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
             padding: EdgeInsets.symmetric(
-              horizontal: SizeConfig.defaultSize * 1.5,
+              horizontal: SizeConfig.defaultPadding,
               vertical: SizeConfig.defaultSize * 3,
             ),
             child: Form(
@@ -127,9 +143,7 @@ class _LoginFormState extends State<LoginForm> {
               ? Icon(Icons.visibility)
               : Icon(Icons.visibility_off),
           onPressed: () {
-            setState(() {
-              isShowPassword = !isShowPassword;
-            });
+            setState(() => isShowPassword = !isShowPassword);
           },
         ),
       ),
@@ -142,14 +156,7 @@ class _LoginFormState extends State<LoginForm> {
         Translate.of(context).translate('login').toUpperCase(),
         style: FONT_CONST.BOLD_WHITE_18,
       ),
-      onPressed: () {
-        if (isLoginButtonEnabled()) {
-          loginBloc.add(LoginWithCredential(
-            email: emailController.text,
-            password: passwordController.text,
-          ));
-        }
-      },
+      onPressed: onLogin,
     );
   }
 
@@ -177,19 +184,6 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  _buildSocialLogin() {
-    return Container(
-      height: SizeConfig.defaultSize * 6,
-      child: Row(
-        children: <Widget>[
-          GoogleLoginButton(),
-          SizedBox(width: SizeConfig.defaultSize * 2),
-          FacebookLoginButton(),
-        ],
-      ),
-    );
-  }
-
   _buildNoAccountText() {
     return Container(
       child: Row(
@@ -211,13 +205,4 @@ class _LoginFormState extends State<LoginForm> {
       ),
     );
   }
-
-  bool isLoginButtonEnabled() {
-    return loginBloc.state.isFormValid &&
-        !loginBloc.state.isSubmitting &&
-        isPopulated;
-  }
-
-  bool get isPopulated =>
-      emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
 }

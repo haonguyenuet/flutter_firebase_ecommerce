@@ -10,6 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ListCartItem extends StatelessWidget {
+  void _onDismissed(BuildContext context, CartItem cartItem) {
+    BlocProvider.of<CartBloc>(context).add(RemoveCartItem(cartItem));
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(
@@ -50,9 +54,5 @@ class ListCartItem extends StatelessWidget {
         return Center(child: Text("Something went wrong."));
       },
     );
-  }
-
-  void _onDismissed(BuildContext context, CartItem cartItem) {
-    BlocProvider.of<CartBloc>(context).add(RemoveCartItem(cartItem));
   }
 }

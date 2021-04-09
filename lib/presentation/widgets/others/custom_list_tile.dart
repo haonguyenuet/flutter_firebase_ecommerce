@@ -27,10 +27,10 @@ class CustomListTile extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         padding: EdgeInsets.only(
-          bottom: SizeConfig.defaultSize * 2,
           top: SizeConfig.defaultSize * 2,
+          bottom: SizeConfig.defaultSize * 2,
+          right: SizeConfig.defaultSize * 1.5,
         ),
-        margin: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
         decoration: BoxDecoration(
           border: _bottomBorder(),
         ),

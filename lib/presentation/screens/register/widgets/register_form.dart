@@ -30,8 +30,33 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   void initState() {
     registerBloc = BlocProvider.of<RegisterBloc>(context);
-
     super.initState();
+  }
+
+  bool get isPopulated =>
+      emailController.text.isNotEmpty &&
+      passwordController.text.isNotEmpty &&
+      confirmPasswordController.text.isNotEmpty;
+
+  bool isRegisterButtonEnabled() {
+    return registerBloc.state.isFormValid &&
+        !registerBloc.state.isSubmitting &&
+        isPopulated;
+  }
+
+  void onRegister() {
+    if (isRegisterButtonEnabled()) {
+      UserModel newUser = widget.intialUser!.cloneWith(
+        email: emailController.text,
+      );
+      registerBloc.add(
+        Submitted(
+          newUser: newUser,
+          password: passwordController.text,
+          confirmPassword: confirmPasswordController.text,
+        ),
+      );
+    }
   }
 
   @override
@@ -42,6 +67,7 @@ class _RegisterFormState extends State<RegisterForm> {
         if (state.isSuccess) {
           UtilDialog.hideWaiting(context);
           BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
+          Navigator.of(context).pop();
         }
 
         /// Failure
@@ -61,7 +87,7 @@ class _RegisterFormState extends State<RegisterForm> {
             margin:
                 EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
             padding: EdgeInsets.symmetric(
-              horizontal: SizeConfig.defaultSize * 1.5,
+              horizontal: SizeConfig.defaultPadding,
               vertical: SizeConfig.defaultSize * 3,
             ),
             child: Form(
@@ -175,20 +201,7 @@ class _RegisterFormState extends State<RegisterForm> {
         Translate.of(context).translate('register').toUpperCase(),
         style: FONT_CONST.BOLD_WHITE_18,
       ),
-      onPressed: () {
-        if (isRegisterButtonEnabled()) {
-          UserModel newUser = widget.intialUser!.cloneWith(
-            email: emailController.text,
-          );
-          registerBloc.add(
-            Submitted(
-              newUser: newUser,
-              password: passwordController.text,
-              confirmPassword: confirmPasswordController.text,
-            ),
-          );
-        }
-      },
+      onPressed: onRegister,
     );
   }
 
@@ -214,15 +227,4 @@ class _RegisterFormState extends State<RegisterForm> {
       ),
     );
   }
-
-  bool isRegisterButtonEnabled() {
-    return registerBloc.state.isFormValid &&
-        !registerBloc.state.isSubmitting &&
-        isPopulated;
-  }
-
-  bool get isPopulated =>
-      emailController.text.isNotEmpty &&
-      passwordController.text.isNotEmpty &&
-      confirmPasswordController.text.isNotEmpty;
 }

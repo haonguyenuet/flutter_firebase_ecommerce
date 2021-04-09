@@ -118,7 +118,7 @@
   "products": "sản phẩm",
   "your_feedback": "Phản hồi của bạn",
   "support": "Support",
-  "created": "Được tạo",
+  "created_at": "Được tạo lúc",
   "check_out": "Thanh toán",
   "continue": "Tiếp tục",
   "don't_match_password": "Mật khẩu không khớp",
@@ -130,5 +130,14 @@
   "ship_to": "Chuyển tới",
   "payment_success": "Thanh toán thành công",
   "detail_order": "Chi tiết đơn hàng",
-  "my_orders": "Đơn hàng của tôi"
+  "my_orders": "Đơn hàng của tôi",
+  "be_delivering": "Đang giao hàng ...",
+  "delivered": "Đã giao",
+  "cancel": "Hủy",
+  "quantity": "Số lượng",
+  "item": "mặt hàng",
+  "order_successfully": "Đặt hàng thành công",
+  "cancel_successfully": "Hủy đơn hàng thành công",
+  "add_successfully": "Thêm thành công",
+  "save": "Lưu"
 }

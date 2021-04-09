@@ -36,9 +36,15 @@ class _DeliveryAddressBottomSheetState
 
   bool isDefaultAddress = true;
 
+  bool get isPopulated =>
+      nameController.text.isNotEmpty &&
+      phoneNumberController.text.isNotEmpty &&
+      detailAddressController.text.isNotEmpty;
+
   @override
   void initState() {
     super.initState();
+
     var profileState = BlocProvider.of<ProfileBloc>(context).state;
 
     if (deliveryAddress != null) {
@@ -52,12 +58,57 @@ class _DeliveryAddressBottomSheetState
     }
   }
 
+  Function(bool value)? onSwitchButtonChanged() {
+    return deliveryAddress == null || deliveryAddress!.isDefault
+        ? null
+        : (value) => setState(() => isDefaultAddress = value);
+  }
+
+  void onSubmitAddress() {
+    if (isPopulated) {
+      // Create new delivery address
+      var newAddress = DeliveryAddress(
+        id: deliveryAddress != null
+            ? deliveryAddress!.id
+            : UniqueKey().toString(),
+        receiverName: nameController.text,
+        phoneNumber: phoneNumberController.text,
+        detailAddress: detailAddressController.text,
+        isDefault: isDefaultAddress,
+      );
+      // Define method submit
+      var _method =
+          deliveryAddress == null ? ListMethod.ADD : ListMethod.UPDATE;
+      // Call delivery address event
+      BlocProvider.of<ProfileBloc>(context).add(AddressListChanged(
+        deliveryAddress: newAddress,
+        method: _method,
+      ));
+
+      Navigator.pop(context);
+    } else {
+      UtilDialog.showInformation(
+        context,
+        content:
+            Translate.of(context).translate("you_need_to_complete_all_fields"),
+      );
+    }
+  }
+
+  void onRemoveAddress() {
+    BlocProvider.of<ProfileBloc>(context).add(AddressListChanged(
+      deliveryAddress: deliveryAddress!,
+      method: ListMethod.DELETE,
+    ));
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(SizeConfig.defaultSize),
+          padding: EdgeInsets.symmetric(vertical: SizeConfig.defaultPadding),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -75,8 +126,6 @@ class _DeliveryAddressBottomSheetState
 
   _buildInput() {
     return CustomCardWidget(
-      margin: EdgeInsets.only(bottom: SizeConfig.defaultSize * 1.5),
-      padding: EdgeInsets.all(SizeConfig.defaultSize),
       child: Column(
         children: [
           // Name input
@@ -128,8 +177,6 @@ class _DeliveryAddressBottomSheetState
 
   _buildGoogleMapOption() {
     return CustomCardWidget(
-      margin: EdgeInsets.only(bottom: SizeConfig.defaultSize * 1.5),
-      padding: EdgeInsets.all(SizeConfig.defaultSize),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -138,10 +185,9 @@ class _DeliveryAddressBottomSheetState
             style: FONT_CONST.BOLD_DEFAULT_18,
           ),
           IconButton(
-              icon: Icon(Icons.forward),
-              onPressed: () {
-                Navigator.pushNamed(context, AppRouter.MAP);
-              })
+            icon: Icon(Icons.forward),
+            onPressed: () => Navigator.pushNamed(context, AppRouter.MAP),
+          )
         ],
       ),
     );
@@ -149,8 +195,6 @@ class _DeliveryAddressBottomSheetState
 
   _buildSwitchDefaultAddress() {
     return CustomCardWidget(
-      margin: EdgeInsets.only(bottom: SizeConfig.defaultSize * 1.5),
-      padding: EdgeInsets.all(SizeConfig.defaultSize),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -160,10 +204,8 @@ class _DeliveryAddressBottomSheetState
           ),
           CupertinoSwitch(
             value: isDefaultAddress,
-            onChanged: deliveryAddress == null || deliveryAddress!.isDefault
-                ? null
-                : (value) => setState(() => isDefaultAddress = value),
-            trackColor: COLOR_CONST.accentShadeColor,
+            onChanged: onSwitchButtonChanged(),
+            trackColor: COLOR_CONST.primaryColor,
           ),
         ],
       ),
@@ -171,63 +213,35 @@ class _DeliveryAddressBottomSheetState
   }
 
   _buildSubmitButton() {
-    return DefaultButton(
-      child: Text(
-        Translate.of(context).translate("confirm"),
-        style: FONT_CONST.BOLD_WHITE_18,
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: SizeConfig.defaultSize * 0.5,
+        horizontal: SizeConfig.defaultPadding,
       ),
-      onPressed: () {
-        if (isPopulated) {
-          // Create new delivery address
-          var newAddress = DeliveryAddress(
-            id: deliveryAddress != null
-                ? deliveryAddress!.id
-                : UniqueKey().toString(),
-            receiverName: nameController.text,
-            phoneNumber: phoneNumberController.text,
-            detailAddress: detailAddressController.text,
-            isDefault: isDefaultAddress,
-          );
-          // Define method submit
-          var _method =
-              deliveryAddress == null ? ListMethod.ADD : ListMethod.UPDATE;
-          // Call delivery address event
-          BlocProvider.of<ProfileBloc>(context).add(AddressListChanged(
-            deliveryAddress: newAddress,
-            method: _method,
-          ));
-
-          Navigator.pop(context);
-        } else {
-          UtilDialog.showInformation(
-            context,
-            content: Translate.of(context)
-                .translate("you_need_to_complete_all_fields"),
-          );
-        }
-      },
+      child: DefaultButton(
+        child: Text(
+          Translate.of(context).translate("confirm"),
+          style: FONT_CONST.BOLD_WHITE_18,
+        ),
+        onPressed: onSubmitAddress,
+      ),
     );
   }
 
   _buildDeleteButton() {
     return deliveryAddress != null && !deliveryAddress!.isDefault
-        ? Container(
-            margin: EdgeInsets.only(bottom: SizeConfig.defaultSize * 1.5),
-            width: double.infinity,
-            height: SizeConfig.defaultSize * 5,
-            child: TextButton(
-              style: TextButton.styleFrom(backgroundColor: Colors.red[300]),
-              onPressed: () {
-                BlocProvider.of<ProfileBloc>(context).add(AddressListChanged(
-                  deliveryAddress: deliveryAddress!,
-                  method: ListMethod.DELETE,
-                ));
-                Navigator.pop(context);
-              },
+        ? Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: SizeConfig.defaultSize * 0.5,
+              horizontal: SizeConfig.defaultPadding,
+            ),
+            child: DefaultButton(
+              onPressed: onRemoveAddress,
               child: Text(
                 Translate.of(context).translate("delete"),
                 style: FONT_CONST.BOLD_WHITE_18,
               ),
+              backgroundColor: COLOR_CONST.deleteButtonColor,
             ),
           )
         : Container();
@@ -239,9 +253,4 @@ class _DeliveryAddressBottomSheetState
       borderSide: BorderSide(color: COLOR_CONST.textColor),
     );
   }
-
-  bool get isPopulated =>
-      nameController.text.isNotEmpty &&
-      phoneNumberController.text.isNotEmpty &&
-      detailAddressController.text.isNotEmpty;
 }

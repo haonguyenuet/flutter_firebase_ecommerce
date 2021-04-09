@@ -14,7 +14,6 @@ class DeliveryAddressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(Translate.of(context).translate("delivery_address")),
       ),

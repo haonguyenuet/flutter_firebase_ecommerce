@@ -8,17 +8,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 
 class Header extends StatefulWidget {
-  const Header({
-    Key? key,
-  }) : super(key: key);
+  const Header({Key? key}) : super(key: key);
 
   @override
   _HeaderState createState() => _HeaderState();
 }
 
 class _HeaderState extends State<Header> {
+  
   // local states
   int selectedStarIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,7 +40,7 @@ class _HeaderState extends State<Header> {
         if (state is FeedbacksLoaded) {
           return Container(
             width: double.infinity,
-            padding: EdgeInsets.all(SizeConfig.defaultSize * 1.5),
+            padding: EdgeInsets.all(SizeConfig.defaultPadding),
             alignment: Alignment.center,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -138,7 +138,7 @@ class StarButton extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 0.5),
         padding: EdgeInsets.symmetric(
-          horizontal: SizeConfig.defaultSize * 1.5,
+          horizontal: SizeConfig.defaultPadding,
           vertical: SizeConfig.defaultSize * 0.5,
         ),
         decoration: BoxDecoration(

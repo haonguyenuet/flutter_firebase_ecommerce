@@ -11,13 +11,13 @@ import 'package:e_commerce_app/presentation/screens/cart/cart_screen.dart';
 import 'package:e_commerce_app/presentation/screens/detail_product/detail_product_screen.dart';
 import 'package:e_commerce_app/presentation/screens/feedbacks/feedbacks_screen.dart';
 import 'package:e_commerce_app/presentation/screens/initialize_info/initialize_info_screen.dart';
-import 'package:e_commerce_app/presentation/screens/login_success/login_success_screen.dart';
 import 'package:e_commerce_app/presentation/screens/profile/profile_screen.dart';
 import 'package:e_commerce_app/presentation/screens/settings/setting_screen.dart';
 import 'package:e_commerce_app/presentation/screens/home_page/home_screen.dart';
 import 'package:e_commerce_app/presentation/screens/login/login_screen.dart';
 import 'package:e_commerce_app/presentation/screens/register/register_screen.dart';
 import 'package:e_commerce_app/presentation/screens/splash/splash_screen.dart';
+import 'package:e_commerce_app/presentation/screens/product_images/product_images_screen.dart';
 
 class AppRouter {
   static const String HOME = '/home';
@@ -25,10 +25,11 @@ class AppRouter {
   static const String LOGIN = '/login';
   static const String INITIALIZE_INFO = '/initialize_info';
   static const String REGISTER = '/register';
-  static const String LOGIN_SUCCESS = '/login_success';
+  static const String BOTTOM_NAVIGATION = '/bottom_navigation';
   static const String FORGOT_PASSWORD = '/forgot_password';
   static const String PROFILE = '/profile';
   static const String DETAIL_PRODUCT = '/detail_product';
+  static const String PRODUCT_IMAGES = '/product_images';
   static const String FEEDBACK = '/feedback';
   static const String CART = '/cart';
   static const String MY_ORDERS = '/my_orders';
@@ -43,29 +44,48 @@ class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case SPLASH:
-        return MaterialPageRoute(builder: (_) => SplashScreen());
+        return MaterialPageRoute(
+          builder: (_) => SplashScreen(),
+        );
       case LOGIN:
-        return MaterialPageRoute(builder: (_) => LoginScreen());
+        return MaterialPageRoute(
+          builder: (_) => LoginScreen(),
+        );
       // case FORGOT_PASSWORD:
-      //   return MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
+      //   return MaterialPageRoute(builder: (_) => ForgotPasswordScreen(),);
       case INITIALIZE_INFO:
-        return MaterialPageRoute(builder: (_) => InitializeInfoScreen());
+        return MaterialPageRoute(
+          builder: (_) => InitializeInfoScreen(),
+        );
       case REGISTER:
         var initialUser = settings.arguments as UserModel;
         return MaterialPageRoute(
-            builder: (_) => RegisterScreen(initialUser: initialUser));
-      case LOGIN_SUCCESS:
-        return MaterialPageRoute(builder: (_) => LoginSuccessScreen());
+          builder: (_) => RegisterScreen(initialUser: initialUser),
+        );
       case HOME:
-        return MaterialPageRoute(builder: (_) => HomeScreen());
+        return MaterialPageRoute(
+          builder: (_) => HomeScreen(),
+        );
       case PROFILE:
-        return MaterialPageRoute(builder: (_) => ProfileScreen());
+        return MaterialPageRoute(
+          builder: (_) => ProfileScreen(),
+        );
       case SETTING:
-        return MaterialPageRoute(builder: (_) => SettingScreen());
+        return MaterialPageRoute(
+          builder: (_) => SettingScreen(),
+        );
       case DETAIL_PRODUCT:
         var product = settings.arguments as Product;
         return MaterialPageRoute(
             builder: (_) => DetailProductScreen(product: product));
+      case PRODUCT_IMAGES:
+        var arguments = settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => ProductImagesScreen(
+            product: arguments["product"],
+            selectedIndex: arguments["selectedIndex"],
+          ),
+        );
       case FEEDBACK:
         var product = settings.arguments as Product;
         return MaterialPageRoute(
@@ -75,21 +95,33 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => CategoriesScreen(category: category));
       case CART:
-        return MaterialPageRoute(builder: (_) => CartScreen());
+        return MaterialPageRoute(
+          builder: (_) => CartScreen(),
+        );
       case MY_ORDERS:
-        return MaterialPageRoute(builder: (_) => MyOrdersScreen());
+        return MaterialPageRoute(
+          builder: (_) => MyOrdersScreen(),
+        );
       case DETAIL_ORDER:
         var order = settings.arguments as Order;
         return MaterialPageRoute(
             builder: (_) => DetailOrderScreen(order: order));
       case DELIVERY_ADDRESS:
-        return MaterialPageRoute(builder: (_) => DeliveryAddressScreen());
+        return MaterialPageRoute(
+          builder: (_) => DeliveryAddressScreen(),
+        );
       case MAP:
-        return MaterialPageRoute(builder: (_) => MapScreen());
+        return MaterialPageRoute(
+          builder: (_) => MapScreen(),
+        );
       case CHAT:
-        return MaterialPageRoute(builder: (_) => ChatScreen());
+        return MaterialPageRoute(
+          builder: (_) => ChatScreen(),
+        );
       case SEARCH:
-        return MaterialPageRoute(builder: (_) => SearchScreen());
+        return MaterialPageRoute(
+          builder: (_) => SearchScreen(),
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

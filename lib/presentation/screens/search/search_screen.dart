@@ -59,7 +59,7 @@ class _SearchScreenState extends State<SearchScreen> {
     Widget hotKeywordsWidget = Container();
     if (state.recentKeywords.length > 0) {
       recentSearchWidget = Padding(
-        padding: EdgeInsets.all(SizeConfig.defaultSize * 1.5),
+        padding: EdgeInsets.all(SizeConfig.defaultPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -78,7 +78,7 @@ class _SearchScreenState extends State<SearchScreen> {
     }
     if (state.hotKeywords.length > 0) {
       hotKeywordsWidget = Padding(
-        padding: EdgeInsets.all(SizeConfig.defaultSize * 1.5),
+        padding: EdgeInsets.all(SizeConfig.defaultPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

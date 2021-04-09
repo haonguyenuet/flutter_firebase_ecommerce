@@ -25,6 +25,12 @@ class _SearchBarState extends State<SearchBar> {
     });
   }
 
+  void onClearSearchField() {
+    if (widget.searchController.text.isNotEmpty) {
+      widget.searchController.clear();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -58,11 +64,7 @@ class _SearchBarState extends State<SearchBar> {
           ),
           IconButton(
             icon: Icon(Icons.cancel),
-            onPressed: () {
-              if (widget.searchController.text.isNotEmpty) {
-                widget.searchController.clear();
-              }
-            },
+            onPressed: onClearSearchField,
           ),
         ],
       ),

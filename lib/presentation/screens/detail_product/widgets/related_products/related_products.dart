@@ -11,6 +11,12 @@ class RelatedProducts extends StatelessWidget {
   final Product product;
 
   const RelatedProducts({Key? key, required this.product}) : super(key: key);
+
+  void _onSeeAll(BuildContext context) {
+    BlocProvider.of<RelatedProductsBloc>(context)
+        .add(OnSeeAll(product.categoryId));
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -41,10 +47,7 @@ class RelatedProducts extends StatelessWidget {
               children: state.relatedProducts
                   .map((p) => ProductCard(product: p))
                   .toList(),
-              handleOnSeeAll: () {
-                BlocProvider.of<RelatedProductsBloc>(context)
-                    .add(OnSeeAll(product.categoryId));
-              },
+              handleOnSeeAll: () => _onSeeAll(context),
             );
           }
           return Center(child: Text("Unknown state"));

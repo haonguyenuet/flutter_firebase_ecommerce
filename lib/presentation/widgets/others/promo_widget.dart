@@ -24,7 +24,7 @@ class PromoWidget extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: SizeConfig.defaultSize * 1.5,
+          horizontal: SizeConfig.defaultPadding,
           vertical: SizeConfig.defaultSize,
         ),
         child: Row(
@@ -42,7 +42,7 @@ class PromoWidget extends StatelessWidget {
   _buildCouponCard(String content, String expireDate) {
     return Container(
       constraints: BoxConstraints(maxWidth: SizeConfig.screenWidth * 0.75),
-      padding: EdgeInsets.all(SizeConfig.defaultSize * 1.5),
+      padding: EdgeInsets.all(SizeConfig.defaultPadding),
       margin: EdgeInsets.only(right: SizeConfig.defaultSize * 2),
       decoration: BoxDecoration(
         border: Border(

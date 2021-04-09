@@ -10,8 +10,8 @@ import 'business_logic/common_blocs/simple_bloc_observer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   Bloc.observer = SimpleBlocObserver();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 

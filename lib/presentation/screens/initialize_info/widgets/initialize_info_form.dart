@@ -22,12 +22,36 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
     super.initState();
   }
 
+  void onClickContinue() {
+    if (formKey.currentState!.validate()) {
+      UserModel initialUser = UserModel(
+        id: "",
+        email: "",
+        avatar: "",
+        addresses: [],
+        name: nameController.text,
+        phoneNumber: phoneNumberController.text,
+      );
+      Navigator.pushReplacementNamed(
+        context,
+        AppRouter.REGISTER,
+        arguments: initialUser,
+      );
+    } else {
+      UtilDialog.showInformation(
+        context,
+        content:
+            Translate.of(context).translate("you_need_to_complete_all_fields"),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
+      margin: EdgeInsets.symmetric(horizontal: SizeConfig.defaultPadding),
       padding: EdgeInsets.symmetric(
-        horizontal: SizeConfig.defaultSize * 1.5,
+        horizontal: SizeConfig.defaultPadding,
         vertical: SizeConfig.defaultSize * 3,
       ),
       child: Form(
@@ -87,29 +111,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
         Translate.of(context).translate("continue").toUpperCase(),
         style: FONT_CONST.BOLD_WHITE_18,
       ),
-      onPressed: () {
-        if (isContinueButtonEnabled()) {
-          UserModel initialUser = UserModel(
-            id: "",
-            email: "",
-            avatar: "",
-            addresses: [],
-            name: nameController.text,
-            phoneNumber: phoneNumberController.text,
-          );
-          Navigator.pushNamed(
-            context,
-            AppRouter.REGISTER,
-            arguments: initialUser,
-          );
-        } else {
-          UtilDialog.showInformation(
-            context,
-            content: Translate.of(context)
-                .translate("you_need_to_complete_all_fields"),
-          );
-        }
-      },
+      onPressed: onClickContinue,
     );
   }
 
@@ -134,10 +136,6 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
         ],
       ),
     );
-  }
-
-  bool isContinueButtonEnabled() {
-    return formKey.currentState!.validate();
   }
 
   @override

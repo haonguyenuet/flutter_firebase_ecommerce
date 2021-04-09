@@ -24,8 +24,8 @@ class DetailProductScreen extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  ProductImages(product: product),
-                  ProductInfo(product: product),
+                  ProductImagesWidget(product: product),
+                  ProductInfoWidget(product: product),
                   Slogan(),
                   RelatedProducts(product: product),
                 ],

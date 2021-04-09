@@ -16,7 +16,7 @@ class RelatedProductsBloc
     if (event is LoadRelatedProducts) {
       yield* _mapLoadRelatedProductsToState(event);
     } else if (event is OnSeeAll) {
-      yield*    _mapOnSeeAllToState(event);
+      yield* _mapOnSeeAllToState(event);
     }
   }
 

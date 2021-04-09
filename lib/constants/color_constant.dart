@@ -18,6 +18,7 @@ class COLOR_CONST {
   static const secondaryColor = Color(0xFF979797);
   static const textColor = Color(0xFF4a4a4a);
   static const googleButtonColor = Color(0xFFFFF1F0);
+  static const deleteButtonColor = Color(0xFFeb4d4b);
   static const googleButtonColorBorder = Color(0xFFF14336);
   static const facebookButtonColor = Color(0xFFF5F9FF);
   static const facebookButtonColorBorder = Color(0xFF3164CE);

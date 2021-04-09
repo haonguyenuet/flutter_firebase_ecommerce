@@ -42,6 +42,7 @@ class MapScreenState extends State<MapScreen> {
         ],
       ),
       bottomNavigationBar: DefaultButton(
+        onPressed: () {},
         child: Text(
           Translate.of(context).translate("select"),
           style: FONT_CONST.BOLD_WHITE_18,

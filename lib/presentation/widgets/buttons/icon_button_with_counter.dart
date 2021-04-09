@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class IconButtonWithCounter extends StatelessWidget {
   const IconButtonWithCounter({
@@ -12,7 +13,7 @@ class IconButtonWithCounter extends StatelessWidget {
   }) : super(key: key);
 
   final int counter;
-  final IconData icon;
+  final String icon;
   final Function()? onPressed;
   final double? size;
   final Color? color;
@@ -31,15 +32,20 @@ class IconButtonWithCounter extends StatelessWidget {
 
   _buildIcon() {
     return InkWell(
-      child: Icon(icon, size: size, color: color),
+      child: SvgPicture.asset(
+        icon,
+        width: size,
+        height: size,
+        color: color,
+      ),
       onTap: onPressed,
     );
   }
 
   _buildCounter() {
     return Positioned(
-      right: -5,
-      top: 0,
+      right: -8,
+      top: -5,
       child: Container(
         alignment: Alignment.center,
         width: SizeConfig.defaultSize * 2,

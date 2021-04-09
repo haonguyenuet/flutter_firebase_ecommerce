@@ -1,5 +1,4 @@
 import 'package:e_commerce_app/configs/config.dart';
-import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/screens/home_page/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/widgets/others/promo_widget.dart';
 import 'package:flutter/material.dart';
@@ -22,11 +21,19 @@ class HomeBody extends StatelessWidget {
               child: Column(
                 children: [
                   HomeBanner(banners: homeResponse.banners),
-                  _buildHomeCategories(context, homeResponse.categories),
+                  _buildHomeCategories(
+                    context,
+                    homeResponse.categories,
+                  ),
                   PromoWidget(),
-                  _buildPopularProducts(context, homeResponse.popularProducts),
+                  _buildPopularProducts(
+                    context,
+                    homeResponse.popularProducts,
+                  ),
                   _buildDiscountProducts(
-                      context, homeResponse.discountProducts),
+                    context,
+                    homeResponse.discountProducts,
+                  ),
                 ],
               ),
             );
@@ -59,34 +66,29 @@ class HomeBody extends StatelessWidget {
 
   _buildHomeCategories(BuildContext context, List<Category> categories) {
     return Container(
-      padding: EdgeInsets.all(SizeConfig.defaultSize * 1.5),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          GridView.builder(
-            itemCount: categories.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 5,
-              crossAxisSpacing: 5,
-              childAspectRatio: 931 / 485,
-            ),
-            itemBuilder: (context, index) {
-              return CategoryCard(
-                  category: categories[index],
-                  onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      AppRouter.CATEGORIES,
-                      arguments: categories[index],
-                    );
-                  });
+      padding: EdgeInsets.all(SizeConfig.defaultPadding),
+      child: GridView.builder(
+        itemCount: categories.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 5,
+          crossAxisSpacing: 5,
+          childAspectRatio: 931 / 485,
+        ),
+        itemBuilder: (context, index) {
+          return CategoryCard(
+            category: categories[index],
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                AppRouter.CATEGORIES,
+                arguments: categories[index],
+              );
             },
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-          ),
-        ],
+          );
+        },
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
       ),
     );
   }

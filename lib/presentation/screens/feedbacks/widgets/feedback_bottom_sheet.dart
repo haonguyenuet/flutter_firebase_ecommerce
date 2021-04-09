@@ -23,18 +23,26 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
   int rating = 5;
   String content = "";
 
-  FeedBack? _createNewFeedback() {
+  void onAddFeeback() {
+    if (content.isEmpty) {
+      UtilDialog.showInformation(
+        context,
+        content:
+            Translate.of(context).translate("you_need_to_complete_all_fields"),
+      );
+      return;
+    }
     ProfileState profileState = BlocProvider.of<ProfileBloc>(context).state;
     if (profileState is ProfileLoaded) {
-      return FeedBack(
+      var newFeedback = FeedBack(
         id: Uuid().v1(),
         userId: profileState.loggedUser.id,
         rating: rating,
         content: content,
         timestamp: Timestamp.now(),
       );
+      Navigator.pop(context, newFeedback);
     }
-    return null;
   }
 
   @override
@@ -80,7 +88,7 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
         onChanged: (value) => setState(() => content = value),
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.defaultSize * 1.5,
+            horizontal: SizeConfig.defaultPadding,
             vertical: SizeConfig.defaultSize,
           ),
           border: InputBorder.none,
@@ -117,12 +125,7 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
                 Translate.of(context).translate('send'),
                 style: FONT_CONST.BOLD_WHITE_18,
               ),
-              onPressed: () {
-                // Create new feedback
-                var newFeedback = _createNewFeedback();
-                // Return new feedback to main screen
-                Navigator.pop(context, newFeedback);
-              },
+              onPressed: onAddFeeback,
             ),
           ),
         );

@@ -18,7 +18,7 @@ class CheckoutBottom extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        padding: EdgeInsets.all(SizeConfig.defaultSize * 2),
+        padding: EdgeInsets.all(SizeConfig.defaultPadding),
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -82,7 +82,7 @@ class CheckoutBottom extends StatelessWidget {
           ),
           child: SvgPicture.asset(ICON_CONST.RECEIPT),
         ),
-        SizedBox(width: SizeConfig.defaultSize * 1.5),
+        SizedBox(width: SizeConfig.defaultSize),
         Text.rich(
           TextSpan(
             style: FONT_CONST.BOLD_DEFAULT_18,

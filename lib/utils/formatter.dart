@@ -8,9 +8,9 @@ class UtilFormatter {
   }
 
   static String formatTimeStamp(Timestamp timestamp) {
-    var format = new DateFormat.yMd().add_jm();
+    DateFormat formatter = DateFormat('yyyy-MM-dd');
     var date =
         new DateTime.fromMillisecondsSinceEpoch(timestamp.seconds * 1000);
-    return format.format(date);
+    return formatter.format(date);
   }
 }

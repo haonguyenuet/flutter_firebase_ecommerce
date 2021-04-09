@@ -21,7 +21,7 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     final size = MediaQuery.of(context).size;
     final offsetPercent = shrinkOffset / _maxHeaderExtent;
-    var rangeSearchFieldWidth = (1 - offsetPercent).clamp(0.9, 1);
+    var rangeSearchFieldWidth = (1 - offsetPercent).clamp(0.8, 1);
     return AnimatedContainer(
       duration: mAnimationDuration,
       decoration: BoxDecoration(
@@ -53,7 +53,13 @@ class HomePersistentHeader extends SliverPersistentHeaderDelegate {
                   ),
                 ),
                 Spacer(),
-                CartButton(color: COLOR_CONST.textColor)
+                Row(
+                  children: [
+                    CartButton(),
+                    const SizedBox(width: 15),
+                    MessageButton(),
+                  ],
+                )
               ],
             ),
           ),

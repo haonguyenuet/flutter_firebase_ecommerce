@@ -24,9 +24,7 @@ class _SettingScreenState extends State<SettingScreen> {
         title: Text(Translate.of(context).translate("settings")),
       ),
       body: SafeArea(
-        child: ListView(
-          padding:
-              EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
+        child: Column(
           children: [
             CustomListTile(
               title: Translate.of(context).translate("language"),
@@ -56,22 +54,20 @@ class _SettingScreenState extends State<SettingScreen> {
       title: Translate.of(context).translate("language_setting"),
       content: StatefulBuilder(
         builder: (context, setState) {
-          return SingleChildScrollView(
-            child: Column(
-              children: List.generate(supportLanguage.length, (index) {
-                final language = supportLanguage[index];
-                return CheckboxListTile(
-                  title: Text(
-                    Translate.of(context).translate(
-                        UtilLanguage.getLanguageName(language.languageCode)),
-                  ),
-                  value: language == selectedLanguage,
-                  onChanged: (value) {
-                    setState(() => selectedLanguage = language);
-                  },
-                );
-              }),
-            ),
+          return Column(
+            children: List.generate(supportLanguage.length, (index) {
+              var language = supportLanguage[index];
+              return CheckboxListTile(
+                title: Text(
+                  Translate.of(context).translate(
+                      UtilLanguage.getLanguageName(language.languageCode)),
+                ),
+                value: language == selectedLanguage,
+                onChanged: (value) {
+                  setState(() => selectedLanguage = language);
+                },
+              );
+            }),
           );
         },
       ),

@@ -1,23 +1,29 @@
 import 'package:e_commerce_app/business_logic/entities/product.dart';
+import 'package:e_commerce_app/configs/router.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 
-class ProductImages extends StatefulWidget {
+class ProductImagesWidget extends StatefulWidget {
   final Product product;
 
-  const ProductImages({Key? key, required this.product}) : super(key: key);
+  const ProductImagesWidget({Key? key, required this.product})
+      : super(key: key);
   @override
-  _ProductImagesState createState() => _ProductImagesState();
+  _ProductImagesWidgetState createState() => _ProductImagesWidgetState();
 }
 
-class _ProductImagesState extends State<ProductImages> {
+class _ProductImagesWidgetState extends State<ProductImagesWidget> {
   Product get product => widget.product;
-  // local states
+
+  // Local states
   int currentPage = 0;
+
+  void onPageChanged(index) => setState(() => currentPage = index);
+
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
         /// Product image preview
         Container(
@@ -25,31 +31,39 @@ class _ProductImagesState extends State<ProductImages> {
           child: PageView.builder(
             itemCount: product.images.length,
             itemBuilder: (context, index) {
-              return Container(
-                alignment: Alignment.center,
-                color: Colors.white,
+              return GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    AppRouter.PRODUCT_IMAGES,
+                    arguments: {
+                      "product": product,
+                      "selectedIndex": currentPage
+                    },
+                  );
+                },
                 child: Image.network(product.images[index]),
               );
             },
-            onPageChanged: (index) {
-              setState(() {
-                currentPage = index;
-              });
-            },
+            onPageChanged: onPageChanged,
           ),
         ),
 
-        /// dots
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:
-              List.generate(product.images.length, (index) => createDot(index)),
+        /// Indicators
+        Positioned(
+          bottom: 0,
+          width: SizeConfig.screenWidth,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+                product.images.length, (index) => _buildIndicator(index)),
+          ),
         ),
       ],
     );
   }
 
-  AnimatedContainer createDot(int index) {
+  _buildIndicator(int index) {
     return AnimatedContainer(
       duration: mAnimationDuration,
       margin: EdgeInsets.only(right: 5),

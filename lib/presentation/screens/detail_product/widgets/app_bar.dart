@@ -8,19 +8,17 @@ import 'package:flutter_svg/svg.dart';
 class DetailProductAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          vertical: SizeConfig.defaultSize,
-          horizontal: SizeConfig.defaultSize * 1.5,
-        ),
-        child: Row(
-          children: [
-            _buildBackButton(context),
-            Spacer(),
-            CartButton(color: COLOR_CONST.textColor),
-          ],
-        ),
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: SizeConfig.defaultSize,
+        horizontal: SizeConfig.defaultPadding,
+      ),
+      child: Row(
+        children: [
+          _buildBackButton(context),
+          Spacer(),
+          CartButton(color: COLOR_CONST.textColor),
+        ],
       ),
     );
   }

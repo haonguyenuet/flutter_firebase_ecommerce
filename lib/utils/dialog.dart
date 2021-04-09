@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/constants/constants.dart';
+import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/utils/translate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,25 +13,27 @@ class UtilDialog {
   }) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(
-          title == null
-              ? Translate.of(context).translate("message_for_you")
-              : title,
-          style: TextStyle(color: COLOR_CONST.primaryColor),
-        ),
-        content: Text(content!),
-        actions: <Widget>[
-          TextButton(
-            child: Text(
-              Translate.of(context).translate("close"),
-              style: TextStyle(color: COLOR_CONST.primaryColor),
-            ),
-            onPressed:
-                onClose != null ? onClose : () => Navigator.of(context).pop(),
-          )
-        ],
-      ),
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            title == null
+                ? Translate.of(context).translate("message_for_you")
+                : title,
+            style: FONT_CONST.REGULAR_PRIMARY,
+          ),
+          content: Text(content!),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                Translate.of(context).translate("close"),
+                style: FONT_CONST.REGULAR_PRIMARY,
+              ),
+              onPressed:
+                  onClose != null ? onClose : () => Navigator.of(context).pop(),
+            )
+          ],
+        );
+      },
     );
   }
 
@@ -38,13 +41,15 @@ class UtilDialog {
     showDialog(
       barrierDismissible: false,
       context: context,
-      builder: (context) => AlertDialog(
-        content: Container(
-          height: 150,
-          alignment: Alignment.center,
-          child: CircularProgressIndicator(),
-        ),
-      ),
+      builder: (context) {
+        return AlertDialog(
+          content: Container(
+            height: 150,
+            alignment: Alignment.center,
+            child: Loading(),
+          ),
+        );
+      },
     );
   }
 
@@ -61,33 +66,35 @@ class UtilDialog {
     return showDialog<bool>(
       context: context,
       barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        title: Text(
-          title == null
-              ? Translate.of(context).translate("message_for_you")
-              : title,
-          style: TextStyle(color: COLOR_CONST.primaryColor),
-        ),
-        content: content,
-        actions: <Widget>[
-          TextButton(
-            child: Text(
-              Translate.of(context).translate("close"),
-              style: TextStyle(color: COLOR_CONST.primaryColor),
-            ),
-            onPressed: () => Navigator.pop(context, false),
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            title == null
+                ? Translate.of(context).translate("message_for_you")
+                : title,
+            style: FONT_CONST.REGULAR_PRIMARY,
           ),
-          TextButton(
-            child: Text(
-              confirmButtonText,
-              style: TextStyle(color: Colors.white),
+          content: content,
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                Translate.of(context).translate("close"),
+                style: FONT_CONST.REGULAR_PRIMARY,
+              ),
+              onPressed: () => Navigator.pop(context, false),
             ),
-            onPressed: () => Navigator.pop(context, true),
-            style:
-                TextButton.styleFrom(backgroundColor: COLOR_CONST.primaryColor),
-          ),
-        ],
-      ),
+            TextButton(
+              child: Text(
+                confirmButtonText,
+                style: FONT_CONST.REGULAR_WHITE,
+              ),
+              onPressed: () => Navigator.pop(context, true),
+              style: TextButton.styleFrom(
+                  backgroundColor: COLOR_CONST.primaryColor),
+            ),
+          ],
+        );
+      },
     );
   }
 }

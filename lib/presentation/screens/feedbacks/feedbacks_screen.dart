@@ -28,14 +28,7 @@ class FeedbacksScreen extends StatelessWidget {
                 ],
               ),
             ),
-            floatingActionButton: FloatingActionButton.extended(
-              onPressed: () => _openFeedbackBottomSheet(context),
-              label: Text(
-                Translate.of(context).translate("add_your_feedback"),
-                style: FONT_CONST.BOLD_WHITE_16,
-              ),
-              icon: Icon(Icons.add),
-            ),
+            floatingActionButton: _buildFloatingActionButton(context),
           );
         },
       ),
@@ -54,6 +47,17 @@ class FeedbacksScreen extends StatelessWidget {
       ),
       backgroundColor: COLOR_CONST.primaryColor,
       elevation: 0,
+    );
+  }
+
+  _buildFloatingActionButton(BuildContext context) {
+    return FloatingActionButton.extended(
+      onPressed: () => _openFeedbackBottomSheet(context),
+      label: Text(
+        Translate.of(context).translate("add_your_feedback"),
+        style: FONT_CONST.BOLD_WHITE_16,
+      ),
+      icon: Icon(Icons.add),
     );
   }
 

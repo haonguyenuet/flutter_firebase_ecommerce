@@ -6,8 +6,8 @@ import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class ProductInfo extends StatefulWidget {
-  const ProductInfo({
+class ProductInfoWidget extends StatefulWidget {
+  const ProductInfoWidget({
     Key? key,
     required this.product,
   }) : super(key: key);
@@ -15,56 +15,58 @@ class ProductInfo extends StatefulWidget {
   final Product product;
 
   @override
-  _ProductInfoState createState() => _ProductInfoState();
+  _ProductInfoWidgetState createState() => _ProductInfoWidgetState();
 }
 
-class _ProductInfoState extends State<ProductInfo> {
+class _ProductInfoWidgetState extends State<ProductInfoWidget> {
   Product get product => widget.product;
   // local states
   bool seeMore = false;
 
+  void onSeeMore() => setState(() => seeMore = !seeMore);
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: SizeConfig.defaultSize * 1.5),
+      margin: EdgeInsets.only(top: SizeConfig.defaultPadding),
       padding: EdgeInsets.symmetric(vertical: SizeConfig.defaultSize * 2),
       color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _productName(),
+          _buildProductName(),
           SizedBox(height: SizeConfig.defaultSize * 0.5),
-          _price(),
+          _buildPrice(),
           SizedBox(height: SizeConfig.defaultSize * 2),
           Row(
             children: [
-              SizedBox(width: SizeConfig.defaultSize * 1.5),
-              _soldQuantity(),
+              SizedBox(width: SizeConfig.defaultPadding),
+              _buildSoldQuantity(),
               SizedBox(width: SizeConfig.defaultSize),
               Container(height: 15, width: 2, color: Colors.black12),
               SizedBox(width: SizeConfig.defaultSize),
-              _rating(context),
+              _buildRating(context),
               Spacer(),
-              _isAvailable(),
+              _buildIsAvailable(),
             ],
           ),
           SizedBox(height: SizeConfig.defaultSize * 2),
-          _description(),
+          _buildDescription(),
         ],
       ),
     );
   }
 
-  _productName() {
+  _buildProductName() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
+      padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultPadding),
       child: Text(product.name, style: FONT_CONST.BOLD_DEFAULT_20),
     );
   }
 
-  _price() {
+  _buildPrice() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
+      padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultPadding),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -85,7 +87,7 @@ class _ProductInfoState extends State<ProductInfo> {
     );
   }
 
-  _soldQuantity() {
+  _buildSoldQuantity() {
     return Text.rich(
       TextSpan(
         style: FONT_CONST.BOLD_DEFAULT,
@@ -100,7 +102,7 @@ class _ProductInfoState extends State<ProductInfo> {
     );
   }
 
-  _rating(BuildContext context) {
+  _buildRating(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.pushNamed(
@@ -119,17 +121,17 @@ class _ProductInfoState extends State<ProductInfo> {
     );
   }
 
-  _isAvailable() {
+  _buildIsAvailable() {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
+        padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultPadding),
         alignment: Alignment.center,
         height: SizeConfig.defaultSize * 4,
         decoration: BoxDecoration(
           color: product.isAvailable ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(SizeConfig.defaultSize * 2.5),
+            topLeft: Radius.circular(25),
             bottomLeft: Radius.circular(SizeConfig.defaultSize * 2.5),
           ),
         ),
@@ -149,9 +151,9 @@ class _ProductInfoState extends State<ProductInfo> {
     );
   }
 
-  _description() {
+  _buildDescription() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
+      padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -162,13 +164,9 @@ class _ProductInfoState extends State<ProductInfo> {
           ),
           SizedBox(height: 5),
 
-          // see more button
+          // See more button
           GestureDetector(
-            onTap: () {
-              setState(() {
-                seeMore = !seeMore;
-              });
-            },
+            onTap: onSeeMore,
             child: Text(
               "${seeMore ? Translate.of(context).translate('see_less') : Translate.of(context).translate('see_all')}",
               style: FONT_CONST.BOLD_PRIMARY,

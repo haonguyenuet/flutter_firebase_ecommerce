@@ -18,8 +18,13 @@ class FirebaseOrderRepository implements OrderRepository {
   }
 
   @override
-  Future<void> addOrder(Order newOrder) {
-    return orderCollection.doc(newOrder.id).set(newOrder.toMap());
+  Future<void> addOrder(Order newOrder) async {
+    await orderCollection.doc(newOrder.id).set(newOrder.toMap());
+  }
+
+  @override
+  Future<void> removeOrder(Order order) async {
+    await orderCollection.doc(order.id).delete();
   }
 
   ///Singleton factory

@@ -13,12 +13,16 @@ class MyOrdersLoading extends OrderState {}
 
 /// MyOrders was loaded
 class MyOrdersLoaded extends OrderState {
-  final List<Order> myOrders;
+  final List<Order> deliveringOrders;
+  final List<Order> deliveredOrders;
 
-  MyOrdersLoaded({required this.myOrders});
+  MyOrdersLoaded({
+    required this.deliveringOrders,
+    required this.deliveredOrders,
+  });
 
   @override
-  List<Object> get props => [myOrders];
+  List<Object> get props => [this.deliveringOrders, this.deliveredOrders];
 }
 
 /// MyOrders wasn't loaded

@@ -7,6 +7,7 @@ import 'package:e_commerce_app/configs/config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/presentation/widgets/others/payment_fees_widget.dart';
+import 'package:e_commerce_app/utils/toast.dart';
 import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,8 +23,6 @@ class PaymentBottomSheet extends StatefulWidget {
 }
 
 class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
-  String uid = "";
-  DeliveryAddress? defaultAddress;
   List<OrderItem> listOrderItem = [];
   int priceOfGoods = 0;
   int deliveryFee = 0;
@@ -32,12 +31,6 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
 
   @override
   void initState() {
-    ProfileState profileState = BlocProvider.of<ProfileBloc>(context).state;
-    if (profileState is ProfileLoaded) {
-      uid = profileState.loggedUser.id;
-      defaultAddress = profileState.loggedUser.defaultAddress;
-    }
-
     CartState cartState = BlocProvider.of<CartBloc>(context).state;
     if (cartState is CartLoaded) {
       listOrderItem =
@@ -77,37 +70,44 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
   }
 
   void _addNewOrder({required String paymentMethod}) {
-    if (uid.isEmpty) return;
-    // create new order
-    var newOrder = Order(
-      id: Uuid().v1(),
-      uid: uid,
-      items: listOrderItem,
-      createdAt: Timestamp.now(),
-      deliveryAddress: defaultAddress!,
-      paymentMethod: paymentMethod,
-      priceToBePaid: priceToBePaid,
-      priceOfGoods: priceOfGoods,
-      deliveryFee: deliveryFee,
-      coupon: coupon,
-    );
-    // Add event add order
-    BlocProvider.of<OrderBloc>(context).add(AddOrder(newOrder));
-    // Clear cart
-    BlocProvider.of<CartBloc>(context).add(ClearCart());
-    // Go to detail order screen
-    Navigator.popAndPushNamed(
-      context,
-      AppRouter.DETAIL_ORDER,
-      arguments: newOrder,
-    );
+    ProfileState profileState = BlocProvider.of<ProfileBloc>(context).state;
+    if (profileState is ProfileLoaded) {
+      // create new order
+      var newOrder = Order(
+        id: Uuid().v1(),
+        uid: profileState.loggedUser.id,
+        items: listOrderItem,
+        createdAt: Timestamp.now(),
+        deliveryAddress: profileState.loggedUser.defaultAddress!,
+        paymentMethod: paymentMethod,
+        priceToBePaid: priceToBePaid,
+        priceOfGoods: priceOfGoods,
+        deliveryFee: deliveryFee,
+        coupon: coupon,
+      );
+      // Add event add order
+      BlocProvider.of<OrderBloc>(context).add(AddOrder(newOrder));
+      // Clear cart
+      BlocProvider.of<CartBloc>(context).add(ClearCart());
+      // Show toast: Order successfully
+      UtilToast.showMessageForUser(
+        context,
+        Translate.of(context).translate("order_successfully"),
+      );
+      // Go to detail order screen
+      Navigator.popAndPushNamed(
+        context,
+        AppRouter.DETAIL_ORDER,
+        arguments: newOrder,
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 15),
+        padding: EdgeInsets.symmetric(vertical: SizeConfig.defaultPadding),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,44 +139,51 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
   }
 
   _buildDeliveryAddress() {
-    if (defaultAddress != null) {
-      return DeliveryAddressCard(
-        deliveryAddress: defaultAddress!,
-        onPressed: () => Navigator.pushNamed(
-          context,
-          AppRouter.DELIVERY_ADDRESS,
-        ),
-      );
-    }
-    return Column(
-      children: [
-        Text(Translate.of(context).translate("no_address")),
-        TextButton(
-          onPressed: () {
-            Navigator.pushNamed(
-              context,
-              AppRouter.DELIVERY_ADDRESS,
-            );
-          },
-          style: TextButton.styleFrom(
-            backgroundColor: COLOR_CONST.primaryColor,
-          ),
-          child: Text(
-            Translate.of(context).translate("add_new_address"),
-            style: TextStyle(color: Colors.white),
-          ),
-        )
-      ],
+    return BlocBuilder<ProfileBloc, ProfileState>(
+      builder: (context, state) {
+        if (state is ProfileLoaded) {
+          var defaultAddress = state.loggedUser.defaultAddress;
+          return defaultAddress != null
+              ? DeliveryAddressCard(
+                  deliveryAddress: defaultAddress,
+                  onPressed: () => Navigator.pushNamed(
+                    context,
+                    AppRouter.DELIVERY_ADDRESS,
+                  ),
+                )
+              : Column(
+                  children: [
+                    Text(Translate.of(context).translate("no_address")),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, AppRouter.DELIVERY_ADDRESS);
+                      },
+                      style: TextButton.styleFrom(
+                          backgroundColor: COLOR_CONST.primaryColor),
+                      child: Text(
+                        Translate.of(context).translate("add_new_address"),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )
+                  ],
+                );
+        }
+        if (state is ProfileLoadFailure) {
+          return Center(child: Text("Load failure"));
+        }
+        return Center(child: Text("Something went wrongs."));
+      },
     );
   }
 
   _buildButtons() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
+      padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultPadding),
       child: Row(
         children: [
           Expanded(
-            child: PaymentButton(
+            child: _buildPaymentButton(
               onPressed: () => _addNewOrder(paymentMethod: "Cash"),
               text: "CASH",
               buttonColor: COLOR_CONST.primaryColor,
@@ -184,13 +191,35 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
           ),
           SizedBox(width: 10),
           Expanded(
-            child: PaymentButton(
+            child: _buildPaymentButton(
               onPressed: _initSquarePayment,
               text: "VISA/MASTER",
               buttonColor: Colors.black,
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  _buildPaymentButton({
+    required Function() onPressed,
+    required String text,
+    Color buttonColor = COLOR_CONST.primaryColor,
+  }) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(SizeConfig.defaultSize * 3),
+          color: buttonColor,
+        ),
+        padding: EdgeInsets.all(SizeConfig.defaultSize * 2),
+        child: Text(
+          text,
+          style: FONT_CONST.BOLD_WHITE_18,
+        ),
       ),
     );
   }
