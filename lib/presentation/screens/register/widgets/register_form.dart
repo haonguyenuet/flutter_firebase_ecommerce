@@ -67,7 +67,6 @@ class _RegisterFormState extends State<RegisterForm> {
         if (state.isSuccess) {
           UtilDialog.hideWaiting(context);
           BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
-          Navigator.of(context).pop();
         }
 
         /// Failure

@@ -1,6 +1,6 @@
 class ICON_CONST {
-  static const HOME = "assets/icons/Shop Icon.svg";
-  static const MESSAGE = "assets/icons/speech-bubble.svg";
+  static const HOME = "assets/icons/home.svg";
+  static const MESSAGE = "assets/icons/speech.svg";
   static const USER = "assets/icons/User Icon.svg";
   static const SETTING = "assets/icons/Settings.svg";
   static const CART = "assets/icons/shopping-bag.svg";

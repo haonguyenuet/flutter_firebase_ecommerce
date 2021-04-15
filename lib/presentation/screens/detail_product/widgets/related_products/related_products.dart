@@ -1,6 +1,7 @@
 import 'package:e_commerce_app/business_logic/entities/entites.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/presentation/screens/detail_product/widgets/related_products/bloc/bloc.dart';
+import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/presentation/widgets/others/section_widget.dart';
 import 'package:e_commerce_app/presentation/widgets/single_card/product_card.dart';
 import 'package:e_commerce_app/utils/utils.dart';
@@ -36,7 +37,7 @@ class RelatedProducts extends StatelessWidget {
         buildWhen: (preState, currState) => currState is! GoToCategoriesScreen,
         builder: (context, state) {
           if (state is RelatedProductsLoading) {
-            return Center(child: CircularProgressIndicator());
+            return Loading();
           }
           if (state is RelatedProductsLoadFailure) {
             return Center(child: Text("Loading Failure"));

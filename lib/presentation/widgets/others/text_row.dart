@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 class TextRow extends StatelessWidget {
   final String title;
   final String content;
+  final TextStyle? titleStyle;
+  final TextStyle? contentStyle;
   final bool isSpaceBetween;
 
   const TextRow({
@@ -12,6 +14,8 @@ class TextRow extends StatelessWidget {
     required this.title,
     required this.content,
     this.isSpaceBetween = false,
+    this.titleStyle,
+    this.contentStyle,
   }) : super(key: key);
 
   @override
@@ -40,13 +44,17 @@ class TextRow extends StatelessWidget {
                   width: SizeConfig.defaultSize * 15,
                   child: Text(
                     title,
-                    style: FONT_CONST.BOLD_DEFAULT_16,
+                    style: titleStyle == null
+                        ? FONT_CONST.BOLD_DEFAULT_16
+                        : titleStyle,
                   ),
                 ),
                 Expanded(
                   child: Text(
                     content,
-                    style: FONT_CONST.REGULAR_DEFAULT_16,
+                    style: contentStyle == null
+                        ? FONT_CONST.REGULAR_DEFAULT_16
+                        : contentStyle,
                   ),
                 )
               ],

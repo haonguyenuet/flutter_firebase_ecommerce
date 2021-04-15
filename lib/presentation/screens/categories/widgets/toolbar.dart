@@ -27,11 +27,14 @@ class _ToolBarWidgetState extends State<ToolBarWidget> {
 
     searchController.addListener(() {
       final keyword = searchController.text;
-      if (keyword.isNotEmpty) {
-        BlocProvider.of<CategoriesBloc>(context)
-            .add(SearchQueryChanged(keyword));
-      }
+      BlocProvider.of<CategoriesBloc>(context).add(SearchQueryChanged(keyword));
     });
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -40,7 +43,7 @@ class _ToolBarWidgetState extends State<ToolBarWidget> {
       listenWhen: (prevState, currState) => currState is OpenSortOption,
       listener: (context, state) {
         if (state is OpenSortOption && state.isOpen) {
-          _openSortOptionsDialog(context, state);
+          _openSortOptionsDialog(state);
         }
       },
       buildWhen: (prevState, currState) => currState is UpdateToolbarState,
@@ -64,9 +67,9 @@ class _ToolBarWidgetState extends State<ToolBarWidget> {
             ),
             child: Row(
               children: <Widget>[
-                _buildLeading(context),
+                _buildLeading(),
                 Expanded(child: _buildTitle(state)),
-                _buildActions(context, state),
+                _buildActions(state),
               ],
             ),
           );
@@ -76,14 +79,14 @@ class _ToolBarWidgetState extends State<ToolBarWidget> {
     );
   }
 
-  _buildLeading(BuildContext context) {
+  _buildLeading() {
     return IconButton(
       icon: Icon(Icons.arrow_back_ios, color: COLOR_CONST.textColor),
       onPressed: () => Navigator.pop(context),
     );
   }
 
-  _buildActions(BuildContext context, UpdateToolbarState state) {
+  _buildActions(UpdateToolbarState state) {
     return Row(
       children: [
         // Search action
@@ -110,7 +113,7 @@ class _ToolBarWidgetState extends State<ToolBarWidget> {
 
   _buildTitle(UpdateToolbarState state) {
     if (state.showSearchField) {
-      searchController.text = "";
+      searchController.clear();
       return SearchFieldWidget(
         searchController: searchController,
         autoFocus: false,
@@ -123,7 +126,7 @@ class _ToolBarWidgetState extends State<ToolBarWidget> {
       );
   }
 
-  _openSortOptionsDialog(BuildContext context, OpenSortOption state) async {
+  _openSortOptionsDialog(OpenSortOption state) async {
     var sortOption = await showDialog<ProductSortOption>(
       context: context,
       builder: (context) {

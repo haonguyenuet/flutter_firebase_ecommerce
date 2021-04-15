@@ -27,8 +27,10 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(Translate.of(context).translate('sort_options'),
-          style: FONT_CONST.BOLD_PRIMARY_18),
+      title: Text(
+        Translate.of(context).translate('sort_options'),
+        style: FONT_CONST.BOLD_PRIMARY_18,
+      ),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -36,25 +38,26 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(Translate.of(context).translate('sort_by') + ":"),
+                Text("${Translate.of(context).translate('sort_by')}:"),
                 SizedBox(width: SizeConfig.defaultSize),
                 RadioListTile(
                   title: Text(Translate.of(context).translate('price')),
                   value: PRODUCT_SORT_BY.PRICE,
                   groupValue: sortOption.productSortBy,
-                  onChanged: (dynamic value) {
-                    print(value);
-                    setState(() =>
-                        sortOption = sortOption.update(productSortBy: value));
+                  onChanged: (value) {
+                    setState(() {
+                      sortOption = sortOption.update(productSortBy: value);
+                    });
                   },
                 ),
                 RadioListTile(
                   title: Text(Translate.of(context).translate('sold_quantity')),
                   value: PRODUCT_SORT_BY.SOLD_QUANTITY,
                   groupValue: sortOption.productSortBy,
-                  onChanged: (dynamic value) {
-                    setState(() =>
-                        sortOption = sortOption.update(productSortBy: value));
+                  onChanged: (value) {
+                    setState(() {
+                      sortOption = sortOption.update(productSortBy: value);
+                    });
                   },
                 )
               ],
@@ -62,24 +65,26 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(Translate.of(context).translate('sort_order') + ":"),
+                Text("${Translate.of(context).translate('sort_order')}:"),
                 SizedBox(width: SizeConfig.defaultSize),
                 RadioListTile(
                   title: Text(Translate.of(context).translate('descending')),
                   value: PRODUCT_SORT_ORDER.DESCENDING,
                   groupValue: sortOption.productSortOrder,
-                  onChanged: (dynamic value) {
-                    setState(() => sortOption =
-                        sortOption.update(productSortOrder: value));
+                  onChanged: (value) {
+                    setState(() {
+                      sortOption = sortOption.update(productSortOrder: value);
+                    });
                   },
                 ),
                 RadioListTile(
                   title: Text(Translate.of(context).translate('ascending')),
                   value: PRODUCT_SORT_ORDER.ASCENDING,
                   groupValue: sortOption.productSortOrder,
-                  onChanged: (dynamic value) {
-                    setState(() => sortOption =
-                        sortOption.update(productSortOrder: value));
+                  onChanged: (value) {
+                    setState(() {
+                      sortOption = sortOption.update(productSortOrder: value);
+                    });
                   },
                 ),
               ],
@@ -87,7 +92,7 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
             SizedBox(height: SizeConfig.defaultSize),
             DefaultButton(
               onPressed: () {
-                // Because productSortOrder default is descending, so it's not null
+                // productSortOrder default is descending, so it's not null
                 if (sortOption.productSortBy != null) {
                   Navigator.pop(context, sortOption);
                 } else {

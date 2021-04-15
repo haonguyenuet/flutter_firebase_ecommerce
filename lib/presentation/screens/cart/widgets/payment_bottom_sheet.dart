@@ -110,7 +110,6 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
         padding: EdgeInsets.symmetric(vertical: SizeConfig.defaultPadding),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildHeader(),
             _buildDeliveryAddress(),

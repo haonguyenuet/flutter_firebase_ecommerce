@@ -55,6 +55,7 @@ class _SettingScreenState extends State<SettingScreen> {
       content: StatefulBuilder(
         builder: (context, setState) {
           return Column(
+            mainAxisSize: MainAxisSize.min,
             children: List.generate(supportLanguage.length, (index) {
               var language = supportLanguage[index];
               return CheckboxListTile(

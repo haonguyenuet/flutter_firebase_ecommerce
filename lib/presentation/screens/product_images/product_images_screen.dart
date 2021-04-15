@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
@@ -25,7 +26,6 @@ class ProductImagesScreen extends StatefulWidget {
 }
 
 class _ProductImagesScreenState extends State<ProductImagesScreen> {
-  Product get product => widget.product;
   late PageController pageController;
   int currentPage = 0;
 
@@ -40,13 +40,13 @@ class _ProductImagesScreenState extends State<ProductImagesScreen> {
 
   void onSave() async {
     var response = await Dio().get(
-      product.images[currentPage],
+      widget.product.images[currentPage],
       options: Options(responseType: ResponseType.bytes),
     );
     await ImageGallerySaver.saveImage(
       Uint8List.fromList(response.data),
       quality: 60,
-      name: product.name,
+      name: widget.product.name,
     );
 
     print("save success");
@@ -65,14 +65,14 @@ class _ProductImagesScreenState extends State<ProductImagesScreen> {
             color: Colors.black,
             child: PageView.builder(
               controller: pageController,
-              itemCount: product.images.length,
+              itemCount: widget.product.images.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
                   },
                   onLongPress: _openSaveBottomSheet,
-                  child: Image.network(product.images[index]),
+                  child: Image.network(widget.product.images[index]),
                 );
               },
               onPageChanged: onPageChanged,
@@ -86,7 +86,7 @@ class _ProductImagesScreenState extends State<ProductImagesScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
-                  product.images.length, (index) => _buildDot(index)),
+                  widget.product.images.length, (index) => _buildDot(index)),
             ),
           ),
         ],

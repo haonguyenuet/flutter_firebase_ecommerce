@@ -95,7 +95,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
   _buildListOrders(List<Order> orders) {
     return orders.isEmpty
         ? Center(
-            child: Text("No order"),
+            child: Image.asset(IMAGE_CONST.NO_RECORD),
           )
         : ListView.builder(
             itemCount: orders.length,

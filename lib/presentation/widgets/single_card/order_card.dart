@@ -40,7 +40,7 @@ class OrderCard extends StatelessWidget {
                       if (!order.isDelivering)
                         TextSpan(
                           text:
-                              UtilFormatter.formatTimeStamp(order.receivedDate),
+                              " (${UtilFormatter.formatTimeStamp(order.receivedDate)})",
                         ),
                     ],
                   ),

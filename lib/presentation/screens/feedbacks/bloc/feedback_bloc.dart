@@ -33,10 +33,9 @@ class FeedbackBloc extends Bloc<FeedbacksEvent, FeedbackState> {
     try {
       _currentProduct = event.product;
       _feedbackSubscription?.cancel();
-      _feedbackSubscription =
-          _feedbackRepository.feedbackStream(_currentProduct.id)!.listen(
-                (feedback) => add(FeedbacksUpdated(feedback)),
-              );
+      _feedbackSubscription = _feedbackRepository
+          .feedbackStream(_currentProduct.id)!
+          .listen((feedback) => add(FeedbacksUpdated(feedback)));
     } catch (e) {
       yield FeedbacksLoadFailure(e.toString());
     }
@@ -82,7 +81,7 @@ class FeedbackBloc extends Bloc<FeedbacksEvent, FeedbackState> {
         feedbacks.length > 0 ? totalRating / feedbacks.length : 0.0;
     _currAverageRating = double.parse(averageRating.toStringAsFixed(1));
     // Update product rating
-    _productRepository.updateProductRatingById(
+    await _productRepository.updateProductRatingById(
       _currentProduct.id,
       _currAverageRating,
     );

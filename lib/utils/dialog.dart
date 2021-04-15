@@ -19,14 +19,14 @@ class UtilDialog {
             title == null
                 ? Translate.of(context).translate("message_for_you")
                 : title,
-            style: FONT_CONST.REGULAR_PRIMARY,
+            style: FONT_CONST.MEDIUM_PRIMARY_16,
           ),
           content: Text(content!),
           actions: <Widget>[
             TextButton(
               child: Text(
                 Translate.of(context).translate("close"),
-                style: FONT_CONST.REGULAR_PRIMARY,
+                style: FONT_CONST.MEDIUM_PRIMARY_16,
               ),
               onPressed:
                   onClose != null ? onClose : () => Navigator.of(context).pop(),
@@ -72,14 +72,14 @@ class UtilDialog {
             title == null
                 ? Translate.of(context).translate("message_for_you")
                 : title,
-            style: FONT_CONST.REGULAR_PRIMARY,
+            style: FONT_CONST.MEDIUM_PRIMARY_16,
           ),
           content: content,
           actions: <Widget>[
             TextButton(
               child: Text(
                 Translate.of(context).translate("close"),
-                style: FONT_CONST.REGULAR_PRIMARY,
+                style: FONT_CONST.MEDIUM_PRIMARY_16,
               ),
               onPressed: () => Navigator.pop(context, false),
             ),

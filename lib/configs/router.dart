@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/bottom_navigation.dart';
 import 'package:e_commerce_app/presentation/screens/chat/chat_screen.dart';
 import 'package:e_commerce_app/presentation/screens/detail_order_screen.dart/detail_order_screen.dart';
 import 'package:e_commerce_app/presentation/screens/map/map_screen.dart';
@@ -11,22 +12,19 @@ import 'package:e_commerce_app/presentation/screens/cart/cart_screen.dart';
 import 'package:e_commerce_app/presentation/screens/detail_product/detail_product_screen.dart';
 import 'package:e_commerce_app/presentation/screens/feedbacks/feedbacks_screen.dart';
 import 'package:e_commerce_app/presentation/screens/initialize_info/initialize_info_screen.dart';
-import 'package:e_commerce_app/presentation/screens/profile/profile_screen.dart';
 import 'package:e_commerce_app/presentation/screens/settings/setting_screen.dart';
-import 'package:e_commerce_app/presentation/screens/home_page/home_screen.dart';
 import 'package:e_commerce_app/presentation/screens/login/login_screen.dart';
 import 'package:e_commerce_app/presentation/screens/register/register_screen.dart';
 import 'package:e_commerce_app/presentation/screens/splash/splash_screen.dart';
 import 'package:e_commerce_app/presentation/screens/product_images/product_images_screen.dart';
 
 class AppRouter {
-  static const String HOME = '/home';
   static const String SPLASH = '/splash';
   static const String LOGIN = '/login';
   static const String INITIALIZE_INFO = '/initialize_info';
   static const String REGISTER = '/register';
-  static const String BOTTOM_NAVIGATION = '/bottom_navigation';
   static const String FORGOT_PASSWORD = '/forgot_password';
+  static const String HOME = '/home';
   static const String PROFILE = '/profile';
   static const String DETAIL_PRODUCT = '/detail_product';
   static const String PRODUCT_IMAGES = '/product_images';
@@ -64,11 +62,7 @@ class AppRouter {
         );
       case HOME:
         return MaterialPageRoute(
-          builder: (_) => HomeScreen(),
-        );
-      case PROFILE:
-        return MaterialPageRoute(
-          builder: (_) => ProfileScreen(),
+          builder: (_) => BottomNavigation(),
         );
       case SETTING:
         return MaterialPageRoute(

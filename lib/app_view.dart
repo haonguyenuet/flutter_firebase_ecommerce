@@ -1,7 +1,4 @@
-import 'package:e_commerce_app/bottom_navigation.dart';
 import 'package:e_commerce_app/configs/application.dart';
-import 'package:e_commerce_app/presentation/screens/login/login_screen.dart';
-import 'package:e_commerce_app/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +17,10 @@ class AppView extends StatefulWidget {
 }
 
 class _AppViewState extends State<AppView> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
+  NavigatorState? get _navigator => _navigatorKey.currentState;
+
   @override
   void initState() {
     CommonBloc.applicationBloc.add(SetupApplication());
@@ -32,6 +33,10 @@ class _AppViewState extends State<AppView> {
     super.dispose();
   }
 
+  void onNavigate(String route) {
+    _navigator!.pushNamedAndRemoveUntil(route, (route) => false);
+  }
+
   void loadData() {
     // Only load data when authenticated
     BlocProvider.of<ProfileBloc>(context).add(LoadProfile());
@@ -40,15 +45,17 @@ class _AppViewState extends State<AppView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LanguageBloc, LanguageState>(
-      builder: (context, state) {
-        return BlocBuilder<AuthenticationBloc, AuthenticationState>(
-          builder: (context, authState) {
+    return BlocBuilder<ApplicationBloc, ApplicationState>(
+      builder: (context, applicationState) {
+        return BlocBuilder<LanguageBloc, LanguageState>(
+          builder: (context, state) {
             return MaterialApp(
+              navigatorKey: _navigatorKey,
               debugShowCheckedModeBanner: Application.debug,
               title: Application.title,
               theme: AppTheme.currentTheme,
               onGenerateRoute: AppRouter.generateRoute,
+              initialRoute: AppRouter.SPLASH,
               locale: AppLanguage.defaultLanguage,
               supportedLocales: AppLanguage.supportLanguage,
               localizationsDelegates: [
@@ -57,20 +64,25 @@ class _AppViewState extends State<AppView> {
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
               ],
-              home: BlocBuilder<ApplicationBloc, ApplicationState>(
-                builder: (context, applicationState) {
-                  if (applicationState is ApplicationCompleted) {
-                    if (authState is Unauthenticated) {
-                      return LoginScreen();
+              builder: (context, child) {
+                return BlocListener<AuthenticationBloc, AuthenticationState>(
+                  listener: (context, authState) {
+                    if (applicationState is ApplicationCompleted) {
+                      if (authState is Unauthenticated) {
+                        onNavigate(AppRouter.LOGIN);
+                      } else if (authState is Uninitialized) {
+                        onNavigate(AppRouter.SPLASH);
+                      } else if (authState is Authenticated) {
+                        loadData();
+                        onNavigate(AppRouter.HOME);
+                      }
+                    } else {
+                      onNavigate(AppRouter.SPLASH);
                     }
-                    if (authState is Authenticated) {
-                      loadData();
-                      return BottomNavigation();
-                    }
-                  }
-                  return SplashScreen();
-                },
-              ),
+                  },
+                  child: child,
+                );
+              },
             );
           },
         );
