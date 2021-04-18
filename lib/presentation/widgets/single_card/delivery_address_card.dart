@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/business_logic/entities/delivery_address.dart';
+import 'package:e_commerce_app/data/entities/delivery_address.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/utils/translate.dart';

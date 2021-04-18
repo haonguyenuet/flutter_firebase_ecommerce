@@ -1,5 +1,5 @@
-import 'package:e_commerce_app/business_logic/entities/category.dart';
-import 'package:e_commerce_app/business_logic/entities/product.dart';
+import 'package:e_commerce_app/data/entities/category.dart';
+import 'package:e_commerce_app/data/entities/product.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class RelatedProductsState extends Equatable {

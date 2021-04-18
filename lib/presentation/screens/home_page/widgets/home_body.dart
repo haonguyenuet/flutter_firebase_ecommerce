@@ -2,7 +2,7 @@ import 'package:e_commerce_app/configs/config.dart';
 import 'package:e_commerce_app/presentation/screens/home_page/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/widgets/others/promo_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:e_commerce_app/business_logic/entities/entites.dart';
+import 'package:e_commerce_app/data/entities/entites.dart';
 import 'package:e_commerce_app/presentation/screens/home_page/widgets/home_banner.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/utils/utils.dart';

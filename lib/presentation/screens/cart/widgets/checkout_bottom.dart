@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/business_logic/common_blocs/cart/bloc.dart';
+import 'package:e_commerce_app/presentation/common_blocs/cart/bloc.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/screens/cart/widgets/payment_bottom_sheet.dart';

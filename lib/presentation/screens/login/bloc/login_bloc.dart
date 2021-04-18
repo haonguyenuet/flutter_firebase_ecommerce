@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:e_commerce_app/business_logic/repository/app_repository.dart';
-import 'package:e_commerce_app/business_logic/repository/repository.dart';
+import 'package:e_commerce_app/data/repository/app_repository.dart';
+import 'package:e_commerce_app/data/repository/repository.dart';
 import 'package:e_commerce_app/utils/utils.dart';
 import 'package:rxdart/rxdart.dart';
 import 'bloc.dart';

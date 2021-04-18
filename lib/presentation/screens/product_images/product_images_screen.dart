@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:e_commerce_app/business_logic/entities/entites.dart';
+import 'package:e_commerce_app/data/entities/entites.dart';
 import 'package:e_commerce_app/configs/config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/buttons/default_button.dart';

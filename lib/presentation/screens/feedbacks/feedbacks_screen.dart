@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/business_logic/entities/entites.dart';
+import 'package:e_commerce_app/data/entities/entites.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/screens/feedbacks/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/screens/feedbacks/widgets/feedback_bottom_sheet.dart';

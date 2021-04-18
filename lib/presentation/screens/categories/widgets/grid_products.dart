@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/business_logic/entities/entites.dart';
+import 'package:e_commerce_app/data/entities/entites.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';

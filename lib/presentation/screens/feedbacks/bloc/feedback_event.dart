@@ -1,5 +1,5 @@
-import 'package:e_commerce_app/business_logic/entities/entites.dart';
-import 'package:e_commerce_app/business_logic/entities/feedback.dart';
+import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/entities/feedback.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class FeedbacksEvent extends Equatable {

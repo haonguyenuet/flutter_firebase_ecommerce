@@ -5,7 +5,7 @@ import 'package:e_commerce_app/presentation/screens/map/map_screen.dart';
 import 'package:e_commerce_app/presentation/screens/my_orders/my_orders_screen.dart';
 import 'package:e_commerce_app/presentation/screens/search/search_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:e_commerce_app/business_logic/entities/entites.dart';
+import 'package:e_commerce_app/data/entities/entites.dart';
 import 'package:e_commerce_app/presentation/screens/delivery_address/delivery_address_screen.dart';
 import 'package:e_commerce_app/presentation/screens/categories/categories_screen.dart';
 import 'package:e_commerce_app/presentation/screens/cart/cart_screen.dart';

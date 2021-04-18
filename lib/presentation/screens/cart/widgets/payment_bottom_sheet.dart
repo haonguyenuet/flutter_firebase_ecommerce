@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/business_logic/common_blocs/cart/bloc.dart';
-import 'package:e_commerce_app/business_logic/common_blocs/order/bloc.dart';
-import 'package:e_commerce_app/business_logic/common_blocs/profile/bloc.dart';
-import 'package:e_commerce_app/business_logic/entities/entites.dart';
+import 'package:e_commerce_app/presentation/common_blocs/cart/bloc.dart';
+import 'package:e_commerce_app/presentation/common_blocs/order/bloc.dart';
+import 'package:e_commerce_app/presentation/common_blocs/profile/bloc.dart';
+import 'package:e_commerce_app/data/entities/entites.dart';
 import 'package:e_commerce_app/configs/config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';

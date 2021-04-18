@@ -1,5 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:e_commerce_app/business_logic/entities/banner.dart';
+import 'package:e_commerce_app/data/entities/banner.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/presentation/widgets/others/shimmer_image.dart';

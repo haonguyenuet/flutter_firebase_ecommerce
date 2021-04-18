@@ -1,7 +1,7 @@
 import 'package:e_commerce_app/presentation/screens/cart/widgets/list_cart_item.dart';
 import 'package:e_commerce_app/presentation/screens/cart/widgets/checkout_bottom.dart';
 import 'package:flutter/material.dart';
-import 'package:e_commerce_app/business_logic/common_blocs/cart/bloc.dart';
+import 'package:e_commerce_app/presentation/common_blocs/cart/bloc.dart';
 import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

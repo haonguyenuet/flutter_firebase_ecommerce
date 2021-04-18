@@ -16,6 +16,7 @@ dependencies:
     sdk: flutter
   #map
   google_maps_flutter: ^2.0.1
+  flutter_google_places: ^0.3.0
   #firebase
   firebase_core: ^1.0.0
   cloud_firestore: ^1.0.0

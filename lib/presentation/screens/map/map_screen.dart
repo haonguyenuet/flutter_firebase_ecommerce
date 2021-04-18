@@ -19,6 +19,8 @@ class MapScreenState extends State<MapScreen> {
     target: LatLng(21.027763, 105.834160),
     zoom: 14.4746,
   );
+  String kGoogleApiKey = "AIzaSyCujk4bJgwEECcDYwX9e0CRiYQFlWzhFU4";
+
 
   @override
   Widget build(BuildContext context) {

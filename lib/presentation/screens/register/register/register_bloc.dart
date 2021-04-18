@@ -1,7 +1,7 @@
-import 'package:e_commerce_app/business_logic/entities/user.dart';
-import 'package:e_commerce_app/business_logic/repository/app_repository.dart';
+import 'package:e_commerce_app/data/entities/user.dart';
+import 'package:e_commerce_app/data/repository/app_repository.dart';
 
-import 'package:e_commerce_app/business_logic/repository/repository.dart';
+import 'package:e_commerce_app/data/repository/repository.dart';
 import 'package:e_commerce_app/presentation/screens/register/register/bloc.dart';
 import 'package:e_commerce_app/utils/validator.dart';
 import 'package:rxdart/rxdart.dart';

@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/business_logic/entities/product.dart';
+import 'package:e_commerce_app/data/entities/product.dart';
 import 'package:e_commerce_app/presentation/screens/detail_product/widgets/app_bar.dart';
 import 'package:e_commerce_app/presentation/screens/detail_product/widgets/product_images.dart';
 import 'package:e_commerce_app/presentation/screens/detail_product/widgets/product_info.dart';

@@ -1,12 +1,12 @@
 // @dart=2.9
 
-import 'package:e_commerce_app/business_logic/common_blocs/common_bloc.dart';
+import 'package:e_commerce_app/presentation/common_blocs/common_bloc.dart';
 import 'package:e_commerce_app/configs/config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/app_view.dart';
-import 'business_logic/common_blocs/simple_bloc_observer.dart';
+import 'presentation/common_blocs/simple_bloc_observer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

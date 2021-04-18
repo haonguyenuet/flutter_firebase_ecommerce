@@ -1,6 +1,6 @@
-import 'package:e_commerce_app/business_logic/common_blocs/cart/bloc.dart';
-import 'package:e_commerce_app/business_logic/entities/cart_item.dart';
-import 'package:e_commerce_app/business_logic/entities/product.dart';
+import 'package:e_commerce_app/presentation/common_blocs/cart/bloc.dart';
+import 'package:e_commerce_app/data/entities/cart_item.dart';
+import 'package:e_commerce_app/data/entities/product.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/toast.dart';

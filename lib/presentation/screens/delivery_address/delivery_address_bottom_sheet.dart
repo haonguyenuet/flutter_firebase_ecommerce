@@ -1,5 +1,5 @@
-import 'package:e_commerce_app/business_logic/common_blocs/profile/bloc.dart';
-import 'package:e_commerce_app/business_logic/entities/delivery_address.dart';
+import 'package:e_commerce_app/presentation/common_blocs/profile/bloc.dart';
+import 'package:e_commerce_app/data/entities/delivery_address.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
