@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/presentation/common_blocs/auth/auth.dart';
 import 'package:e_commerce_app/presentation/common_blocs/auth/bloc.dart';
 import 'package:e_commerce_app/configs/config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
