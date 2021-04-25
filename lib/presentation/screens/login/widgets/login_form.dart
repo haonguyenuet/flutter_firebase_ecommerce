@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/presentation/common_blocs/auth/auth.dart';
 import 'package:e_commerce_app/presentation/common_blocs/auth/bloc.dart';
 import 'package:e_commerce_app/configs/config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
@@ -7,7 +8,10 @@ import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// ignore: must_be_immutable
 class LoginForm extends StatefulWidget {
+  late AuthBase authBase ;
+
   @override
   _LoginFormState createState() => _LoginFormState();
 }
@@ -91,7 +95,12 @@ class _LoginFormState extends State<LoginForm> {
                   SizedBox(height: SizeConfig.defaultSize * 2),
                   _buildTextOr(),
                   SizedBox(height: SizeConfig.defaultSize * 2),
+
+                  ElevatedButton(
+                      onPressed: (){},
+                      child:
                   _buildNoAccountText(),
+                  ),
                 ],
               ),
             ),
@@ -119,8 +128,15 @@ class _LoginFormState extends State<LoginForm> {
         hintText: Translate.of(context).translate('email'),
         suffixIcon: Icon(Icons.email_outlined),
       ),
+      textInputAction: TextInputAction.next, // thay nút enter thành next
+      onEditingComplete:_emailEditingComplete,
     );
   }
+  final FocusNode _passwordFocusNode = FocusNode();
+  void _emailEditingComplete() {
+    FocusScope.of(context).requestFocus(_passwordFocusNode);
+  }
+
 
   _buildTextFieldPassword() {
     return TextFormField(
@@ -147,6 +163,8 @@ class _LoginFormState extends State<LoginForm> {
           },
         ),
       ),
+      focusNode: _passwordFocusNode,
+      onEditingComplete: onLogin,
     );
   }
 

@@ -22,7 +22,7 @@ dependencies:
   cloud_firestore: ^1.0.0
   firebase_storage: ^8.0.0
   firebase_auth: ^1.0.0
-  # google_sign_in: ^5.0.1
+  google_sign_in: 5.0.0
   #image
   image_picker: ^0.7.2
   image_gallery_saver: ^1.6.8
