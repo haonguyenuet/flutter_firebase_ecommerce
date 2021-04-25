@@ -9,6 +9,7 @@ class AppRepository {
   static final cartRepository = FirebaseCartRepository();
   static final orderRepository = FirebaseOrderRepository();
   static final feedbackRepository = FirebaseFeedbackRepository();
+  static final messageRepository = FirebaseMessageRepository();
   static final storageRepository = StorageRepository();
 
   /// Singleton factory

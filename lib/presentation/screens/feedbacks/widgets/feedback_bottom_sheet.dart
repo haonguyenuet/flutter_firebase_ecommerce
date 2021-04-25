@@ -24,14 +24,8 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
   String content = "";
 
   void onAddFeeback() {
-    if (content.isEmpty) {
-      UtilDialog.showInformation(
-        context,
-        content:
-            Translate.of(context).translate("you_need_to_complete_all_fields"),
-      );
-      return;
-    }
+    if (content.isEmpty) return;
+
     ProfileState profileState = BlocProvider.of<ProfileBloc>(context).state;
     if (profileState is ProfileLoaded) {
       var newFeedback = FeedBack(

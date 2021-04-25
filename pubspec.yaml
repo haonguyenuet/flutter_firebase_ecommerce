@@ -26,6 +26,7 @@ dependencies:
   #image
   image_picker: ^0.7.2
   image_gallery_saver: ^1.6.8
+  multi_image_picker: ^4.8.0
   #bloc
   flutter_bloc: ^7.0.0
   #provider
@@ -54,10 +55,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-flutter_icons:
-  android: true
-  ios: true
-  image_path: "assets/images/ic_launcher.png"
 # The following section is specific to Flutter.
 flutter:
   # The following line ensures that the Material Icons font is

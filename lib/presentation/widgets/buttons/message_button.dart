@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/configs/config.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/constants/constants.dart';
@@ -15,7 +16,9 @@ class MessageButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButtonWithCounter(
       icon: ICON_CONST.MESSAGE,
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pushNamed(context, AppRouter.MESSAGES);
+      },
       counter: 1,
       size: SizeConfig.defaultSize * 2.4,
       color: color,

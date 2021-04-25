@@ -35,7 +35,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       _profileStreamSub?.cancel();
       _profileStreamSub = _userRepository
           .loggedUserStream(_authRepository.loggedFirebaseUser)
-          .listen((cart) => add(ProfileUpdated(cart)));
+          .listen((updatedUser) => add(ProfileUpdated(updatedUser)));
     } catch (e) {
       yield ProfileLoadFailure(e.toString());
     }
@@ -45,7 +45,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Stream<ProfileState> _mapUploadAvatarToState(UploadAvatar event) async* {
     try {
       // Get image url from firebase storage
-      String imageUrl = await _storageRepository.uploadImage(
+      String imageUrl = await _storageRepository.uploadImageFile(
         "users/profile/${_loggedUser!.id}",
         event.imageFile,
       );

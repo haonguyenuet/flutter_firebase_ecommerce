@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/bottom_navigation.dart';
-import 'package:e_commerce_app/presentation/screens/chat/chat_screen.dart';
+import 'package:e_commerce_app/presentation/screens/message/message_screen.dart';
 import 'package:e_commerce_app/presentation/screens/detail_order_screen.dart/detail_order_screen.dart';
 import 'package:e_commerce_app/presentation/screens/map/map_screen.dart';
 import 'package:e_commerce_app/presentation/screens/my_orders/my_orders_screen.dart';
@@ -36,7 +36,7 @@ class AppRouter {
   static const String MAP = '/map';
   static const String CATEGORIES = '/categories';
   static const String SETTING = '/setting';
-  static const String CHAT = '/chat';
+  static const String MESSAGES = '/messages';
   static const String SEARCH = '/search';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -108,9 +108,9 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => MapScreen(),
         );
-      case CHAT:
+      case MESSAGES:
         return MaterialPageRoute(
-          builder: (_) => ChatScreen(),
+          builder: (_) => MessagesScreen(),
         );
       case SEARCH:
         return MaterialPageRoute(

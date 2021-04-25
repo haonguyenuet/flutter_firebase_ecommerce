@@ -6,3 +6,4 @@ export 'feedback.dart';
 export 'category.dart';
 export 'order.dart';
 export 'delivery_address.dart';
+export 'message.dart';

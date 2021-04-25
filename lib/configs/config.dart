@@ -3,4 +3,3 @@ export 'router.dart';
 export 'size_config.dart';
 export 'theme.dart';
 export 'application.dart';
-export 'enum.dart';

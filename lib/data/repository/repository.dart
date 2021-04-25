@@ -12,5 +12,7 @@ export 'order_repository/order_repo.dart';
 export 'order_repository/firebase_order_repo.dart';
 export 'feedback_repository/feedback_repo.dart';
 export 'feedback_repository/firebase_feedback_repo.dart';
+export 'message_repository/message_repo.dart';
+export 'message_repository/firebase_message_repo.dart';
 export 'storage_repository/storage_repo.dart';
 export 'app_repository.dart';

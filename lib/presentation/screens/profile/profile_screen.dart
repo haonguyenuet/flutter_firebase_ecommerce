@@ -1,7 +1,7 @@
 import 'package:e_commerce_app/presentation/common_blocs/auth/bloc.dart';
 import 'package:e_commerce_app/configs/config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
-import 'package:e_commerce_app/presentation/screens/profile/widgets/profile_header.dart';
+import 'package:e_commerce_app/presentation/screens/profile/profile_header.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';

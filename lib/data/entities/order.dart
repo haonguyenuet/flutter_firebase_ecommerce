@@ -107,7 +107,7 @@ class Order extends Equatable {
         priceOfGoods,
         deliveryFee,
         coupon,
-        createdAt
+        createdAt,
       ];
 }
 

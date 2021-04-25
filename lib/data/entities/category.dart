@@ -30,13 +30,6 @@ class Category extends Equatable {
     };
   }
 
-  /// Represent to all category
-  static const all = Category(
-    id: "default",
-    name: "All products",
-    imageUrl: "",
-  );
-
   @override
   String toString() {
     return this.name;
