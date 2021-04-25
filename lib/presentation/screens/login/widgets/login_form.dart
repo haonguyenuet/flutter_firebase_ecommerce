@@ -73,7 +73,7 @@ class _LoginFormState extends State<LoginForm> {
         builder: (context, state) {
           return Container(
             margin:
-                EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
+            EdgeInsets.symmetric(horizontal: SizeConfig.defaultSize * 1.5),
             padding: EdgeInsets.symmetric(
               horizontal: SizeConfig.defaultPadding,
               vertical: SizeConfig.defaultSize * 3,
@@ -97,9 +97,9 @@ class _LoginFormState extends State<LoginForm> {
                   SizedBox(height: SizeConfig.defaultSize * 2),
 
                   ElevatedButton(
-                      onPressed: (){},
-                      child:
-                  _buildNoAccountText(),
+                    onPressed: (){},
+                    child:
+                    _buildNoAccountText(),
                   ),
                 ],
               ),
