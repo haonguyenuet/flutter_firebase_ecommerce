@@ -9,17 +9,30 @@ abstract class MessageEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-/// Load messages event
-class LoadMessages extends MessageEvent {
-  final bool isTheFirstTime;
+/// Triggered load messages
+class LoadMessages extends MessageEvent {}
 
-  LoadMessages(this.isTheFirstTime);
+/// Triggered load more messages
+class LoadPreviousMessages extends MessageEvent {
+  final Message lastMessage;
+
+  LoadPreviousMessages(this.lastMessage);
 
   @override
-  List<Object> get props => [isTheFirstTime, DateTime.now()];
+  List<Object> get props => [lastMessage];
 }
 
-///
+/// When messages stream has new data
+class MessagesUpdated extends MessageEvent {
+  final List<Message> messages;
+
+  MessagesUpdated(this.messages);
+
+  @override
+  List<Object> get props => [messages];
+}
+
+/// Triggered to send a text message
 class SendTextMessage extends MessageEvent {
   final String text;
 
@@ -29,7 +42,7 @@ class SendTextMessage extends MessageEvent {
   List<Object> get props => [text];
 }
 
-///
+/// Triggered to send a image message
 class SendImageMessage extends MessageEvent {
   final String? text;
   final List<Asset> images;
@@ -40,7 +53,7 @@ class SendImageMessage extends MessageEvent {
   List<Object> get props => [images];
 }
 
-///
+/// Triggered to remove a message
 class RemoveMessage extends MessageEvent {
   final Message message;
 

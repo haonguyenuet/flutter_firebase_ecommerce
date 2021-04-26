@@ -20,13 +20,19 @@ class _ChatInputFieldState extends State<ChatInputField> {
   List<Asset> images = <Asset>[];
   String error = 'No Error Dectected';
 
+  @override
+  void dispose() {
+    messageController.dispose();
+    super.dispose();
+  }
+
   void sendMessage() {
     if (images.isNotEmpty) {
       BlocProvider.of<MessageBloc>(context).add(SendImageMessage(
         images: images,
         text: messageController.text,
       ));
-    } else {
+    } else if (messageController.text.isNotEmpty) {
       BlocProvider.of<MessageBloc>(context).add(SendTextMessage(
         text: messageController.text,
       ));
@@ -105,6 +111,8 @@ class _ChatInputFieldState extends State<ChatInputField> {
                       Expanded(
                         child: TextField(
                           controller: messageController,
+                          textInputAction: TextInputAction.send,
+                          onEditingComplete: sendMessage,
                           decoration: InputDecoration(
                             hintText: "Type message",
                             border: InputBorder.none,

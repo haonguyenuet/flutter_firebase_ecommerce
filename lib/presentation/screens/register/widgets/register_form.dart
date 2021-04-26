@@ -33,6 +33,14 @@ class _RegisterFormState extends State<RegisterForm> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
+
   bool get isPopulated =>
       emailController.text.isNotEmpty &&
       passwordController.text.isNotEmpty &&

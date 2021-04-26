@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/bottom_navigation.dart';
+import 'package:e_commerce_app/presentation/screens/detail_image/detail_image_screen.dart';
 import 'package:e_commerce_app/presentation/screens/message/message_screen.dart';
 import 'package:e_commerce_app/presentation/screens/detail_order_screen.dart/detail_order_screen.dart';
 import 'package:e_commerce_app/presentation/screens/map/map_screen.dart';
@@ -16,7 +17,6 @@ import 'package:e_commerce_app/presentation/screens/settings/setting_screen.dart
 import 'package:e_commerce_app/presentation/screens/login/login_screen.dart';
 import 'package:e_commerce_app/presentation/screens/register/register_screen.dart';
 import 'package:e_commerce_app/presentation/screens/splash/splash_screen.dart';
-import 'package:e_commerce_app/presentation/screens/product_images/product_images_screen.dart';
 
 class AppRouter {
   static const String SPLASH = '/splash';
@@ -27,7 +27,7 @@ class AppRouter {
   static const String HOME = '/home';
   static const String PROFILE = '/profile';
   static const String DETAIL_PRODUCT = '/detail_product';
-  static const String PRODUCT_IMAGES = '/product_images';
+  static const String DETAIL_IMAGE = '/detail_image';
   static const String FEEDBACK = '/feedback';
   static const String CART = '/cart';
   static const String MY_ORDERS = '/my_orders';
@@ -72,13 +72,10 @@ class AppRouter {
         var product = settings.arguments as Product;
         return MaterialPageRoute(
             builder: (_) => DetailProductScreen(product: product));
-      case PRODUCT_IMAGES:
-        var arguments = settings.arguments as Map<String, dynamic>;
+      case DETAIL_IMAGE:
+        var imageUrl = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (_) => ProductImagesScreen(
-            product: arguments["product"],
-            selectedIndex: arguments["selectedIndex"],
-          ),
+          builder: (_) => DetailImageScreen( imageUrl: imageUrl),
         );
       case FEEDBACK:
         var product = settings.arguments as Product;

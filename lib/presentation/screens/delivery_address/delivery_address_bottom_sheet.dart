@@ -58,6 +58,14 @@ class _DeliveryAddressBottomSheetState
     }
   }
 
+  @override
+  void dispose() {
+    nameController.dispose();
+    phoneNumberController.dispose();
+    detailAddressController.dispose();
+    super.dispose();
+  }
+
   Function(bool value)? onSwitchButtonChanged() {
     return deliveryAddress == null || deliveryAddress!.isDefault
         ? null

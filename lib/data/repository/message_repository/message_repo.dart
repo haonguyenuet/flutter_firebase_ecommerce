@@ -1,13 +1,24 @@
 import 'package:e_commerce_app/data/entities/entites.dart';
 
 abstract class MessageRepository {
-  /// Get all messages of logged user
+  /// Get 20 first messages
   /// Created by NDH
-  Future<List<Message>> getMessages({
+  Stream<List<Message>> getRecentMessages({
     required String uid,
     required int messagesLimit,
-    required bool isTheFirstTime,
   });
+
+  /// Get more messages
+  /// Created by NDH
+  Future<List<Message>> getPreviousMessages({
+    required String uid,
+    required int messagesLimit,
+    required Message lastMessage,
+  });
+
+  /// Get lastest message
+  /// Created by NDH
+  Future<Message?> getLastestMessage({required String uid});
 
   /// Add message
   /// [uid] is user id

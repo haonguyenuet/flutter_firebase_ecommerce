@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/presentation/common_blocs/profile/bloc.dart';
-import 'package:e_commerce_app/data/entities/feedback.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
+import 'package:e_commerce_app/presentation/screens/feedbacks/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/widgets/buttons/default_button.dart';
 import 'package:e_commerce_app/presentation/widgets/others/rating_bar.dart';
 import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
-import 'package:uuid/uuid.dart';
+
 
 class FeedbackBottomSheet extends StatefulWidget {
   const FeedbackBottomSheet({Key? key}) : super(key: key);
@@ -23,20 +23,14 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
   int rating = 5;
   String content = "";
 
-  void onAddFeeback() {
+  void addFeeback() {
     if (content.isEmpty) return;
 
-    ProfileState profileState = BlocProvider.of<ProfileBloc>(context).state;
-    if (profileState is ProfileLoaded) {
-      var newFeedback = FeedBack(
-        id: Uuid().v1(),
-        userId: profileState.loggedUser.id,
-        rating: rating,
-        content: content,
-        timestamp: Timestamp.now(),
-      );
-      Navigator.pop(context, newFeedback);
-    }
+    BlocProvider.of<FeedbackBloc>(context).add(AddFeedback(
+      rating: rating,
+      content: content,
+    ));
+    Navigator.pop(context);
   }
 
   @override
@@ -119,7 +113,7 @@ class _FeedbackBottomSheetState extends State<FeedbackBottomSheet> {
                 Translate.of(context).translate('send'),
                 style: FONT_CONST.BOLD_WHITE_18,
               ),
-              onPressed: onAddFeeback,
+              onPressed: addFeeback,
             ),
           ),
         );

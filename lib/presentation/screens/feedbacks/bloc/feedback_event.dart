@@ -20,12 +20,13 @@ class LoadFeedbacks extends FeedbacksEvent {
 }
 
 class AddFeedback extends FeedbacksEvent {
-  final FeedBack feedback;
+  final String content;
+  final int rating;
 
-  AddFeedback(this.feedback);
+  AddFeedback({required this.content, required this.rating});
 
   @override
-  List<Object?> get props => [feedback];
+  List<Object?> get props => [content, rating];
 }
 
 class StarChanged extends FeedbacksEvent {

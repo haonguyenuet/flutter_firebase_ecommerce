@@ -18,8 +18,8 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   final AuthRepository _authRepository = AppRepository.authRepository;
   final MessageRepository _messageRepository = AppRepository.messageRepository;
   late User _loggedFirebaseUser;
-  List<Message> _allMessages = [];
   bool _hasReachedMax = false;
+  StreamSubscription? _messagesStreamSubs;
 
   MessageBloc() : super(DisplayMessages.loading());
 
@@ -28,9 +28,10 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   Stream<Transition<MessageEvent, MessageState>> transformEvents(
       Stream<MessageEvent> events, transitionFn) {
     var debounceStream = events
-        .where((event) => event is LoadMessages)
+        .where((event) => event is LoadPreviousMessages)
         .debounceTime(Duration(milliseconds: 500));
-    var nonDebounceStream = events.where((event) => event is! LoadMessages);
+    var nonDebounceStream =
+        events.where((event) => event is! LoadPreviousMessages);
     return super.transformEvents(
       nonDebounceStream.mergeWith([debounceStream]),
       transitionFn,
@@ -41,46 +42,58 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   Stream<MessageState> mapEventToState(MessageEvent event) async* {
     if (event is LoadMessages) {
       yield* _mapLoadMessagesToState(event);
+    } else if (event is LoadPreviousMessages) {
+      yield* _mapLoadPreviousMessagesToState(event);
     } else if (event is SendTextMessage) {
       yield* _mapSendTextMessageToState(event);
     } else if (event is SendImageMessage) {
       yield* _mapSendImageMessageToState(event);
     } else if (event is RemoveMessage) {
       yield* _mapRemoveMessageToState(event);
+    } else if (event is MessagesUpdated) {
+      _hasReachedMax = event.messages.length < _messagesLimit;
+      yield DisplayMessages.data(
+        messages: event.messages,
+        hasReachedMax: _hasReachedMax,
+        isPrevious: false,
+      );
     }
   }
 
   Stream<MessageState> _mapLoadMessagesToState(LoadMessages event) async* {
-    if (_hasReachedMax) {
-      return;
-    }
     try {
-      List<Message> messages = [];
-
-      // Get messages
-      if (event.isTheFirstTime) {
-        _loggedFirebaseUser = _authRepository.loggedFirebaseUser;
-        messages = await _messageRepository.getMessages(
-          uid: _loggedFirebaseUser.uid,
-          messagesLimit: _messagesLimit,
-          isTheFirstTime: true,
-        );
-      } else {
-        messages = await _messageRepository.getMessages(
-          uid: _loggedFirebaseUser.uid,
-          messagesLimit: _messagesLimit,
-          isTheFirstTime: false,
-        );
-      }
-
-      _hasReachedMax = messages.length < _messagesLimit;
-      _allMessages = List<Message>.of(_allMessages)..addAll(messages);
-
-      yield DisplayMessages.data(
-        messages: _allMessages,
-        hasReachedMax: _hasReachedMax,
-      );
+      _loggedFirebaseUser = _authRepository.loggedFirebaseUser;
+      _messagesStreamSubs?.cancel();
+      _messagesStreamSubs = _messageRepository
+          .getRecentMessages(
+            uid: _loggedFirebaseUser.uid,
+            messagesLimit: _messagesLimit,
+          )
+          .listen((messages) => add(MessagesUpdated(messages)));
     } catch (e) {
+      yield DisplayMessages.error(e.toString());
+    }
+  }
+
+  Stream<MessageState> _mapLoadPreviousMessagesToState(
+    LoadPreviousMessages event,
+  ) async* {
+    if (_hasReachedMax) return;
+    // get messages after event.lastMessage
+    List<Message> messages = await _messageRepository.getPreviousMessages(
+      uid: _loggedFirebaseUser.uid,
+      messagesLimit: _messagesLimit,
+      lastMessage: event.lastMessage,
+    );
+    // check messages has reached max
+    _hasReachedMax = messages.length < _messagesLimit;
+    // yield data state
+    yield DisplayMessages.data(
+      messages: messages,
+      hasReachedMax: _hasReachedMax,
+      isPrevious: true,
+    );
+    try {} catch (e) {
       yield DisplayMessages.error(e.toString());
     }
   }
@@ -97,11 +110,17 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         createdAt: Timestamp.now(),
       );
 
-      await _messageRepository.addMessage(
-        _loggedFirebaseUser.uid,
-        newMessage,
-      );
-      _messagesUpdated();
+      var automaticReply = await _automacticReply();
+
+      await _messageRepository.addMessage(_loggedFirebaseUser.uid, newMessage);
+
+      if (automaticReply) {
+        await _messageRepository.addMessage(
+          _loggedFirebaseUser.uid,
+          automaticMessage,
+        );
+      }
+      _automacticReply();
     } catch (e) {
       print(e);
     }
@@ -131,11 +150,16 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         createdAt: Timestamp.now(),
       );
 
-      await _messageRepository.addMessage(
-        _loggedFirebaseUser.uid,
-        newMessage,
-      );
-      _messagesUpdated();
+      var automaticReply = await _automacticReply();
+
+      await _messageRepository.addMessage(_loggedFirebaseUser.uid, newMessage);
+
+      if (automaticReply) {
+        await _messageRepository.addMessage(
+          _loggedFirebaseUser.uid,
+          automaticMessage,
+        );
+      }
     } catch (e) {
       print(e);
     }
@@ -147,32 +171,26 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         _loggedFirebaseUser.uid,
         event.message,
       );
-      _messagesUpdated();
     } catch (e) {
       print(e);
     }
   }
 
-  void _messagesUpdated() async {
-    if (_allMessages.isEmpty ||
-        _allMessages[0]
-                .createdAt
+  Future<bool> _automacticReply() async {
+    var lastestMessage = await _messageRepository.getLastestMessage(
+      uid: _loggedFirebaseUser.uid,
+    );
+    return lastestMessage == null ||
+        lastestMessage.createdAt
                 .toDate()
                 .add(Duration(days: 1))
                 .compareTo(DateTime.now()) <
-            1) {
-      await _messageRepository.addMessage(
-        _loggedFirebaseUser.uid,
-        automaticMessage,
-      );
-    }
-    _allMessages = [];
-    _hasReachedMax = false;
-    add(LoadMessages(true));
+            1;
   }
 
   @override
   Future<void> close() {
+    _messagesStreamSubs?.cancel();
     return super.close();
   }
 }

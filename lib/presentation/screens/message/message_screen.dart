@@ -6,12 +6,11 @@ import 'package:e_commerce_app/presentation/screens/message/widgets/list_message
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 class MessagesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MessageBloc()..add(LoadMessages(true)),
+      create: (context) => MessageBloc()..add(LoadMessages()),
       child: Scaffold(
         appBar: _buildAppBar(),
         body: SafeArea(
@@ -42,10 +41,6 @@ class MessagesScreen extends StatelessWidget {
       actions: [
         IconButton(
           icon: Icon(Icons.local_phone),
-          onPressed: () {},
-        ),
-        IconButton(
-          icon: Icon(Icons.video_call),
           onPressed: () {},
         ),
         SizedBox(width: SizeConfig.defaultPadding / 2),

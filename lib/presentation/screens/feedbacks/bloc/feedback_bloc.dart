@@ -1,11 +1,14 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/data/entities/entites.dart';
 import 'package:e_commerce_app/data/repository/app_repository.dart';
 import 'package:e_commerce_app/data/repository/repository.dart';
 import 'package:e_commerce_app/presentation/screens/feedbacks/bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uuid/uuid.dart';
 
 class FeedbackBloc extends Bloc<FeedbacksEvent, FeedbackState> {
+  final AuthRepository _authRepository = AppRepository.authRepository;
   final FeedbackRepository _feedbackRepository =
       AppRepository.feedbackRepository;
   final ProductRepository _productRepository = AppRepository.productRepository;
@@ -43,9 +46,16 @@ class FeedbackBloc extends Bloc<FeedbacksEvent, FeedbackState> {
 
   Stream<FeedbackState> _mapAddFeedbackToState(AddFeedback event) async* {
     try {
+      var newFeedback = FeedBack(
+        id: Uuid().v1(),
+        content: event.content,
+        rating: event.rating,
+        userId: _authRepository.loggedFirebaseUser.uid,
+        timestamp: Timestamp.now(),
+      );
       await _feedbackRepository.addNewFeedback(
         _currentProduct.id,
-        event.feedback,
+        newFeedback,
       );
     } catch (e) {
       print(e);

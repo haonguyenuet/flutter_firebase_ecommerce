@@ -4,12 +4,14 @@ import 'package:e_commerce_app/presentation/common_blocs/common_bloc.dart';
 import 'package:e_commerce_app/configs/config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:e_commerce_app/app_view.dart';
 import 'presentation/common_blocs/simple_bloc_observer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemUiOverlayStyle(statusBarColor: Colors.transparent);
   Bloc.observer = SimpleBlocObserver();
   await Firebase.initializeApp();
   runApp(MyApp());

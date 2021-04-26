@@ -62,7 +62,8 @@ class FeedbacksScreen extends StatelessWidget {
   }
 
   _openFeedbackBottomSheet(BuildContext context) async {
-    var newFeedback = await showModalBottomSheet<FeedBack>(
+    var feedbackBloc = BlocProvider.of<FeedbackBloc>(context);
+    showModalBottomSheet<FeedBack>(
       isScrollControlled: true,
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(
@@ -72,10 +73,12 @@ class FeedbacksScreen extends StatelessWidget {
         ),
       ),
       context: context,
-      builder: (BuildContext context) => FeedbackBottomSheet(),
+      builder: (BuildContext context) {
+        return BlocProvider(
+          create: (_) => feedbackBloc,
+          child: FeedbackBottomSheet(),
+        );
+      },
     );
-    if (newFeedback != null) {
-      BlocProvider.of<FeedbackBloc>(context).add(AddFeedback(newFeedback));
-    }
   }
 }

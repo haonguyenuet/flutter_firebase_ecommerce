@@ -19,7 +19,7 @@ class MessageButton extends StatelessWidget {
       onPressed: () {
         Navigator.pushNamed(context, AppRouter.MESSAGES);
       },
-      counter: 1,
+      counter: 0,
       size: SizeConfig.defaultSize * 2.4,
       color: color,
     );

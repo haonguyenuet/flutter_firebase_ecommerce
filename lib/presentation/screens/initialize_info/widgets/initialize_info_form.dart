@@ -22,6 +22,13 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    nameController.dispose();
+    phoneNumberController.dispose();
+    super.dispose();
+  }
+
   void onClickContinue() {
     if (formKey.currentState!.validate()) {
       UserModel initialUser = UserModel(
@@ -136,12 +143,5 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    phoneNumberController.dispose();
-    nameController.dispose();
-    super.dispose();
   }
 }

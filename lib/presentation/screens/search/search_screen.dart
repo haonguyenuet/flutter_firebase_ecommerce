@@ -17,6 +17,12 @@ class _SearchScreenState extends State<SearchScreen> {
   TextEditingController searchControler = TextEditingController();
 
   @override
+  void dispose() {
+    searchControler.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SearchBloc()..add(OpenScreen()),

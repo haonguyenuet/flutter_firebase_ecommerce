@@ -4,32 +4,57 @@ import 'package:e_commerce_app/data/repository/repository.dart';
 
 class FirebaseMessageRepository implements MessageRepository {
   final userCollection = FirebaseFirestore.instance.collection("users");
-  DocumentSnapshot? lastDocument;
 
-  /// Get all messages of logged user
-  Future<List<Message>> getMessages({
+  /// Get 20 the first messages
+  Stream<List<Message>> getRecentMessages({
     required String uid,
     required int messagesLimit,
-    required bool isTheFirstTime,
-  }) async {
-    Query messagesQuery = userCollection
+  }) {
+    return userCollection
         .doc(uid)
         .collection("messages")
         .orderBy("createdAt", descending: true)
-        .limit(messagesLimit);
+        .limit(messagesLimit)
+        .snapshots()
+        .map(
+          (snapshot) =>
+              snapshot.docs.map((doc) => Message.fromMap(doc.data()!)).toList(),
+        );
+  }
 
-    if (isTheFirstTime == false && lastDocument != null) {
-      messagesQuery = messagesQuery.startAfterDocument(lastDocument!);
-    }
+  @override
+  Future<List<Message>> getPreviousMessages({
+    required String uid,
+    required int messagesLimit,
+    required Message lastMessage,
+  }) async {
+    var messagesCollection = userCollection.doc(uid).collection("messages");
+    // Gets a reference to the last message in the existing list
+    DocumentSnapshot lastDocument =
+        await messagesCollection.doc(lastMessage.id).get();
+    return messagesCollection
+        .orderBy("createdAt", descending: true)
+        .startAfterDocument(lastDocument)
+        .limit(messagesLimit)
+        .get()
+        .then(
+          (snapshot) =>
+              snapshot.docs.map((doc) => Message.fromMap(doc.data()!)).toList(),
+        );
+  }
 
-    QuerySnapshot querySnapshot = await messagesQuery.get();
-    if (querySnapshot.docs.isNotEmpty) {
-      lastDocument = querySnapshot.docs[querySnapshot.docs.length - 1];
-    }
-
-    return querySnapshot.docs
-        .map((doc) => Message.fromMap(doc.data()!))
-        .toList();
+  Future<Message?> getLastestMessage({
+    required String uid,
+  }) async {
+    // Gets the lastest message in the existing list
+    QuerySnapshot querySnapshot = await userCollection
+        .doc(uid)
+        .collection("messages")
+        .orderBy("createdAt", descending: true)
+        .limit(1)
+        .get();
+    if (querySnapshot.docs.isEmpty) return null;
+    return Message.fromMap(querySnapshot.docs[0].data()!);
   }
 
   /// Add item

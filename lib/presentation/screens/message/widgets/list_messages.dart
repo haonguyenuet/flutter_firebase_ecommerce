@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/configs/config.dart';
+import 'package:e_commerce_app/data/entities/entites.dart';
 import 'package:e_commerce_app/presentation/screens/message/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/screens/message/widgets/message_card.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
@@ -12,27 +13,30 @@ class ListMessages extends StatefulWidget {
 }
 
 class _ListMessagesState extends State<ListMessages> {
-  ScrollController _scrollController = ScrollController();
+  ScrollController scrollController = ScrollController();
+  List<Message> messages = [];
 
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_onScroll);
+    scrollController.addListener(_onScroll);
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
   void _onScroll() {
-    if (!_scrollController.hasClients) return;
-    final maxScroll = _scrollController.position.maxScrollExtent;
-    final currentScroll = _scrollController.offset;
+    if (!scrollController.hasClients) return;
+    final maxScroll = scrollController.position.maxScrollExtent;
+    final currentScroll = scrollController.offset;
 
     if (currentScroll > maxScroll - SizeConfig.defaultSize * 7) {
-      BlocProvider.of<MessageBloc>(context).add(LoadMessages(false));
+      BlocProvider.of<MessageBloc>(context).add(
+        LoadPreviousMessages(messages[messages.length - 1]),
+      );
     }
   }
 
@@ -46,9 +50,13 @@ class _ListMessagesState extends State<ListMessages> {
             return Loading();
           }
           if (state.messages != null) {
-            final messages = state.messages!;
+            if (state.isPrevious) {
+              messages.addAll(state.messages!);
+            } else {
+              messages = state.messages!;
+            }
             return ListView.builder(
-                controller: _scrollController,
+                controller: scrollController,
                 shrinkWrap: true,
                 reverse: true,
                 padding: EdgeInsets.only(

@@ -26,6 +26,13 @@ class _LoginFormState extends State<LoginForm> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   bool get isPopulated =>
       emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
 
@@ -104,6 +111,7 @@ class _LoginFormState extends State<LoginForm> {
   /// Build content
   _buildTextFieldUsername() {
     return TextFormField(
+      textInputAction: TextInputAction.next,
       controller: emailController,
       onChanged: (value) {
         loginBloc.add(EmailChanged(email: value));
@@ -125,6 +133,7 @@ class _LoginFormState extends State<LoginForm> {
   _buildTextFieldPassword() {
     return TextFormField(
       controller: passwordController,
+      textInputAction: TextInputAction.go,
       onChanged: (value) {
         loginBloc.add(PasswordChanged(password: value));
       },
@@ -133,6 +142,7 @@ class _LoginFormState extends State<LoginForm> {
             ? Translate.of(context).translate('invalid_password')
             : null;
       },
+      onEditingComplete: onLogin,
       autovalidateMode: AutovalidateMode.always,
       keyboardType: TextInputType.text,
       obscureText: !isShowPassword,

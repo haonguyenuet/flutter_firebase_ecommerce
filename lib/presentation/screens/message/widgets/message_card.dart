@@ -107,10 +107,19 @@ class _MessageCardState extends State<MessageCard> {
         const SizedBox(height: 5),
         Wrap(
           children: List.generate(message.images.length, (index) {
-            return Image.network(
-              message.images[index],
-              width: 100,
-              height: 100,
+            return GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  AppRouter.DETAIL_IMAGE,
+                  arguments: message.images[index],
+                );
+              },
+              child: Image.network(
+                message.images[index],
+                width: 100,
+                height: 100,
+              ),
             );
           }),
         )
