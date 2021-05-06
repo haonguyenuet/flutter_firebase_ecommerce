@@ -14,6 +14,7 @@ class ListFeedbacks extends StatelessWidget {
           var feedbacks = state.feedbacks;
           return feedbacks.length > 0
               ? ListView.builder(
+                  physics: BouncingScrollPhysics(),
                   itemCount: feedbacks.length,
                   itemBuilder: (context, index) {
                     return FeedbackCard(feedBack: feedbacks[index]);

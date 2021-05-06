@@ -114,6 +114,7 @@ class _SearchScreenState extends State<SearchScreen> {
     var results = state.results;
     if (results.isNotEmpty) {
       return ListView.builder(
+        physics: BouncingScrollPhysics(),
         itemCount: results.length,
         itemBuilder: (context, index) {
           return CustomListTile(

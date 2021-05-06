@@ -98,6 +98,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
             child: Image.asset(IMAGE_CONST.NO_RECORD),
           )
         : ListView.builder(
+            physics: BouncingScrollPhysics(),
             itemCount: orders.length,
             itemBuilder: (context, index) {
               return OrderCard(order: orders[index]);

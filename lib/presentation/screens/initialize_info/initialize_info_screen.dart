@@ -6,11 +6,13 @@ class InitializeInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: [
-          InitializeInfoHeader(),
-          InitializeInfoForm(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            InitializeInfoHeader(),
+            InitializeInfoForm(),
+          ],
+        ),
       ),
     );
   }

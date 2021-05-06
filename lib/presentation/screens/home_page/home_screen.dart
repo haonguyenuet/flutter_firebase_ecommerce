@@ -12,6 +12,7 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         body: SafeArea(
           child: CustomScrollView(
+            physics: BouncingScrollPhysics(),
             slivers: [
               SliverPersistentHeader(
                 delegate: HomePersistentHeader(),

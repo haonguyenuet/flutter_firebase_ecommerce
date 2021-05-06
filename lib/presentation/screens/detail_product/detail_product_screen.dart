@@ -23,6 +23,7 @@ class DetailProductScreen extends StatelessWidget {
             DetailProductAppBar(),
             Expanded(
               child: ListView(
+                physics: BouncingScrollPhysics(),
                 children: [
                   ProductImagesWidget(product: product),
                   ProductInfoWidget(product: product),

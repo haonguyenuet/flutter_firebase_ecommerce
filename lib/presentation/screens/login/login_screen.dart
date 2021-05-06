@@ -10,11 +10,13 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => LoginBloc(),
       child: Scaffold(
-        body: ListView(
-          children: [
-            LoginHeader(),
-            LoginForm(),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              LoginHeader(),
+              LoginForm(),
+            ],
+          ),
         ),
       ),
     );

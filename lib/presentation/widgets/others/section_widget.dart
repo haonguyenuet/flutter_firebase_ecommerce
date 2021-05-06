@@ -37,6 +37,7 @@ class SectionWidget extends StatelessWidget {
             child: children.length == 0
                 ? CircularProgressIndicator()
                 : SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     child: Padding(
                       padding: EdgeInsets.symmetric(

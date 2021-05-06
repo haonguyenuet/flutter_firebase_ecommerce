@@ -21,6 +21,7 @@ class GridProducts extends StatelessWidget {
       );
     }
     return GridView.builder(
+      physics: BouncingScrollPhysics(),
       shrinkWrap: true,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,

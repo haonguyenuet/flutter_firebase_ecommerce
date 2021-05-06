@@ -1,7 +1,7 @@
 import 'package:e_commerce_app/bottom_navigation.dart';
 import 'package:e_commerce_app/presentation/screens/detail_image/detail_image_screen.dart';
 import 'package:e_commerce_app/presentation/screens/message/message_screen.dart';
-import 'package:e_commerce_app/presentation/screens/detail_order_screen.dart/detail_order_screen.dart';
+import 'package:e_commerce_app/presentation/screens/detail_order/detail_order_screen.dart';
 import 'package:e_commerce_app/presentation/screens/map/map_screen.dart';
 import 'package:e_commerce_app/presentation/screens/my_orders/my_orders_screen.dart';
 import 'package:e_commerce_app/presentation/screens/search/search_screen.dart';
@@ -75,7 +75,7 @@ class AppRouter {
       case DETAIL_IMAGE:
         var imageUrl = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (_) => DetailImageScreen( imageUrl: imageUrl),
+          builder: (_) => DetailImageScreen(imageUrl: imageUrl),
         );
       case FEEDBACK:
         var product = settings.arguments as Product;

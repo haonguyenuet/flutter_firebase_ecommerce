@@ -51,6 +51,7 @@ class DeliveryAddressScreen extends StatelessWidget {
 
   _buildContent(List<DeliveryAddress> addressList) {
     return ListView.builder(
+      physics: BouncingScrollPhysics(),
       itemCount: addressList.length,
       itemBuilder: (context, index) {
         return DeliveryAddressCard(

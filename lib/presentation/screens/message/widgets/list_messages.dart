@@ -56,6 +56,7 @@ class _ListMessagesState extends State<ListMessages> {
               messages = state.messages!;
             }
             return ListView.builder(
+                physics: BouncingScrollPhysics(),
                 controller: scrollController,
                 shrinkWrap: true,
                 reverse: true,

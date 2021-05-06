@@ -26,6 +26,7 @@ class ListCartItem extends StatelessWidget {
           return SafeArea(
             child: cart.length > 0
                 ? ListView.builder(
+                    physics: BouncingScrollPhysics(),
                     itemCount: cart.length + 1,
                     itemBuilder: (context, index) {
                       if (index == cart.length) {

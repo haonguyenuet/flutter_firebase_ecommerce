@@ -30,7 +30,7 @@ class ProfileHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: SizeConfig.screenHeight * 0.3,
+      height: SizeConfig.defaultSize * 30,
       color: COLOR_CONST.primaryColor,
       child: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {

@@ -98,10 +98,7 @@ class _LoginFormState extends State<LoginForm> {
                   SizedBox(height: SizeConfig.defaultSize * 2),
                   _buildTextOr(),
                   SizedBox(height: SizeConfig.defaultSize * 2),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: _buildNoAccountText(),
-                  ),
+                  _buildNoAccountText(),
                 ],
               ),
             ),
