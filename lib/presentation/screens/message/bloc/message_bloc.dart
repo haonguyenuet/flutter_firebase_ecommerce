@@ -120,7 +120,6 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
           automaticMessage,
         );
       }
-      _automacticReply();
     } catch (e) {
       print(e);
     }
