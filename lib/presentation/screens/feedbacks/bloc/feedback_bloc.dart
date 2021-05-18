@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/data/repository/app_repository.dart';
 import 'package:e_commerce_app/data/repository/repository.dart';
 import 'package:e_commerce_app/presentation/screens/feedbacks/bloc/bloc.dart';
@@ -37,7 +37,7 @@ class FeedbackBloc extends Bloc<FeedbacksEvent, FeedbackState> {
       _currentProduct = event.product;
       _feedbackSubscription?.cancel();
       _feedbackSubscription = _feedbackRepository
-          .feedbackStream(_currentProduct.id)!
+          .fetchFeedbacks(_currentProduct.id)!
           .listen((feedback) => add(FeedbacksUpdated(feedback)));
     } catch (e) {
       yield FeedbacksLoadFailure(e.toString());
@@ -46,7 +46,7 @@ class FeedbackBloc extends Bloc<FeedbacksEvent, FeedbackState> {
 
   Stream<FeedbackState> _mapAddFeedbackToState(AddFeedback event) async* {
     try {
-      var newFeedback = FeedBack(
+      var newFeedback = FeedBackModel(
         id: Uuid().v1(),
         content: event.content,
         rating: event.rating,

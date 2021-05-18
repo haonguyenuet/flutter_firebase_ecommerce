@@ -1,6 +1,6 @@
-import 'package:e_commerce_app/data/entities/banner.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 
 abstract class BannerRepository {
 // Get all cart items
-  Future<List<BannerItem>> getBanners();
+  Future<List<BannerModel>> fetchBanners();
 }

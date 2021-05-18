@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/data/entities/category.dart';
-import 'package:e_commerce_app/data/entities/product.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/data/repository/product_repository/product_repo.dart';
 
 class FirebaseProductRepository implements ProductRepository {
@@ -10,7 +9,7 @@ class FirebaseProductRepository implements ProductRepository {
   /// Get all products
   /// Created by NDH
   @override
-  Future<List<Product>> getProducts() async {
+  Future<List<Product>> fetchProducts() async {
     return await productCollection
         .get()
         .then((snapshot) => snapshot.docs
@@ -22,7 +21,7 @@ class FirebaseProductRepository implements ProductRepository {
   /// Get popular product by soldQuantity
   /// Created by NDH
   @override
-  Future<List<Product>> getPopularProducts() async {
+  Future<List<Product>> fetchPopularProducts() async {
     return await productCollection
         .orderBy("soldQuantity", descending: true)
         .limit(10)
@@ -36,7 +35,7 @@ class FirebaseProductRepository implements ProductRepository {
   /// Get discount product by percentOff
   /// Created by NDH
   @override
-  Future<List<Product>> getDiscountProducts() async {
+  Future<List<Product>> fetchDiscountProducts() async {
     return await productCollection
         .orderBy("percentOff", descending: true)
         .where("percentOff", isGreaterThan: 0)
@@ -52,7 +51,7 @@ class FirebaseProductRepository implements ProductRepository {
   /// [categoryId] is id of category
   /// Created by NDH
   @override
-  Future<List<Product>> getProductsByCategory(String? categoryId) async {
+  Future<List<Product>> fetchProductsByCategory(String? categoryId) async {
     return await productCollection
         .where("categoryId", isEqualTo: categoryId)
         .get()
@@ -89,12 +88,12 @@ class FirebaseProductRepository implements ProductRepository {
   /// Get all categories
   /// Created by NDH
   @override
-  Future<List<Category>> getCategories() async {
+  Future<List<CategoryModel>> getCategories() async {
     return await FirebaseFirestore.instance
         .collection("categories")
         .get()
         .then((snapshot) => snapshot.docs
-            .map((doc) => Category.fromMap(doc.id, doc.data()!))
+            .map((doc) => CategoryModel.fromMap(doc.id, doc.data()!))
             .toList())
         .catchError((err) {});
   }
@@ -102,12 +101,12 @@ class FirebaseProductRepository implements ProductRepository {
   /// Get category by id
   /// Created by NDH
   @override
-  Future<Category> getCategoryById(String categoryId) async {
+  Future<CategoryModel> getCategoryById(String categoryId) async {
     return await FirebaseFirestore.instance
         .collection("categories")
         .doc(categoryId)
         .get()
-        .then((doc) => Category.fromMap(doc.id, doc.data()!))
+        .then((doc) => CategoryModel.fromMap(doc.id, doc.data()!))
         .catchError((err) {});
   }
 

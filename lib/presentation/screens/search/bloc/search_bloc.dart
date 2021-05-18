@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/data/local/pref.dart';
 import 'package:e_commerce_app/data/repository/repository.dart';
 import 'package:e_commerce_app/presentation/screens/search/bloc/bloc.dart';
@@ -56,7 +56,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         );
       } else {
         // Get products by keywords
-        List<Product> products = await _productRepository.getProducts();
+        List<Product> products = await _productRepository.fetchProducts();
         List<Product> results = products
             .where((p) => p.name.toLowerCase().contains(keyword.toLowerCase()))
             .toList();

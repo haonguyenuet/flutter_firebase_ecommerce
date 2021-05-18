@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/entities/category.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/configs/config.dart';
 import 'package:e_commerce_app/presentation/screens/categories/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/screens/categories/widgets/product_gallery.dart';
@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  final Category category;
+  final CategoryModel category;
 
   const CategoriesScreen({
     Key? key,
@@ -22,7 +22,7 @@ class CategoriesScreen extends StatelessWidget {
         body: SafeArea(
           child: Column(
             children: <Widget>[
-              ToolBarWidget(currCategory: category),
+              ToolBarWidget(currCategoryModel: category),
               Expanded(child: ProductGallery()),
             ],
           ),

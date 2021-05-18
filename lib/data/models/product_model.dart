@@ -3,7 +3,7 @@ class Product {
   /// Product id
   final String id;
 
-  /// Category id
+  /// CategoryModel id
   final String categoryId;
 
   /// Product name

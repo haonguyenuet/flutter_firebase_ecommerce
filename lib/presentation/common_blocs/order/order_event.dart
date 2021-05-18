@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class OrderEvent extends Equatable {
@@ -11,15 +11,15 @@ abstract class OrderEvent extends Equatable {
 class LoadMyOrders extends OrderEvent {}
 
 class AddOrder extends OrderEvent {
-  final Order newOrder;
+  final OrderModel newOrderModel;
 
-  AddOrder(this.newOrder);
+  AddOrder(this.newOrderModel);
 
-  List<Object> get props => [newOrder];
+  List<Object> get props => [newOrderModel];
 }
 
 class RemoveOrder extends OrderEvent {
-  final Order order;
+  final OrderModel order;
 
   RemoveOrder(this.order);
 

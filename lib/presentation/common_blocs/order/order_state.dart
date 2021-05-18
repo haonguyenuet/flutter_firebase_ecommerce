@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class OrderState extends Equatable {
@@ -13,8 +13,8 @@ class MyOrdersLoading extends OrderState {}
 
 /// MyOrders was loaded
 class MyOrdersLoaded extends OrderState {
-  final List<Order> deliveringOrders;
-  final List<Order> deliveredOrders;
+  final List<OrderModel> deliveringOrders;
+  final List<OrderModel> deliveredOrders;
 
   MyOrdersLoaded({
     required this.deliveringOrders,

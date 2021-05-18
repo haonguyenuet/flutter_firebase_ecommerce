@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:e_commerce_app/presentation/common_blocs/profile/bloc.dart';
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ProfileEvent extends Equatable {
@@ -22,7 +22,7 @@ class UploadAvatar extends ProfileEvent {
 
 /// Delivery addresses changed
 class AddressListChanged extends ProfileEvent {
-  final DeliveryAddress deliveryAddress;
+  final DeliveryAddressModel deliveryAddress;
   final ListMethod method;
 
   AddressListChanged({required this.deliveryAddress, required this.method});

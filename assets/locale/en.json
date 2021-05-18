@@ -164,5 +164,7 @@
   "order_successfully": "Order successfully",
   "cancel_successfully": "Cancel successfully",
   "add_successfully": "Add successfully",
-  "save": "Save"
+  "save": "Save",
+  "district": "District",
+  "ward": "Ward"
 }

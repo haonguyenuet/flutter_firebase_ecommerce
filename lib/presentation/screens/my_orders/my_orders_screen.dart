@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/presentation/common_blocs/order/bloc.dart';
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/configs/config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
@@ -92,7 +92,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
     );
   }
 
-  _buildListOrders(List<Order> orders) {
+  _buildListOrders(List<OrderModel> orders) {
     return orders.isEmpty
         ? Center(
             child: Image.asset(IMAGE_CONST.NO_RECORD),
@@ -101,7 +101,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen>
             physics: BouncingScrollPhysics(),
             itemCount: orders.length,
             itemBuilder: (context, index) {
-              return OrderCard(order: orders[index]);
+              return OrderModelCard(order: orders[index]);
             },
           );
   }

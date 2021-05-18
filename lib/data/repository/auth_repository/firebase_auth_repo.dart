@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/entities/user.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/data/repository/auth_repository/auth_repo.dart';
 import 'package:e_commerce_app/data/repository/repository.dart';
 import 'package:e_commerce_app/data/repository/user_repository/user_repo.dart';

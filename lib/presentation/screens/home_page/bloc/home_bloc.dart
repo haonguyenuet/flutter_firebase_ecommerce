@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/data/repository/app_repository.dart';
 import 'package:e_commerce_app/data/repository/repository.dart';
 import 'package:e_commerce_app/presentation/screens/home_page/bloc/bloc.dart';
@@ -23,10 +23,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Stream<HomeState> _mapLoadHomeToState() async* {
     try {
       HomeResponse homeResponse = HomeResponse(
-        banners: await _bannerRepository.getBanners(),
+        banners: await _bannerRepository.fetchBanners(),
         categories: await _productRepository.getCategories(),
-        popularProducts: await _productRepository.getPopularProducts(),
-        discountProducts: await _productRepository.getDiscountProducts(),
+        popularProducts: await _productRepository.fetchPopularProducts(),
+        discountProducts: await _productRepository.fetchDiscountProducts(),
       );
       yield HomeLoaded(homeResponse: homeResponse);
     } catch (e) {
@@ -36,8 +36,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 }
 
 class HomeResponse {
-  final List<BannerItem> banners;
-  final List<Category> categories;
+  final List<BannerModel> banners;
+  final List<CategoryModel> categories;
   final List<Product> popularProducts;
   final List<Product> discountProducts;
 

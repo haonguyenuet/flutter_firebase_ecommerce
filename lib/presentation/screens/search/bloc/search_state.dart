@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class SearchState extends Equatable {

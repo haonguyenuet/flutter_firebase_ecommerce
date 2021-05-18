@@ -1,5 +1,5 @@
-import 'package:e_commerce_app/data/entities/entites.dart';
-import 'package:e_commerce_app/data/entities/feedback.dart';
+import 'package:e_commerce_app/data/models/models.dart';
+
 import 'package:equatable/equatable.dart';
 
 abstract class FeedbacksEvent extends Equatable {
@@ -39,7 +39,7 @@ class StarChanged extends FeedbacksEvent {
 }
 
 class FeedbacksUpdated extends FeedbacksEvent {
-  final List<FeedBack> feedbacks;
+  final List<FeedBackModel> feedbacks;
 
   FeedbacksUpdated(this.feedbacks);
 

@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/presentation/common_blocs/cart/bloc.dart';
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/image_constant.dart';
 import 'package:e_commerce_app/presentation/widgets/others/custom_dismissible.dart';
@@ -9,9 +9,9 @@ import 'package:e_commerce_app/presentation/widgets/single_card/cart_item_card.d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ListCartItem extends StatelessWidget {
-  void _onDismissed(BuildContext context, CartItem cartItem) {
-    BlocProvider.of<CartBloc>(context).add(RemoveCartItem(cartItem));
+class ListCartItemModel extends StatelessWidget {
+  void _onDismissed(BuildContext context, CartItemModel cartItem) {
+    BlocProvider.of<CartBloc>(context).add(RemoveCartItemModel(cartItem));
   }
 
   @override
@@ -38,7 +38,7 @@ class ListCartItem extends StatelessWidget {
                           _onDismissed(context, cart[index]);
                         },
                         removeIcon: Icon(Icons.remove_shopping_cart),
-                        child: CartItemCard(cartItem: cart[index]),
+                        child: CartItemModelCard(cartItem: cart[index]),
                       );
                     },
                   )

@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/presentation/common_blocs/order/bloc.dart';
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/configs/config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
@@ -10,11 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DetailOrderScreen extends StatelessWidget {
-  final Order order;
+  final OrderModel order;
 
   const DetailOrderScreen({Key? key, required this.order}) : super(key: key);
 
-  void _onCancelOrder(BuildContext context) {
+  void _onCancelOrderModel(BuildContext context) {
     // Add remove order event
     BlocProvider.of<OrderBloc>(context).add(RemoveOrder(order));
 
@@ -37,7 +37,7 @@ class DetailOrderScreen extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.only(bottom: SizeConfig.defaultPadding),
           children: [
-            _buildListOrderItems(),
+            _buildListOrderModelItems(),
             PaymentFeesWidget(
               priceOfGoods: order.priceOfGoods,
               deliveryFee: order.deliveryFee,
@@ -87,7 +87,7 @@ class DetailOrderScreen extends StatelessWidget {
     );
   }
 
-  _buildListOrderItems() {
+  _buildListOrderModelItems() {
     return CustomCardWidget(
       child: Column(
         children: List.generate(order.items.length, (index) {
@@ -115,7 +115,7 @@ class DetailOrderScreen extends StatelessWidget {
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultPadding),
         child: DefaultButton(
-          onPressed: () => _onCancelOrder(context),
+          onPressed: () => _onCancelOrderModel(context),
           child: Text(
             Translate.of(context).translate("cancel"),
             style: FONT_CONST.BOLD_WHITE_18,

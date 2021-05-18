@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:e_commerce_app/presentation/common_blocs/profile/bloc.dart';
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/data/repository/app_repository.dart';
 import 'package:e_commerce_app/data/repository/repository.dart';
 import 'package:e_commerce_app/data/repository/storage_repository/storage_repo.dart';
@@ -63,7 +63,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       // Get delivery address from event
       var deliveryAddress = event.deliveryAddress;
       // Get current addresses
-      var addresses = List<DeliveryAddress>.from(_loggedUser!.addresses);
+      var addresses = List<DeliveryAddressModel>.from(_loggedUser!.addresses);
       if (deliveryAddress.isDefault) {
         addresses =
             addresses.map((item) => item.cloneWith(isDefault: false)).toList();

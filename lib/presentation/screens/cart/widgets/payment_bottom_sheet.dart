@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_app/presentation/common_blocs/cart/bloc.dart';
 import 'package:e_commerce_app/presentation/common_blocs/order/bloc.dart';
 import 'package:e_commerce_app/presentation/common_blocs/profile/bloc.dart';
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/configs/config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
@@ -23,7 +23,7 @@ class PaymentBottomSheet extends StatefulWidget {
 }
 
 class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
-  List<OrderItem> listOrderItem = [];
+  List<OrderModelItem> listOrderModelItem = [];
   int priceOfGoods = 0;
   int deliveryFee = 0;
   int coupon = 0;
@@ -33,8 +33,9 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
   void initState() {
     CartState cartState = BlocProvider.of<CartBloc>(context).state;
     if (cartState is CartLoaded) {
-      listOrderItem =
-          cartState.cart.map((c) => OrderItem.fromCartItem(c)).toList();
+      listOrderModelItem = cartState.cart
+          .map((c) => OrderModelItem.fromCartItemModel(c))
+          .toList();
       priceOfGoods = cartState.priceOfGoods;
       deliveryFee = 30000;
 
@@ -73,10 +74,10 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
     ProfileState profileState = BlocProvider.of<ProfileBloc>(context).state;
     if (profileState is ProfileLoaded) {
       // create new order
-      var newOrder = Order(
+      var newOrderModel = OrderModel(
         id: Uuid().v1(),
         uid: profileState.loggedUser.id,
-        items: listOrderItem,
+        items: listOrderModelItem,
         createdAt: Timestamp.now(),
         deliveryAddress: profileState.loggedUser.defaultAddress!,
         paymentMethod: paymentMethod,
@@ -86,10 +87,10 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
         coupon: coupon,
       );
       // Add event add order
-      BlocProvider.of<OrderBloc>(context).add(AddOrder(newOrder));
+      BlocProvider.of<OrderBloc>(context).add(AddOrder(newOrderModel));
       // Clear cart
       BlocProvider.of<CartBloc>(context).add(ClearCart());
-      // Show toast: Order successfully
+      // Show toast: OrderModel successfully
       UtilToast.showMessageForUser(
         context,
         Translate.of(context).translate("order_successfully"),
@@ -98,7 +99,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
       Navigator.popAndPushNamed(
         context,
         AppRouter.DETAIL_ORDER,
-        arguments: newOrder,
+        arguments: newOrderModel,
       );
     }
   }
@@ -112,7 +113,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
           mainAxisSize: MainAxisSize.min,
           children: [
             _buildHeader(),
-            _buildDeliveryAddress(),
+            _buildDeliveryAddressModel(),
             PaymentFeesWidget(
               priceOfGoods: priceOfGoods,
               deliveryFee: deliveryFee,
@@ -137,7 +138,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
     );
   }
 
-  _buildDeliveryAddress() {
+  _buildDeliveryAddressModel() {
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
         if (state is ProfileLoaded) {

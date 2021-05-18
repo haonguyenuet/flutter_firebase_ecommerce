@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/configs/config.dart';
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/presentation/screens/message/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/screens/message/widgets/message_card.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
@@ -14,7 +14,7 @@ class ListMessages extends StatefulWidget {
 
 class _ListMessagesState extends State<ListMessages> {
   ScrollController scrollController = ScrollController();
-  List<Message> messages = [];
+  List<MessageModel> messages = [];
 
   @override
   void initState() {

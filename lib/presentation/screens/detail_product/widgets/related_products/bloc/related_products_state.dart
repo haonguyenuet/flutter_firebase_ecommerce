@@ -1,5 +1,5 @@
-import 'package:e_commerce_app/data/entities/category.dart';
-import 'package:e_commerce_app/data/entities/product.dart';
+import 'package:e_commerce_app/data/models/models.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class RelatedProductsState extends Equatable {
@@ -31,7 +31,7 @@ class RelatedProductsLoadFailure extends RelatedProductsState {
 }
 
 class GoToCategoriesScreen extends RelatedProductsState {
-  final Category category;
+  final CategoryModel category;
 
   GoToCategoriesScreen(this.category);
   @override

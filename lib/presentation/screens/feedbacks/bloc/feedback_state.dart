@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class FeedbackState extends Equatable {
@@ -13,7 +13,7 @@ class FeedbacksLoading extends FeedbackState {}
 
 /// Feedbacks was loaded
 class FeedbacksLoaded extends FeedbackState {
-  final List<FeedBack> feedbacks;
+  final List<FeedBackModel> feedbacks;
   final double rating;
   final int numberOfFeedbacks;
 

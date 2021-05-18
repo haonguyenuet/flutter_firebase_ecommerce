@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/entities/message.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
@@ -14,7 +14,7 @@ class LoadMessages extends MessageEvent {}
 
 /// Triggered load more messages
 class LoadPreviousMessages extends MessageEvent {
-  final Message lastMessage;
+  final MessageModel lastMessage;
 
   LoadPreviousMessages(this.lastMessage);
 
@@ -24,7 +24,7 @@ class LoadPreviousMessages extends MessageEvent {
 
 /// When messages stream has new data
 class MessagesUpdated extends MessageEvent {
-  final List<Message> messages;
+  final List<MessageModel> messages;
 
   MessagesUpdated(this.messages);
 
@@ -55,7 +55,7 @@ class SendImageMessage extends MessageEvent {
 
 /// Triggered to remove a message
 class RemoveMessage extends MessageEvent {
-  final Message message;
+  final MessageModel message;
 
   RemoveMessage(this.message);
 

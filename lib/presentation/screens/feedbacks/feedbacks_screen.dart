@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/screens/feedbacks/bloc/bloc.dart';
 import 'package:e_commerce_app/presentation/screens/feedbacks/widgets/feedback_bottom_sheet.dart';
@@ -63,7 +63,7 @@ class FeedbacksScreen extends StatelessWidget {
 
   _openFeedbackBottomSheet(BuildContext context) async {
     var feedbackBloc = BlocProvider.of<FeedbackBloc>(context);
-    showModalBottomSheet<FeedBack>(
+    showModalBottomSheet<FeedBackModel>(
       isScrollControlled: true,
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(

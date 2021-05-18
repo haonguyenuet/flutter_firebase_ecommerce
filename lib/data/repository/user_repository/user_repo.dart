@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class UserRepository {

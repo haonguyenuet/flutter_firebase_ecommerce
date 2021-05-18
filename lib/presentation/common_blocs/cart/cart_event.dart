@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/entities/cart_item.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class CartEvent extends Equatable {
@@ -16,7 +16,7 @@ class ClearCart extends CartEvent {}
 
 /// Cart was cleared
 class CartUpdated extends CartEvent {
-  final List<CartItem> updatedCart;
+  final List<CartItemModel> updatedCart;
 
   CartUpdated(this.updatedCart);
 
@@ -25,30 +25,30 @@ class CartUpdated extends CartEvent {
 }
 
 /// When user clicks to add button => add cart item event
-class AddCartItem extends CartEvent {
-  final CartItem cartItem;
+class AddCartItemModel extends CartEvent {
+  final CartItemModel cartItem;
 
-  AddCartItem(this.cartItem);
+  AddCartItemModel(this.cartItem);
 
   @override
   List<Object> get props => [cartItem];
 }
 
 /// When user swipes to remove cart item => remove cart item event
-class RemoveCartItem extends CartEvent {
-  final CartItem cartItem;
+class RemoveCartItemModel extends CartEvent {
+  final CartItemModel cartItem;
 
-  RemoveCartItem(this.cartItem);
+  RemoveCartItemModel(this.cartItem);
 
   @override
   List<Object> get props => [cartItem];
 }
 
 /// When user clicks to change quantity => update cart event
-class UpdateCartItem extends CartEvent {
-  final CartItem cartItem;
+class UpdateCartItemModel extends CartEvent {
+  final CartItemModel cartItem;
 
-  UpdateCartItem(this.cartItem);
+  UpdateCartItemModel(this.cartItem);
 
   @override
   List<Object> get props => [cartItem];

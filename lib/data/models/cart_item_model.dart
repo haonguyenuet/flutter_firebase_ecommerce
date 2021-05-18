@@ -1,8 +1,8 @@
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:equatable/equatable.dart';
 
 /// Cart item model
-class CartItem extends Equatable {
+class CartItemModel extends Equatable {
   /// Cart item id
   final String id;
 
@@ -19,7 +19,7 @@ class CartItem extends Equatable {
   final Product? productInfo;
 
   /// Constructor
-  CartItem({
+  CartItemModel({
     required this.id,
     required this.productId,
     required this.price,
@@ -28,8 +28,8 @@ class CartItem extends Equatable {
   });
 
   /// Json data from server turns into model data
-  static CartItem fromMap(Map<String, dynamic> data) {
-    return CartItem(
+  static CartItemModel fromMap(Map<String, dynamic> data) {
+    return CartItemModel(
       id: data["id"] ?? "",
       productId: data["productId"],
       price: data["price"],
@@ -48,14 +48,14 @@ class CartItem extends Equatable {
   }
 
   /// Clone and update
-  CartItem cloneWith({
+  CartItemModel cloneWith({
     id,
     productId,
     productInfo,
     price,
     quantity,
   }) {
-    return CartItem(
+    return CartItemModel(
       id: id ?? this.id,
       productId: productId ?? this.productId,
       productInfo: productInfo ?? this.productInfo,

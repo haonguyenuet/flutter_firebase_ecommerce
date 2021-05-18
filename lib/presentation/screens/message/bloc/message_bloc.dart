@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/data/repository/repository.dart';
 import 'package:e_commerce_app/presentation/screens/message/bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -65,7 +65,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
       _loggedFirebaseUser = _authRepository.loggedFirebaseUser;
       _messagesStreamSubs?.cancel();
       _messagesStreamSubs = _messageRepository
-          .getRecentMessages(
+          .fetchRecentMessages(
             uid: _loggedFirebaseUser.uid,
             messagesLimit: _messagesLimit,
           )
@@ -80,7 +80,8 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   ) async* {
     if (_hasReachedMax) return;
     // get messages after event.lastMessage
-    List<Message> messages = await _messageRepository.getPreviousMessages(
+    List<MessageModel> messages =
+        await _messageRepository.fetchPreviousMessages(
       uid: _loggedFirebaseUser.uid,
       messagesLimit: _messagesLimit,
       lastMessage: event.lastMessage,
@@ -103,7 +104,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   ) async* {
     try {
       // Create new text message object
-      var newMessage = TextMessage(
+      var newMessage = TextMessageModel(
         text: event.text,
         id: Uuid().v1(),
         senderId: _loggedFirebaseUser.uid,
@@ -141,7 +142,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         imageUrls.add(imageUrl);
       }
       // Create new image message object
-      var newMessage = ImageMessage(
+      var newMessage = ImageMessageModel(
         images: imageUrls,
         text: event.text,
         id: Uuid().v1(),
@@ -194,7 +195,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
   }
 }
 
-Message automaticMessage = TextMessage(
+MessageModel automaticMessage = TextMessageModel(
   id: Uuid().v1(),
   senderId: "admin",
   text: "We will reply to your message as soon as possible",

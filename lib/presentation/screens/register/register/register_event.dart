@@ -1,6 +1,5 @@
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:equatable/equatable.dart';
-import 'package:e_commerce_app/data/entities/user.dart';
-
 abstract class RegisterEvent extends Equatable {
   const RegisterEvent();
 

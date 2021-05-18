@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/data/repository/location_repository/location_repo.dart';
 import 'package:e_commerce_app/data/repository/repository.dart';
 
 class AppRepository {
@@ -11,6 +12,7 @@ class AppRepository {
   static final feedbackRepository = FirebaseFeedbackRepository();
   static final messageRepository = FirebaseMessageRepository();
   static final storageRepository = StorageRepository();
+  static final locationRepository = LocationRepository();
 
   /// Singleton factory
   static final AppRepository _instance = AppRepository._internal();

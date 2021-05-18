@@ -70,20 +70,22 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
                 RadioListTile(
                   title: Text(Translate.of(context).translate('descending')),
                   value: PRODUCT_SORT_ORDER.DESCENDING,
-                  groupValue: sortOption.productSortOrder,
+                  groupValue: sortOption.productSortOrderModel,
                   onChanged: (value) {
                     setState(() {
-                      sortOption = sortOption.update(productSortOrder: value);
+                      sortOption =
+                          sortOption.update(productSortOrderModel: value);
                     });
                   },
                 ),
                 RadioListTile(
                   title: Text(Translate.of(context).translate('ascending')),
                   value: PRODUCT_SORT_ORDER.ASCENDING,
-                  groupValue: sortOption.productSortOrder,
+                  groupValue: sortOption.productSortOrderModel,
                   onChanged: (value) {
                     setState(() {
-                      sortOption = sortOption.update(productSortOrder: value);
+                      sortOption =
+                          sortOption.update(productSortOrderModel: value);
                     });
                   },
                 ),
@@ -92,7 +94,7 @@ class _SortOptionDialogState extends State<SortOptionDialog> {
             SizedBox(height: SizeConfig.defaultSize),
             DefaultButton(
               onPressed: () {
-                // productSortOrder default is descending, so it's not null
+                // productSortOrderModel default is descending, so it's not null
                 if (sortOption.productSortBy != null) {
                   Navigator.pop(context, sortOption);
                 } else {

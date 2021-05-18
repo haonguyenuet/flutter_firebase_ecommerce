@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/entities/delivery_address.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:equatable/equatable.dart';
 
 /// User model
@@ -18,10 +18,10 @@ class UserModel extends Equatable {
   /// The user's phone number
   final String phoneNumber;
 
-  final List<DeliveryAddress> addresses;
+  final List<DeliveryAddressModel> addresses;
 
   /// Get default address
-  DeliveryAddress? get defaultAddress {
+  DeliveryAddressModel? get defaultAddress {
     return addresses.isEmpty
         ? null
         : addresses.firstWhere((address) => address.isDefault);
@@ -39,15 +39,19 @@ class UserModel extends Equatable {
 
   /// Json data from server turns into model data
   static UserModel fromMap(Map<String, dynamic> data) {
+    List<DeliveryAddressModel> addresses = [];
+    if (data["addresses"] != null) {
+      data["addresses"].forEach((item) {
+        addresses.add(DeliveryAddressModel.fromMap(item));
+      });
+    }
     return UserModel(
       id: data["id"] ?? "",
       name: data["name"] ?? "",
       email: data["email"] ?? "",
       avatar: data["avatar"] ?? "",
       phoneNumber: data["phoneNumber"] ?? "",
-      addresses: List<DeliveryAddress>.from(data["addresses"]!.map((item) {
-        return DeliveryAddress.fromMap(item);
-      })),
+      addresses: addresses,
     );
   }
 

@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class CartState extends Equatable {
@@ -13,7 +13,7 @@ class CartLoading extends CartState {}
 
 /// Cart was loaded
 class CartLoaded extends CartState {
-  final List<CartItem> cart;
+  final List<CartItemModel> cart;
   final int priceOfGoods;
 
   CartLoaded({

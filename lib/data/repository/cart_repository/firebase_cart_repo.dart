@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/data/entities/cart_item.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/data/repository/cart_repository/cart_repo.dart';
 
 /// cart is collection in each user
@@ -7,20 +7,20 @@ class FirebaseCartRepository implements CartRepository {
   var userCollection = FirebaseFirestore.instance.collection("users");
 
   /// Get all cart items
-  Stream<List<CartItem>> cartStream(String uid) {
+  Stream<List<CartItemModel>> fetchCart(String uid) {
     return userCollection
         .doc(uid)
         .collection("cart")
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) {
               var data = doc.data()!;
-              return CartItem.fromMap(data);
+              return CartItemModel.fromMap(data);
             }).toList());
   }
 
   /// Add item
   /// Created by NDH
-  Future<void> addCartItem(String uid, CartItem newItem) async {
+  Future<void> addCartItemModel(String uid, CartItemModel newItem) async {
     var userRef = userCollection.doc(uid);
     await userRef.collection("cart").doc(newItem.id).get().then((doc) async {
       if (doc.exists) {
@@ -41,7 +41,7 @@ class FirebaseCartRepository implements CartRepository {
 
   /// Remove item
   /// Created by NDH
-  Future<void> removeCartItem(String uid, CartItem cartItem) async {
+  Future<void> removeCartItemModel(String uid, CartItemModel cartItem) async {
     await userCollection
         .doc(uid)
         .collection("cart")
@@ -66,7 +66,7 @@ class FirebaseCartRepository implements CartRepository {
 
   /// Update quantity of cart item
   /// Created by NDH
-  Future<void> updateCartItem(String uid, CartItem cartItem) async {
+  Future<void> updateCartItemModel(String uid, CartItemModel cartItem) async {
     var userRef = userCollection.doc(uid);
     await userRef.collection("cart").doc(cartItem.id).get().then((doc) async {
       if (doc.exists) {

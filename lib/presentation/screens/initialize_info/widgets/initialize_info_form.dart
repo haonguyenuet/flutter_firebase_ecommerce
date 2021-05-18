@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/entities/user.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/utils.dart';
 import 'package:e_commerce_app/presentation/widgets/buttons/default_button.dart';

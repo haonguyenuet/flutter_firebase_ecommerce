@@ -1,23 +1,22 @@
-import 'package:e_commerce_app/data/entities/category.dart';
-import 'package:e_commerce_app/data/entities/product.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 
 abstract class ProductRepository {
   /// Get all products
   /// Created by NDH
-  Future<List<Product>> getProducts();
+  Future<List<Product>> fetchProducts();
 
   /// Get popular products
   /// Created by NDH
-  Future<List<Product>> getPopularProducts();
+  Future<List<Product>> fetchPopularProducts();
 
   /// Get discount products
   /// Created by NDH
-  Future<List<Product>> getDiscountProducts();
+  Future<List<Product>> fetchDiscountProducts();
 
   /// Get products by category
   /// [categoryId] is id of category
   /// Created by NDH
-  Future<List<Product>> getProductsByCategory(String? categoryId);
+  Future<List<Product>> fetchProductsByCategory(String? categoryId);
 
   /// Get product by Id
   /// [pid] is product id
@@ -32,9 +31,9 @@ abstract class ProductRepository {
 
   /// Get all categories
   /// Created by NDH
-  Future<List<Category>> getCategories();
+  Future<List<CategoryModel>> getCategories();
 
   /// Get category by id
   /// Created by NDH
-  Future<Category> getCategoryById(String caregoryId);
+  Future<CategoryModel> getCategoryById(String caregoryId);
 }

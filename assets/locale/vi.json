@@ -139,5 +139,8 @@
   "order_successfully": "Đặt hàng thành công",
   "cancel_successfully": "Hủy đơn hàng thành công",
   "add_successfully": "Thêm thành công",
-  "save": "Lưu"
+  "save": "Lưu",
+  "city": "Thành phố/ Tỉnh",
+  "district": "Quận / Huyện",
+  "ward": "Phường / Xã"
 }

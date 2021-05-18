@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/entities/category.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/presentation/screens/categories/bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -8,7 +8,7 @@ class CategoriesEvent extends Equatable {
 }
 
 class OpenScreen extends CategoriesEvent {
-  final Category category;
+  final CategoryModel category;
 
   OpenScreen(this.category);
 

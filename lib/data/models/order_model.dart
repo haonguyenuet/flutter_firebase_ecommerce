@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/data/entities/cart_item.dart';
-import 'package:e_commerce_app/data/entities/delivery_address.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:equatable/equatable.dart';
 
-class Order extends Equatable {
+class OrderModel extends Equatable {
   final String id;
   final String uid;
-  final List<OrderItem> items;
+  final List<OrderModelItem> items;
   final String paymentMethod;
-  final DeliveryAddress deliveryAddress;
+  final DeliveryAddressModel deliveryAddress;
   final int priceToBePaid;
   final int priceOfGoods;
   final int deliveryFee;
@@ -23,7 +22,7 @@ class Order extends Equatable {
   Timestamp get receivedDate =>
       Timestamp.fromDate(this.createdAt.toDate().add(Duration(days: 3)));
 
-  Order({
+  OrderModel({
     required this.id,
     required this.uid,
     required this.items,
@@ -37,14 +36,14 @@ class Order extends Equatable {
   });
 
   /// Json data from server turns into model data
-  static Order fromMap(Map<String, dynamic> data) {
-    return Order(
+  static OrderModel fromMap(Map<String, dynamic> data) {
+    return OrderModel(
       id: data["id"],
       uid: data["uid"],
-      items: List<OrderItem>.from(data["items"]!.map((item) {
-        return OrderItem.fromMap(item);
+      items: List<OrderModelItem>.from(data["items"]!.map((item) {
+        return OrderModelItem.fromMap(item);
       })),
-      deliveryAddress: DeliveryAddress.fromMap(data["deliveryAddress"]),
+      deliveryAddress: DeliveryAddressModel.fromMap(data["deliveryAddress"]),
       paymentMethod: data["paymentMethod"],
       priceToBePaid: data["priceToBePaid"],
       priceOfGoods: data["priceOfGoods"],
@@ -71,7 +70,7 @@ class Order extends Equatable {
   }
 
   /// Clone and update
-  Order cloneWith({
+  OrderModel cloneWith({
     id,
     uid,
     items,
@@ -83,7 +82,7 @@ class Order extends Equatable {
     coupon,
     createdAt,
   }) {
-    return Order(
+    return OrderModel(
       id: id ?? this.id,
       uid: uid ?? this.uid,
       items: items ?? this.items,
@@ -111,7 +110,7 @@ class Order extends Equatable {
       ];
 }
 
-class OrderItem {
+class OrderModelItem {
   final String productId;
 
   final String productName;
@@ -123,7 +122,7 @@ class OrderItem {
   final int quantity;
 
   /// Constructor
-  OrderItem({
+  OrderModelItem({
     required this.productId,
     required this.productName,
     required this.productPrice,
@@ -132,8 +131,8 @@ class OrderItem {
   });
 
   /// Json data from server turns into model data
-  static OrderItem fromMap(Map<String, dynamic> data) {
-    return OrderItem(
+  static OrderModelItem fromMap(Map<String, dynamic> data) {
+    return OrderModelItem(
       productId: data["productId"] ?? "",
       productImage: data["productImage"] ?? "",
       productName: data["productName"] ?? "",
@@ -154,8 +153,8 @@ class OrderItem {
   }
 
   /// Json data from server turns into model data
-  static OrderItem fromCartItem(CartItem cartItem) {
-    return OrderItem(
+  static OrderModelItem fromCartItemModel(CartItemModel cartItem) {
+    return OrderModelItem(
       productId: cartItem.productId,
       quantity: cartItem.quantity,
       productImage: cartItem.productInfo!.images[0],

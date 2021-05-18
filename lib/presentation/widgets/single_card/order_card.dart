@@ -1,14 +1,14 @@
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/configs/config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 
-class OrderCard extends StatelessWidget {
-  final Order order;
+class OrderModelCard extends StatelessWidget {
+  final OrderModel order;
 
-  const OrderCard({Key? key, required this.order}) : super(key: key);
+  const OrderModelCard({Key? key, required this.order}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 /// Feedback item model
-class FeedBack extends Equatable {
+class FeedBackModel extends Equatable {
   /// Feedback Id
   final String id;
 
@@ -19,7 +19,7 @@ class FeedBack extends Equatable {
   final Timestamp timestamp;
 
   /// Contructor
-  FeedBack({
+  FeedBackModel({
     required this.id,
     required this.timestamp,
     required this.userId,
@@ -28,8 +28,8 @@ class FeedBack extends Equatable {
   });
 
   /// Json data from server turns into model data
-  static FeedBack fromMap(Map<String, dynamic> data) {
-    return FeedBack(
+  static FeedBackModel fromMap(Map<String, dynamic> data) {
+    return FeedBackModel(
       id: data["id"] ?? "",
       userId: data["userId"] ?? "",
       rating: data["rating"] ?? 0,
@@ -50,14 +50,14 @@ class FeedBack extends Equatable {
   }
 
   /// Clone and update
-  FeedBack cloneWith({
+  FeedBackModel cloneWith({
     id,
     userId,
     timestamp,
     rating,
     content,
   }) {
-    return FeedBack(
+    return FeedBackModel(
       id: id ?? this.id,
       userId: userId ?? this.userId,
       timestamp: timestamp ?? this.timestamp,

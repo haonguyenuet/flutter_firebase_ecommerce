@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/data/repository/app_repository.dart';
 import 'package:e_commerce_app/data/repository/repository.dart';
 import 'package:e_commerce_app/presentation/screens/categories/bloc/bloc.dart';
@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   ProductRepository _productRepository = AppRepository.productRepository;
-  late Category _category;
+  late CategoryModel _category;
   // Criteria filters
   String _currKeyword = "";
   ProductSortOption _currSortOption = ProductSortOption();
@@ -59,10 +59,10 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   }
 
   /// Open screen event => state
-  Stream<CategoriesState> _mapOpenScreenToState(Category category) async* {
+  Stream<CategoriesState> _mapOpenScreenToState(CategoryModel category) async* {
     try {
       _category = category;
-      yield DisplayListProducts.data(await getProducts());
+      yield DisplayListProducts.data(await fetchProducts());
     } catch (e) {
       yield DisplayListProducts.error(e.toString());
     }
@@ -73,7 +73,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
     yield DisplayListProducts.loading();
     try {
       _currKeyword = keyword;
-      yield DisplayListProducts.data(await getProducts());
+      yield DisplayListProducts.data(await fetchProducts());
     } catch (e) {
       yield DisplayListProducts.error(e.toString());
     }
@@ -90,25 +90,25 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   }
 
   /// This should be done at server side
-  Future<PriceSegment> getProducts() async {
+  Future<PriceSegment> fetchProducts() async {
     // Get products by category
-    List<Product> productsByCategory =
-        await _productRepository.getProductsByCategory(_category.id);
+    List<Product> productsByCategoryModel =
+        await _productRepository.fetchProductsByCategory(_category.id);
     // Filter products by current keyword
     bool query(Product p) =>
         _currKeyword.isEmpty ||
         p.name.toLowerCase().contains(_currKeyword.toLowerCase());
-    productsByCategory = productsByCategory.where(query).toList();
+    productsByCategoryModel = productsByCategoryModel.where(query).toList();
 
     // Sort
-    productsByCategory.sort(_mapOptionToSortMethod());
+    productsByCategoryModel.sort(_mapOptionToSortMethod());
 
     // Products are classified according to price segments
     List<Product> productsInLowRange = [];
     List<Product> productsInMidRange = [];
     List<Product> productsInHighRange = [];
 
-    productsByCategory.forEach((product) {
+    productsByCategoryModel.forEach((product) {
       if (product.price <= PriceSegment.LOW_SEGMENT) {
         productsInLowRange.add(product);
       } else if (product.price > PriceSegment.LOW_SEGMENT &&
@@ -129,19 +129,21 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
   /// Map sort options
   int Function(Product, Product) _mapOptionToSortMethod() {
     if (_currSortOption.productSortBy == PRODUCT_SORT_BY.SOLD_QUANTITY &&
-        _currSortOption.productSortOrder == PRODUCT_SORT_ORDER.DESCENDING) {
+        _currSortOption.productSortOrderModel ==
+            PRODUCT_SORT_ORDER.DESCENDING) {
       return sortSoldQuantityDescending;
     }
     if (_currSortOption.productSortBy == PRODUCT_SORT_BY.SOLD_QUANTITY &&
-        _currSortOption.productSortOrder == PRODUCT_SORT_ORDER.ASCENDING) {
+        _currSortOption.productSortOrderModel == PRODUCT_SORT_ORDER.ASCENDING) {
       return sortSoldQuantityAscending;
     }
     if (_currSortOption.productSortBy == PRODUCT_SORT_BY.PRICE &&
-        _currSortOption.productSortOrder == PRODUCT_SORT_ORDER.DESCENDING) {
+        _currSortOption.productSortOrderModel ==
+            PRODUCT_SORT_ORDER.DESCENDING) {
       return sortPriceDescending;
     }
     if (_currSortOption.productSortBy == PRODUCT_SORT_BY.PRICE &&
-        _currSortOption.productSortOrder == PRODUCT_SORT_ORDER.ASCENDING) {
+        _currSortOption.productSortOrderModel == PRODUCT_SORT_ORDER.ASCENDING) {
       return sortPriceAscending;
     }
     return sortSoldQuantityDescending;
@@ -172,23 +174,24 @@ class PriceSegment {
 /// Product sort options
 class ProductSortOption {
   final PRODUCT_SORT_BY? productSortBy;
-  final PRODUCT_SORT_ORDER productSortOrder;
+  final PRODUCT_SORT_ORDER productSortOrderModel;
 
   ProductSortOption({
     this.productSortBy,
-    this.productSortOrder = PRODUCT_SORT_ORDER.DESCENDING,
+    this.productSortOrderModel = PRODUCT_SORT_ORDER.DESCENDING,
   });
 
-  ProductSortOption update({productSortBy, productSortOrder}) {
+  ProductSortOption update({productSortBy, productSortOrderModel}) {
     return ProductSortOption(
       productSortBy: productSortBy ?? this.productSortBy,
-      productSortOrder: productSortOrder ?? this.productSortOrder,
+      productSortOrderModel:
+          productSortOrderModel ?? this.productSortOrderModel,
     );
   }
 
   @override
   String toString() {
-    return "ProductSortOption: ${this.productSortBy}, ${this.productSortOrder}";
+    return "ProductSortOption: ${this.productSortBy}, ${this.productSortOrderModel}";
   }
 }
 

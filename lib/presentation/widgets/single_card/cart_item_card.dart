@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/presentation/common_blocs/cart/bloc.dart';
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
@@ -9,14 +9,14 @@ import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CartItemCard extends StatelessWidget {
-  const CartItemCard({
+class CartItemModelCard extends StatelessWidget {
+  const CartItemModelCard({
     Key? key,
     required this.cartItem,
     this.allowChangeQuantity = true,
   }) : super(key: key);
 
-  final CartItem cartItem;
+  final CartItemModel cartItem;
   final bool allowChangeQuantity;
 
   @override
@@ -35,15 +35,15 @@ class CartItemCard extends StatelessWidget {
       padding: EdgeInsets.only(right: SizeConfig.defaultSize),
       child: Row(
         children: [
-          _buildCartItemImage(product),
+          _buildCartItemModelImage(product),
           SizedBox(width: SizeConfig.defaultSize),
-          Expanded(child: _buildCartItemInfo(product, context)),
+          Expanded(child: _buildCartItemModelInfo(product, context)),
         ],
       ),
     );
   }
 
-  _buildCartItemImage(Product product) {
+  _buildCartItemModelImage(Product product) {
     return Padding(
       padding: EdgeInsets.all(SizeConfig.defaultSize * 0.5),
       child: ShimmerImage(
@@ -54,7 +54,7 @@ class CartItemCard extends StatelessWidget {
     );
   }
 
-  _buildCartItemInfo(Product product, BuildContext context) {
+  _buildCartItemModelInfo(Product product, BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,13 +77,13 @@ class CartItemCard extends StatelessWidget {
         ),
 
         allowChangeQuantity
-            ? _buildCartItemQuantity(product, context)
+            ? _buildCartItemModelQuantity(product, context)
             : Text("x ${cartItem.quantity}")
       ],
     );
   }
 
-  _buildCartItemQuantity(Product product, BuildContext context) {
+  _buildCartItemModelQuantity(Product product, BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -118,7 +118,7 @@ class CartItemCard extends StatelessWidget {
 
   _onChangeQuantity(BuildContext context, Product product, int newQuantity) {
     // update cart item
-    BlocProvider.of<CartBloc>(context).add(UpdateCartItem(
+    BlocProvider.of<CartBloc>(context).add(UpdateCartItemModel(
       cartItem.cloneWith(
         quantity: newQuantity,
         price: newQuantity * product.price,

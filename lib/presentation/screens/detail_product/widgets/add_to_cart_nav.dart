@@ -1,6 +1,5 @@
 import 'package:e_commerce_app/presentation/common_blocs/cart/bloc.dart';
-import 'package:e_commerce_app/data/entities/cart_item.dart';
-import 'package:e_commerce_app/data/entities/product.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/utils/toast.dart';
@@ -29,14 +28,14 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
 
   void onAddToCart() {
     // Create new cart item
-    CartItem cartItem = CartItem(
+    CartItemModel cartItem = CartItemModel(
       id: product.id,
       productId: product.id,
       price: product.price * quantity,
       quantity: quantity,
     );
     // Add event AddToCart
-    BlocProvider.of<CartBloc>(context).add(AddCartItem(cartItem));
+    BlocProvider.of<CartBloc>(context).add(AddCartItemModel(cartItem));
     // Show toast: add successfully
     UtilToast.showMessageForUser(context, "Add successfully");
   }
@@ -69,25 +68,23 @@ class _AddToCartNavigationState extends State<AddToCartNavigation> {
           aspectRatio: 1,
           child: AbsorbPointer(
             absorbing: quantity > 1 ? false : true,
-            child: ElevatedButton(
-              onPressed: onDecreaseQuantity,
-              style: ElevatedButton.styleFrom(primary: Colors.white),
+            child: InkWell(
+              onTap: onDecreaseQuantity,
               child: Icon(Icons.remove, color: COLOR_CONST.primaryColor),
             ),
           ),
         ),
 
         /// Display the quantity of product
-        Text("$quantity", style: FONT_CONST.BOLD_PRIMARY_16),
+        Text("$quantity", style: FONT_CONST.BOLD_PRIMARY_18),
 
         /// Button increases the quantity of product
         AspectRatio(
           aspectRatio: 1,
           child: AbsorbPointer(
             absorbing: quantity < product.quantity ? false : true,
-            child: ElevatedButton(
-              onPressed: onIncreaseQuantity,
-              style: ElevatedButton.styleFrom(primary: Colors.white),
+            child: InkWell(
+              onTap: onIncreaseQuantity,
               child: Icon(Icons.add, color: COLOR_CONST.primaryColor),
             ),
           ),

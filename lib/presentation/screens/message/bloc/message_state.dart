@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class MessageState extends Equatable {
@@ -8,40 +8,9 @@ abstract class MessageState extends Equatable {
   List<Object?> get props => [];
 }
 
-///
-// class MessagesLoading extends MessageState {}
-
-// ///
-// class MessagesLoaded extends MessageState {
-//   final List<Message> messages;
-//   final bool hasReachedMax;
-//   MessagesLoaded({
-//     required this.messages,
-//     required this.hasReachedMax,
-//   });
-
-//   @override
-//   String toString() {
-//     return "MessagesLoaded{Number of messages: ${this.messages.length}, hasReachedMax: $hasReachedMax}";
-//   }
-
-//   @override
-//   List<Object> get props => [messages, hasReachedMax];
-// }
-
-// ///
-// class MessagesLoadFailure extends MessageState {
-//   final String error;
-
-//   MessagesLoadFailure(this.error);
-
-//   @override
-//   List<Object> get props => [error];
-// }
-
 //////////////////
 class DisplayMessages extends MessageState {
-  final List<Message>? messages;
+  final List<MessageModel>? messages;
   final bool hasReachedMax;
   final bool isPrevious;
   final String msg;
@@ -66,7 +35,7 @@ class DisplayMessages extends MessageState {
   }
 
   factory DisplayMessages.data({
-    required List<Message> messages,
+    required List<MessageModel> messages,
     required bool hasReachedMax,
     required bool isPrevious,
   }) {

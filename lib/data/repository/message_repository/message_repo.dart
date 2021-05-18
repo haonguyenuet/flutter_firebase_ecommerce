@@ -1,34 +1,34 @@
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 
 abstract class MessageRepository {
   /// Get 20 first messages
   /// Created by NDH
-  Stream<List<Message>> getRecentMessages({
+  Stream<List<MessageModel>> fetchRecentMessages({
     required String uid,
     required int messagesLimit,
   });
 
   /// Get more messages
   /// Created by NDH
-  Future<List<Message>> getPreviousMessages({
+  Future<List<MessageModel>> fetchPreviousMessages({
     required String uid,
     required int messagesLimit,
-    required Message lastMessage,
+    required MessageModel lastMessage,
   });
 
   /// Get lastest message
   /// Created by NDH
-  Future<Message?> getLastestMessage({required String uid});
+  Future<MessageModel?> getLastestMessage({required String uid});
 
   /// Add message
   /// [uid] is user id
   /// [newItem] is data of new  message
   /// Created by NDH
-  Future<void> addMessage(String uid, Message message);
+  Future<void> addMessage(String uid, MessageModel message);
 
   /// Remove message
   /// [uid] is user id
   /// [cartItem] is data of  message
   /// Created by NDH
-  Future<void> removeMessage(String uid, Message message);
+  Future<void> removeMessage(String uid, MessageModel message);
 }

@@ -1,12 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:e_commerce_app/data/entities/banner.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/presentation/widgets/others/shimmer_image.dart';
 import 'package:flutter/material.dart';
 
 class HomeBanner extends StatefulWidget {
-  final List<BannerItem> banners;
+  final List<BannerModel> banners;
 
   const HomeBanner({Key? key, required this.banners}) : super(key: key);
   @override
@@ -14,7 +14,7 @@ class HomeBanner extends StatefulWidget {
 }
 
 class _HomeBannerState extends State<HomeBanner> {
-  List<BannerItem> get banners => widget.banners;
+  List<BannerModel> get banners => widget.banners;
   final double aspectRatioBanner = 2 / 1;
   // local states
 

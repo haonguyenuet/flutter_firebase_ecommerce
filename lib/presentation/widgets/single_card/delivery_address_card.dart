@@ -1,11 +1,11 @@
-import 'package:e_commerce_app/data/entities/delivery_address.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/custom_widgets.dart';
 import 'package:e_commerce_app/utils/translate.dart';
 import 'package:flutter/material.dart';
 
 class DeliveryAddressCard extends StatelessWidget {
-  final DeliveryAddress deliveryAddress;
+  final DeliveryAddressModel deliveryAddress;
   final Function()? onPressed;
   final bool showDefautTick;
 
@@ -19,33 +19,32 @@ class DeliveryAddressCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomCardWidget(
       onTap: onPressed,
-      child: Row(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  Translate.of(context).translate("delivery_address"),
-                  style: FONT_CONST.BOLD_PRIMARY_18,
-                ),
-                TextRow(
-                  title: Translate.of(context).translate("name"),
-                  content: deliveryAddress.receiverName,
-                ),
-                TextRow(
-                  title: Translate.of(context).translate("phone_number"),
-                  content: deliveryAddress.phoneNumber,
-                ),
-                TextRow(
-                  title: Translate.of(context).translate("detail_address"),
-                  content: deliveryAddress.detailAddress,
-                ),
-              ],
-            ),
+          Row(
+            children: [
+              Text(
+                Translate.of(context).translate("delivery_address"),
+                style: FONT_CONST.BOLD_PRIMARY_18,
+              ),
+              Spacer(),
+              _buildDefaultText(context),
+            ],
           ),
-          _buildDefaultText(context),
+          TextRow(
+            title: Translate.of(context).translate("name"),
+            content: deliveryAddress.receiverName,
+          ),
+          TextRow(
+            title: Translate.of(context).translate("phone_number"),
+            content: deliveryAddress.phoneNumber,
+          ),
+          TextRow(
+            title: Translate.of(context).translate("detail_address"),
+            content: deliveryAddress.toString(),
+          ),
         ],
       ),
     );

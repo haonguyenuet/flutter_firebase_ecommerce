@@ -15,7 +15,6 @@ class Header extends StatefulWidget {
 }
 
 class _HeaderState extends State<Header> {
-  
   // local states
   int selectedStarIndex = 0;
 
@@ -60,7 +59,7 @@ class _HeaderState extends State<Header> {
             ),
           );
         }
-        return Center(child: Text("Something went wrongs."));
+        return Container();
       },
     );
   }

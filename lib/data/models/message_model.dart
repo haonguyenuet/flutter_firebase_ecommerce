@@ -1,30 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class Message extends Equatable {
+abstract class MessageModel extends Equatable {
   final String id;
   final String senderId;
   final Timestamp createdAt;
 
-  Message({
+  MessageModel({
     required this.id,
     required this.senderId,
     required this.createdAt,
   });
 
   /// Json data from server turns into model data
-  factory Message.fromMap(Map<String, dynamic> data) {
+  factory MessageModel.fromMap(Map<String, dynamic> data) {
     final int type = data['type'];
-    Message message;
+    MessageModel message;
     switch (type) {
       case 0:
-        message = TextMessage.fromMap(data);
+        message = TextMessageModel.fromMap(data);
         break;
       case 1:
-        message = ImageMessage.fromMap(data);
+        message = ImageMessageModel.fromMap(data);
         break;
       default:
-        message = TextMessage.fromMap(data);
+        message = TextMessageModel.fromMap(data);
     }
     return message;
   }
@@ -36,19 +36,19 @@ abstract class Message extends Equatable {
   List<Object?> get props => [id, senderId, createdAt];
 }
 
-/// Message type: Text
-class TextMessage extends Message {
+/// MessageModel type: Text
+class TextMessageModel extends MessageModel {
   final String text;
 
-  TextMessage({
+  TextMessageModel({
     required this.text,
     required String id,
     required String senderId,
     required Timestamp createdAt,
   }) : super(id: id, senderId: senderId, createdAt: createdAt);
 
-  factory TextMessage.fromMap(Map<String, dynamic> data) {
-    return TextMessage(
+  factory TextMessageModel.fromMap(Map<String, dynamic> data) {
+    return TextMessageModel(
       id: data['id'] ?? "",
       senderId: data['senderId'] ?? "",
       text: data['text'] ?? "",
@@ -70,12 +70,12 @@ class TextMessage extends Message {
   List<Object?> get props => [text, id, senderId, createdAt];
 }
 
-/// Message type: Image
-class ImageMessage extends Message {
+/// MessageModel type: Image
+class ImageMessageModel extends MessageModel {
   final String? text;
   final List<dynamic> images;
 
-  ImageMessage({
+  ImageMessageModel({
     this.text,
     required this.images,
     required String id,
@@ -83,8 +83,8 @@ class ImageMessage extends Message {
     required Timestamp createdAt,
   }) : super(id: id, senderId: senderId, createdAt: createdAt);
 
-  factory ImageMessage.fromMap(Map<String, dynamic> data) {
-    return ImageMessage(
+  factory ImageMessageModel.fromMap(Map<String, dynamic> data) {
+    return ImageMessageModel(
       id: data['id'] ?? "",
       senderId: data['senderId'] ?? "",
       text: data['text'] ?? "",

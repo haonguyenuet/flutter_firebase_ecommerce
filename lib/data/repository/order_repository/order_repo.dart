@@ -1,18 +1,18 @@
-import 'package:e_commerce_app/data/entities/entites.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 
 abstract class OrderRepository {
   /// Get all orders
   /// [uid] is user id
   /// Created by NDH
-  Future<List<Order>> getOrders(String uid);
+  Future<List<OrderModel>> fetchOrders(String uid);
 
   /// Add item
-  /// [newOrder] is data of new order
+  /// [newOrderModel] is data of new order
   /// Created by NDH
-  Future<void> addOrder(Order newOrder);
+  Future<void> addOrderModel(OrderModel newOrderModel);
 
   /// Add item
-  /// [newOrder] is data of new order
+  /// [newOrderModel] is data of new order
   /// Created by NDH
-  Future<void> removeOrder(Order order);
+  Future<void> removeOrderModel(OrderModel order);
 }

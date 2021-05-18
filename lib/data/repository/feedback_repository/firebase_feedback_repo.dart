@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce_app/data/entities/feedback.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/data/repository/feedback_repository/feedback_repo.dart';
 
 /// Feedbacks is collection type in each product
@@ -10,7 +10,7 @@ class FirebaseFeedbackRepository implements FeedbackRepository {
   /// [pid] is product id
   /// Created by NDH
   @override
-  Stream<List<FeedBack>>? feedbackStream(String pid) {
+  Stream<List<FeedBackModel>>? fetchFeedbacks(String pid) {
     try {
       return productCollection
           .doc(pid)
@@ -18,7 +18,7 @@ class FirebaseFeedbackRepository implements FeedbackRepository {
           .orderBy("timestamp", descending: true)
           .snapshots()
           .map((snapshot) => snapshot.docs
-              .map((doc) => FeedBack.fromMap(doc.data()!))
+              .map((doc) => FeedBackModel.fromMap(doc.data()!))
               .toList());
     } catch (e) {
       print(e);
@@ -31,7 +31,7 @@ class FirebaseFeedbackRepository implements FeedbackRepository {
   /// [newItem] is data of new feedback
   /// Created by NDH
   @override
-  Future<List<FeedBack>> getFeedbacksByStar(String pid, int star) async {
+  Future<List<FeedBackModel>> getFeedbacksByStar(String pid, int star) async {
     return star != 0
         ? await productCollection
             .doc(pid)
@@ -40,7 +40,7 @@ class FirebaseFeedbackRepository implements FeedbackRepository {
             .orderBy("timestamp", descending: true)
             .get()
             .then((snapshot) => snapshot.docs
-                .map((doc) => FeedBack.fromMap(doc.data()!))
+                .map((doc) => FeedBackModel.fromMap(doc.data()!))
                 .toList())
             .catchError((error) {})
         : await productCollection
@@ -49,7 +49,7 @@ class FirebaseFeedbackRepository implements FeedbackRepository {
             .orderBy("timestamp", descending: true)
             .get()
             .then((snapshot) => snapshot.docs
-                .map((doc) => FeedBack.fromMap(doc.data()!))
+                .map((doc) => FeedBackModel.fromMap(doc.data()!))
                 .toList())
             .catchError((error) {});
   }
@@ -59,7 +59,7 @@ class FirebaseFeedbackRepository implements FeedbackRepository {
   /// [star] is number of stars
   /// Created by NDH
   @override
-  Future<void> addNewFeedback(String pid, FeedBack newItem) async {
+  Future<void> addNewFeedback(String pid, FeedBackModel newItem) async {
     var productRef = productCollection.doc(pid);
     await productRef
         .collection("feedbacks")

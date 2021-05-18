@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/bottom_navigation.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/presentation/screens/detail_image/detail_image_screen.dart';
 import 'package:e_commerce_app/presentation/screens/message/message_screen.dart';
 import 'package:e_commerce_app/presentation/screens/detail_order/detail_order_screen.dart';
@@ -6,7 +7,6 @@ import 'package:e_commerce_app/presentation/screens/map/map_screen.dart';
 import 'package:e_commerce_app/presentation/screens/my_orders/my_orders_screen.dart';
 import 'package:e_commerce_app/presentation/screens/search/search_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:e_commerce_app/data/entities/entites.dart';
 import 'package:e_commerce_app/presentation/screens/delivery_address/delivery_address_screen.dart';
 import 'package:e_commerce_app/presentation/screens/categories/categories_screen.dart';
 import 'package:e_commerce_app/presentation/screens/cart/cart_screen.dart';
@@ -82,7 +82,7 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => FeedbacksScreen(product: product));
       case CATEGORIES:
-        var category = settings.arguments as Category;
+        var category = settings.arguments as CategoryModel;
         return MaterialPageRoute(
             builder: (_) => CategoriesScreen(category: category));
       case CART:
@@ -94,12 +94,12 @@ class AppRouter {
           builder: (_) => MyOrdersScreen(),
         );
       case DETAIL_ORDER:
-        var order = settings.arguments as Order;
+        var order = settings.arguments as OrderModel;
         return MaterialPageRoute(
             builder: (_) => DetailOrderScreen(order: order));
       case DELIVERY_ADDRESS:
         return MaterialPageRoute(
-          builder: (_) => DeliveryAddressScreen(),
+          builder: (_) => DeliveryAddressModelScreen(),
         );
       case MAP:
         return MaterialPageRoute(

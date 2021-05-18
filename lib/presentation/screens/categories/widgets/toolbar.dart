@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/data/entities/category.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/constants/constants.dart';
@@ -11,9 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ToolBarWidget extends StatefulWidget {
-  final Category currCategory;
+  final CategoryModel currCategoryModel;
 
-  const ToolBarWidget({Key? key, required this.currCategory}) : super(key: key);
+  const ToolBarWidget({Key? key, required this.currCategoryModel})
+      : super(key: key);
 
   @override
   _ToolBarWidgetState createState() => _ToolBarWidgetState();
@@ -121,7 +122,7 @@ class _ToolBarWidgetState extends State<ToolBarWidget> {
       );
     } else
       return Text(
-        Translate.of(context).translate(widget.currCategory.name),
+        Translate.of(context).translate(widget.currCategoryModel.name),
         style: FONT_CONST.BOLD_DEFAULT_20,
       );
   }

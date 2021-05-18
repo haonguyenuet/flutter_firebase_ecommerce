@@ -23,7 +23,7 @@ class RelatedProductsBloc
   Stream<RelatedProductsState> _mapLoadRelatedProductsToState(
       LoadRelatedProducts event) async* {
     try {
-      var products = await _productRepository.getProductsByCategory(
+      var products = await _productRepository.fetchProductsByCategory(
         event.product.categoryId,
       );
       final relatedProducts =

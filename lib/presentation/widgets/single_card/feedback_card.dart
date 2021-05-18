@@ -1,5 +1,4 @@
-import 'package:e_commerce_app/data/entities/feedback.dart';
-import 'package:e_commerce_app/data/entities/user.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/data/repository/app_repository.dart';
 import 'package:e_commerce_app/data/repository/repository.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
@@ -16,7 +15,7 @@ class FeedbackCard extends StatelessWidget {
     required this.feedBack,
   }) : super(key: key);
 
-  final FeedBack feedBack;
+  final FeedBackModel feedBack;
 
   @override
   Widget build(BuildContext context) {
