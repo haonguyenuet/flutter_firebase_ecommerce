@@ -1,5 +1,5 @@
 import 'package:e_commerce_app/presentation/common_blocs/profile/bloc.dart';
-import 'package:e_commerce_app/data/entities/delivery_address.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/constants/color_constant.dart';
 import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/widgets/others/loading.dart';
@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'delivery_address_bottom_sheet.dart';
 
-class DeliveryAddressScreen extends StatelessWidget {
+class DeliveryAddressModelScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +49,7 @@ class DeliveryAddressScreen extends StatelessWidget {
     );
   }
 
-  _buildContent(List<DeliveryAddress> addressList) {
+  _buildContent(List<DeliveryAddressModel> addressList) {
     return ListView.builder(
       physics: BouncingScrollPhysics(),
       itemCount: addressList.length,
@@ -72,7 +72,7 @@ class DeliveryAddressScreen extends StatelessWidget {
   }
 
   _openDeliveryBottomSheet(BuildContext context,
-      {DeliveryAddress? deliveryAddress}) {
+      {DeliveryAddressModel? deliveryAddress}) {
     showModalBottomSheet(
       isScrollControlled: true,
       backgroundColor: Colors.white,
@@ -84,7 +84,8 @@ class DeliveryAddressScreen extends StatelessWidget {
       ),
       context: context,
       builder: (BuildContext context) {
-        return DeliveryAddressBottomSheet(deliveryAddress: deliveryAddress);
+        return DeliveryAddressModelBottomSheet(
+            deliveryAddress: deliveryAddress);
       },
     );
   }

@@ -1,5 +1,6 @@
+import 'package:e_commerce_app/data/models/location_model.dart';
 import 'package:e_commerce_app/presentation/common_blocs/profile/bloc.dart';
-import 'package:e_commerce_app/data/entities/delivery_address.dart';
+import 'package:e_commerce_app/data/models/models.dart';
 import 'package:e_commerce_app/configs/router.dart';
 import 'package:e_commerce_app/configs/size_config.dart';
 import 'package:e_commerce_app/constants/constants.dart';
@@ -12,34 +13,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DeliveryAddressBottomSheet extends StatefulWidget {
-  final DeliveryAddress? deliveryAddress;
+import 'address_picker/address_picker.dart';
 
-  const DeliveryAddressBottomSheet({Key? key, this.deliveryAddress})
+class DeliveryAddressModelBottomSheet extends StatefulWidget {
+  final DeliveryAddressModel? deliveryAddress;
+
+  const DeliveryAddressModelBottomSheet({Key? key, this.deliveryAddress})
       : super(key: key);
   @override
-  _DeliveryAddressBottomSheetState createState() =>
-      _DeliveryAddressBottomSheetState();
+  _DeliveryAddressModelBottomSheetState createState() =>
+      _DeliveryAddressModelBottomSheetState();
 }
 
-class _DeliveryAddressBottomSheetState
-    extends State<DeliveryAddressBottomSheet> {
+class _DeliveryAddressModelBottomSheetState
+    extends State<DeliveryAddressModelBottomSheet> {
   // [deliveryAddress] is null, that means addresses is empty
   // So name and phoneNumber is default
   // And isDefaultAddress = true
-  DeliveryAddress? get deliveryAddress => widget.deliveryAddress;
+  DeliveryAddressModel? get deliveryAddress => widget.deliveryAddress;
 
   // local states
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
-  final TextEditingController detailAddressController = TextEditingController();
-
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController detailAddressController = TextEditingController();
+  LocationModel selectedCity = LocationModel();
+  LocationModel selectedDistrict = LocationModel();
+  LocationModel selectedWard = LocationModel();
   bool isDefaultAddress = true;
 
   bool get isPopulated =>
       nameController.text.isNotEmpty &&
       phoneNumberController.text.isNotEmpty &&
-      detailAddressController.text.isNotEmpty;
+      detailAddressController.text.isNotEmpty &&
+      selectedCity.name.isNotEmpty &&
+      selectedDistrict.name.isNotEmpty &&
+      selectedWard.name.isNotEmpty;
 
   @override
   void initState() {
@@ -51,7 +59,9 @@ class _DeliveryAddressBottomSheetState
       nameController.text = deliveryAddress!.receiverName;
       phoneNumberController.text = deliveryAddress!.phoneNumber;
       detailAddressController.text = deliveryAddress!.detailAddress;
-      isDefaultAddress = deliveryAddress!.isDefault;
+      selectedCity = deliveryAddress!.city;
+      selectedDistrict = deliveryAddress!.district;
+      selectedWard = deliveryAddress!.ward;
     } else if (profileState is ProfileLoaded) {
       nameController.text = profileState.loggedUser.name;
       phoneNumberController.text = profileState.loggedUser.phoneNumber;
@@ -62,7 +72,6 @@ class _DeliveryAddressBottomSheetState
   void dispose() {
     nameController.dispose();
     phoneNumberController.dispose();
-    detailAddressController.dispose();
     super.dispose();
   }
 
@@ -75,12 +84,15 @@ class _DeliveryAddressBottomSheetState
   void onSubmitAddress() {
     if (isPopulated) {
       // Create new delivery address
-      var newAddress = DeliveryAddress(
+      var newAddress = DeliveryAddressModel(
         id: deliveryAddress != null
             ? deliveryAddress!.id
             : UniqueKey().toString(),
         receiverName: nameController.text,
         phoneNumber: phoneNumberController.text,
+        city: selectedCity,
+        district: selectedDistrict,
+        ward: selectedWard,
         detailAddress: detailAddressController.text,
         isDefault: isDefaultAddress,
       );
@@ -114,19 +126,17 @@ class _DeliveryAddressBottomSheetState
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      padding: EdgeInsets.symmetric(vertical: SizeConfig.defaultPadding),
       child: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: SizeConfig.defaultPadding),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              _buildInput(),
-              _buildGoogleMapOption(),
-              _buildSwitchDefaultAddress(),
-              _buildDeleteButton(),
-              _buildSubmitButton(),
-            ],
-          ),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            _buildInput(),
+            _buildGoogleMapOption(),
+            _buildSwitchDefaultAddress(),
+            _buildDeleteButton(),
+            _buildSubmitButton(),
+          ],
         ),
       ),
     );
@@ -142,10 +152,6 @@ class _DeliveryAddressBottomSheetState
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
               labelText: Translate.of(context).translate("name"),
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: SizeConfig.defaultSize * 2,
-              ),
-              border: outlineInputBorder(),
             ),
           ),
 
@@ -157,24 +163,25 @@ class _DeliveryAddressBottomSheetState
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             decoration: InputDecoration(
               labelText: Translate.of(context).translate("phone_number"),
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: SizeConfig.defaultSize * 2,
-              ),
-              border: outlineInputBorder(),
             ),
           ),
           SizedBox(height: SizeConfig.defaultSize),
-          // Detail address input
+
+          AddressPicker(
+            addressChanged: (city, district, ward) {
+              selectedCity = city;
+              selectedDistrict = district;
+              selectedWard = ward;
+            },
+            deliveryAddress: widget.deliveryAddress,
+          ),
+          SizedBox(height: SizeConfig.defaultSize),
+
           TextFormField(
             controller: detailAddressController,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
               labelText: Translate.of(context).translate("detail_address"),
-              contentPadding: EdgeInsets.symmetric(
-                vertical: SizeConfig.defaultSize,
-                horizontal: SizeConfig.defaultSize * 2,
-              ),
-              border: outlineInputBorder(),
             ),
             maxLines: null,
           ),
@@ -253,12 +260,5 @@ class _DeliveryAddressBottomSheetState
             ),
           )
         : Container();
-  }
-
-  outlineInputBorder() {
-    return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(5),
-      borderSide: BorderSide(color: COLOR_CONST.textColor),
-    );
   }
 }
