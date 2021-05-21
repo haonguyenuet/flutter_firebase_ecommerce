@@ -56,22 +56,23 @@ class _ListMessagesState extends State<ListMessages> {
               messages = state.messages!;
             }
             return ListView.builder(
-                physics: BouncingScrollPhysics(),
-                controller: scrollController,
-                shrinkWrap: true,
-                reverse: true,
-                padding: EdgeInsets.only(
-                  left: SizeConfig.defaultPadding,
-                  right: SizeConfig.defaultPadding,
-                  bottom: SizeConfig.defaultPadding,
-                ),
-                itemCount:
-                    state.hasReachedMax ? messages.length : messages.length + 1,
-                itemBuilder: (context, index) {
-                  return index == messages.length
-                      ? Loading()
-                      : MessageCard(message: messages[index]);
-                });
+              physics: BouncingScrollPhysics(),
+              controller: scrollController,
+              shrinkWrap: true,
+              reverse: true,
+              padding: EdgeInsets.only(
+                left: SizeConfig.defaultPadding,
+                right: SizeConfig.defaultPadding,
+                bottom: SizeConfig.defaultPadding,
+              ),
+              itemCount:
+                  state.hasReachedMax ? messages.length : messages.length + 1,
+              itemBuilder: (context, index) {
+                return index == messages.length
+                    ? Loading()
+                    : MessageCard(message: messages[index]);
+              },
+            );
           }
           if (state.msg.isNotEmpty) {
             return Center(child: Text('Loaded failure'));

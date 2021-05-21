@@ -91,7 +91,7 @@ class _MessageCardState extends State<MessageCard> {
   }
 
   _buildImageMessage(ImageMessageModel message, bool isSender) {
-    var textWidget = message.text!.isNotEmpty
+    var textPart = message.text!.isNotEmpty
         ? Text(
             message.text!,
             style: isSender
@@ -106,7 +106,7 @@ class _MessageCardState extends State<MessageCard> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        textWidget,
+        textPart,
         const SizedBox(height: 5),
         Wrap(
           children: List.generate(message.images.length, (index) {

@@ -6,6 +6,8 @@ import 'package:e_commerce_app/presentation/screens/message/widgets/list_message
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 class MessagesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -41,10 +43,20 @@ class MessagesScreen extends StatelessWidget {
       actions: [
         IconButton(
           icon: Icon(Icons.local_phone),
-          onPressed: () {},
+          onPressed: () async {
+            await _makePhoneCall("0967438901");
+          },
         ),
         SizedBox(width: SizeConfig.defaultPadding / 2),
       ],
     );
+  }
+
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    if (await canLaunch("tel:$phoneNumber")) {
+      await launch("tel:$phoneNumber");
+    } else {
+      throw 'Could not launch $phoneNumber';
+    }
   }
 }
