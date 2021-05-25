@@ -1,6 +1,6 @@
-# A Completed Functional Flutter App - Peachy Ecommerce  (BLoC + Firebase + Clean Architecture
+# A Completed Functional Flutter App - Peachy Ecommerce  (BLoC + Firebase + Clean Architecture)
 
-![Banner](https://github.com/haonguyenuet/Ecommerce_Flutter_Firebase/screenshots/banner.png)
+![Banner](https://github.com/haonguyenuet/Ecommerce_Flutter_Firebase/blob/main/screenshots/banner.png)
 
 Before run project, execute commands:
 - `flutter clean`
