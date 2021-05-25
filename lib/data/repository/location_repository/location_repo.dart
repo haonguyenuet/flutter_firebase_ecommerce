@@ -9,41 +9,40 @@ class LocationRepository {
   Future<List<LocationModel>> fetchCities() async {
     List<LocationModel> citites = [];
 
-    String url = "/city";
+    String url = "/province";
     var res = await _request.requestApi(method: MethodType.GET, url: url);
 
     if (res is ErrorModel) return citites;
 
     var data = (res as Map<String, dynamic>);
-    var results = data["LtsItem"] as List<dynamic>;
+    var results = data["results"] as List<dynamic>;
     citites = results.map((item) => LocationModel.fromMap(item)).toList();
     return citites;
   }
 
-  Future<List<LocationModel>> fetchDistricts(int cityId) async {
+  Future<List<LocationModel>> fetchDistricts(String cityId) async {
     List<LocationModel> districts = [];
 
-    String url = "/city/$cityId/district";
+    String url = "/district?province=$cityId";
     var res = await _request.requestApi(method: MethodType.GET, url: url);
 
     if (res is ErrorModel) return districts;
-
-    var data = (res as List<dynamic>);
-    districts = data.map((item) => LocationModel.fromMap(item)).toList();
+    var data = (res as Map<String, dynamic>);
+    var results = data["results"] as List<dynamic>;
+    districts = results.map((item) => LocationModel.fromMap(item)).toList();
     return districts;
   }
 
-  Future<List<LocationModel>> fetchWards(int districtId) async {
+  Future<List<LocationModel>> fetchWards(String districtId) async {
     List<LocationModel> wards = [];
 
-    String url = "/district/$districtId/ward";
+    String url = "/commune?district=$districtId";
     var res = await _request.requestApi(method: MethodType.GET, url: url);
 
     if (res is ErrorModel) return wards;
-
-    var data = (res as List<dynamic>);
-
-    wards = data.map((item) => LocationModel.fromMap(item)).toList();
+    var data = (res as Map<String, dynamic>);
+    var results = data["results"] as List<dynamic>;
+    wards = results.map((item) => LocationModel.fromMap(item)).toList();
     return wards;
   }
 }

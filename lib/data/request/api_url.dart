@@ -4,7 +4,7 @@ class DevEnvironment {
 }
 
 class LocationApi {
-  static const BASE_URL = "https://thongtindoanhnghiep.co/api";
+  static const BASE_URL = "https://api.mysupership.vn/v1/partner/areas";
 }
 
 final environment = DevEnvironment();

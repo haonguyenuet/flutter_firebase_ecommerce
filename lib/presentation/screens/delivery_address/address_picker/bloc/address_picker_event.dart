@@ -8,14 +8,14 @@ abstract class AddressPickerEvent extends Equatable {
 }
 
 class InitialEvent extends AddressPickerEvent {
-  final int? cityId;
-  final int? districtId;
+  final String? cityId;
+  final String? districtId;
 
   InitialEvent({this.cityId, this.districtId});
 }
 
 class LoadDistricts extends AddressPickerEvent {
-  final int cityId;
+  final String cityId;
 
   LoadDistricts(this.cityId);
 
@@ -23,7 +23,7 @@ class LoadDistricts extends AddressPickerEvent {
 }
 
 class LoadWards extends AddressPickerEvent {
-  final int districtId;
+  final String districtId;
 
   LoadWards(this.districtId);
 
