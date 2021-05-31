@@ -150,7 +150,7 @@ class _LoginFormState extends State<LoginForm> {
         hintText: Translate.of(context).translate('password'),
         suffixIcon: IconButton(
           icon: isShowPassword
-              ? Icon(Icons.visibility)
+              ? Icon(Icons.visibility_outlined)
               : Icon(Icons.visibility_off),
           onPressed: () {
             setState(() => isShowPassword = !isShowPassword);
