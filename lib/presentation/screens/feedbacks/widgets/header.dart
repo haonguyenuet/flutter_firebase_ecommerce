@@ -51,9 +51,8 @@ class _HeaderState extends State<Header> {
                 RatingBar(initialRating: state.rating, readOnly: true),
                 SizedBox(height: SizeConfig.defaultSize),
                 Text(
-                  "${state.numberOfFeedbacks} " +
-                      Translate.of(context).translate("feedbacks"),
-                  style: FONT_CONST.MEDIUM_WHITE,
+                  "${state.numberOfFeedbacks} ${Translate.of(context).translate("feedbacks")}",
+                  style: FONT_CONST.MEDIUM_WHITE_20,
                 ),
               ],
             ),
@@ -87,13 +86,7 @@ class _HeaderState extends State<Header> {
               ),
               child: Text(
                 "All",
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: selectedStarIndex == 0
-                      ? COLOR_CONST.primaryColor
-                      : COLOR_CONST.textColor,
-                ),
+                style:selectedStarIndex == 0 ? FONT_CONST.BOLD_PRIMARY_18 : FONT_CONST.BOLD_DEFAULT_18 ,
               ),
             ),
           ),

@@ -33,11 +33,13 @@ class AppTheme {
   );
 
   static final _inputDecorationThem = InputDecorationTheme(
-    contentPadding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultPadding),
+    contentPadding:
+        EdgeInsets.symmetric(horizontal: SizeConfig.defaultPadding * 1.2),
     border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(5),
+      borderRadius: BorderRadius.all(Radius.circular(5)),
       borderSide: BorderSide(color: COLOR_CONST.textColor),
     ),
+    hintStyle: FONT_CONST.REGULAR_DEFAULT_20,
   );
 
   /// Singleton factory

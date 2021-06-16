@@ -73,14 +73,18 @@ class CheckoutBottom extends StatelessWidget {
     return Row(
       children: [
         Container(
-          padding: EdgeInsets.all(10),
-          height: SizeConfig.defaultSize * 4,
-          width: SizeConfig.defaultSize * 4,
+          alignment: Alignment.center,
+          height: SizeConfig.defaultSize * 5,
+          width: SizeConfig.defaultSize * 5,
           decoration: BoxDecoration(
-            color: Color(0xFFF5F6F9),
-            borderRadius: BorderRadius.circular(10),
+            color: COLOR_CONST.cardShadowColor.withOpacity(0.5),
+            borderRadius: BorderRadius.circular(SizeConfig.defaultSize),
           ),
-          child: SvgPicture.asset(ICON_CONST.RECEIPT),
+          child: SvgPicture.asset(
+            ICON_CONST.RECEIPT,
+            width: SizeConfig.defaultSize * 2.5,
+            height: SizeConfig.defaultSize * 2.5,
+          ),
         ),
         SizedBox(width: SizeConfig.defaultSize),
         Text.rich(

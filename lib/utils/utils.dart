@@ -1,4 +1,3 @@
-export 'hex_color.dart';
 export 'validator.dart';
 export 'formatter.dart';
 export 'dialog.dart';

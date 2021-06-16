@@ -24,7 +24,7 @@ class RegisterHeader extends StatelessWidget {
           ),
           Text(
             Translate.of(context).translate('it_so_quick_and_easy'),
-            style: FONT_CONST.MEDIUM_WHITE_18,
+            style: FONT_CONST.MEDIUM_WHITE_20,
             textAlign: TextAlign.center,
           ),
         ],

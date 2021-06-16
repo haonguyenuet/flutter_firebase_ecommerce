@@ -25,7 +25,7 @@ class LoginHeader extends StatelessWidget {
           ),
           Text(
             Translate.of(context).translate("login_slogan"),
-            style: FONT_CONST.MEDIUM_WHITE_18,
+            style: FONT_CONST.MEDIUM_WHITE_20,
           ),
         ],
       ),

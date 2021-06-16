@@ -9,19 +9,30 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => HomeBloc()..add(LoadHome()),
-      child: Scaffold(
-        body: SafeArea(
-          child: CustomScrollView(
-            physics: BouncingScrollPhysics(),
-            slivers: [
-              SliverPersistentHeader(
-                delegate: HomePersistentHeader(),
-                pinned: true,
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            body: SafeArea(
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  BlocProvider.of<HomeBloc>(context).add(RefreshHome());
+                },
+                child: CustomScrollView(
+                  physics: AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics(),
+                  ),
+                  slivers: [
+                    SliverPersistentHeader(
+                      delegate: HomePersistentHeader(),
+                      pinned: true,
+                    ),
+                    HomeBody(),
+                  ],
+                ),
               ),
-              HomeBody(),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

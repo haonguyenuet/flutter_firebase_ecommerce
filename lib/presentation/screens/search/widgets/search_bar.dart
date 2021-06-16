@@ -63,7 +63,7 @@ class _SearchBarState extends State<SearchBar> {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.cancel),
+            icon: Icon(Icons.cancel_outlined),
             onPressed: onClearSearchField,
           ),
         ],

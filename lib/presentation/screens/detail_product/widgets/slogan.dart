@@ -42,12 +42,12 @@ class Slogan extends StatelessWidget {
       children: [
         SvgPicture.asset(
           iconPath,
-          width: SizeConfig.defaultSize * 2,
-          height: SizeConfig.defaultSize * 2,
+          width: SizeConfig.defaultSize * 3,
+          height: SizeConfig.defaultSize * 3,
           color: COLOR_CONST.primaryColor,
         ),
         SizedBox(width: SizeConfig.defaultSize * 0.5),
-        Text(text),
+        Text(text, style: FONT_CONST.REGULAR_DEFAULT_18),
       ],
     );
   }

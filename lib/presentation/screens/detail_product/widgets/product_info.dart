@@ -60,7 +60,7 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
   _buildProductName() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultPadding),
-      child: Text(product.name, style: FONT_CONST.BOLD_DEFAULT_20),
+      child: Text(product.name, style: FONT_CONST.BOLD_DEFAULT_24),
     );
   }
 
@@ -92,10 +92,13 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
       TextSpan(
         style: FONT_CONST.BOLD_DEFAULT,
         children: [
-          TextSpan(text: Translate.of(context).translate('sold')),
+          TextSpan(
+            text: Translate.of(context).translate('sold'),
+            style: FONT_CONST.BOLD_DEFAULT_18,
+          ),
           TextSpan(
             text: " ${product.soldQuantity}",
-            style: FONT_CONST.BOLD_PRIMARY_16,
+            style: FONT_CONST.BOLD_PRIMARY_18,
           ),
         ],
       ),
@@ -113,9 +116,13 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
       },
       child: Row(
         children: [
-          Text("${product.rating}", style: FONT_CONST.BOLD_DEFAULT_16),
+          Text("${product.rating}", style: FONT_CONST.BOLD_DEFAULT_18),
           SizedBox(width: 5),
-          SvgPicture.asset("assets/icons/Star Icon.svg"),
+          SvgPicture.asset(
+            "assets/icons/Star Icon.svg",
+            width: SizeConfig.defaultSize * 1.8,
+            height: SizeConfig.defaultSize * 1.8,
+          ),
         ],
       ),
     );
@@ -125,13 +132,16 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultPadding),
+        padding: EdgeInsets.symmetric(
+          horizontal: SizeConfig.defaultPadding,
+          vertical: SizeConfig.defaultSize,
+        ),
         alignment: Alignment.center,
-        height: SizeConfig.defaultSize * 4,
+        height: SizeConfig.defaultSize * 5,
         decoration: BoxDecoration(
           color: product.isAvailable ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(25),
+            topLeft: Radius.circular(SizeConfig.defaultSize * 2.5),
             bottomLeft: Radius.circular(SizeConfig.defaultSize * 2.5),
           ),
         ),
@@ -141,10 +151,14 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
               "assets/icons/Check mark rounde.svg",
               color:
                   product.isAvailable ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
+              width: SizeConfig.defaultSize * 3,
+              height: SizeConfig.defaultSize * 3,
             ),
             SizedBox(width: 5),
             Text(
-                "${product.isAvailable ? Translate.of(context).translate('available') : Translate.of(context).translate('not_available')}"),
+              "${product.isAvailable ? Translate.of(context).translate('available') : Translate.of(context).translate('not_available')}",
+              style: FONT_CONST.REGULAR_DEFAULT_18,
+            ),
           ],
         ),
       ),
@@ -159,7 +173,7 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
         children: [
           Text(
             product.description,
-            style: FONT_CONST.REGULAR_DEFAULT_16,
+            style: FONT_CONST.REGULAR_DEFAULT_18,
             maxLines: seeMore ? null : 2,
           ),
           SizedBox(height: 5),
@@ -168,8 +182,8 @@ class _ProductInfoWidgetState extends State<ProductInfoWidget> {
           GestureDetector(
             onTap: onSeeMore,
             child: Text(
-              "${seeMore ? Translate.of(context).translate('see_less') : Translate.of(context).translate('see_all')}",
-              style: FONT_CONST.BOLD_PRIMARY,
+              "${seeMore ? Translate.of(context).translate('see_less') : Translate.of(context).translate('see_more')}",
+              style: FONT_CONST.BOLD_PRIMARY_18,
             ),
           ),
         ],

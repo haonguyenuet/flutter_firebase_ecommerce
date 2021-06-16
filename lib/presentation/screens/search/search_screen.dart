@@ -64,48 +64,47 @@ class _SearchScreenState extends State<SearchScreen> {
     Widget recentSearchWidget = Container();
     Widget hotKeywordsWidget = Container();
     if (state.recentKeywords.length > 0) {
-      recentSearchWidget = Padding(
-        padding: EdgeInsets.symmetric(vertical: SizeConfig.defaultPadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              Translate.of(context).translate("recent_search"),
-              style: FONT_CONST.BOLD_DEFAULT_26,
-            ),
-            Wrap(
-              children: List.generate(state.recentKeywords.length, (index) {
-                return _buildSuggestionItem(state.recentKeywords[index]);
-              }),
-            ),
-          ],
-        ),
+      recentSearchWidget = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            Translate.of(context).translate("recent_search"),
+            style: FONT_CONST.BOLD_DEFAULT_26,
+          ),
+          Wrap(
+            children: List.generate(state.recentKeywords.length, (index) {
+              return _buildSuggestionItem(state.recentKeywords[index]);
+            }),
+          ),
+        ],
       );
     }
     if (state.hotKeywords.length > 0) {
-      hotKeywordsWidget = Padding(
-    padding: EdgeInsets.symmetric(vertical: SizeConfig.defaultPadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              Translate.of(context).translate("hot_keywords"),
-              style: FONT_CONST.BOLD_DEFAULT_26,
-            ),
-            Wrap(
-              children: List.generate(state.hotKeywords.length, (index) {
-                return _buildSuggestionItem(state.hotKeywords[index]);
-              }),
-            ),
-          ],
-        ),
+      hotKeywordsWidget = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            Translate.of(context).translate("hot_keywords"),
+            style: FONT_CONST.BOLD_DEFAULT_26,
+          ),
+          Wrap(
+            children: List.generate(state.hotKeywords.length, (index) {
+              return _buildSuggestionItem(state.hotKeywords[index]);
+            }),
+          ),
+        ],
       );
     }
 
     return SingleChildScrollView(
+      padding: EdgeInsets.all(SizeConfig.defaultPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [recentSearchWidget, hotKeywordsWidget],
+        children: [
+          recentSearchWidget,
+          SizedBox(height: SizeConfig.defaultSize * 3),
+          hotKeywordsWidget
+        ],
       ),
     );
   }
@@ -114,6 +113,7 @@ class _SearchScreenState extends State<SearchScreen> {
     var results = state.results;
     if (results.isNotEmpty) {
       return ListView.builder(
+        padding: EdgeInsets.symmetric(horizontal: SizeConfig.defaultPadding),
         physics: BouncingScrollPhysics(),
         itemCount: results.length,
         itemBuilder: (context, index) {
@@ -149,16 +149,16 @@ class _SearchScreenState extends State<SearchScreen> {
       },
       child: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: SizeConfig.defaultSize * 2,
-          vertical: SizeConfig.defaultSize,
+          horizontal: SizeConfig.defaultSize * 3,
+          vertical: SizeConfig.defaultSize * 1.5,
         ),
         margin: EdgeInsets.only(
           top: SizeConfig.defaultSize,
           right: SizeConfig.defaultSize,
         ),
         decoration: BoxDecoration(
-          color: COLOR_CONST.backgroundColor,
-          borderRadius: BorderRadius.circular(20),
+          color: COLOR_CONST.primaryColor.withOpacity(0.3),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Text(
           keyword,

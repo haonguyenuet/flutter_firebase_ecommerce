@@ -16,9 +16,7 @@ class UtilDialog {
       builder: (context) {
         return AlertDialog(
           title: Text(
-            title == null
-                ? Translate.of(context).translate("message_for_you")
-                : title,
+            title ?? Translate.of(context).translate("message_for_you"),
             style: FONT_CONST.MEDIUM_PRIMARY_20,
           ),
           content: Text(content!),
@@ -28,8 +26,7 @@ class UtilDialog {
                 Translate.of(context).translate("close"),
                 style: FONT_CONST.MEDIUM_PRIMARY_18,
               ),
-              onPressed:
-                  onClose != null ? onClose : () => Navigator.of(context).pop(),
+              onPressed: onClose ?? () => Navigator.of(context).pop(),
             )
           ],
         );
@@ -69,10 +66,8 @@ class UtilDialog {
       builder: (context) {
         return AlertDialog(
           title: Text(
-            title == null
-                ? Translate.of(context).translate("message_for_you")
-                : title,
-            style: FONT_CONST.MEDIUM_PRIMARY_20,
+            title ?? Translate.of(context).translate("message_for_you"),
+            style: FONT_CONST.MEDIUM_PRIMARY_24,
           ),
           content: content,
           actions: <Widget>[
@@ -90,7 +85,8 @@ class UtilDialog {
               ),
               onPressed: () => Navigator.pop(context, true),
               style: TextButton.styleFrom(
-                  backgroundColor: COLOR_CONST.primaryColor),
+                backgroundColor: COLOR_CONST.primaryColor,
+              ),
             ),
           ],
         );

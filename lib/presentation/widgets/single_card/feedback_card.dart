@@ -26,7 +26,6 @@ class FeedbackCard extends StatelessWidget {
         spacing: 10,
         children: [
           _buildUserInfo(context),
-          _buildRating(),
           _buildFeedbackContent(),
           _buildCreatedDate()
         ],
@@ -50,7 +49,18 @@ class FeedbackCard extends StatelessWidget {
               ),
               SizedBox(width: 5),
               // User email
-              Text(user.email),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(user.email, style: FONT_CONST.REGULAR_DEFAULT_20),
+                  SizedBox(height: 5),
+                  RatingBar(
+                    readOnly: true,
+                    initialRating: feedBack.rating.toDouble(),
+                    itemSize: SizeConfig.defaultSize * 2.4,
+                  ),
+                ],
+              ),
             ],
           );
         }
@@ -59,22 +69,17 @@ class FeedbackCard extends StatelessWidget {
     );
   }
 
-  _buildRating() {
-    return RatingBar(
-      readOnly: true,
-      initialRating: feedBack.rating.toDouble(),
-      itemSize: SizeConfig.defaultSize * 2,
-    );
-  }
-
   _buildFeedbackContent() {
     return Text(
       "${feedBack.content}",
-      style: FONT_CONST.BOLD_DEFAULT_16,
+      style: FONT_CONST.BOLD_DEFAULT_20,
     );
   }
 
   _buildCreatedDate() {
-    return Text("${UtilFormatter.formatTimeStamp(feedBack.timestamp)}");
+    return Text(
+      "${UtilFormatter.formatTimeStamp(feedBack.timestamp)}",
+      style: FONT_CONST.REGULAR_DEFAULT_16,
+    );
   }
 }

@@ -68,7 +68,7 @@ class ProfileScreen extends StatelessWidget {
       leading: SvgPicture.asset(
         icon,
         color: COLOR_CONST.primaryColor,
-        width: SizeConfig.defaultSize * 2,
+        width: SizeConfig.defaultSize * 3,
       ),
       title: text,
       onPressed: onPressed,

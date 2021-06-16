@@ -44,8 +44,8 @@ class IconButtonWithCounter extends StatelessWidget {
 
   _buildCounter() {
     return Positioned(
-      right: -8,
-      top: -5,
+      right: -5,
+      top: -3,
       child: Container(
         alignment: Alignment.center,
         width: SizeConfig.defaultSize * 2,

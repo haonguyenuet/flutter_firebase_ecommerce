@@ -87,18 +87,18 @@ class _LoginFormState extends State<LoginForm> {
                   _buildTextFieldUsername(),
                   SizedBox(height: SizeConfig.defaultSize),
                   _buildTextFieldPassword(),
-                  SizedBox(height: SizeConfig.defaultSize),
+                  SizedBox(height: SizeConfig.defaultSize * 2),
                   Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                        Translate.of(context).translate('forgot_password')),
+                      Translate.of(context).translate('forgot_password'),
+                      style: FONT_CONST.REGULAR_DEFAULT_18,
+                    ),
                   ),
                   SizedBox(height: SizeConfig.defaultSize * 2),
                   _buildButtonLogin(state),
                   SizedBox(height: SizeConfig.defaultSize * 2),
                   _buildTextOr(),
-                  SizedBox(height: SizeConfig.defaultSize * 2),
-                  _buildNoAccountText(),
                 ],
               ),
             ),
@@ -151,7 +151,7 @@ class _LoginFormState extends State<LoginForm> {
         suffixIcon: IconButton(
           icon: isShowPassword
               ? Icon(Icons.visibility_outlined)
-              : Icon(Icons.visibility_off),
+              : Icon(Icons.visibility_off_outlined),
           onPressed: () {
             setState(() => isShowPassword = !isShowPassword);
           },
@@ -167,6 +167,9 @@ class _LoginFormState extends State<LoginForm> {
         style: FONT_CONST.BOLD_WHITE_18,
       ),
       onPressed: onLogin,
+      backgroundColor: isLoginButtonEnabled()
+          ? COLOR_CONST.primaryColor
+          : COLOR_CONST.cardShadowColor,
     );
   }
 
@@ -191,28 +194,6 @@ class _LoginFormState extends State<LoginForm> {
           ),
         )
       ],
-    );
-  }
-
-  _buildNoAccountText() {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(Translate.of(context).translate('don\'t_have_an_account')),
-          SizedBox(width: 5),
-          GestureDetector(
-            onTap: () => Navigator.pushNamed(
-              context,
-              AppRouter.INITIALIZE_INFO,
-            ),
-            child: Text(
-              Translate.of(context).translate('register'),
-              style: FONT_CONST.BOLD_PRIMARY_16,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

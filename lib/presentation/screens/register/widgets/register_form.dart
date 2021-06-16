@@ -107,8 +107,6 @@ class _RegisterFormState extends State<RegisterForm> {
                   _buildConfirmPasswordInput(),
                   SizedBox(height: SizeConfig.defaultSize),
                   _buildButtonRegister(),
-                  SizedBox(height: SizeConfig.defaultSize * 2),
-                  _buildHaveAccountText(),
                 ],
               ),
             ),
@@ -157,8 +155,8 @@ class _RegisterFormState extends State<RegisterForm> {
         hintText: Translate.of(context).translate('password'),
         suffixIcon: IconButton(
           icon: isShowPassword
-              ? Icon(Icons.visibility)
-              : Icon(Icons.visibility_off),
+              ? Icon(Icons.visibility_outlined)
+              : Icon(Icons.visibility_off_outlined),
           onPressed: () {
             setState(() {
               isShowPassword = !isShowPassword;
@@ -190,8 +188,8 @@ class _RegisterFormState extends State<RegisterForm> {
         hintText: Translate.of(context).translate('confirm_password'),
         suffixIcon: IconButton(
           icon: isShowConfirmPassword
-              ? Icon(Icons.visibility)
-              : Icon(Icons.visibility_off),
+              ? Icon(Icons.visibility_outlined)
+              : Icon(Icons.visibility_off_outlined),
           onPressed: () {
             setState(() {
               isShowConfirmPassword = !isShowConfirmPassword;
@@ -209,29 +207,9 @@ class _RegisterFormState extends State<RegisterForm> {
         style: FONT_CONST.BOLD_WHITE_18,
       ),
       onPressed: onRegister,
-    );
-  }
-
-  _buildHaveAccountText() {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(Translate.of(context).translate('already_have_an_account')),
-          SizedBox(width: 5),
-          GestureDetector(
-            onTap: () => Navigator.pushNamedAndRemoveUntil(
-              context,
-              AppRouter.LOGIN,
-              (_) => false,
-            ),
-            child: Text(
-              Translate.of(context).translate('login'),
-              style: FONT_CONST.BOLD_PRIMARY_16,
-            ),
-          ),
-        ],
-      ),
+      backgroundColor: isRegisterButtonEnabled()
+          ? COLOR_CONST.primaryColor
+          : COLOR_CONST.cardShadowColor,
     );
   }
 }

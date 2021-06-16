@@ -70,8 +70,6 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
             _buildPhoneNumberInput(),
             SizedBox(height: SizeConfig.defaultSize * 2),
             _buildButtonContinue(),
-            SizedBox(height: SizeConfig.defaultSize),
-            _buildHaveAccountText(),
           ],
         ),
       ),
@@ -90,7 +88,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
       },
       decoration: InputDecoration(
         hintText: Translate.of(context).translate("name"),
-        suffixIcon: Icon(Icons.person),
+        suffixIcon: Icon(Icons.person_outline),
       ),
     );
   }
@@ -107,7 +105,7 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       decoration: InputDecoration(
         hintText: Translate.of(context).translate("phone_number"),
-        suffixIcon: Icon(Icons.phone_callback),
+        suffixIcon: Icon(Icons.phone_callback_outlined),
       ),
     );
   }
@@ -122,26 +120,5 @@ class _InitializeInfoFormState extends State<InitializeInfoForm> {
     );
   }
 
-  _buildHaveAccountText() {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(Translate.of(context).translate("already_have_an_account")),
-          SizedBox(width: 5),
-          GestureDetector(
-            onTap: () => Navigator.pushNamedAndRemoveUntil(
-              context,
-              AppRouter.LOGIN,
-              (_) => false,
-            ),
-            child: Text(
-              Translate.of(context).translate("login"),
-              style: FONT_CONST.BOLD_PRIMARY_16,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+ 
 }

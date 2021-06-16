@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/constants/constants.dart';
 import 'package:e_commerce_app/presentation/screens/cart/widgets/list_cart_item.dart';
 import 'package:e_commerce_app/presentation/screens/cart/widgets/checkout_bottom.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,9 @@ class CartScreen extends StatelessWidget {
       title: Text(Translate.of(context).translate("cart")),
       actions: [
         IconButton(
-            icon: Icon(Icons.clear_all_rounded),
-            onPressed: () => _onClearCart(context))
+          icon: Icon(Icons.clear_all_rounded),
+          onPressed: () => _onClearCart(context),
+        )
       ],
     );
   }
@@ -33,6 +35,7 @@ class CartScreen extends StatelessWidget {
       content: Text(
         Translate.of(context)
             .translate("all_cart_items_will_be_deleted_from_your_cart"),
+        style: FONT_CONST.REGULAR_DEFAULT_20,
       ),
       confirmButtonText: Translate.of(context).translate("delete"),
     ) as bool;

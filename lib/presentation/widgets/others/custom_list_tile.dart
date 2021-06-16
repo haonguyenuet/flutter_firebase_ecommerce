@@ -35,7 +35,7 @@ class CustomListTile extends StatelessWidget {
           border: _bottomBorder(),
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      
           children: [
             _leadingWidget(),
             Expanded(
@@ -83,6 +83,6 @@ class CustomListTile extends StatelessWidget {
               color: COLOR_CONST.dividerColor,
             ),
           )
-        : null;
+        :null;
   }
 }

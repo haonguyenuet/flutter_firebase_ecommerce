@@ -22,7 +22,7 @@ class SearchFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height == null ? SizeConfig.defaultSize * 4 : height,
+      height: height ?? SizeConfig.defaultSize * 5,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(SizeConfig.defaultSize * 2),
         color: COLOR_CONST.cardShadowColor.withOpacity(0.3),
@@ -37,8 +37,8 @@ class SearchFieldWidget extends StatelessWidget {
         decoration: InputDecoration(
           isDense: true,
           hintText: hintText,
-          hintStyle: FONT_CONST.REGULAR_DEFAULT_18,
-          prefixStyle: FONT_CONST.REGULAR_DEFAULT_18,
+          hintStyle: FONT_CONST.REGULAR_DEFAULT_20,
+          prefixStyle: FONT_CONST.REGULAR_DEFAULT_20,
           contentPadding: EdgeInsets.all(0),
           prefixIcon: Icon(Icons.search),
           border: InputBorder.none,

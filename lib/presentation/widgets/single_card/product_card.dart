@@ -37,7 +37,9 @@ class ProductCard extends StatelessWidget {
             children: [
               _buildProductImage(),
               _buildProductName(),
+              SizedBox(height: 3),
               _buildPriceAndAvailable(),
+              SizedBox(height: 3),
               _buildSoldQuantity(context)
             ],
           ),
@@ -57,7 +59,7 @@ class ProductCard extends StatelessWidget {
   }
 
   _buildProductName() =>
-      Text(product.name, style: FONT_CONST.BOLD_DEFAULT, maxLines: 2);
+      Text(product.name, style: FONT_CONST.BOLD_DEFAULT_18, maxLines: 2);
 
   _buildPriceAndAvailable() {
     return Row(
@@ -65,12 +67,12 @@ class ProductCard extends StatelessWidget {
       children: [
         Text(
           "${product.price.toPrice()}",
-          style: FONT_CONST.BOLD_PRIMARY,
+          style: FONT_CONST.BOLD_PRIMARY_18,
         ),
         Container(
           padding: EdgeInsets.all(2),
-          width: SizeConfig.defaultSize * 2,
-          height: SizeConfig.defaultSize * 2,
+          width: SizeConfig.defaultSize * 2.4,
+          height: SizeConfig.defaultSize * 2.4,
           decoration: BoxDecoration(
             color: product.isAvailable ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
             shape: BoxShape.circle,
@@ -89,14 +91,14 @@ class ProductCard extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Text.rich(
         TextSpan(
-          style: TextStyle(fontSize: 12, color: COLOR_CONST.textColor),
+          style: FONT_CONST.REGULAR_DEFAULT_18,
           children: [
             TextSpan(text: Translate.of(context).translate("sold")),
             TextSpan(
               text: " ${product.soldQuantity}",
-              style: FONT_CONST.BOLD_DEFAULT,
+              style: FONT_CONST.BOLD_DEFAULT_18,
             ),
-            TextSpan(text: " " + Translate.of(context).translate("products")),
+            TextSpan(text: " " + Translate.of(context).translate("products"),),
           ],
         ),
       ),
