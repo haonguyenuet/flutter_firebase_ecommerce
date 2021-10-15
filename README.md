@@ -50,7 +50,7 @@ lib/
 * More...
 
 ## Some Screens:
-![Banner](https://github.com/haonguyenuet/Ecommerce_Flutter_Firebase/blob/main/screenshots/screens.png)
+![Banner](https://github.com/haonguyenuet/ecommerce-flutter-firebase/blob/main/screenshots/screens.png)
 
 ## Before run project, execute commands:
 - `flutter clean`
